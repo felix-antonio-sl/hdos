@@ -1,0 +1,174 @@
+schema:
+  name: ingresos_hodom
+  version: 1.0
+  entity: ingreso
+  description: Registro de pacientes en programa de hospitalización domiciliaria
+
+  fields:
+
+    - name: id_registro
+      source: "Unnamed: 0"
+      type: integer
+      required: true
+      constraints: [unique, >0]
+
+    - name: estado
+      source: "ESTADO"
+      type: enum
+      domain: [ACTIVO, EGRESADO]
+      required: true
+
+    - name: fecha_ingreso
+      source: "FECHA DE INGRESO"
+      type: date
+      format: dd-mm-aaaa
+      required: true
+
+    - name: fecha_egreso
+      source: "FECHA DE EGRESO"
+      type: date
+      format: dd-mm-aaaa
+      required: false
+      constraint: ">= fecha_ingreso"
+
+    - name: dias_estada
+      source: "DÍAS ESTADA"
+      type: integer
+      required: false
+      constraint: ">=0"
+
+    - name: motivo_egreso
+      source: "MOTIVO EGRESO"
+      type: string
+      required: false
+
+    - name: nombres
+      source: "NOMBRES"
+      type: string
+      required: true
+
+    - name: apellidos
+      source: "APELLIDOS"
+      type: string
+      required: true
+
+    - name: sexo
+      source: "SEXO"
+      type: enum
+      domain: [M, F]
+      required: true
+
+    - name: edad
+      source: "EDAD"
+      type: integer
+      required: true
+      constraint: ">=0"
+
+    - name: fecha_nacimiento
+      source: "FECHA DE NACIMIENTO (dd-mm-aaaa)"
+      type: date
+      format: dd-mm-aaaa
+      required: false
+
+    - name: rut
+      source: "RUT (9999999-9)"
+      type: string
+      format: chileno
+      required: true
+      constraint: "unique"
+
+    - name: barthel
+      source: "I. BARTHEL"
+      type: integer
+      domain: [0-100]
+      required: false
+
+    - name: prevision
+      source: "PREVISIÓN"
+      type: string
+      required: false
+
+    - name: servicio_origen
+      source: "SERVICIO DE ORIGEN"
+      type: string
+      required: false
+
+    - name: usuario_o2
+      source: "USUARIO O2"
+      type: boolean
+      encoding: [SI, NO]
+      required: false
+
+    - name: requerimiento_hodom_o2
+      source: "REQUERIMIENTO HODOM O2"
+      type: boolean
+      encoding: [SI, NO]
+      required: false
+
+    - name: categorizacion
+      source: "CATEGORIZACIÓN"
+      type: string
+      required: false
+
+    - name: diagnostico_egreso
+      source: "DIAGNÓSTICO DE EGRESO"
+      type: string
+      required: false
+
+    - name: domicilio
+      source: "DOMICILIO"
+      type: string
+      required: false
+
+    - name: comuna
+      source: "COMUNA"
+      type: string
+      required: false
+
+    - name: cesfam
+      source: "CESFAM"
+      type: string
+      required: false
+
+    - name: nro_contacto
+      source: "NRO. CONTACTO"
+      type: string
+      required: false
+
+    - name: nacionalidad
+      source: "NACIONALIDAD"
+      type: string
+      required: false
+
+    - name: enfermeria
+      source: "ENFERMERÍA"
+      type: boolean
+      encoding: [SI, NO]
+      required: false
+
+    - name: kinesiologia
+      source: "KINESIOLOGÍA"
+      type: boolean
+      encoding: [SI, NO]
+      required: false
+
+    - name: fonoaudiologia
+      source: "FONOAUDIOLOGÍA"
+      type: boolean
+      encoding: [SI, NO]
+      required: false
+
+  constraints:
+    - "fecha_egreso null si estado=ACTIVO"
+    - "fecha_egreso not null si estado=EGRESADO"
+    - "dias_estada = fecha_egreso - fecha_ingreso"
+    - "edad consistente con fecha_nacimiento"
+
+  normalization:
+    - "prevision, servicio_origen, cesfam → catálogos externos"
+    - "diagnostico_egreso → idealmente codificado (CIE10)"
+
+  notes:
+    - "tipos actualmente inferidos como string → requiere tipado explícito en ETL"
+    - "valores booleanos inconsistentes (NaN vs SI/NO)"
+    - "columna id mal nombrada (Unnamed: 0)"
