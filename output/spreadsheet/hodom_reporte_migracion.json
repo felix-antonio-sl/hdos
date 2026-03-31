@@ -1,0 +1,14 @@
+{
+  "generated_at": "2026-03-31T14:09:06",
+  "raw_records": 2998,
+  "deduplicated_records": 1757,
+  "discarded_duplicate_rows": 1241,
+  "patients": 1298,
+  "source_files": 30,
+  "duplicate_group_sizes": {
+    "1": 537,
+    "2": 1200,
+    "3": 19,
+    "4": 1
+  }
+}
