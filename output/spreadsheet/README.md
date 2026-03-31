@@ -12,14 +12,28 @@ Este directorio contiene una salida intermedia lista para cargar a una base nuev
 - `hodom_reporte_migracion.json`: métricas globales de la corrida.
 - `hodom_schema_postgres.sql`: DDL base para PostgreSQL.
 
+Columnas nuevas relevantes:
+
+- `patient_key_strategy`: indica si la identidad quedó basada en `rut`, `nombre_fecha` o `nombre_contacto`.
+- `rut_valido`: `1` si el RUT pasó validación por dígito verificador.
+- `normalization_notes`: correcciones aplicadas, por ejemplo `swap_rut_fecha_nacimiento` o `invalid_rut_rejected`.
+
 ## Resultado de esta corrida
 
 - Archivos fuente procesados: `30`
 - Filas válidas leídas: `2998`
-- Episodios deduplicados: `1757`
-- Filas descartadas por duplicado: `1241`
-- Pacientes deduplicados: `1298`
+- Episodios deduplicados: `1698`
+- Filas descartadas por duplicado: `1300`
+- Pacientes deduplicados: `1231`
 - Archivo excluido como catálogo: `NO MOD.csv`
+
+Control de calidad adicional:
+
+- Episodios con RUT válido: `1653`
+- Episodios con RUT rechazado: `40`
+- Episodios sin RUT válido pero con clave legible `nombre+fecha`: `39`
+- Episodios sin RUT válido pero con clave legible `nombre+contacto`: `6`
+- Correcciones `rut/fecha_nacimiento` invertidos detectadas: `71`
 
 ## Carga sugerida en PostgreSQL
 

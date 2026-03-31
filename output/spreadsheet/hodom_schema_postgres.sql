@@ -1,6 +1,8 @@
 CREATE TABLE IF NOT EXISTS hodom_pacientes_staging (
     patient_key TEXT PRIMARY KEY,
+    patient_key_strategy TEXT,
     rut TEXT,
+    rut_valido BOOLEAN,
     rut_raw TEXT,
     nombres TEXT,
     apellido_paterno TEXT,
@@ -24,6 +26,7 @@ CREATE TABLE IF NOT EXISTS hodom_episodios_staging (
     record_uid TEXT PRIMARY KEY,
     dedupe_key TEXT NOT NULL,
     patient_key TEXT NOT NULL REFERENCES hodom_pacientes_staging(patient_key),
+    patient_key_strategy TEXT,
     source_file TEXT NOT NULL,
     source_family TEXT NOT NULL,
     source_pattern TEXT NOT NULL,
@@ -51,6 +54,7 @@ CREATE TABLE IF NOT EXISTS hodom_episodios_staging (
     fecha_nacimiento_date DATE,
     rut_raw TEXT,
     rut TEXT,
+    rut_valido BOOLEAN,
     barthel TEXT,
     prevision TEXT,
     nro_ficha TEXT,
@@ -83,5 +87,6 @@ CREATE TABLE IF NOT EXISTS hodom_episodios_staging (
     knt TEXT,
     fono TEXT,
     trabajo_social TEXT,
+    normalization_notes TEXT,
     non_empty_fields INTEGER
 );
