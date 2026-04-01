@@ -335,6 +335,15 @@ def repair_year_token(year_token: str) -> str:
         return token
     if len(token) == 5 and token.isdigit() and token.startswith("0"):
         return token[1:]
+    if len(token) == 5 and token.isdigit():
+        candidates: list[int] = []
+        for idx in range(5):
+            candidate = token[:idx] + token[idx + 1 :]
+            year = int(candidate)
+            if 1900 <= year <= datetime.now().year + 2:
+                candidates.append(year)
+        if candidates:
+            return str(min(candidates, key=lambda year: abs(year - datetime.now().year)))
     if len(token) == 3 and token.isdigit():
         candidates: list[int] = []
         for position in range(4):
@@ -367,6 +376,34 @@ def parse_numeric_date(text: str) -> str:
     except ValueError:
         return ""
     return parsed.date().isoformat()
+
+
+def parse_compact_numeric_date(text: str) -> str:
+    digits = re.sub(r"\D", "", text)
+    if len(digits) != 8:
+        return ""
+    day_token = digits[:2]
+    month_token = digits[2:4]
+    year_token = digits[4:]
+    try:
+        parsed = datetime(int(year_token), int(month_token), int(day_token))
+    except ValueError:
+        return ""
+    return parsed.date().isoformat()
+
+
+def parse_js_date_loose(text: str) -> str:
+    match = re.search(
+        r"(?:[A-Za-z]{3}\s+)?([A-Za-z]{3}\s+\d{1,2}\s+\d{4}\s+\d{2}:\d{2}:\d{2}\s+GMT[+-]\d{4})",
+        text,
+    )
+    if not match:
+        return ""
+    candidate = match.group(1)
+    try:
+        return datetime.strptime(candidate, "%b %d %Y %H:%M:%S GMT%z").date().isoformat()
+    except ValueError:
+        return ""
 
 
 def calculate_rut_verifier(number: str) -> str:
@@ -470,9 +507,20 @@ def parse_date(value: str | None) -> str:
     if not text:
         return ""
 
+    cleaned_text = re.sub(r"[-/]{2,}", "-", text)
+
+    compact_date = parse_compact_numeric_date(cleaned_text)
+    if compact_date:
+        return compact_date
+
     parsed_numeric = parse_numeric_date(text)
     if parsed_numeric:
         return parsed_numeric
+
+    if cleaned_text != text:
+        parsed_numeric = parse_numeric_date(cleaned_text)
+        if parsed_numeric:
+            return parsed_numeric
 
     sanitized = re.sub(r"\s+\([^)]*\)$", "", text)
     for fmt in ("%a %b %d %Y %H:%M:%S GMT%z",):
@@ -480,6 +528,10 @@ def parse_date(value: str | None) -> str:
             return datetime.strptime(sanitized, fmt).date().isoformat()
         except ValueError:
             pass
+
+    parsed_js = parse_js_date_loose(sanitized)
+    if parsed_js:
+        return parsed_js
 
     if re.fullmatch(r"\d{4}-\d{2}-\d{2}", text):
         try:
@@ -494,11 +546,11 @@ def parse_int(value: str | None) -> str:
     text = normalize_whitespace(value)
     if not text:
         return ""
-    digits = re.sub(r"[^0-9-]", "", text)
-    if not digits:
+    match = re.search(r"-?\d+", text)
+    if not match:
         return ""
     try:
-        return str(int(digits))
+        return str(int(match.group(0)))
     except ValueError:
         return ""
 
@@ -745,6 +797,7 @@ def normalize_record(mapped: dict[str, str], filename: str, row_number: int, pat
     record["rut_valido"] = "1" if record["rut"] else "0"
 
     reference_date = record["fecha_ingreso_date"] or record["fecha_egreso_date"]
+    birth_date_parsed = bool(record["fecha_nacimiento_date"])
     if reference_date and not age_matches_birth_date(
         record["fecha_nacimiento_date"],
         record["edad_reportada"],
@@ -788,7 +841,7 @@ def normalize_record(mapped: dict[str, str], filename: str, row_number: int, pat
         notes.append("invalid_fecha_ingreso")
     if record["fecha_egreso_raw"] and not record["fecha_egreso_date"]:
         notes.append("invalid_fecha_egreso")
-    if record["fecha_nacimiento_raw"] and not record["fecha_nacimiento_date"]:
+    if record["fecha_nacimiento_raw"] and not birth_date_parsed:
         notes.append("invalid_fecha_nacimiento")
 
     patient_key, patient_key_strategy = build_patient_identity(record)

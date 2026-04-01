@@ -1168,7 +1168,22 @@ def build_canonical_outputs(
     except FileNotFoundError:
         source_count = 0
 
-    # 3b. Enrich episodes with patient + reference data before consolidation
+    # 3b. Apply manual corrections to episodes (especially rescue episodes)
+    ep_lookup = {ep["episode_id"]: ep for ep in episodes}
+    for res in resolutions:
+        if res.get("applied") == "True":
+            continue
+        if res.get("action") != "correct":
+            continue
+        field = res.get("field_corrected", "")
+        new_val = res.get("new_value", "")
+        item_id = res.get("item_id", "")
+        if not field or not new_val or not item_id:
+            continue
+        if item_id in ep_lookup:
+            ep_lookup[item_id][field] = new_val
+
+    # 3c. Enrich episodes with patient + reference data before consolidation
     patient_lookup = {p["patient_id"]: p for p in patients}
     estab_lookup = {}
     for est in read_csv(enriched_dir / "establishment_reference.csv") if (enriched_dir / "establishment_reference.csv").exists() else []:

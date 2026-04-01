@@ -1,0 +1,10 @@
+resolution_id,queue_type,item_id,action,target_id,field_corrected,old_value,new_value,resolved_by,resolved_at,applied
+res_20260401_neira,correct,rescue_721bedef35ff6752,correct,,fecha_egreso,,2025-10-29,felix,2026-04-01T12:00:00,False
+res_20260401_torres,correct,rescue_ae82166a1b2e1667,correct,,fecha_egreso,,2025-10-20,felix,2026-04-01T12:00:00,False
+res_20260401_leiva,correct,ep_d28a8c83b5652a39,correct,,fecha_egreso,,2025-10-10,felix,2026-04-01T12:00:00,False
+res_20260401_nelson,correct,rescue_47125dad9b759793,correct,,fecha_egreso,,2025-12-04,felix,2026-04-01T12:00:00,False
+res_20260401_amestico,correct,rescue_179a90882092bf92,correct,,fecha_egreso,,2025-11-24,felix,2026-04-01T12:00:00,False
+res_20260401_inzunza,correct,rescue_ad262a589242ca21,correct,,fecha_egreso,,2025-11-16,felix,2026-04-01T12:00:00,False
+res_20260401_ibanez,correct,rescue_68f4272d3ebc4449,correct,,fecha_egreso,,2025-12-29,felix,2026-04-01T12:00:00,False
+res_20260401_gallegos,correct,ep_21598c9c347c7308,correct,,fecha_egreso,,2025-09-29,felix,2026-04-01T12:00:00,False
+res_20260401_andrades,correct,ep_4c66cf6771a2577f,correct,,fecha_egreso,,2025-07-30,felix,2026-04-01T12:00:00,False
