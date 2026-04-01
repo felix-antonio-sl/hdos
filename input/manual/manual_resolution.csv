@@ -33,3 +33,9 @@ res_20260401_hernan_fecha_egreso,correct,ep_6e3ef0eb695e7e34,correct,,fecha_egre
 res_20260401_antonio_fecha_egreso,correct,ep_afa1062d6d99c42c,correct,,fecha_egreso,,2025-11-20,felix,2026-04-01T12:43:47,False
 res_20260401_rodolfo_fecha_ingreso,correct,ep_ac8e5bec97e04f4c,correct,,fecha_ingreso,2025-10-15,2025-10-12,felix,2026-04-01T12:43:47,False
 res_20260401_rodolfo_fecha_egreso,correct,ep_ac8e5bec97e04f4c,correct,,fecha_egreso,,2025-10-14,felix,2026-04-01T12:43:47,False
+res_fix_garrido_sexo,correct,pt_919418515903977d,correct,,sexo,F,M,felix,2026-04-01T13:35:15,False
+res_fix_riquelme_fe,correct,ep_9b8ea39affe57a39,correct,,fecha_egreso,2025-12-09,2025-12-12,felix,2026-04-01T13:35:15,False
+res_fix_morales_fdn,correct,pt_538374b247abf995,correct,,fecha_nacimiento_date,,1967-02-18,felix,2026-04-01T13:35:30,False
+res_fix_morales_edad,correct,pt_538374b247abf995,correct,,edad_reportada,,59,felix,2026-04-01T13:35:30,False
+res_fix_torres_fdn,correct,pt_8db7766405775efe,correct,,fecha_nacimiento_date,,1980-01-05,felix,2026-04-01T13:35:30,False
+res_fix_torres_edad,correct,pt_8db7766405775efe,correct,,edad_reportada,,46,felix,2026-04-01T13:35:30,False
