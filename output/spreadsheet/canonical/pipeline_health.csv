@@ -1,0 +1,2 @@
+run_id,run_timestamp,source_files_processed,raw_rows_processed,patients_total,stays_total,stays_with_egreso,stays_with_ingreso,stays_with_establishment,issues_open,issues_review_required,review_queue_pending,duplicate_candidates,coverage_gaps_detected,health_status
+run_7ec08f0cc194,2026-04-01T11:01:25.420803,31,1848,1339,1769,1714,1756,0,518,268,1853,5,4,red

@@ -1,0 +1,6 @@
+candidate_id,entity_type,entity_a_id,entity_b_id,match_reason,confidence,reviewed,resolution
+dup_7d3133256988,patient,pt_b5f476059a454ccb,pt_6bc8a8a1698c0e5e,same_rut_different_patient,high,False,
+dup_cbdae1a1522d,patient,pt_73561258d488e925,pt_d1b0eb99ee87555e,same_rut_different_patient,high,False,
+dup_9be7b530e1c1,patient,pt_0ec93095a2263214,pt_1b900b933c38e812,similar_name_same_comuna,medium,False,
+dup_441fd337628f,patient,pt_af8fadd92d775d69,pt_97936a4ed01481d4,similar_name_same_comuna,medium,False,
+dup_af4aef38175c,patient,pt_de2807c9c8420fa7,pt_674dba2eec405999,similar_name_same_comuna,medium,False,
