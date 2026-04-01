@@ -23,3 +23,7 @@ res_20260401_mella_egreso,correct,ep_58955033c3d4af6f,correct,,fecha_egreso,,202
 res_20260401_navarrete_ingreso,correct,ep_ed90d102de662ebe,correct,,fecha_ingreso,2025-10-03,2025-10-09,felix,2026-04-01T12:04:02,False
 res_20260401_perez_ingreso,correct,ep_817e642d74af5c0d,correct,,fecha_ingreso,2025-10-08,2025-10-13,felix,2026-04-01T12:04:02,False
 res_20260401_cerda_ingreso,correct,ep_33c422cd5659437e,correct,,fecha_ingreso,2025-10-17,2025-10-20,felix,2026-04-01T12:04:02,False
+res_20260401_perez_ingreso2,correct,ep_817e642d74af5c0d,correct,,fecha_ingreso,2025-10-08,2025-10-09,felix,2026-04-01T12:10:50,False
+res_20260401_perez_egreso2,correct,ep_817e642d74af5c0d,correct,,fecha_egreso,,2025-10-13,felix,2026-04-01T12:10:50,False
+res_20260401_navarrete_sep_ingreso,correct,ep_96adb92986a051af,correct,,fecha_ingreso,2025-09-08,2025-08-30,felix,2026-04-01T12:10:50,False
+res_20260401_navarrete_sep_egreso,correct,ep_96adb92986a051af,correct,,fecha_egreso,,2025-09-08,felix,2026-04-01T12:10:50,False
