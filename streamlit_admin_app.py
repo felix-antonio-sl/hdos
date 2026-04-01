@@ -84,10 +84,17 @@ def load_admin_data() -> dict[str, pd.DataFrame]:
     stays["nombre_completo"] = stays["nombre_completo"].fillna("")
     stays["rut"] = stays["rut"].fillna("")
 
+    # Display-formatted dates (dd-mm-aaaa)
+    stays["fecha_ingreso_fmt"] = stays["fecha_ingreso"].dt.strftime("%d-%m-%Y").fillna("")
+    stays["fecha_egreso_fmt"] = stays["fecha_egreso"].dt.strftime("%d-%m-%Y").fillna("")
+
     # Parse dates on patients
     patients["fecha_nacimiento_date"] = pd.to_datetime(patients["fecha_nacimiento_date"], errors="coerce")
     patients["edad_reportada"] = pd.to_numeric(patients["edad_reportada"], errors="coerce")
     patients["total_hospitalizaciones"] = pd.to_numeric(patients.get("total_hospitalizaciones", 0), errors="coerce").fillna(0).astype(int)
+    for col in ("primera_fecha_ingreso", "ultima_fecha_egreso"):
+        if col in patients.columns:
+            patients[col] = pd.to_datetime(patients[col], errors="coerce").dt.strftime("%d-%m-%Y").fillna("")
 
     # Parse pipeline_health timestamps
     if not pipeline_health.empty and "run_timestamp" in pipeline_health.columns:
@@ -483,11 +490,12 @@ def render_admin_hospitalizations(df: pd.DataFrame) -> None:
         "stay_id",
         "nombre_completo",
         "rut",
+        "sexo_resuelto",
+        "edad_reportada",
         "estado",
-        "fecha_ingreso",
-        "fecha_egreso",
+        "fecha_ingreso_fmt",
+        "fecha_egreso_fmt",
         "estadia_util",
-        "source_episode_count",
         "servicio_origen",
         "prevision",
         "establecimiento",
@@ -605,8 +613,8 @@ def render_admin_rem(df: pd.DataFrame, start: pd.Timestamp | None, end: pd.Times
         "rut",
         "sexo_resuelto",
         "edad_reportada",
-        "fecha_ingreso",
-        "fecha_egreso",
+        "fecha_ingreso_fmt",
+        "fecha_egreso_fmt",
         "overlap_days",
         "servicio_origen",
         "prevision",
