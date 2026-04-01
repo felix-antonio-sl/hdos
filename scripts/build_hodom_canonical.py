@@ -368,17 +368,42 @@ def consolidate_stays(episodes: list[dict[str, str]]) -> list[dict[str, str]]:
 
 
 def _merge_adjacent_stays(stays: list[dict[str, str]]) -> list[dict[str, str]]:
-    """Merge stays for the same patient where egreso-to-ingreso gap is <= 1 day."""
+    """Merge stays for the same patient/RUT where egreso-to-ingreso gap is <= 1 day.
+
+    Groups by patient_id first, then also by RUT to catch cross-patient duplicates
+    (same person with different patient_ids).
+    """
     from datetime import date as _date
 
-    by_patient: dict[str, list[dict[str, str]]] = {}
+    # Build groups: by patient_id AND by RUT (cross-patient dedup)
+    by_group: dict[str, list[dict[str, str]]] = {}
+    assigned: set[str] = set()  # stay_ids already in a group
+
+    # First pass: group by RUT (catches cross-patient duplicates)
+    by_rut: dict[str, list[dict[str, str]]] = {}
     for s in stays:
+        rut = s.get("rut", "").strip()
+        if rut:
+            by_rut.setdefault(rut, []).append(s)
+
+    for rut, group in by_rut.items():
+        if len(group) >= 1:
+            key = f"rut:{rut}"
+            by_group[key] = group
+            for s in group:
+                assigned.add(s.get("stay_id", ""))
+
+    # Second pass: remaining stays grouped by patient_id
+    for s in stays:
+        sid = s.get("stay_id", "")
+        if sid in assigned:
+            continue
         pid = s.get("patient_id", "")
-        if pid:
-            by_patient.setdefault(pid, []).append(s)
+        key = f"pid:{pid}"
+        by_group.setdefault(key, []).append(s)
 
     result: list[dict[str, str]] = []
-    for pid, group in by_patient.items():
+    for group_key, group in by_group.items():
         if len(group) < 2:
             result.extend(group)
             continue
@@ -393,11 +418,23 @@ def _merge_adjacent_stays(stays: list[dict[str, str]]) -> list[dict[str, str]]:
             fi_curr = current.get("fecha_ingreso", "")
 
             should_merge = False
-            if fe_prev and fi_curr:
+            fi_prev = prev.get("fecha_ingreso", "")
+            if fi_prev and fi_curr:
+                try:
+                    d_fi_prev = _date.fromisoformat(fi_prev)
+                    d_fi_curr = _date.fromisoformat(fi_curr)
+                    ingreso_diff = abs((d_fi_curr - d_fi_prev).days)
+                    # Same ingreso (±2 days) → same hospitalization from different sources
+                    if ingreso_diff <= 2:
+                        should_merge = True
+                except ValueError:
+                    pass
+            if not should_merge and fe_prev and fi_curr:
                 try:
                     d_fe = _date.fromisoformat(fe_prev)
                     d_fi = _date.fromisoformat(fi_curr)
                     gap = (d_fi - d_fe).days
+                    # Adjacent stays (egreso to ingreso gap ≤1 day)
                     if -3 <= gap <= 1:
                         should_merge = True
                 except ValueError:
@@ -426,10 +463,11 @@ def _merge_adjacent_stays(stays: list[dict[str, str]]) -> list[dict[str, str]]:
                 prev["episode_origin"] = "consolidated"
                 prev["confidence_level"] = "high"
 
-                # Fill empty fields from current
-                for field in ("servicio_origen", "establecimiento", "codigo_deis",
+                # Fill empty fields from current (including patient_id for cross-patient merges)
+                for field in ("patient_id", "servicio_origen", "establecimiento", "codigo_deis",
                               "comuna", "localidad", "latitud", "longitud",
-                              "gestora", "usuario_o2", "motivo_egreso"):
+                              "gestora", "usuario_o2", "motivo_egreso",
+                              "nombre_completo", "rut", "sexo_resuelto", "edad_reportada"):
                     if not prev.get(field, "") and current.get(field, ""):
                         prev[field] = current[field]
 
