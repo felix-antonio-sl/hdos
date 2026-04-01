@@ -170,6 +170,11 @@ def overlap_days(row: pd.Series, start: pd.Timestamp, end: pd.Timestamp) -> int:
     egreso = row["fecha_egreso"]
     if pd.isna(ingreso) and pd.isna(egreso):
         return 0
+    # Stay sin egreso: solo contar si ingreso es reciente (≤90 días antes del fin del período)
+    # Evita que stays de 2023/2024 sin cerrar inflen los días persona
+    if pd.isna(egreso) and pd.notna(ingreso):
+        if (end - ingreso).days > 90:
+            return 0
     effective_start = max(ingreso, start) if pd.notna(ingreso) else start
     effective_end = min(egreso, end) if pd.notna(egreso) else end
     if effective_end < effective_start:
