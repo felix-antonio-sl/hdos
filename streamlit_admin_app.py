@@ -121,9 +121,9 @@ def infer_origin_derivation(service: str) -> str:
     value = str(service or "").strip().upper()
     if not value:
         return "sin_inferencia"
-    if any(token in value for token in ["APS", "CESFAM", "CECOSF", "PSR"]):
+    if any(token in value for token in ["APS", "CESFAM", "CECOSF", "PSR", "CONSULTORIO"]):
         return "APS"
-    if value in {"UE", "EU", "URG", "URG. HOSP", "URGENCIA"}:
+    if value in {"UE", "EU", "URG", "URG. HOSP", "URGENCIA", "USAT", "URA"}:
         return "urgencia"
     if any(token in value for token in ["CAE", "CDT", "HOSPITAL DE DIA", "CMA", "CMI", "AMB"]):
         return "ambulatorio"
@@ -131,6 +131,10 @@ def infer_origin_derivation(service: str) -> str:
         return "UGCC"
     if "LEY" in value and "URG" in value:
         return "ley_urgencia"
+    # Servicios hospitalarios específicos
+    if value in {"MEDICINA", "CIRUGIA", "CIRGUIA", "TMT", "GINE", "PEDIATRIA", "PED",
+                 "UTI", "UCI", "MEL", "OTRO", "HCHM", "ING.ESPECIAL"}:
+        return "hospitalizacion"
     return "hospitalizacion"
 
 
@@ -138,10 +142,15 @@ def classify_outcome(motivo: str) -> str:
     value = str(motivo or "").strip().upper()
     if not value:
         return "sin_clasificar"
-    if "FALLE" in value:
+    # Fallecido — detectar antes de "alta" porque "ALTA POR FALLECIMIENTO" es fallecido
+    if any(t in value for t in ("FALLE", "FALLEC", "DEFUNC")):
         return "fallecido"
-    if "REHOSP" in value or "REINGRESO" in value or "HOSPITALIZ" in value:
+    # Reingreso/rehospitalización — antes de "alta" porque "ALTA POR REHOSPITALIZACION"
+    if any(t in value for t in ("REHOSP", "REHOSPIT", "REINGRESO", "REINGRESO HOSP")):
         return "reingreso_hospitalizacion"
+    if "HOSPITALIZACION" in value or "HOSPITALIZACIÓN" in value:
+        return "reingreso_hospitalizacion"
+    # Alta (incluye rechazo, curaciones APS, etc.)
     if "ALTA" in value:
         return "alta"
     return "otro"
@@ -172,6 +181,12 @@ def overlap_days(row: pd.Series, start: pd.Timestamp, end: pd.Timestamp) -> int:
 # REM functions
 # ---------------------------------------------------------------------------
 
+def _dedup_key(row: pd.Series) -> str:
+    """Clave de deduplicación: RUT si existe, sino patient_id."""
+    rut = str(row.get("rut", "")).strip()
+    return rut if rut else row.get("patient_id", "")
+
+
 def build_rem_c11(df: pd.DataFrame, start: pd.Timestamp | None, end: pd.Timestamp | None) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, dict[str, object]]:
     work = df.copy()
     if start is None:
@@ -188,10 +203,19 @@ def build_rem_c11(df: pd.DataFrame, start: pd.Timestamp | None, end: pd.Timestam
     work["ingreso_in_period"] = work["fecha_ingreso"].between(start, end, inclusive="both")
     work["egreso_in_period"] = work["fecha_egreso"].between(start, end, inclusive="both")
 
+    # Clave de deduplicación por RUT (cubre cross-patient duplicates)
+    work["_dedup_key"] = work.apply(_dedup_key, axis=1)
+
+    # Personas atendidas: pacientes únicos por RUT con solapamiento en el período
+    personas_atendidas = int(work.loc[work["is_active_in_period"], "_dedup_key"].nunique())
+
+    # Días persona: solo stays con solapamiento positivo y fecha_ingreso válida
+    dias_persona = int(work.loc[work["is_active_in_period"], "overlap_days"].sum())
+
     totals = {
         "ingresos": int(work["ingreso_in_period"].sum()),
-        "personas_atendidas": int(work.loc[work["is_active_in_period"], "patient_id"].nunique()),
-        "dias_persona": int(work["overlap_days"].sum()),
+        "personas_atendidas": personas_atendidas,
+        "dias_persona": dias_persona,
         "altas": int(((work["egreso_in_period"]) & (work["outcome"] == "alta")).sum()),
         "reingresos_hospitalizacion": int(((work["egreso_in_period"]) & (work["outcome"] == "reingreso_hospitalizacion")).sum()),
         "fallecidos_total_inferidos": int(((work["egreso_in_period"]) & (work["outcome"] == "fallecido")).sum()),
@@ -200,11 +224,19 @@ def build_rem_c11(df: pd.DataFrame, start: pd.Timestamp | None, end: pd.Timestam
     def make_table(dimension_col: str, categories: list[str]) -> pd.DataFrame:
         rows = []
         for label in categories:
-            rows.append({"componente": "ingresos", dimension_col: label, "valor": int(work.loc[work["ingreso_in_period"] & (work[dimension_col] == label)].shape[0])})
-            rows.append({"componente": "personas_atendidas", dimension_col: label, "valor": int(work.loc[work["is_active_in_period"] & (work[dimension_col] == label), "patient_id"].nunique())})
-            rows.append({"componente": "dias_persona", dimension_col: label, "valor": int(work.loc[work[dimension_col] == label, "overlap_days"].sum())})
-            rows.append({"componente": "altas", dimension_col: label, "valor": int(work.loc[work["egreso_in_period"] & (work["outcome"] == "alta") & (work[dimension_col] == label)].shape[0])})
-            rows.append({"componente": "reingresos_hospitalizacion", dimension_col: label, "valor": int(work.loc[work["egreso_in_period"] & (work["outcome"] == "reingreso_hospitalizacion") & (work[dimension_col] == label)].shape[0])})
+            mask_dim = work[dimension_col] == label
+            rows.append({"componente": "ingresos", dimension_col: label,
+                         "valor": int(work.loc[work["ingreso_in_period"] & mask_dim].shape[0])})
+            rows.append({"componente": "personas_atendidas", dimension_col: label,
+                         "valor": int(work.loc[work["is_active_in_period"] & mask_dim, "_dedup_key"].nunique())})
+            rows.append({"componente": "dias_persona", dimension_col: label,
+                         "valor": int(work.loc[work["is_active_in_period"] & mask_dim, "overlap_days"].sum())})
+            rows.append({"componente": "altas", dimension_col: label,
+                         "valor": int(work.loc[work["egreso_in_period"] & (work["outcome"] == "alta") & mask_dim].shape[0])})
+            rows.append({"componente": "reingresos_hospitalizacion", dimension_col: label,
+                         "valor": int(work.loc[work["egreso_in_period"] & (work["outcome"] == "reingreso_hospitalizacion") & mask_dim].shape[0])})
+            rows.append({"componente": "fallecidos", dimension_col: label,
+                         "valor": int(work.loc[work["egreso_in_period"] & (work["outcome"] == "fallecido") & mask_dim].shape[0])})
         data = pd.DataFrame(rows)
         pivot = data.pivot_table(index="componente", columns=dimension_col, values="valor", aggfunc="sum", fill_value=0).reindex(columns=categories, fill_value=0).reset_index()
         totals_local = data.groupby("componente")["valor"].sum().rename("total").reset_index()
@@ -232,6 +264,7 @@ def build_rem_detail_dataset(df: pd.DataFrame, start: pd.Timestamp | None, end: 
     work["is_active_in_period"] = work["overlap_days"] > 0
     work["ingreso_in_period"] = work["fecha_ingreso"].between(start, end, inclusive="both")
     work["egreso_in_period"] = work["fecha_egreso"].between(start, end, inclusive="both")
+    work["_dedup_key"] = work.apply(_dedup_key, axis=1)
     return work
 
 
@@ -239,13 +272,17 @@ def rem_nominal_subset(detail_df: pd.DataFrame, component: str) -> pd.DataFrame:
     if component == "ingresos":
         return detail_df[detail_df["ingreso_in_period"]]
     if component == "personas_atendidas":
-        return detail_df[detail_df["is_active_in_period"]].drop_duplicates(subset=["patient_id"])
+        # Deduplicar por RUT (cubre cross-patient) y luego por patient_id
+        active = detail_df[detail_df["is_active_in_period"]].copy()
+        return active.drop_duplicates(subset=["_dedup_key"])
     if component == "dias_persona":
-        return detail_df[detail_df["overlap_days"] > 0]
+        return detail_df[detail_df["is_active_in_period"]]
     if component == "altas":
         return detail_df[detail_df["egreso_in_period"] & detail_df["outcome"].eq("alta")]
     if component == "reingresos_hospitalizacion":
         return detail_df[detail_df["egreso_in_period"] & detail_df["outcome"].eq("reingreso_hospitalizacion")]
+    if component == "fallecidos_total_inferidos":
+        return detail_df[detail_df["egreso_in_period"] & detail_df["outcome"].eq("fallecido")]
     return detail_df[detail_df["egreso_in_period"] & detail_df["outcome"].eq("fallecido")]
 
 
