@@ -19,3 +19,7 @@ res_20260401_jarpa_rut,correct,pt_47fff4a68b0e03ee,correct,,rut,,10355595-6,feli
 res_20260401_barra_rut,correct,pt_674dba2eec405999,correct,,rut,,4470492-7,felix,2026-04-01T11:48:10,False
 res_20260401_navarrete_egreso,correct,ep_ed90d102de662ebe,correct,,fecha_egreso,,2025-10-09,felix,2026-04-01T11:53:00,False
 res_20260401_perez_arias_egreso,correct,ep_817e642d74af5c0d,correct,,fecha_egreso,,2025-10-13,felix,2026-04-01T11:53:00,False
+res_20260401_mella_egreso,correct,ep_58955033c3d4af6f,correct,,fecha_egreso,,2025-10-04,felix,2026-04-01T12:04:02,False
+res_20260401_navarrete_ingreso,correct,ep_ed90d102de662ebe,correct,,fecha_ingreso,2025-10-03,2025-10-09,felix,2026-04-01T12:04:02,False
+res_20260401_perez_ingreso,correct,ep_817e642d74af5c0d,correct,,fecha_ingreso,2025-10-08,2025-10-13,felix,2026-04-01T12:04:02,False
+res_20260401_cerda_ingreso,correct,ep_33c422cd5659437e,correct,,fecha_ingreso,2025-10-17,2025-10-20,felix,2026-04-01T12:04:02,False
