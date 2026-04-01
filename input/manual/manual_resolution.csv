@@ -39,3 +39,10 @@ res_fix_morales_fdn,correct,pt_538374b247abf995,correct,,fecha_nacimiento_date,,
 res_fix_morales_edad,correct,pt_538374b247abf995,correct,,edad_reportada,,59,felix,2026-04-01T13:35:30,False
 res_fix_torres_fdn,correct,pt_8db7766405775efe,correct,,fecha_nacimiento_date,,1980-01-05,felix,2026-04-01T13:35:30,False
 res_fix_torres_edad,correct,pt_8db7766405775efe,correct,,edad_reportada,,46,felix,2026-04-01T13:35:30,False
+res_fix_gutierrez_fe1,correct,ep_4a91cc90d7ac0455,correct,,fecha_egreso,2026-03-15,2026-03-12,felix,2026-04-01T13:42:42,False
+res_fix_gutierrez_fi1,correct,ep_4a91cc90d7ac0455,correct,,fecha_ingreso,2026-03-13,2026-03-10,felix,2026-04-01T13:42:42,False
+res_fix_gutierrez_motivo,correct,ep_4a91cc90d7ac0455,correct,,motivo_egreso,FALLECIDA,FALLECIDO,felix,2026-04-01T13:42:42,False
+res_fix_uberlinda_fe,correct,ep_98721f51082a7412,correct,,fecha_egreso,,2025-10-27,felix,2026-04-01T13:42:42,False
+res_fix_uberlinda_estado,correct,ep_98721f51082a7412,correct,,estado,ACTIVO,EGRESADO,felix,2026-04-01T13:42:42,False
+res_fix_gutierrez_fe2,correct,ep_6c682801d06e385f,correct,,fecha_egreso,2026-03-15,2026-03-12,felix,2026-04-01T13:43:22,False
+res_fix_gutierrez_fi2,correct,ep_6c682801d06e385f,correct,,fecha_ingreso,2026-03-13,2026-03-10,felix,2026-04-01T13:43:22,False
