@@ -1847,11 +1847,11 @@ rescue_3fe21f9c1a674817,pt_8f9aa4f8a6d97cf3,rescue_3fe21f9c1a674817,alta_9ecc617
 rescue_e3b43e9eeafd16ec,pt_04651a6e5a706cc4,rescue_e3b43e9eeafd16ec,alta_55ae6b45c2493c6a,EGRESADO,ALTA,2025-12-22,2025-12-26,,4,ALTA,,,,,,,,INSUFICIENCIA CARDIACA CONGESTIVA,REVIEW,1,alta_rescued,PROVISIONAL,rescued_provisional,10,,,,0,,,loc_634ff1d0bfa4a7f8,HIGH
 rescue_f8c788e7bea7c804,pt_8df5161be5edec55,rescue_f8c788e7bea7c804,alta_e396a838919a4fac,EGRESADO,ALTA,2025-12-16,2025-12-30,,14,ALTA,,,,,,,,FRACTURA PERTROCANTERIANA,REVIEW,1,alta_rescued,PROVISIONAL,rescued_provisional,10,,,,0,,,loc_b309a9f358c0f9c8,HIGH
 rescue_3651b4e0513461ac,pt_9a8eeea75676952e,rescue_3651b4e0513461ac,alta_05550469a95285b9,EGRESADO,ALTA,2026-01-06,2026-01-14,,8,ALTA,,,,,,,,NEUMONIA,REVIEW,1,alta_rescued,PROVISIONAL,rescued_provisional,55,,,,0,117311,est_4a50d9e625a5c238,loc_5ef7a9d41fb260f7,MEDIUM
-ep_58955033c3d4af6f,pt_2f2fb85b5d413395,manual:5653936-0:2025-10-01,,ACTIVO,INGRESO,2025-10-01,,,,,,,,,,,,,,,manual,MANUAL,manual_entry,,,,,,,,,
-ep_ed90d102de662ebe,pt_7738a75da0b08896,manual:10458601-5:2025-10-03,,ACTIVO,INGRESO,2025-10-03,,,,,,,,,,,,,,,manual,MANUAL,manual_entry,,,,,,,,,
-ep_817e642d74af5c0d,pt_156558f7246c1dd6,manual:2965249-K:2025-10-08,,ACTIVO,INGRESO,2025-10-08,,,,,,,,,,,,,,,manual,MANUAL,manual_entry,,,,,,,,,
+ep_58955033c3d4af6f,pt_2f2fb85b5d413395,manual:5653936-0:2025-10-01,,ACTIVO,INGRESO,2025-10-01,2025-10-04,,,,,,,,,,,,,,manual,MANUAL,manual_entry,,,,,,,,,
+ep_4d9083487503f331,pt_7738a75da0b08896,manual:10458601-5:2025-08-30,,EGRESADO,INGRESO,2025-08-30,2025-09-08,,,,,,,,,,,,,,manual,MANUAL,manual_entry,,,,,,,,,
+ep_ed90d102de662ebe,pt_7738a75da0b08896,manual:10458601-5:2025-10-03,,EGRESADO,INGRESO,2025-10-03,2025-10-09,,,,,,,,,,,,,,manual,MANUAL,manual_entry,,,,,,,,,
+ep_f12c0d8b66f6a9a0,pt_156558f7246c1dd6,manual:2965249-K:2025-10-09,,EGRESADO,INGRESO,2025-10-09,2025-10-13,,,,,,,,,,,,,,manual,MANUAL,manual_entry,,,,,,,,,
 ep_ac8e5bec97e04f4c,pt_1b52e0d6cb572aff,manual:10836150-6:2025-10-15,,ACTIVO,INGRESO,2025-10-15,,,,,,,,,,,,,,,manual,MANUAL,manual_entry,,,,,,,,,
-ep_33c422cd5659437e,pt_2ae2269ae45cf0fe,manual:7679860-5:2025-10-17,,ACTIVO,INGRESO,2025-10-17,,,,,,,,,,,,,,,manual,MANUAL,manual_entry,,,,,,,,,
+ep_afa1062d6d99c42c,pt_2ae2269ae45cf0fe,manual:7679860-5:2025-10-20,,ACTIVO,INGRESO,2025-10-20,,,,,,,,,,,,,,,manual,MANUAL,manual_entry,,,,,,,,,
 ep_6e3ef0eb695e7e34,pt_d3a161394dfb5ec6,manual:4921003-5:2025-11-05,,ACTIVO,INGRESO,2025-11-05,,,,,,,,,,,,,,,manual,MANUAL,manual_entry,,,,,,,,,
-ep_96adb92986a051af,pt_7738a75da0b08896,manual:10458601-5:2025-09-08,,EGRESADO,INGRESO,2025-09-08,,,,,,,,,,,,,,,manual,MANUAL,manual_entry,,,,,,,,,
 ep_e80c3feb1e954447,pt_8db7766405775efe,manual:13794368-9:2025-09-27,,EGRESADO,INGRESO,2025-09-27,2025-10-06,,,,,,,,,,,,,,manual,MANUAL,manual_entry,,,,,,,,,
