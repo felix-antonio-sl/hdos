@@ -505,7 +505,7 @@ def render_admin_hospitalizations(df: pd.DataFrame) -> None:
     present_columns = [c for c in columns if c in df.columns]
     for tab, (title, view) in zip(tabs, views.items()):
         with tab:
-            table = view[present_columns].sort_values(["fecha_ingreso", "fecha_egreso"], ascending=[False, False])
+            table = view.sort_values(["fecha_ingreso", "fecha_egreso"], ascending=[False, False])[present_columns]
             st.dataframe(table, use_container_width=True, hide_index=True)
             st.download_button(
                 f"Descargar {title.lower()}",
@@ -627,7 +627,7 @@ def render_admin_rem(df: pd.DataFrame, start: pd.Timestamp | None, end: pd.Times
     present_columns = [column for column in detail_columns if column in detail_view.columns]
     st.caption(f"Listado nominal usado para calcular: {component}")
     st.dataframe(
-        detail_view[present_columns].sort_values(["fecha_ingreso", "fecha_egreso"], ascending=[False, False]),
+        detail_view.sort_values(["fecha_ingreso", "fecha_egreso"], ascending=[False, False])[present_columns],
         use_container_width=True,
         hide_index=True,
     )
