@@ -32,6 +32,42 @@ RESOLUTION_COLUMNS = [
     "notes",
 ]
 
+ISSUE_DESCRIPTIONS = {
+    "LOCALITY_COORDINATES_MISSING": "Localidad sin coordenadas geograficas",
+    "UNMATCHED_FORM_SUBMISSION": "Formulario HODOM sin episodio asociado",
+    "PATIENT_WITHOUT_EPISODE": "Paciente registrado sin hospitalizacion",
+    "ESTABLISHMENT_UNRESOLVED": "Establecimiento no encontrado en catalogo DEIS",
+    "BIRTHDATE_AGE_MISMATCH": "Edad no coincide con fecha de nacimiento",
+    "DATE_PARSE_FAILED": "Fecha no se pudo interpretar",
+}
+
+QUEUE_DESCRIPTIONS = {
+    "unmatched_form": (
+        "Formularios de solicitud HODOM que no pudieron asociarse automaticamente "
+        "a una hospitalizacion. Revisa cada caso y decide si asociar a un episodio "
+        "existente, crear uno nuevo, o descartar."
+    ),
+    "unresolved_discharge": (
+        "Altas registradas en la planilla que no coinciden con ningun episodio. "
+        "Pueden ser altas de pacientes no ingresados al sistema o errores de digitacion."
+    ),
+    "identity": (
+        "Problemas de identidad: RUT invalido, edad que no coincide con fecha de "
+        "nacimiento, u otros conflictos en los datos del paciente."
+    ),
+    "patient_orphan": (
+        "Pacientes que aparecen en los registros pero no tienen ninguna hospitalizacion "
+        "asociada. Pueden ser registros de prueba, errores, o pacientes cuyo ingreso "
+        "no se registro."
+    ),
+    "establishment": (
+        "Establecimientos de salud mencionados en los datos que no se pudieron resolver "
+        "contra el catalogo oficial DEIS."
+    ),
+}
+
+PAGINATION_SIZE = 20
+
 
 def read_canonical(name: str) -> pd.DataFrame:
     path = CANONICAL_DIR / name
@@ -47,17 +83,13 @@ def read_canonical_optional(name: str) -> pd.DataFrame:
     return pd.DataFrame()
 
 
-@st.cache_data(show_spinner=False)
-def load_admin_data() -> dict[str, pd.DataFrame]:
+@st.cache_data(ttl=300, show_spinner=False)
+def load_core_data() -> dict[str, pd.DataFrame]:
+    """Load core datasets needed for all main tabs (stays, patients, establishments, localities)."""
     stays = read_canonical("hospitalization_stay.csv")
     patients = read_canonical("patient_master.csv")
     establishments = read_canonical_optional("establishment_reference.csv")
     localities = read_canonical_optional("locality_reference.csv")
-    pipeline_health = read_canonical_optional("pipeline_health.csv")
-    review_queue = read_canonical_optional("review_queue.csv")
-    coverage_gaps = read_canonical_optional("coverage_gap.csv")
-    quality_issues = read_canonical_optional("quality_issue.csv")
-    duplicate_candidates = read_canonical_optional("duplicate_candidate.csv")
 
     # Parse dates on stays
     stays["fecha_ingreso"] = pd.to_datetime(stays["fecha_ingreso"], errors="coerce")
@@ -96,15 +128,28 @@ def load_admin_data() -> dict[str, pd.DataFrame]:
         if col in patients.columns:
             patients[col] = pd.to_datetime(patients[col], errors="coerce").dt.strftime("%d-%m-%Y").fillna("")
 
-    # Parse pipeline_health timestamps
-    if not pipeline_health.empty and "run_timestamp" in pipeline_health.columns:
-        pipeline_health["run_timestamp"] = pd.to_datetime(pipeline_health["run_timestamp"], errors="coerce")
-
     return {
         "stays": stays,
         "patients": patients,
         "establishments": establishments,
         "localities": localities,
+    }
+
+
+@st.cache_data(ttl=300, show_spinner=False)
+def load_audit_data() -> dict[str, pd.DataFrame]:
+    """Load audit/quality datasets only when needed (pipeline health, review queue, etc.)."""
+    pipeline_health = read_canonical_optional("pipeline_health.csv")
+    review_queue = read_canonical_optional("review_queue.csv")
+    coverage_gaps = read_canonical_optional("coverage_gap.csv")
+    quality_issues = read_canonical_optional("quality_issue.csv")
+    duplicate_candidates = read_canonical_optional("duplicate_candidate.csv")
+
+    # Parse pipeline_health timestamps
+    if not pipeline_health.empty and "run_timestamp" in pipeline_health.columns:
+        pipeline_health["run_timestamp"] = pd.to_datetime(pipeline_health["run_timestamp"], errors="coerce")
+
+    return {
         "pipeline_health": pipeline_health,
         "review_queue": review_queue,
         "coverage_gaps": coverage_gaps,
@@ -391,15 +436,16 @@ def filter_admin_data(df: pd.DataFrame, datasets: dict[str, pd.DataFrame]) -> tu
     with st.sidebar:
         st.subheader("Filtros Administrativos")
 
-        # Sidebar counters
-        rq = datasets.get("review_queue", pd.DataFrame())
-        qi = datasets.get("quality_issues", pd.DataFrame())
-        dc = datasets.get("duplicate_candidates", pd.DataFrame())
+        # Sidebar counters - load audit data lazily for the small sidebar summary
+        audit = load_audit_data()
+        rq = audit.get("review_queue", pd.DataFrame())
+        qi = audit.get("quality_issues", pd.DataFrame())
+        dc = audit.get("duplicate_candidates", pd.DataFrame())
         pending_queue = len(rq) if not rq.empty else 0
         open_issues = int(qi[qi["status"] == "open"].shape[0]) if not qi.empty and "status" in qi.columns else 0
         unreviewed_dupes = int(dc[dc["reviewed"] == False].shape[0]) if not dc.empty and "reviewed" in dc.columns else 0  # noqa: E712
 
-        ph = datasets.get("pipeline_health", pd.DataFrame())
+        ph = audit.get("pipeline_health", pd.DataFrame())
         if not ph.empty:
             latest = ph.iloc[-1]
             status = str(latest.get("health_status", "unknown"))
@@ -715,13 +761,21 @@ def render_admin_territory(df: pd.DataFrame, establishments: pd.DataFrame, local
 # Pipeline Health tab (Task 9)
 # ---------------------------------------------------------------------------
 
-def render_pipeline_health(datasets: dict[str, pd.DataFrame]) -> None:
+def render_pipeline_health() -> None:
     st.subheader("Salud del Pipeline")
-    ph = datasets.get("pipeline_health", pd.DataFrame())
-    cg = datasets.get("coverage_gaps", pd.DataFrame())
-    qi = datasets.get("quality_issues", pd.DataFrame())
-    rq = datasets.get("review_queue", pd.DataFrame())
-    dc = datasets.get("duplicate_candidates", pd.DataFrame())
+
+    st.markdown(
+        "Esta seccion muestra el estado general del proceso de datos (pipeline) que alimenta "
+        "este dashboard. El pipeline toma los datos crudos de las planillas, los limpia, "
+        "normaliza y cruza para producir los registros que ves en las demas pestanas. "
+        "Aqui puedes verificar si el proceso se ejecuto correctamente y si hay problemas "
+        "de calidad de datos que requieran atencion."
+    )
+
+    audit = load_audit_data()
+    ph = audit.get("pipeline_health", pd.DataFrame())
+    cg = audit.get("coverage_gaps", pd.DataFrame())
+    qi = audit.get("quality_issues", pd.DataFrame())
 
     if ph.empty:
         st.warning("No hay datos de salud del pipeline disponibles.")
@@ -731,8 +785,14 @@ def render_pipeline_health(datasets: dict[str, pd.DataFrame]) -> None:
     status = str(latest.get("health_status", "unknown"))
     color_map = {"green": "#22c55e", "yellow": "#eab308", "red": "#ef4444"}
     label_map = {"green": "Saludable", "yellow": "Con advertencias", "red": "Critico"}
+    reason_map = {
+        "green": "Todos los indicadores estan dentro de los rangos esperados. No se detectaron problemas criticos.",
+        "yellow": "Se detectaron advertencias menores: puede haber brechas de cobertura o issues de calidad que conviene revisar, pero los datos principales son confiables.",
+        "red": "Se detectaron problemas criticos que afectan la confiabilidad de los datos. Revisa los issues abiertos y la cola de revision antes de usar los indicadores.",
+    }
     sem_color = color_map.get(status, "#94a3b8")
     sem_label = label_map.get(status, "Desconocido")
+    sem_reason = reason_map.get(status, "No se pudo determinar el estado del pipeline.")
 
     # Semaphore
     st.markdown(
@@ -741,10 +801,13 @@ def render_pipeline_health(datasets: dict[str, pd.DataFrame]) -> None:
                      background:linear-gradient(135deg,rgba(248,250,249,0.98),rgba(255,255,255,0.98));
                      border:1px solid rgba(16,74,61,0.10);margin-bottom:1rem;">
             <div style="width:48px;height:48px;border-radius:50%;background:{sem_color};
-                        box-shadow:0 0 12px {sem_color};"></div>
+                        box-shadow:0 0 12px {sem_color};flex-shrink:0;"></div>
             <div>
                 <div style="font-size:1.3rem;font-weight:700;color:#14342b;">{sem_label}</div>
-                <div style="font-size:0.8rem;color:#6b7b75;">
+                <div style="font-size:0.85rem;color:#3d5a50;margin-top:0.2rem;">
+                    {sem_reason}
+                </div>
+                <div style="font-size:0.8rem;color:#6b7b75;margin-top:0.3rem;">
                     Ultima ejecucion: {latest.get('run_timestamp', 'N/D')}
                 </div>
             </div>
@@ -753,7 +816,7 @@ def render_pipeline_health(datasets: dict[str, pd.DataFrame]) -> None:
         unsafe_allow_html=True,
     )
 
-    # 8 metric cards
+    # 8 metric cards with captions
     m1, m2, m3, m4 = st.columns(4)
     stays_total = int(latest.get("stays_total", 0))
     patients_total = int(latest.get("patients_total", 0))
@@ -763,20 +826,34 @@ def render_pipeline_health(datasets: dict[str, pd.DataFrame]) -> None:
     pct_estab = f"{stays_estab / stays_total * 100:.1f}%" if stays_total > 0 else "N/D"
 
     m1.metric("Estadias", stays_total)
+    m1.caption("Total de hospitalizaciones registradas en el sistema.")
     m2.metric("Pacientes", patients_total)
+    m2.caption("Pacientes unicos identificados (por RUT o ID interno).")
     m3.metric("% con egreso", pct_egreso)
+    m3.caption("Porcentaje de estadias que tienen fecha de alta registrada.")
     m4.metric("% con establecimiento", pct_estab)
+    m4.caption("Porcentaje de estadias asociadas a un establecimiento DEIS.")
 
     m5, m6, m7, m8 = st.columns(4)
     m5.metric("Issues abiertos", int(latest.get("issues_open", 0)))
+    m5.caption("Problemas de calidad de datos detectados y aun no resueltos.")
     m6.metric("Cola de revision", int(latest.get("review_queue_pending", 0)))
+    m6.caption("Registros que necesitan revision manual en la pestana Revision.")
     m7.metric("Brechas de cobertura", int(latest.get("coverage_gaps_detected", 0)))
+    m7.caption("Meses donde los ingresos cayeron significativamente respecto al promedio.")
     m8.metric("Candidatos duplicados", int(latest.get("duplicate_candidates", 0)))
+    m8.caption("Pares de registros que podrian ser el mismo paciente u hospitalizacion.")
 
     # Coverage chart
     if not cg.empty:
         st.markdown("---")
-        st.caption("Cobertura mensual: observado vs esperado")
+        st.subheader("Brechas de cobertura mensual")
+        st.markdown(
+            "Esto compara cuantos ingresos hubo cada mes contra el promedio de los 6 meses "
+            "anteriores. Si un mes tiene menos del 70% del promedio, se marca como brecha. "
+            "Las brechas pueden indicar que faltan datos en la planilla de ese mes, o que "
+            "hubo una caida real en la actividad."
+        )
         metrics_available = sorted(cg["metric"].unique()) if "metric" in cg.columns else []
         selected_metric = st.selectbox("Metrica de cobertura", metrics_available, index=0, key="cg_metric") if metrics_available else None
         if selected_metric:
@@ -790,9 +867,21 @@ def render_pipeline_health(datasets: dict[str, pd.DataFrame]) -> None:
     # Issue breakdown
     if not qi.empty and "issue_type" in qi.columns:
         st.markdown("---")
-        st.caption("Desglose de issues por tipo")
+        st.subheader("Problemas de calidad de datos")
+        st.markdown(
+            "Estos son problemas de datos que requieren atencion. Cada tipo de problema "
+            "tiene un significado especifico que se explica a continuacion."
+        )
         issue_counts = qi["issue_type"].value_counts()
         st.bar_chart(issue_counts)
+
+        # Explanatory table of issue types
+        issue_rows = []
+        for issue_type, count in issue_counts.items():
+            description = ISSUE_DESCRIPTIONS.get(str(issue_type), str(issue_type))
+            issue_rows.append({"Tipo": str(issue_type), "Descripcion": description, "Cantidad": int(count)})
+        if issue_rows:
+            st.dataframe(pd.DataFrame(issue_rows), use_container_width=True, hide_index=True)
 
 
 # ---------------------------------------------------------------------------
@@ -800,13 +889,23 @@ def render_pipeline_health(datasets: dict[str, pd.DataFrame]) -> None:
 # ---------------------------------------------------------------------------
 
 def render_queue_items(rq: pd.DataFrame, queue_type: str) -> None:
-    """Render review queue items for a given queue_type with action buttons."""
+    """Render review queue items for a given queue_type with action buttons and pagination."""
     subset = rq[rq["queue_type"] == queue_type] if not rq.empty and "queue_type" in rq.columns else pd.DataFrame()
     if subset.empty:
         st.info(f"No hay items pendientes de tipo '{queue_type}'.")
         return
 
-    for idx, row in subset.iterrows():
+    total_items = len(subset)
+    page_key = f"page_{queue_type}"
+    if page_key not in st.session_state:
+        st.session_state[page_key] = PAGINATION_SIZE
+
+    visible_limit = st.session_state[page_key]
+    visible_subset = subset.head(visible_limit)
+
+    st.caption(f"Mostrando {min(visible_limit, total_items)} de {total_items} items")
+
+    for idx, row in visible_subset.iterrows():
         item_id = str(row.get("queue_item_id", idx))
         entity_id = str(row.get("entity_id", ""))
         patient_name = str(row.get("patient_name", ""))
@@ -866,8 +965,56 @@ def render_queue_items(rq: pd.DataFrame, queue_type: str) -> None:
                         st.success(f"Resolucion 'descartar' guardada para {item_id}.")
                         st.cache_data.clear()
 
+    # "Mostrar mas" pagination button
+    if visible_limit < total_items:
+        if st.button(f"Mostrar mas ({total_items - visible_limit} restantes)", key=f"more_{queue_type}"):
+            st.session_state[page_key] = visible_limit + PAGINATION_SIZE
+            st.rerun()
 
-def render_duplicate_items(dc: pd.DataFrame) -> None:
+
+def _lookup_entity_data(entity_id: str, entity_type: str, stays: pd.DataFrame, patients: pd.DataFrame) -> dict[str, str]:
+    """Look up actual data for a duplicate candidate entity from stays or patients."""
+    info: dict[str, str] = {"id": entity_id}
+    if entity_type == "patient" and not patients.empty:
+        match = patients[patients["patient_id"] == entity_id]
+        if not match.empty:
+            row = match.iloc[0]
+            info["nombre"] = str(row.get("nombre_completo", ""))
+            info["rut"] = str(row.get("rut", ""))
+            info["sexo"] = str(row.get("sexo", ""))
+            info["edad"] = str(row.get("edad_reportada", ""))
+            info["comuna"] = str(row.get("comuna", ""))
+            return info
+    if entity_type == "stay" and not stays.empty:
+        match = stays[stays["stay_id"] == entity_id]
+        if not match.empty:
+            row = match.iloc[0]
+            info["nombre"] = str(row.get("nombre_completo", ""))
+            info["rut"] = str(row.get("rut", ""))
+            info["ingreso"] = str(row.get("fecha_ingreso_fmt", ""))
+            info["egreso"] = str(row.get("fecha_egreso_fmt", ""))
+            info["establecimiento"] = str(row.get("establecimiento", ""))
+            info["diagnostico"] = str(row.get("diagnostico_principal", ""))
+            return info
+    # Fallback: try both
+    if not patients.empty:
+        match = patients[patients["patient_id"] == entity_id]
+        if not match.empty:
+            row = match.iloc[0]
+            info["nombre"] = str(row.get("nombre_completo", ""))
+            info["rut"] = str(row.get("rut", ""))
+            return info
+    if not stays.empty:
+        match = stays[stays["stay_id"] == entity_id]
+        if not match.empty:
+            row = match.iloc[0]
+            info["nombre"] = str(row.get("nombre_completo", ""))
+            info["rut"] = str(row.get("rut", ""))
+            return info
+    return info
+
+
+def render_duplicate_items(dc: pd.DataFrame, stays: pd.DataFrame, patients: pd.DataFrame) -> None:
     """Render duplicate candidate pairs with side-by-side comparison and action buttons."""
     if dc.empty:
         st.info("No hay candidatos duplicados pendientes.")
@@ -878,7 +1025,17 @@ def render_duplicate_items(dc: pd.DataFrame) -> None:
         st.success("Todos los candidatos duplicados han sido revisados.")
         return
 
-    for idx, row in unreviewed.iterrows():
+    total_dupes = len(unreviewed)
+    dupe_page_key = "page_duplicates"
+    if dupe_page_key not in st.session_state:
+        st.session_state[dupe_page_key] = PAGINATION_SIZE
+
+    visible_limit = st.session_state[dupe_page_key]
+    visible_dupes = unreviewed.head(visible_limit)
+
+    st.caption(f"Mostrando {min(visible_limit, total_dupes)} de {total_dupes} pares")
+
+    for idx, row in visible_dupes.iterrows():
         cand_id = str(row.get("candidate_id", idx))
         entity_a = str(row.get("entity_a_id", ""))
         entity_b = str(row.get("entity_b_id", ""))
@@ -886,15 +1043,27 @@ def render_duplicate_items(dc: pd.DataFrame) -> None:
         confidence = row.get("confidence", "")
         entity_type = str(row.get("entity_type", ""))
 
-        with st.expander(f"Duplicado: {entity_a} vs {entity_b} ({match_reason})", expanded=False):
+        # Look up actual data for both entities
+        data_a = _lookup_entity_data(entity_a, entity_type, stays, patients)
+        data_b = _lookup_entity_data(entity_b, entity_type, stays, patients)
+
+        label_a_name = data_a.get("nombre", entity_a)
+        label_b_name = data_b.get("nombre", entity_b)
+        expander_label = f"{label_a_name} vs {label_b_name} ({match_reason})"
+
+        with st.expander(expander_label, expanded=False):
             col_left, col_right = st.columns(2)
             with col_left:
-                st.markdown(f"**Entidad A:** {entity_a}")
-                st.markdown(f"**Tipo:** {entity_type}")
+                st.markdown("**Entidad A**")
+                for k, v in data_a.items():
+                    if v and v != "nan":
+                        st.markdown(f"- **{k}:** {v}")
             with col_right:
-                st.markdown(f"**Entidad B:** {entity_b}")
-                st.markdown(f"**Confianza:** {confidence}")
-            st.markdown(f"**Razon:** {match_reason}")
+                st.markdown("**Entidad B**")
+                for k, v in data_b.items():
+                    if v and v != "nan":
+                        st.markdown(f"- **{k}:** {v}")
+            st.markdown(f"**Razon de coincidencia:** {match_reason} | **Confianza:** {confidence}")
 
             col_merge, col_not_dup = st.columns(2)
             with col_merge:
@@ -908,11 +1077,24 @@ def render_duplicate_items(dc: pd.DataFrame) -> None:
                     st.success(f"Resolucion 'no duplicado' guardada para {cand_id}.")
                     st.cache_data.clear()
 
+    # "Mostrar mas" pagination button for duplicates
+    if visible_limit < total_dupes:
+        if st.button(f"Mostrar mas ({total_dupes - visible_limit} restantes)", key="more_duplicates"):
+            st.session_state[dupe_page_key] = visible_limit + PAGINATION_SIZE
+            st.rerun()
 
-def render_resolution_tab(datasets: dict[str, pd.DataFrame]) -> None:
+
+def render_resolution_tab(stays: pd.DataFrame, patients: pd.DataFrame) -> None:
     st.subheader("Revision y Resolucion")
-    rq = datasets.get("review_queue", pd.DataFrame())
-    dc = datasets.get("duplicate_candidates", pd.DataFrame())
+
+    st.markdown(
+        "Esta seccion muestra los datos pendientes de revision manual. Las acciones que "
+        "tomes aqui se guardan y se aplican en la proxima ejecucion del pipeline."
+    )
+
+    audit = load_audit_data()
+    rq = audit.get("review_queue", pd.DataFrame())
+    dc = audit.get("duplicate_candidates", pd.DataFrame())
 
     # Determine available queue types
     queue_types = sorted(rq["queue_type"].unique().tolist()) if not rq.empty and "queue_type" in rq.columns else []
@@ -926,8 +1108,16 @@ def render_resolution_tab(datasets: dict[str, pd.DataFrame]) -> None:
     for i, label in enumerate(sub_tab_labels):
         with sub_tabs[i]:
             if label == "Duplicados":
-                render_duplicate_items(dc)
+                st.markdown(
+                    "Pares de registros que podrian ser el mismo paciente o la misma "
+                    "hospitalizacion registrada dos veces. Revisa cada par y decide si "
+                    "fusionar o marcar como no duplicado."
+                )
+                render_duplicate_items(dc, stays, patients)
             else:
+                desc = QUEUE_DESCRIPTIONS.get(label, "")
+                if desc:
+                    st.markdown(desc)
                 render_queue_items(rq, label)
 
     # Show existing resolutions if file exists
@@ -946,26 +1136,91 @@ def render_admin_methodology() -> None:
     st.subheader("Metodologia")
     st.markdown(
         """
-        Este dashboard esta orientado a uso administrativo e institucional.
-
-        Principios:
-        - usa la capa canonica como fuente principal
-        - incluye salud del pipeline, cola de revision y resolucion de problemas
-        - privilegia hospitalizaciones, pacientes, territorio y REM
-        - cuando un indicador es inferido desde texto o fechas, se declara explicitamente
+        Este dashboard esta orientado a uso administrativo e institucional. Muestra los
+        datos procesados de hospitalizacion domiciliaria (HODOM) para el Servicio de Salud,
+        y permite revisar indicadores, detectar problemas de calidad y resolver manualmente
+        registros que el pipeline automatico no pudo procesar.
         """
     )
+
+    st.markdown("#### Principios de diseno")
+    st.markdown(
+        """
+        - **Fuente unica de verdad:** todos los datos provienen de la capa canonica, que es el resultado
+          del pipeline de procesamiento. No se leen planillas crudas directamente.
+        - **Transparencia:** cuando un indicador es inferido desde texto libre o fechas (en lugar de
+          ser un dato observado directamente), se declara explicitamente.
+        - **Auditabilidad:** cada tab incluye la posibilidad de descargar los datos nominales
+          que sustentan cada indicador, para verificacion manual.
+        - **Resolucion progresiva:** los problemas de datos se resuelven de forma incremental;
+          las decisiones manuales se almacenan y se aplican en la siguiente ejecucion del pipeline.
+        """
+    )
+
+    st.markdown("#### Flujo del pipeline de datos")
+    st.markdown(
+        """
+        1. **Ingesta:** se toman las planillas Excel/CSV originales (registros de ingresos,
+           formularios HODOM, datos de O2, etc.) y se normalizan a un formato intermedio.
+        2. **Enriquecimiento:** se cruzan los datos con catalogos de referencia (establecimientos DEIS,
+           localidades con coordenadas, comunas) y se resuelven identidades de pacientes por RUT.
+        3. **Capa canonica:** se generan los archivos finales que alimentan este dashboard:
+           `hospitalization_stay.csv`, `patient_master.csv`, `establishment_reference.csv`, etc.
+        4. **Auditoria automatica:** el pipeline detecta problemas de calidad (quality_issue),
+           brechas de cobertura (coverage_gap), posibles duplicados (duplicate_candidate) y
+           registros que requieren revision manual (review_queue).
+        5. **Resolucion manual:** en la pestana "Revision y Resolucion" los administradores
+           pueden tomar decisiones sobre los casos ambiguos, que se aplicaran en la proxima ejecucion.
+        """
+    )
+
+    st.markdown("#### Fuentes de datos por pestana")
     scope = pd.DataFrame(
         [
-            {"area": "Hospitalizaciones", "fuente principal": "hospitalization_stay (canonical)", "uso": "gestion operacional"},
-            {"area": "Pacientes", "fuente principal": "patient_master (canonical)", "uso": "seguimiento nominal agregado"},
-            {"area": "REM A21/C1", "fuente principal": "hospitalization_stay + reglas de calculo", "uso": "estadistica institucional"},
-            {"area": "Territorio", "fuente principal": "locality_reference + establishment_reference", "uso": "cobertura territorial y establecimiento"},
-            {"area": "Salud del Pipeline", "fuente principal": "pipeline_health + coverage_gap + quality_issue", "uso": "monitoreo de calidad de datos"},
-            {"area": "Revision y Resolucion", "fuente principal": "review_queue + duplicate_candidate", "uso": "resolucion manual de problemas"},
+            {"Pestana": "Resumen", "Fuente principal": "hospitalization_stay (canonical)", "Uso": "Vision general de actividad y diagnosticos principales"},
+            {"Pestana": "Hospitalizaciones", "Fuente principal": "hospitalization_stay (canonical)", "Uso": "Listado nominal de estadias con filtros y descarga"},
+            {"Pestana": "Pacientes", "Fuente principal": "patient_master (canonical)", "Uso": "Seguimiento de pacientes unicos, hospitalizaciones acumuladas"},
+            {"Pestana": "REM A21/C1", "Fuente principal": "hospitalization_stay + reglas de calculo", "Uso": "Estadistica institucional REM con verificacion nominal"},
+            {"Pestana": "Territorio", "Fuente principal": "locality_reference + establishment_reference", "Uso": "Mapa de cobertura territorial y establecimientos DEIS"},
+            {"Pestana": "Salud del Pipeline", "Fuente principal": "pipeline_health + coverage_gap + quality_issue", "Uso": "Monitoreo de calidad de datos y brechas"},
+            {"Pestana": "Revision y Resolucion", "Fuente principal": "review_queue + duplicate_candidate", "Uso": "Resolucion manual de casos ambiguos"},
         ]
     )
     st.dataframe(scope, use_container_width=True, hide_index=True)
+
+    st.markdown("#### Como interpretar cada pestana")
+    st.markdown(
+        """
+        - **Resumen:** ofrece los indicadores clave (hospitalizaciones, pacientes, ingresos, egresos,
+          activos) y graficos de tendencia mensual. Util para tener un panorama rapido.
+        - **Hospitalizaciones:** permite filtrar y buscar estadias individuales. Usa los filtros del
+          sidebar para acotar por periodo, comuna, establecimiento o diagnostico.
+        - **Pacientes:** lista todos los pacientes unicos con su historial acumulado. La columna
+          "total_hospitalizaciones" indica cuantas estadias tiene cada paciente.
+        - **REM A21/C1:** reproduce los indicadores del Registro Estadistico Mensual, desglosados por
+          sexo, rango etario y origen de derivacion. Incluye verificacion nominal para cada componente.
+        - **Territorio:** mapa interactivo con la ubicacion de las hospitalizaciones y tabla de
+          establecimientos DEIS vinculados.
+        - **Salud del Pipeline:** semaforo de estado, metricas de completitud y graficos de brechas.
+          Si el semaforo esta en rojo, los datos del dashboard pueden no ser confiables.
+        - **Revision y Resolucion:** cola de trabajo para resolver manualmente formularios sin asociar,
+          altas huerfanas, problemas de identidad, establecimientos no resueltos y posibles duplicados.
+        """
+    )
+
+    st.markdown("#### Glosario")
+    glossary = pd.DataFrame(
+        [
+            {"Termino": "Estadia", "Definicion": "Un episodio de hospitalizacion domiciliaria, desde el ingreso hasta el alta."},
+            {"Termino": "Dias persona", "Definicion": "Suma de dias que cada paciente estuvo hospitalizado dentro del periodo seleccionado (solapamiento)."},
+            {"Termino": "Brecha de cobertura", "Definicion": "Un mes donde los ingresos registrados son menores al 70% del promedio de los 6 meses anteriores."},
+            {"Termino": "Issue de calidad", "Definicion": "Un problema de datos detectado automaticamente (ej: localidad sin coordenadas, fecha invalida)."},
+            {"Termino": "Cola de revision", "Definicion": "Registros que el pipeline no pudo resolver automaticamente y requieren decision humana."},
+            {"Termino": "Candidato duplicado", "Definicion": "Par de registros con alta probabilidad de ser el mismo paciente u hospitalizacion."},
+            {"Termino": "Codigo DEIS", "Definicion": "Identificador unico de establecimiento de salud asignado por el Departamento de Estadisticas e Informacion de Salud (DEIS)."},
+        ]
+    )
+    st.dataframe(glossary, use_container_width=True, hide_index=True)
 
 
 # ---------------------------------------------------------------------------
@@ -1035,12 +1290,12 @@ def main() -> None:
     st.caption("Dashboard institucional para hospitalizaciones domiciliarias, pacientes, indicadores y REM.")
 
     try:
-        datasets = load_admin_data()
+        core = load_core_data()
     except FileNotFoundError as exc:
         st.error(str(exc))
         st.stop()
 
-    filtered, rem_filtered, start, end = filter_admin_data(datasets["stays"], datasets)
+    filtered, rem_filtered, start, end = filter_admin_data(core["stays"], core)
     if filtered.empty:
         st.warning("Los filtros dejaron el conjunto vacio.")
         st.stop()
@@ -1053,15 +1308,15 @@ def main() -> None:
     with hosp_tab:
         render_admin_hospitalizations(filtered)
     with patient_tab:
-        render_admin_patients(filtered, datasets["patients"])
+        render_admin_patients(filtered, core["patients"])
     with rem_tab:
         render_admin_rem(rem_filtered, start, end)
     with territory_tab:
-        render_admin_territory(filtered, datasets["establishments"], datasets["localities"])
+        render_admin_territory(filtered, core["establishments"], core["localities"])
     with pipeline_tab:
-        render_pipeline_health(datasets)
+        render_pipeline_health()
     with resolution_tab:
-        render_resolution_tab(datasets)
+        render_resolution_tab(core["stays"], core["patients"])
     with methodology_tab:
         render_admin_methodology()
 
