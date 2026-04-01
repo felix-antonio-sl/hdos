@@ -81,3 +81,6 @@ res_fix_edad_92425509,correct,pt_bcf8a1fa9bb627d7,correct,,edad_reportada,,63,fe
 2026-04-01T17:23:10.577958,rq_ec191ac5fc53,unmatched_form,rvw_a279b69e9e1162db,associate,,admin_dashboard,
 res_fix_jarpa_fdn,correct,pt_47fff4a68b0e03ee,correct,,fecha_nacimiento_date,,1964-03-30,felix,2026-04-01T14:33:16,False
 res_fix_jarpa_edad,correct,pt_47fff4a68b0e03ee,correct,,edad_reportada,,62,felix,2026-04-01T14:33:16,False
+res_fix_irma_rut,correct,pt_f176548192f58590,correct,,rut,,7438762-4,felix,2026-04-01T14:39:28,False
+res_fix_irma_fdn,correct,pt_f176548192f58590,correct,,fecha_nacimiento_date,,1951-09-17,felix,2026-04-01T14:39:28,False
+res_fix_irma_edad,correct,pt_f176548192f58590,correct,,edad_reportada,,74,felix,2026-04-01T14:39:28,False
