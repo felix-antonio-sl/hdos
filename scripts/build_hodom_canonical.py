@@ -361,7 +361,86 @@ def consolidate_stays(episodes: list[dict[str, str]]) -> list[dict[str, str]]:
         stay = _build_stay(members)
         stays.append(stay)
 
+    # --- Phase 5: merge adjacent stays for same patient (gap <= 1 day) ---
+    stays = _merge_adjacent_stays(stays)
+
     return stays
+
+
+def _merge_adjacent_stays(stays: list[dict[str, str]]) -> list[dict[str, str]]:
+    """Merge stays for the same patient where egreso-to-ingreso gap is <= 1 day."""
+    from datetime import date as _date
+
+    by_patient: dict[str, list[dict[str, str]]] = {}
+    for s in stays:
+        pid = s.get("patient_id", "")
+        if pid:
+            by_patient.setdefault(pid, []).append(s)
+
+    result: list[dict[str, str]] = []
+    for pid, group in by_patient.items():
+        if len(group) < 2:
+            result.extend(group)
+            continue
+
+        # Sort by fecha_ingreso
+        group.sort(key=lambda s: s.get("fecha_ingreso", ""))
+        merged: list[dict[str, str]] = [group[0]]
+
+        for current in group[1:]:
+            prev = merged[-1]
+            fe_prev = prev.get("fecha_egreso", "")
+            fi_curr = current.get("fecha_ingreso", "")
+
+            should_merge = False
+            if fe_prev and fi_curr:
+                try:
+                    d_fe = _date.fromisoformat(fe_prev)
+                    d_fi = _date.fromisoformat(fi_curr)
+                    gap = (d_fi - d_fe).days
+                    if -3 <= gap <= 1:
+                        should_merge = True
+                except ValueError:
+                    pass
+
+            if should_merge:
+                # Merge current into prev: extend date range, combine sources
+                fe_curr = current.get("fecha_egreso", "")
+                if fe_curr and (not fe_prev or fe_curr > fe_prev):
+                    prev["fecha_egreso"] = fe_curr
+
+                # Combine source episodes
+                prev_sources = prev.get("source_episode_ids", "")
+                curr_sources = current.get("source_episode_ids", "")
+                all_sources = [s.strip() for s in f"{prev_sources},{curr_sources}".split(",") if s.strip()]
+                prev["source_episode_ids"] = ",".join(sorted(set(all_sources)))
+                prev["source_episode_count"] = str(len(set(all_sources)))
+
+                # Combine diagnostics
+                diag_prev = prev.get("diagnostico_principal", "")
+                diag_curr = current.get("diagnostico_principal", "")
+                all_diags = [d.strip() for d in f"{diag_prev} | {diag_curr}".split(" | ") if d.strip()]
+                prev["diagnostico_principal"] = " | ".join(sorted(set(all_diags)))
+
+                # Pick best origin/confidence
+                prev["episode_origin"] = "consolidated"
+                prev["confidence_level"] = "high"
+
+                # Fill empty fields from current
+                for field in ("servicio_origen", "establecimiento", "codigo_deis",
+                              "comuna", "localidad", "latitud", "longitud",
+                              "gestora", "usuario_o2", "motivo_egreso"):
+                    if not prev.get(field, "") and current.get(field, ""):
+                        prev[field] = current[field]
+
+                # Regenerate stay_id
+                prev["stay_id"] = make_id("stay", prev["source_episode_ids"])
+            else:
+                merged.append(current)
+
+        result.extend(merged)
+
+    return result
 
 
 # ---------------------------------------------------------------------------
