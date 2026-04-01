@@ -22,10 +22,10 @@ month,metric,observed,expected,ratio,gap_flag
 2025-07,ingresos,63,64.00,0.98,False
 2025-08,ingresos,78,65.67,1.19,False
 2025-09,ingresos,58,70.50,0.82,False
-2025-10,ingresos,53,71.00,0.75,False
-2025-11,ingresos,42,69.17,0.61,True
-2025-12,ingresos,48,63.00,0.76,False
-2026-01,ingresos,52,57.00,0.91,False
-2026-02,ingresos,47,55.17,0.85,False
-2026-03,ingresos,47,50.00,0.94,False
-2026-06,ingresos,2,48.17,0.04,True
+2025-10,ingresos,58,71.00,0.82,False
+2025-11,ingresos,43,70.00,0.61,True
+2025-12,ingresos,48,64.00,0.75,False
+2026-01,ingresos,52,58.00,0.90,False
+2026-02,ingresos,47,56.17,0.84,False
+2026-03,ingresos,47,51.00,0.92,False
+2026-06,ingresos,2,49.17,0.04,True
