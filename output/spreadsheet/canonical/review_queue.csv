@@ -1680,175 +1680,175 @@ rq_50a8e5dda40a,unmatched_form,rvw_2739ead13b47dc78,LUIS CORREA ROJAS,5155151-6,
 rq_70148a8aac93,unmatched_form,rvw_cc121ad24602f82c,LUIS CORREA ROJAS,5155151-6,Form match pending review,ep_3d377499c88e7fb1,20,high,2026-03-31T13:33:48
 rq_1644c1ddd370,unmatched_form,rvw_c8308ba1089da629,LUIS CORREA ROJAS,5155151-6,Form match pending review,ep_b824d0fe4724ecc8,20,high,2026-03-31T13:33:48
 rq_aefe6ae1f6b7,unmatched_form,rvw_1cc33f8f1626b124,LUIS CORREA ROJAS,5155151-6,Form match pending review,ep_bce677c63f7198ae,20,high,2026-03-31T13:33:48
-rq_b0a56c5d9609,identity,idr_2751ae7bae22bd59,MARIA BADILLA CORREA,,Identity issue (DATE_PARSE_FAILED):  -> ,pt_33cf0c9218a883bd,,low,2026-04-01T12:10:59.110458
-rq_f129f008f40f,identity,idr_d1109c89792faf2f,RAMON GONZALEZ SALINAS,,Identity issue (BIRTHDATE_AGE_MISMATCH):  -> ,pt_92d500f267d8f7e2,,low,2026-04-01T12:10:59.110458
-rq_c39d50ca0ab5,identity,idr_acc26d94e7bef7b5,ANDRES MALDONADO ZUÑIGA,,Identity issue (BIRTHDATE_AGE_MISMATCH):  -> ,pt_f7d007b1fe53bc4f,,low,2026-04-01T12:10:59.110458
-rq_331992e41840,identity,idr_5cb0e406d87e23b5,CARMEN CORDERO NAVARRO,,Identity issue (BIRTHDATE_AGE_MISMATCH):  -> ,pt_3adf560449d00f99,,low,2026-04-01T12:10:59.110458
-rq_bd8a5b937799,identity,idr_dd116d576b28c032,VICTOR ESPINOZA MANRIQUEZ,,Identity issue (BIRTHDATE_AGE_MISMATCH):  -> ,pt_f0f97414dc558687,,low,2026-04-01T12:10:59.110458
-rq_f78bef10ba4c,patient_orphan,dq_021a1dd4e4e3df9d,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_0c2bb36556b1,patient_orphan,dq_6a3e4f8f28de2289,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_ee856950334a,patient_orphan,dq_603805ef182fe9ff,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_333903bc431a,patient_orphan,dq_f60d823d7cb11eb0,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_58fba3e65e7a,patient_orphan,dq_0d66e35b614f4d1a,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_fcfad0dc2ad4,patient_orphan,dq_7c9bdfb60d8da019,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_4838b57fa0ae,patient_orphan,dq_a5c88d43c5049e74,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_df9074abde9d,patient_orphan,dq_b7f0e3fee1971dcf,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_892b978ce298,patient_orphan,dq_d7bb5d1f4adf129a,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_4485c0a39867,patient_orphan,dq_8a4d9ee714e10ccb,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_d20b941f8840,patient_orphan,dq_630c5a60b12e83f9,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_29fa893505fb,patient_orphan,dq_e63e3ef181186051,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_f78e4402daa6,patient_orphan,dq_bd83c731cd82550f,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_4d850fdfacf8,patient_orphan,dq_e1af0c74f917b089,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_0392a880324c,patient_orphan,dq_6cc6e8b6434d76bb,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_f6961e805a5f,patient_orphan,dq_a4a4acc694c416d7,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_49b1a178bd3b,patient_orphan,dq_210d9058aa912bcb,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_5458f9dc467c,patient_orphan,dq_8c40a5ff86b48e5c,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_09b3adc1a0d6,patient_orphan,dq_42e4226658e1f23c,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_e1897673a475,patient_orphan,dq_0a6db09d9e9054f8,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_e5a7abc749d6,patient_orphan,dq_c24d26662cf8ea8f,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_0bc6fc22319f,patient_orphan,dq_b88429ab10f17a43,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_4ac40b303a36,patient_orphan,dq_c0a01a1e9c4be0b1,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_0755f01e3093,patient_orphan,dq_032dab2c4efbded2,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_b07a0cc80534,patient_orphan,dq_02868620bbb228a0,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_d67eb2ebf057,patient_orphan,dq_717c009000ee74be,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_20d6a9ebc857,patient_orphan,dq_f09f894753887b82,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_ad2cf88f76e7,patient_orphan,dq_50a7e23f7aef209b,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_e277fcf6f3e0,patient_orphan,dq_8d87cd35f2ef8293,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_920248708c3d,patient_orphan,dq_f5b527732ce48d59,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_bad4ea291391,patient_orphan,dq_320dfcdb401fd0fe,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_7b5b7d956e6a,patient_orphan,dq_42bd6c566afabde0,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_19e41a2bcc11,patient_orphan,dq_e0f4e97d8ef435ea,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_6f57e457878c,patient_orphan,dq_63b717223055f9ec,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_24ee62ef8410,patient_orphan,dq_48a48e8d1220568f,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_8fa11fe3ff38,patient_orphan,dq_8bafcf221c583ca6,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_b2ebb4c8a624,patient_orphan,dq_cad55ab80ab0fe96,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_2223dbcaf276,patient_orphan,dq_1dafe155904e1baf,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_a418880aea61,patient_orphan,dq_d32e6373fd1a746f,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_4a9464efeb46,patient_orphan,dq_1fc22c0c4884355d,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_62cc2af21494,patient_orphan,dq_fedaa83939291c28,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_f51b54673c15,patient_orphan,dq_5db2f623949a0806,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_4a11d326dda2,patient_orphan,dq_cb2118bbc7c581b5,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_b797edaf7fdd,patient_orphan,dq_1bec44f660692283,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_63ccf0e7471a,patient_orphan,dq_dc2f6b65b0522d19,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_28b3d15ecb6a,patient_orphan,dq_2331d89765b9a36d,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_e9b1b72b82db,patient_orphan,dq_fc27903d736e8fea,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_f5173470f028,patient_orphan,dq_83b350926a07ea89,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_388805c5b0ba,patient_orphan,dq_04efe69ffe24f174,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_726fe3a33220,patient_orphan,dq_afb70986d713d495,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_085d2f1575c2,patient_orphan,dq_cab0a3b115daf9f2,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_3a56f11cd9d0,patient_orphan,dq_576e034d29c34afe,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_0fd867cbe16c,patient_orphan,dq_4074a7811e24de0c,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_a629c260d71e,patient_orphan,dq_522db12e56062608,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_e4cd7cd6daf1,patient_orphan,dq_5e97616a8b5e5212,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_60fcdc461ce0,patient_orphan,dq_e93cd40f0a5e79bf,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_f13cf574bc1e,patient_orphan,dq_c6b7ec0125caf5b4,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_f375ca192492,patient_orphan,dq_e0e2a6ed9bdb3861,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_dadfc7bc821b,patient_orphan,dq_98cc2adda4a12de4,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_1fc46897647a,patient_orphan,dq_9adc1b9ab07515a9,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_cd1e6476298d,patient_orphan,dq_eed3184337b50d46,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_2b05218accfd,patient_orphan,dq_2c14534ef071036f,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_de2063db0221,patient_orphan,dq_f6e38edc916888e4,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_12f349a79fde,patient_orphan,dq_eeba588ed35ac23c,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_ffdd9555afa5,patient_orphan,dq_ff950a8f1348f250,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_74b069d75c41,patient_orphan,dq_f7b610b236db3838,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_e1c5b014a7ca,patient_orphan,dq_70fbecf59fe19417,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_232fe15c08c4,patient_orphan,dq_ff54f100fb79ee88,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_c86e97bee668,patient_orphan,dq_ed0f06c9ba8a44c1,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_34072e62008a,patient_orphan,dq_d062925f425495b2,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_fabaef46b357,patient_orphan,dq_241cc050263e1386,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_a8b94b19ffdd,patient_orphan,dq_8e06f4644e185f9e,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_34c3ce856a24,patient_orphan,dq_16bfae5c1903ebd3,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_e497f1680aa0,patient_orphan,dq_240929d4390a946b,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_eea3e9edda30,patient_orphan,dq_b2deac1d8e4f446c,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_c204e88f8722,patient_orphan,dq_668e6bf4f4de227d,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_016b7cb4697d,patient_orphan,dq_d56bb4470d8f2bca,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_dcb6a8bd72f3,patient_orphan,dq_1e1df2f7ec098789,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_e96d2f821154,patient_orphan,dq_79ae0e42284ccd34,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_8f4e6910aadd,patient_orphan,dq_218ccd25b5303316,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_4b1a2a8fcf7a,patient_orphan,dq_50665275360071ed,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_dcb9ed7c676c,patient_orphan,dq_816bbd1d22a99287,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_0840d890a363,patient_orphan,dq_68bf71af172f5e79,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_5741c761b797,patient_orphan,dq_fb8e6e9f50dc3d1f,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_f9340e19e8e6,patient_orphan,dq_5879985e9f83b1bc,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_fde358ce278a,patient_orphan,dq_6109020d24c9f100,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_f34d3695cae2,patient_orphan,dq_dcf7460358a31e0d,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_a189ab1bfb13,patient_orphan,dq_5c1facf9e9827ccd,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_1ba1e74811f2,patient_orphan,dq_90df6c92dcfed7c4,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_b2bf08e4ff7c,patient_orphan,dq_97c3a86b6de13fff,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_8c6bab33ba53,patient_orphan,dq_bb20cec44cfd399c,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_e0eb9d66c16d,patient_orphan,dq_48f0da7b40a74b53,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_8ada8777f230,patient_orphan,dq_84ff4b3fc4cd389d,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_ec30c4e83469,patient_orphan,dq_9f5fdf458a2635fa,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_3190d43b82b5,patient_orphan,dq_e616228f43da11c4,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_085c7ad445c7,patient_orphan,dq_a4b55d35e25c26cf,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_3977c6273fc9,patient_orphan,dq_422225e9fb52c3ba,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_ef8d397ba1e6,patient_orphan,dq_48fdb0ee90054884,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_de7fda4234ca,patient_orphan,dq_8081952007b2a39d,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_217adb3a43d8,patient_orphan,dq_2dc1cc23be94541d,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_2d859a0ef68e,patient_orphan,dq_c132a49aadba1d81,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_9329ac4d8493,patient_orphan,dq_2da4aed2d5e9c8fc,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_fde450aeb5fe,patient_orphan,dq_bbd5cc37dae9144c,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_5701de7c8902,patient_orphan,dq_531a11c1ae61ebc7,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_9d4f0ae4dc21,patient_orphan,dq_cfd82e24597e7bb8,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_2ffc6b9b5328,patient_orphan,dq_900e0a9c6bc5c901,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_b7484588ca54,patient_orphan,dq_8338400b854ad2ef,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_3b5bcd75577f,patient_orphan,dq_7cb74cf599d709d7,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_6181c50d9372,patient_orphan,dq_7c088a5f7c65190a,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_478057140af2,patient_orphan,dq_2fabbdd7a3e2dd5a,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_cea83003086b,patient_orphan,dq_e9804bfe6013ad7a,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_1aa2aba1ddd6,patient_orphan,dq_efa70afb3ff8058a,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_5e120944644f,patient_orphan,dq_c58e32900220a986,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_5811341e4a11,patient_orphan,dq_1282b65f2d28b2a4,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_7df878dbc590,patient_orphan,dq_abd1f55abfd7f8bd,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_9b200aac9455,patient_orphan,dq_a82294534d35d400,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_f2fda16b0fba,patient_orphan,dq_b55201617e99aa74,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_aa06b80bc4b2,patient_orphan,dq_8f14ae47f52ac123,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_c03a46ee47ef,patient_orphan,dq_727618e5bf559cba,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_31f28043ea1f,patient_orphan,dq_e70e068c1a075e66,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_859d3528a35a,patient_orphan,dq_6dfe11cf4c352531,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_b6fb2e5fb7b2,patient_orphan,dq_6e84563179927966,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_a0bf4c4d3edb,patient_orphan,dq_707945985bcd9049,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_295eb2bc0c4b,patient_orphan,dq_e73dc4a7ba762c38,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_bf6e273541f3,patient_orphan,dq_c4b922bf3b581703,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_c028d0bef203,patient_orphan,dq_65bb9173c3f71a9f,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_86485f3813ad,patient_orphan,dq_247e7c20d243e9f4,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_05e8b0da062b,patient_orphan,dq_94a0f5c4ee8644b7,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_94f902d03c41,patient_orphan,dq_c5cb2c093744826c,,,Patient without episode,,,low,2026-04-01T12:10:59.110458
-rq_02d6b5b6e9b5,establishment,dq_40eb413b3efc3b04,,,Establishment unresolved,,,low,2026-04-01T12:10:59.110458
-rq_943eb6bdb623,establishment,dq_7779f5d1a753db8c,,,Establishment unresolved,,,low,2026-04-01T12:10:59.110458
-rq_8d4c66b0f254,establishment,dq_b3e6302293b9c55f,,,Establishment unresolved,,,low,2026-04-01T12:10:59.110458
-rq_c0f626c34dd2,establishment,dq_b61cdfdd6f4514f3,,,Establishment unresolved,,,low,2026-04-01T12:10:59.110458
-rq_c08c96380cc2,establishment,dq_611700be784c0a61,,,Establishment unresolved,,,low,2026-04-01T12:10:59.110458
-rq_b302f6954752,establishment,dq_07bd5a8641ca3344,,,Establishment unresolved,,,low,2026-04-01T12:10:59.110458
-rq_5dcd56b2822b,establishment,dq_9747e08396fd5dce,,,Establishment unresolved,,,low,2026-04-01T12:10:59.110458
-rq_0b658256cc8e,establishment,dq_92087297f9b1d85d,,,Establishment unresolved,,,low,2026-04-01T12:10:59.110458
-rq_592ac3e7e35d,establishment,dq_2d015ad1f6c5a318,,,Establishment unresolved,,,low,2026-04-01T12:10:59.110458
-rq_7986e00755fa,establishment,dq_221cf692f7d758d8,,,Establishment unresolved,,,low,2026-04-01T12:10:59.110458
-rq_6bfbe9e1350c,establishment,dq_94a4fdc770eefdf9,,,Establishment unresolved,,,low,2026-04-01T12:10:59.110458
-rq_0a9854201120,establishment,dq_da1397fcabd63d20,,,Establishment unresolved,,,low,2026-04-01T12:10:59.110458
-rq_da19147e9cad,establishment,dq_b07e936d97a082a0,,,Establishment unresolved,,,low,2026-04-01T12:10:59.110458
-rq_ee90edc44ece,establishment,dq_afe02e1bee95f5cd,,,Establishment unresolved,,,low,2026-04-01T12:10:59.110458
-rq_e47d4e650640,establishment,dq_54fd8fcb107dd6a4,,,Establishment unresolved,,,low,2026-04-01T12:10:59.110458
-rq_ee96cfad813a,establishment,dq_6fd6e01b4ca18e4f,,,Establishment unresolved,,,low,2026-04-01T12:10:59.110458
-rq_fae0f95fd6a5,establishment,dq_67d6a0317ddab283,,,Establishment unresolved,,,low,2026-04-01T12:10:59.110458
-rq_75007eeb0fca,establishment,dq_35caae2ceb848838,,,Establishment unresolved,,,low,2026-04-01T12:10:59.110458
-rq_4da8190394c9,establishment,dq_52e8199094b03960,,,Establishment unresolved,,,low,2026-04-01T12:10:59.110458
-rq_5ba6323dcc0d,establishment,dq_ddc27208d1c57f06,,,Establishment unresolved,,,low,2026-04-01T12:10:59.110458
-rq_b2d6519c6d5e,establishment,dq_f3cc9f6c307049df,,,Establishment unresolved,,,low,2026-04-01T12:10:59.110458
-rq_a4dfdc2b1125,establishment,dq_aeb4d0279551fac6,,,Establishment unresolved,,,low,2026-04-01T12:10:59.110458
-rq_7c3563feba91,establishment,dq_dc017de70ff6518d,,,Establishment unresolved,,,low,2026-04-01T12:10:59.110458
-rq_407f73e64509,establishment,dq_32d803ae6ac16083,,,Establishment unresolved,,,low,2026-04-01T12:10:59.110458
-rq_1ad93bd93a68,establishment,dq_65313b5e2350058a,,,Establishment unresolved,,,low,2026-04-01T12:10:59.110458
-rq_68f8957a5dd7,establishment,dq_372367a1af27f86a,,,Establishment unresolved,,,low,2026-04-01T12:10:59.110458
-rq_a23f774f814c,establishment,dq_22b77c5bd195ef2c,,,Establishment unresolved,,,low,2026-04-01T12:10:59.110458
-rq_ade53a45b0b9,establishment,dq_f426cef0fccdd39a,,,Establishment unresolved,,,low,2026-04-01T12:10:59.110458
-rq_9f66d0a6bcf6,establishment,dq_9ba1e7cc1c063ae3,,,Establishment unresolved,,,low,2026-04-01T12:10:59.110458
-rq_558d50667450,establishment,dq_573ccd093bcebaf7,,,Establishment unresolved,,,low,2026-04-01T12:10:59.110458
-rq_e3f83cba728f,establishment,dq_2ffbda34ff78026e,,,Establishment unresolved,,,low,2026-04-01T12:10:59.110458
-rq_72fadaa9d302,establishment,dq_e4104ea93e4a8ad1,,,Establishment unresolved,,,low,2026-04-01T12:10:59.110458
-rq_acf1acf5310c,establishment,dq_9fd3e0166dbec837,,,Establishment unresolved,,,low,2026-04-01T12:10:59.110458
-rq_6dea55616468,establishment,dq_f56234843347430b,,,Establishment unresolved,,,low,2026-04-01T12:10:59.110458
-rq_a3e9ce084a1a,establishment,dq_6bd827bfd10f9160,,,Establishment unresolved,,,low,2026-04-01T12:10:59.110458
-rq_677e4465bf3a,establishment,dq_64eddb97cc7282e4,,,Establishment unresolved,,,low,2026-04-01T12:10:59.110458
-rq_e988a527937c,establishment,dq_3efdb96c3a614a1b,,,Establishment unresolved,,,low,2026-04-01T12:10:59.110458
-rq_267141b91de7,establishment,dq_f2be70db820865bc,,,Establishment unresolved,,,low,2026-04-01T12:10:59.110458
+rq_b0a56c5d9609,identity,idr_2751ae7bae22bd59,MARIA BADILLA CORREA,,Identity issue (DATE_PARSE_FAILED):  -> ,pt_33cf0c9218a883bd,,low,2026-04-01T12:12:59.100779
+rq_f129f008f40f,identity,idr_d1109c89792faf2f,RAMON GONZALEZ SALINAS,,Identity issue (BIRTHDATE_AGE_MISMATCH):  -> ,pt_92d500f267d8f7e2,,low,2026-04-01T12:12:59.100779
+rq_c39d50ca0ab5,identity,idr_acc26d94e7bef7b5,ANDRES MALDONADO ZUÑIGA,,Identity issue (BIRTHDATE_AGE_MISMATCH):  -> ,pt_f7d007b1fe53bc4f,,low,2026-04-01T12:12:59.100779
+rq_331992e41840,identity,idr_5cb0e406d87e23b5,CARMEN CORDERO NAVARRO,,Identity issue (BIRTHDATE_AGE_MISMATCH):  -> ,pt_3adf560449d00f99,,low,2026-04-01T12:12:59.100779
+rq_bd8a5b937799,identity,idr_dd116d576b28c032,VICTOR ESPINOZA MANRIQUEZ,,Identity issue (BIRTHDATE_AGE_MISMATCH):  -> ,pt_f0f97414dc558687,,low,2026-04-01T12:12:59.100779
+rq_f78bef10ba4c,patient_orphan,dq_021a1dd4e4e3df9d,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_0c2bb36556b1,patient_orphan,dq_6a3e4f8f28de2289,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_ee856950334a,patient_orphan,dq_603805ef182fe9ff,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_333903bc431a,patient_orphan,dq_f60d823d7cb11eb0,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_58fba3e65e7a,patient_orphan,dq_0d66e35b614f4d1a,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_fcfad0dc2ad4,patient_orphan,dq_7c9bdfb60d8da019,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_4838b57fa0ae,patient_orphan,dq_a5c88d43c5049e74,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_df9074abde9d,patient_orphan,dq_b7f0e3fee1971dcf,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_892b978ce298,patient_orphan,dq_d7bb5d1f4adf129a,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_4485c0a39867,patient_orphan,dq_8a4d9ee714e10ccb,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_d20b941f8840,patient_orphan,dq_630c5a60b12e83f9,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_29fa893505fb,patient_orphan,dq_e63e3ef181186051,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_f78e4402daa6,patient_orphan,dq_bd83c731cd82550f,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_4d850fdfacf8,patient_orphan,dq_e1af0c74f917b089,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_0392a880324c,patient_orphan,dq_6cc6e8b6434d76bb,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_f6961e805a5f,patient_orphan,dq_a4a4acc694c416d7,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_49b1a178bd3b,patient_orphan,dq_210d9058aa912bcb,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_5458f9dc467c,patient_orphan,dq_8c40a5ff86b48e5c,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_09b3adc1a0d6,patient_orphan,dq_42e4226658e1f23c,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_e1897673a475,patient_orphan,dq_0a6db09d9e9054f8,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_e5a7abc749d6,patient_orphan,dq_c24d26662cf8ea8f,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_0bc6fc22319f,patient_orphan,dq_b88429ab10f17a43,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_4ac40b303a36,patient_orphan,dq_c0a01a1e9c4be0b1,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_0755f01e3093,patient_orphan,dq_032dab2c4efbded2,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_b07a0cc80534,patient_orphan,dq_02868620bbb228a0,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_d67eb2ebf057,patient_orphan,dq_717c009000ee74be,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_20d6a9ebc857,patient_orphan,dq_f09f894753887b82,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_ad2cf88f76e7,patient_orphan,dq_50a7e23f7aef209b,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_e277fcf6f3e0,patient_orphan,dq_8d87cd35f2ef8293,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_920248708c3d,patient_orphan,dq_f5b527732ce48d59,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_bad4ea291391,patient_orphan,dq_320dfcdb401fd0fe,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_7b5b7d956e6a,patient_orphan,dq_42bd6c566afabde0,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_19e41a2bcc11,patient_orphan,dq_e0f4e97d8ef435ea,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_6f57e457878c,patient_orphan,dq_63b717223055f9ec,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_24ee62ef8410,patient_orphan,dq_48a48e8d1220568f,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_8fa11fe3ff38,patient_orphan,dq_8bafcf221c583ca6,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_b2ebb4c8a624,patient_orphan,dq_cad55ab80ab0fe96,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_2223dbcaf276,patient_orphan,dq_1dafe155904e1baf,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_a418880aea61,patient_orphan,dq_d32e6373fd1a746f,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_4a9464efeb46,patient_orphan,dq_1fc22c0c4884355d,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_62cc2af21494,patient_orphan,dq_fedaa83939291c28,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_f51b54673c15,patient_orphan,dq_5db2f623949a0806,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_4a11d326dda2,patient_orphan,dq_cb2118bbc7c581b5,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_b797edaf7fdd,patient_orphan,dq_1bec44f660692283,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_63ccf0e7471a,patient_orphan,dq_dc2f6b65b0522d19,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_28b3d15ecb6a,patient_orphan,dq_2331d89765b9a36d,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_e9b1b72b82db,patient_orphan,dq_fc27903d736e8fea,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_f5173470f028,patient_orphan,dq_83b350926a07ea89,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_388805c5b0ba,patient_orphan,dq_04efe69ffe24f174,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_726fe3a33220,patient_orphan,dq_afb70986d713d495,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_085d2f1575c2,patient_orphan,dq_cab0a3b115daf9f2,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_3a56f11cd9d0,patient_orphan,dq_576e034d29c34afe,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_0fd867cbe16c,patient_orphan,dq_4074a7811e24de0c,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_a629c260d71e,patient_orphan,dq_522db12e56062608,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_e4cd7cd6daf1,patient_orphan,dq_5e97616a8b5e5212,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_60fcdc461ce0,patient_orphan,dq_e93cd40f0a5e79bf,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_f13cf574bc1e,patient_orphan,dq_c6b7ec0125caf5b4,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_f375ca192492,patient_orphan,dq_e0e2a6ed9bdb3861,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_dadfc7bc821b,patient_orphan,dq_98cc2adda4a12de4,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_1fc46897647a,patient_orphan,dq_9adc1b9ab07515a9,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_cd1e6476298d,patient_orphan,dq_eed3184337b50d46,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_2b05218accfd,patient_orphan,dq_2c14534ef071036f,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_de2063db0221,patient_orphan,dq_f6e38edc916888e4,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_12f349a79fde,patient_orphan,dq_eeba588ed35ac23c,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_ffdd9555afa5,patient_orphan,dq_ff950a8f1348f250,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_74b069d75c41,patient_orphan,dq_f7b610b236db3838,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_e1c5b014a7ca,patient_orphan,dq_70fbecf59fe19417,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_232fe15c08c4,patient_orphan,dq_ff54f100fb79ee88,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_c86e97bee668,patient_orphan,dq_ed0f06c9ba8a44c1,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_34072e62008a,patient_orphan,dq_d062925f425495b2,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_fabaef46b357,patient_orphan,dq_241cc050263e1386,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_a8b94b19ffdd,patient_orphan,dq_8e06f4644e185f9e,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_34c3ce856a24,patient_orphan,dq_16bfae5c1903ebd3,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_e497f1680aa0,patient_orphan,dq_240929d4390a946b,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_eea3e9edda30,patient_orphan,dq_b2deac1d8e4f446c,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_c204e88f8722,patient_orphan,dq_668e6bf4f4de227d,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_016b7cb4697d,patient_orphan,dq_d56bb4470d8f2bca,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_dcb6a8bd72f3,patient_orphan,dq_1e1df2f7ec098789,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_e96d2f821154,patient_orphan,dq_79ae0e42284ccd34,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_8f4e6910aadd,patient_orphan,dq_218ccd25b5303316,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_4b1a2a8fcf7a,patient_orphan,dq_50665275360071ed,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_dcb9ed7c676c,patient_orphan,dq_816bbd1d22a99287,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_0840d890a363,patient_orphan,dq_68bf71af172f5e79,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_5741c761b797,patient_orphan,dq_fb8e6e9f50dc3d1f,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_f9340e19e8e6,patient_orphan,dq_5879985e9f83b1bc,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_fde358ce278a,patient_orphan,dq_6109020d24c9f100,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_f34d3695cae2,patient_orphan,dq_dcf7460358a31e0d,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_a189ab1bfb13,patient_orphan,dq_5c1facf9e9827ccd,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_1ba1e74811f2,patient_orphan,dq_90df6c92dcfed7c4,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_b2bf08e4ff7c,patient_orphan,dq_97c3a86b6de13fff,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_8c6bab33ba53,patient_orphan,dq_bb20cec44cfd399c,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_e0eb9d66c16d,patient_orphan,dq_48f0da7b40a74b53,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_8ada8777f230,patient_orphan,dq_84ff4b3fc4cd389d,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_ec30c4e83469,patient_orphan,dq_9f5fdf458a2635fa,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_3190d43b82b5,patient_orphan,dq_e616228f43da11c4,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_085c7ad445c7,patient_orphan,dq_a4b55d35e25c26cf,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_3977c6273fc9,patient_orphan,dq_422225e9fb52c3ba,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_ef8d397ba1e6,patient_orphan,dq_48fdb0ee90054884,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_de7fda4234ca,patient_orphan,dq_8081952007b2a39d,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_217adb3a43d8,patient_orphan,dq_2dc1cc23be94541d,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_2d859a0ef68e,patient_orphan,dq_c132a49aadba1d81,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_9329ac4d8493,patient_orphan,dq_2da4aed2d5e9c8fc,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_fde450aeb5fe,patient_orphan,dq_bbd5cc37dae9144c,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_5701de7c8902,patient_orphan,dq_531a11c1ae61ebc7,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_9d4f0ae4dc21,patient_orphan,dq_cfd82e24597e7bb8,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_2ffc6b9b5328,patient_orphan,dq_900e0a9c6bc5c901,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_b7484588ca54,patient_orphan,dq_8338400b854ad2ef,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_3b5bcd75577f,patient_orphan,dq_7cb74cf599d709d7,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_6181c50d9372,patient_orphan,dq_7c088a5f7c65190a,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_478057140af2,patient_orphan,dq_2fabbdd7a3e2dd5a,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_cea83003086b,patient_orphan,dq_e9804bfe6013ad7a,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_1aa2aba1ddd6,patient_orphan,dq_efa70afb3ff8058a,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_5e120944644f,patient_orphan,dq_c58e32900220a986,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_5811341e4a11,patient_orphan,dq_1282b65f2d28b2a4,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_7df878dbc590,patient_orphan,dq_abd1f55abfd7f8bd,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_9b200aac9455,patient_orphan,dq_a82294534d35d400,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_f2fda16b0fba,patient_orphan,dq_b55201617e99aa74,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_aa06b80bc4b2,patient_orphan,dq_8f14ae47f52ac123,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_c03a46ee47ef,patient_orphan,dq_727618e5bf559cba,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_31f28043ea1f,patient_orphan,dq_e70e068c1a075e66,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_859d3528a35a,patient_orphan,dq_6dfe11cf4c352531,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_b6fb2e5fb7b2,patient_orphan,dq_6e84563179927966,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_a0bf4c4d3edb,patient_orphan,dq_707945985bcd9049,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_295eb2bc0c4b,patient_orphan,dq_e73dc4a7ba762c38,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_bf6e273541f3,patient_orphan,dq_c4b922bf3b581703,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_c028d0bef203,patient_orphan,dq_65bb9173c3f71a9f,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_86485f3813ad,patient_orphan,dq_247e7c20d243e9f4,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_05e8b0da062b,patient_orphan,dq_94a0f5c4ee8644b7,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_94f902d03c41,patient_orphan,dq_c5cb2c093744826c,,,Patient without episode,,,low,2026-04-01T12:12:59.100779
+rq_02d6b5b6e9b5,establishment,dq_40eb413b3efc3b04,,,Establishment unresolved,,,low,2026-04-01T12:12:59.100779
+rq_943eb6bdb623,establishment,dq_7779f5d1a753db8c,,,Establishment unresolved,,,low,2026-04-01T12:12:59.100779
+rq_8d4c66b0f254,establishment,dq_b3e6302293b9c55f,,,Establishment unresolved,,,low,2026-04-01T12:12:59.100779
+rq_c0f626c34dd2,establishment,dq_b61cdfdd6f4514f3,,,Establishment unresolved,,,low,2026-04-01T12:12:59.100779
+rq_c08c96380cc2,establishment,dq_611700be784c0a61,,,Establishment unresolved,,,low,2026-04-01T12:12:59.100779
+rq_b302f6954752,establishment,dq_07bd5a8641ca3344,,,Establishment unresolved,,,low,2026-04-01T12:12:59.100779
+rq_5dcd56b2822b,establishment,dq_9747e08396fd5dce,,,Establishment unresolved,,,low,2026-04-01T12:12:59.100779
+rq_0b658256cc8e,establishment,dq_92087297f9b1d85d,,,Establishment unresolved,,,low,2026-04-01T12:12:59.100779
+rq_592ac3e7e35d,establishment,dq_2d015ad1f6c5a318,,,Establishment unresolved,,,low,2026-04-01T12:12:59.100779
+rq_7986e00755fa,establishment,dq_221cf692f7d758d8,,,Establishment unresolved,,,low,2026-04-01T12:12:59.100779
+rq_6bfbe9e1350c,establishment,dq_94a4fdc770eefdf9,,,Establishment unresolved,,,low,2026-04-01T12:12:59.100779
+rq_0a9854201120,establishment,dq_da1397fcabd63d20,,,Establishment unresolved,,,low,2026-04-01T12:12:59.100779
+rq_da19147e9cad,establishment,dq_b07e936d97a082a0,,,Establishment unresolved,,,low,2026-04-01T12:12:59.100779
+rq_ee90edc44ece,establishment,dq_afe02e1bee95f5cd,,,Establishment unresolved,,,low,2026-04-01T12:12:59.100779
+rq_e47d4e650640,establishment,dq_54fd8fcb107dd6a4,,,Establishment unresolved,,,low,2026-04-01T12:12:59.100779
+rq_ee96cfad813a,establishment,dq_6fd6e01b4ca18e4f,,,Establishment unresolved,,,low,2026-04-01T12:12:59.100779
+rq_fae0f95fd6a5,establishment,dq_67d6a0317ddab283,,,Establishment unresolved,,,low,2026-04-01T12:12:59.100779
+rq_75007eeb0fca,establishment,dq_35caae2ceb848838,,,Establishment unresolved,,,low,2026-04-01T12:12:59.100779
+rq_4da8190394c9,establishment,dq_52e8199094b03960,,,Establishment unresolved,,,low,2026-04-01T12:12:59.100779
+rq_5ba6323dcc0d,establishment,dq_ddc27208d1c57f06,,,Establishment unresolved,,,low,2026-04-01T12:12:59.100779
+rq_b2d6519c6d5e,establishment,dq_f3cc9f6c307049df,,,Establishment unresolved,,,low,2026-04-01T12:12:59.100779
+rq_a4dfdc2b1125,establishment,dq_aeb4d0279551fac6,,,Establishment unresolved,,,low,2026-04-01T12:12:59.100779
+rq_7c3563feba91,establishment,dq_dc017de70ff6518d,,,Establishment unresolved,,,low,2026-04-01T12:12:59.100779
+rq_407f73e64509,establishment,dq_32d803ae6ac16083,,,Establishment unresolved,,,low,2026-04-01T12:12:59.100779
+rq_1ad93bd93a68,establishment,dq_65313b5e2350058a,,,Establishment unresolved,,,low,2026-04-01T12:12:59.100779
+rq_68f8957a5dd7,establishment,dq_372367a1af27f86a,,,Establishment unresolved,,,low,2026-04-01T12:12:59.100779
+rq_a23f774f814c,establishment,dq_22b77c5bd195ef2c,,,Establishment unresolved,,,low,2026-04-01T12:12:59.100779
+rq_ade53a45b0b9,establishment,dq_f426cef0fccdd39a,,,Establishment unresolved,,,low,2026-04-01T12:12:59.100779
+rq_9f66d0a6bcf6,establishment,dq_9ba1e7cc1c063ae3,,,Establishment unresolved,,,low,2026-04-01T12:12:59.100779
+rq_558d50667450,establishment,dq_573ccd093bcebaf7,,,Establishment unresolved,,,low,2026-04-01T12:12:59.100779
+rq_e3f83cba728f,establishment,dq_2ffbda34ff78026e,,,Establishment unresolved,,,low,2026-04-01T12:12:59.100779
+rq_72fadaa9d302,establishment,dq_e4104ea93e4a8ad1,,,Establishment unresolved,,,low,2026-04-01T12:12:59.100779
+rq_acf1acf5310c,establishment,dq_9fd3e0166dbec837,,,Establishment unresolved,,,low,2026-04-01T12:12:59.100779
+rq_6dea55616468,establishment,dq_f56234843347430b,,,Establishment unresolved,,,low,2026-04-01T12:12:59.100779
+rq_a3e9ce084a1a,establishment,dq_6bd827bfd10f9160,,,Establishment unresolved,,,low,2026-04-01T12:12:59.100779
+rq_677e4465bf3a,establishment,dq_64eddb97cc7282e4,,,Establishment unresolved,,,low,2026-04-01T12:12:59.100779
+rq_e988a527937c,establishment,dq_3efdb96c3a614a1b,,,Establishment unresolved,,,low,2026-04-01T12:12:59.100779
+rq_267141b91de7,establishment,dq_f2be70db820865bc,,,Establishment unresolved,,,low,2026-04-01T12:12:59.100779
