@@ -1168,8 +1168,9 @@ def build_canonical_outputs(
     except FileNotFoundError:
         source_count = 0
 
-    # 3b. Apply manual corrections to episodes (especially rescue episodes)
+    # 3b. Apply manual corrections to episodes and patients
     ep_lookup = {ep["episode_id"]: ep for ep in episodes}
+    pat_lookup_by_id = {p["patient_id"]: p for p in patients}
     for res in resolutions:
         if res.get("applied") == "True":
             continue
@@ -1182,6 +1183,8 @@ def build_canonical_outputs(
             continue
         if item_id in ep_lookup:
             ep_lookup[item_id][field] = new_val
+        if item_id in pat_lookup_by_id:
+            pat_lookup_by_id[item_id][field] = new_val
 
     # 3c. Enrich episodes with patient + reference data before consolidation
     patient_lookup = {p["patient_id"]: p for p in patients}
