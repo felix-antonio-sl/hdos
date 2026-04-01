@@ -46,3 +46,8 @@ res_fix_uberlinda_fe,correct,ep_98721f51082a7412,correct,,fecha_egreso,,2025-10-
 res_fix_uberlinda_estado,correct,ep_98721f51082a7412,correct,,estado,ACTIVO,EGRESADO,felix,2026-04-01T13:42:42,False
 res_fix_gutierrez_fe2,correct,ep_6c682801d06e385f,correct,,fecha_egreso,2026-03-15,2026-03-12,felix,2026-04-01T13:43:22,False
 res_fix_gutierrez_fi2,correct,ep_6c682801d06e385f,correct,,fecha_ingreso,2026-03-13,2026-03-10,felix,2026-04-01T13:43:22,False
+res_fix_cecilia_rut,correct,pt_43c2d5bbf76e836d,correct,,rut,,10634329-2,felix,2026-04-01T13:53:45,False
+res_fix_cecilia_fdn,correct,pt_43c2d5bbf76e836d,correct,,fecha_nacimiento_date,,1967-02-18,felix,2026-04-01T13:53:45,False
+res_fix_cecilia_edad,correct,pt_43c2d5bbf76e836d,correct,,edad_reportada,,59,felix,2026-04-01T13:53:45,False
+res_fix_cecilia_nombre,correct,pt_43c2d5bbf76e836d,correct,,nombre_completo,CECILIA MORALES BRIONES,CECILIA DEL PILAR MORALES BRIONES,felix,2026-04-01T13:53:45,False
+res_fix_cecilia_nombre2,correct,pt_538374b247abf995,correct,,nombre_completo,CECILIA MORALES FLORES,CECILIA DEL PILAR MORALES BRIONES,felix,2026-04-01T13:53:45,False
