@@ -51,3 +51,10 @@ res_fix_cecilia_fdn,correct,pt_43c2d5bbf76e836d,correct,,fecha_nacimiento_date,,
 res_fix_cecilia_edad,correct,pt_43c2d5bbf76e836d,correct,,edad_reportada,,59,felix,2026-04-01T13:53:45,False
 res_fix_cecilia_nombre,correct,pt_43c2d5bbf76e836d,correct,,nombre_completo,CECILIA MORALES BRIONES,CECILIA DEL PILAR MORALES BRIONES,felix,2026-04-01T13:53:45,False
 res_fix_cecilia_nombre2,correct,pt_538374b247abf995,correct,,nombre_completo,CECILIA MORALES FLORES,CECILIA DEL PILAR MORALES BRIONES,felix,2026-04-01T13:53:45,False
+res_fix_gutierrez_dic_fe,correct,ep_66eade67c3ffe3f8,correct,,fecha_egreso,,2026-03-16,felix,2026-04-01T13:56:06,False
+res_fix_gutierrez_dic_motivo,correct,ep_66eade67c3ffe3f8,correct,,motivo_egreso,,FALLECIDO,felix,2026-04-01T13:56:06,False
+res_fix_gutierrez_dic_estado,correct,ep_66eade67c3ffe3f8,correct,,estado,EGRESADO,EGRESADO,felix,2026-04-01T13:56:06,False
+res_fix_gutierrez_mar_fe3,correct,ep_4a91cc90d7ac0455,correct,,fecha_egreso,2026-03-12,2026-03-16,felix,2026-04-01T13:56:06,False
+res_fix_gutierrez_mar_fe4,correct,ep_6c682801d06e385f,correct,,fecha_egreso,2026-03-12,2026-03-16,felix,2026-04-01T13:56:06,False
+res_fix_gutierrez_mar_fi_merge,correct,ep_4a91cc90d7ac0455,correct,,fecha_ingreso,2026-03-10,2025-12-10,felix,2026-04-01T13:56:30,False
+res_fix_gutierrez_mar_fi_merge2,correct,ep_6c682801d06e385f,correct,,fecha_ingreso,2026-03-10,2025-12-10,felix,2026-04-01T13:56:30,False
