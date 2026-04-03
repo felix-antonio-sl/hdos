@@ -1,0 +1,29 @@
+egreso_id,action,run,notes
+alta_ef98a2c586f30aa7,set_run,22677595-1,DV+body errado 22667595-1 → 22677595-1. NATALIA CABALLERO QUEZADA. Confirmado en master por nombre.
+alta_fa17fda82951a484,set_run,9393416-4,Body errado 93934165-6 → 9393416-4 (dígito extra). LUIS MERIÑO JAQUE. Confirmado en master por nombre.
+alta_30c927a1c8f70bf2,set_run,4038136-8,rut_raw vacío. MANUEL ELGUETA ORTIZ. Confirmado en master por nombre (mismo paciente que ingreso).
+alta_992348039ca463e9,set_run,7057166-8,Body errado 7057168-8 → 7057166-8. WALDO GARCIA MORENO. Confirmado en master por nombre.
+alta_44a89e98abcb741d,set_run,10634329-2,DV incorrecto 10634329-8 → 10634329-2. CECILIA MORALES BRIONES. Confirmado en master por RUT corregido.
+alta_eea7d4bc50d11333,set_run,10355590-6,DV incorrecto 10335590-6 → 10355590-6. BLANCA JARPA SANHUEZA. Master tiene duplicado; RUT correcto es 10355590-6.
+sgh_2a74b01d8e4b7cc0,discard,,Duplicado SGH de altas. GLADYS GATICA RETAMAL 7320684-7 egr=2025-01-30.
+sgh_54a54c8382931874,discard,,Duplicado SGH de altas. LUIS GAJARDO SEPULVEDA 3455034-4 egr=2025-02-04.
+sgh_07f61c8fdd7f6532,discard,,Duplicado SGH de altas. FERMIN MUÑOZ QUEZADA 7463156-8 egr=2025-02-18.
+sgh_4e04673a01de1483,discard,,Duplicado SGH de altas. MARGARITA MELLA POBLETE 8837974-8 egr=2025-03-03.
+sgh_86315fba07d945eb,discard,,Duplicado SGH de altas. PEDRO QUEZADA GODOY 6109150-5 egr=2025-03-24.
+sgh_606b3f7e18029b58,discard,,Duplicado SGH de altas. DOMINGO GONZALEZ RETAMAL 3446856-7 egr=2025-06-06.
+sgh_950e87dd1a50bdac,discard,,Duplicado SGH de altas. CECILIA MORALES BRIONES 10634329-2 egr=2025-09-15.
+sgh_23e15109bf92fe13,discard,,Duplicado SGH de altas. MIRIAM MARIANGEL FUENTES 9262855-8 egr=2025-10-03.
+sgh_d1adf28be88d8ca3,discard,,Duplicado SGH de altas. ELIZABETH SEPULVEDA ORTIZ 8471270-1 egr=2026-03-20.
+alta_44a420a4adee47b2,set_fecha_egreso_fix,2026-01-05,CARLOS ACUÑA CISTERNA 4710140-9. Fecha egreso corregida de 2025-01-05 a 2026-01-05 (sheet dice ENE 2026).
+alta_8260dcf85b60dba4,discard,,MARIA SAEZ GREZ 6012998-3. Egreso 2025-04-01 errado (anterior al ingreso real). Egreso correcto es 2025-05-05 por fallecimiento (SGH).
+alta_32dbc0f8f9c66ac7,set_run,5268745-4,JUAN CABAÑAS SALINAS. RUT errado 7469724-0 en planilla altas. RUT correcto 5268745-4 (confirmado en master). Ingreso 2026-01-06.
+sgh_63bc7a911c030cba,discard,,Duplicado SGH de altas (3 días). HILDA MENA ARAYA 3834915-5 egr=2025-10-03 vs altas egr=2025-10-06.
+sgh_b0f31e491e78a0f3,discard,,Duplicado SGH de altas (6 días). EVA COFRE 6423143-K egr=2025-10-03 vs altas egr=2025-10-09.
+sgh_9e08887241b9bf97,discard,,Duplicado SGH de altas (3 días). CLELIA POBLETE AGUILERA 6298507-0 egr=2026-01-28 vs altas egr=2026-01-31.
+sgh_60fa1bbd33b7e657,discard,,Duplicado SGH de altas (4 días). MANUEL IBAÑEZ SOTO 15699431-6 egr=2025-06-02 vs altas egr=2025-06-06.
+sgh_ee9a46c1e91fb641,discard,,Duplicado SGH sin formulario ingreso. GLADYS CRISOSTOMO VERGARA 4632914-7 egr=2025-10-24. Estadía cubierta por canon.
+alta_015f28e08c8a0445,set_fecha_egreso_fix,2026-03-06,LUIS CONTRERAS CONTRERAS 5986351-7. Fecha errada 2025-03-06 corregida a 2026-03-06 (sheet dice MARZO 2026).
+alta_84fc77e1273bbd07,discard,,MARIA SAN MARTIN DE LA FUENTES 7831165-7. Sin ingreso en ninguna fuente. Canon tiene ingreso futuro errado (2026-06-17).
+sgh_5f933d285e670015,discard,,INADINA VALENZUELA BELMAR 6454659-7 egr=2025-05-19. Estadía sin formulario ingreso. Matching consume ing 2024 incorrectamente.
+alta_5a601188fae65f33,force_pair_canon,,ROSA MUÑOZ AGURTO 8750352-6. Canon: ing=2025-07-30 egr=2025-08-04. Ingreso formulario compartido con otro RUT por bug dedup.
+alta_445f90fc6456c2a9,force_pair_canon,,JUANA MUÑOZ SALINAS 9939529-K. Canon: ing=2025-09-26 egr=2025-10-06. Ingreso formulario compartido con otro RUT por bug dedup.
