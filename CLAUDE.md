@@ -30,11 +30,20 @@ scripts/run_streamlit_dashboard.sh
 # Run admin dashboard
 scripts/run_streamlit_admin_dashboard.sh
 
+# Run migration model dashboard
+scripts/run_streamlit_migration_model_dashboard.sh
+
 # Run individual pipeline stages
 .venv/bin/python scripts/migrate_hodom_csv.py          # Stage 1
 .venv/bin/python scripts/build_hodom_intermediate.py    # Stage 2
 .venv/bin/python scripts/build_hodom_enriched.py        # Stage 3
 .venv/bin/python scripts/build_hodom_canonical.py       # Stage 4
+
+# Auxiliary scripts
+.venv/bin/python scripts/build_active_patient_packets.py    # Patient summary packets
+.venv/bin/python scripts/build_hodom_admissions_minimal.py  # Minimal admission dataset
+.venv/bin/python scripts/build_hodom_discharges_minimal.py  # Minimal discharge dataset
+.venv/bin/python scripts/generate_hodom_clinical_updates.py # Clinical updates
 ```
 
 ## Architecture
@@ -43,19 +52,19 @@ scripts/run_streamlit_admin_dashboard.sh
 
 ```
 Stage 1: migrate_hodom_csv.py
-  input/raw_csv_exports/ (33 CSVs) → output/spreadsheet/ (normalized rows, patients, file summary)
+  input/raw_csv_exports/ → output/spreadsheet/ (normalized rows, patients, file summary)
 
 Stage 2: build_hodom_intermediate.py
-  Stage 1 output → output/spreadsheet/intermediate/ (17 CSVs: episodes, patients, diagnoses, care requirements, identity candidates, provenance)
+  Stage 1 output → output/spreadsheet/intermediate/ (20 CSVs: episodes, patients, diagnoses, care requirements, identity candidates, provenance)
 
 Stage 3: build_hodom_enriched.py
-  intermediate/ + XLSX forms + DEIS reference + INE geodata → output/spreadsheet/enriched/ (28 CSVs: episode_master, patient_master, address_resolution, locality_reference, etc.)
+  intermediate/ + XLSX forms + DEIS reference + INE geodata → output/spreadsheet/enriched/ (26 CSVs: episode_master, patient_master, address_resolution, locality_reference, etc.)
 
 Stage 4: build_hodom_canonical.py
-  enriched/ + input/manual/ corrections → output/spreadsheet/canonical/ (7 CSVs: hospitalization_stay, patient_master, review_queue, coverage_gap, etc.)
+  enriched/ + input/manual/ corrections → output/spreadsheet/canonical/ (12 CSVs: hospitalization_stay, patient_identity_master, patient_master, review_queue, coverage_gap, episode_source, pipeline_health, etc.)
 ```
 
-Each stage imports the previous one as a Python module. Stage 3 (`build_hodom_enriched.py`) imports `build_hodom_intermediate` and `migrate_hodom_csv` directly via `sys.path`.
+Each stage imports the previous one as a Python module via `sys.path`. Stage 3 imports both `build_hodom_intermediate` (as `core`) and `migrate_hodom_csv` (as `base`). Stage 4 imports `migrate_hodom_csv` (as `base`).
 
 ### Key Design Principles
 
@@ -80,6 +89,9 @@ Episodes are grouped into stays by: exact (patient_id + fecha_ingreso + fecha_eg
 
 - **`apps/streamlit_dashboard.py`** — Main dashboard: geospatial visualization, episode filtering, patient search, aggregations by origin/age/sex.
 - **`apps/streamlit_admin_dashboard.py`** — Admin dashboard: review queues, quality issues, manual corrections, pipeline health. Uses lazy loading and pagination.
+- **`apps/streamlit_migration_model_dashboard.py`** — Migration model dashboard.
+
+Streamlit config in `.streamlit/config.toml`: port 8502, headless, light theme (primary `#0B6E4F`).
 
 ### Data Directories
 
@@ -90,9 +102,13 @@ Episodes are grouped into stays by: exact (patient_id + fecha_ingreso + fecha_eg
 - `output/spreadsheet/enriched/` — Stage 3 output
 - `output/spreadsheet/canonical/` — Stage 4 output (final)
 
+### Testing
+
+Tests use `sys.path.insert` to import pipeline modules from `scripts/`. Shared fixtures in `tests/conftest.py` provide sample episodes, patients, quality issues, and a `write_csv_to_path` helper for creating temp CSVs. Tests are organized by canonical layer (stays, patients, health, queues) plus stage-specific tests.
+
 ## Dependencies
 
-Runtime: `streamlit>=1.43`, `pandas>=2.2`, `openpyxl`, `requests`. Optional: `pyogrio` (for GIS/geodatabase operations).
+Python 3.14. Runtime: `streamlit>=1.43`, `pandas>=2.2`, `openpyxl`, `requests`. GIS: `geopandas`, `pyogrio`, `pyproj`, `shapely`. PDF: `PyMuPDF`. Geospatial viz: `pydeck`.
 
 Virtual environment at `.venv/`. No `pyproject.toml` — dependencies managed via `requirements-dashboard.txt` and direct pip installs.
 
@@ -104,3 +120,11 @@ Virtual environment at `.venv/`. No `pyproject.toml` — dependencies managed vi
 - **DEIS**: Departamento de Estadísticas e Información en Salud — health statistics department
 - **SGH**: Sistema de Gestión Hospitalaria — hospital management system
 - **Age ranges follow REM standard**: <15, 15-19, 20-59, >=60
+
+## Conventions
+
+- No working files in the repo root — content lives under `apps/`, `scripts/`, `tests/`, `input/`, `output/`, `docs/`.
+- Editable manual data lives in `input/manual/`. External reference data in `input/reference/`.
+- Pipeline artifacts materialize under `output/spreadsheet/`.
+- Historical/non-normalized backups live in `documentacion-legacy/`.
+- Active documentation in `docs/` (models, specs, session logs, audit reports).
