@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ERD FHIR R4/R5 — Hospitalización Domiciliaria y Transporte</title>
+<style>
+:root {
+  --bg: #0f172a;
+  --surface: #1e293b;
+  --border: #334155;
+  --text: #e2e8f0;
+  --text-dim: #94a3b8;
+  --text-bright: #f8fafc;
+  --blue: #3b82f6;
+  --green: #10b981;
+  --purple: #8b5cf6;
+  --amber: #f59e0b;
+  --red: #ef4444;
+  --cyan: #06b6d4;
+  --orange: #f97316;
+  --pink: #ec4899;
+  --indigo: #6366f1;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+  background: var(--bg);
+  color: var(--text);
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+}
+
+/* HEADER */
+#header {
+  position: fixed; top:0; left:0; right:0; z-index:100;
+  background: rgba(15,23,42,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 20px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+#header h1 {
+  font-size: 14px; font-weight: 600; color: var(--text-bright);
+  letter-spacing: 0.5px;
+}
+#header .subtitle { font-size: 11px; color: var(--text-dim); }
+#legend {
+  display: flex; gap: 12px; flex-wrap: wrap;
+}
+.legend-item {
+  display: flex; align-items: center; gap: 4px;
+  font-size: 10px; color: var(--text-dim);
+}
+.legend-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+}
+
+/* SIDEBAR */
+#sidebar {
+  position: fixed; top: 50px; right: 0; bottom: 0; width: 380px;
+  background: rgba(30,41,59,0.97);
+  backdrop-filter: blur(12px);
+  border-left: 1px solid var(--border);
+  z-index: 90;
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  overflow-y: auto;
+  padding: 20px;
+}
+#sidebar.open { transform: translateX(0); }
+#sidebar .close-btn {
+  position: absolute; top: 10px; right: 10px;
+  background: none; border: none; color: var(--text-dim);
+  font-size: 18px; cursor: pointer;
+}
+#sidebar .close-btn:hover { color: var(--text-bright); }
+#sidebar h2 {
+  font-size: 16px; color: var(--text-bright);
+  margin-bottom: 4px;
+}
+#sidebar .resource-badge {
+  display: inline-block; padding: 2px 8px; border-radius: 10px;
+  font-size: 10px; font-weight: 600; margin-bottom: 12px;
+}
+#sidebar .section-title {
+  font-size: 10px; text-transform: uppercase; letter-spacing: 1px;
+  color: var(--text-dim); margin: 16px 0 8px; font-weight: 600;
+}
+#sidebar .attr-list { list-style: none; }
+#sidebar .attr-list li {
+  font-size: 11px; padding: 3px 0;
+  display: flex; justify-content: space-between;
+  border-bottom: 1px solid rgba(51,65,85,0.5);
+}
+#sidebar .attr-name { color: var(--text); }
+#sidebar .attr-type { color: var(--text-dim); font-style: italic; }
+#sidebar .rel-list { list-style: none; }
+#sidebar .rel-list li {
+  font-size: 11px; padding: 4px 0;
+  border-bottom: 1px solid rgba(51,65,85,0.5);
+  cursor: pointer;
+}
+#sidebar .rel-list li:hover { color: var(--text-bright); }
+#sidebar .rel-arrow { color: var(--text-dim); margin: 0 4px; }
+#sidebar .rel-target { font-weight: 600; }
+#sidebar .rel-card { color: var(--text-dim); font-size: 10px; }
+#sidebar .fhir-link {
+  display: inline-block; margin-top: 16px; padding: 6px 12px;
+  background: rgba(99,102,241,0.2); border: 1px solid var(--indigo);
+  border-radius: 6px; color: var(--indigo); text-decoration: none;
+  font-size: 11px;
+}
+#sidebar .fhir-link:hover { background: rgba(99,102,241,0.3); }
+#sidebar .r5-badge {
+  background: linear-gradient(135deg, var(--pink), var(--purple));
+  color: white; padding: 2px 6px; border-radius: 4px;
+  font-size: 9px; font-weight: 700; margin-left: 6px;
+}
+#sidebar .r4-note {
+  margin-top: 12px; padding: 10px; border-radius: 6px;
+  background: rgba(236,72,153,0.1); border: 1px solid rgba(236,72,153,0.3);
+  font-size: 11px; color: var(--pink); line-height: 1.5;
+}
+
+/* CANVAS */
+#canvas-container {
+  position: fixed; top: 50px; left: 0; right: 0; bottom: 0;
+  overflow: auto; cursor: grab;
+}
+#canvas-container:active { cursor: grabbing; }
+#canvas {
+  position: relative;
+  width: 2400px;
+  height: 1500px;
+  min-width: 2400px;
+  min-height: 1500px;
+}
+
+/* CLUSTERS */
+.cluster {
+  position: absolute;
+  border-radius: 12px;
+  border: 1px solid;
+  padding: 10px;
+}
+.cluster-label {
+  font-size: 10px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 1.5px;
+  margin-bottom: 8px; padding: 2px 8px;
+  border-radius: 4px; display: inline-block;
+}
+
+/* ENTITY CARDS */
+.entity {
+  position: absolute;
+  width: 172px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 10;
+}
+.entity:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  z-index: 20;
+}
+.entity.highlighted {
+  box-shadow: 0 0 20px rgba(255,255,255,0.15);
+  z-index: 20;
+}
+.entity.dimmed { opacity: 0.2; }
+.entity .entity-header {
+  padding: 8px 10px 6px;
+  border-bottom: 1px solid var(--border);
+  border-radius: 8px 8px 0 0;
+  font-size: 11px; font-weight: 700;
+  color: var(--text-bright);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.entity .entity-header .rel-count {
+  font-size: 9px; padding: 1px 5px;
+  border-radius: 8px; background: rgba(255,255,255,0.1);
+  color: var(--text-dim);
+}
+.entity .entity-body {
+  padding: 6px 10px 8px;
+}
+.entity .entity-attr {
+  font-size: 9.5px; padding: 1.5px 0;
+  color: var(--text-dim);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.entity .entity-attr .pk { color: var(--amber); margin-right: 3px; }
+.entity .entity-attr .fk { color: var(--cyan); margin-right: 3px; }
+.entity .entity-attr .attr-t { color: rgba(148,163,184,0.6); }
+
+/* SVG RELATIONSHIPS */
+#svg-layer {
+  position: absolute; top: 0; left: 0;
+  width: 2400px; height: 1500px;
+  pointer-events: none; z-index: 5;
+}
+.rel-line {
+  fill: none;
+  stroke-width: 1.5;
+  opacity: 0.35;
+  transition: opacity 0.2s, stroke-width 0.2s;
+}
+.rel-line.highlighted {
+  opacity: 0.9;
+  stroke-width: 2.5;
+}
+.rel-line.dimmed { opacity: 0.05; }
+.rel-label {
+  font-size: 8px;
+  fill: var(--text-dim);
+  opacity: 0;
+  transition: opacity 0.2s;
+  pointer-events: none;
+}
+.rel-label.highlighted { opacity: 1; }
+
+/* ZOOM CONTROLS */
+#zoom-controls {
+  position: fixed; bottom: 20px; right: 20px; z-index: 100;
+  display: flex; flex-direction: column; gap: 4px;
+}
+#zoom-controls button {
+  width: 36px; height: 36px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; color: var(--text);
+  font-size: 16px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+}
+#zoom-controls button:hover { background: rgba(51,65,85,0.8); }
+
+/* FILTER BAR */
+#filter-bar {
+  position: fixed; bottom: 20px; left: 20px; z-index: 100;
+  display: flex; gap: 6px; flex-wrap: wrap;
+}
+.filter-btn {
+  padding: 4px 10px; border-radius: 12px;
+  font-size: 10px; font-weight: 600;
+  border: 1px solid; cursor: pointer;
+  background: transparent;
+  transition: all 0.2s;
+}
+.filter-btn:hover { filter: brightness(1.3); }
+.filter-btn.active { filter: brightness(1); }
+.filter-btn.inactive { opacity: 0.3; }
+
+/* TOOLTIP */
+#tooltip {
+  position: fixed; z-index: 200;
+  background: rgba(15,23,42,0.95);
+  border: 1px solid var(--border);
+  border-radius: 6px; padding: 6px 10px;
+  font-size: 10px; color: var(--text);
+  pointer-events: none;
+  display: none;
+  max-width: 250px;
+}
+
+/* SCROLLBAR */
+#canvas-container::-webkit-scrollbar { width: 8px; height: 8px; }
+#canvas-container::-webkit-scrollbar-track { background: var(--bg); }
+#canvas-container::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+</style>
+</head>
+<body>
+
+<div id="header">
+  <div>
+    <h1>ERD FHIR R4/R5 — Hospitalización Domiciliaria y Logística</h1>
+    <span class="subtitle">37 recursos · 9 clusters · Modelo extendido con Transport R5</span>
+  </div>
+  <div id="legend"></div>
+</div>
+
+<div id="sidebar">
+  <button class="close-btn" onclick="closeSidebar()">✕</button>
+  <div id="sidebar-content"></div>
+</div>
+
+<div id="canvas-container">
+  <div id="canvas">
+    <svg id="svg-layer"></svg>
+  </div>
+</div>
+
+<div id="zoom-controls">
+  <button onclick="zoomIn()">+</button>
+  <button onclick="zoomOut()">−</button>
+  <button onclick="zoomReset()">⟲</button>
+</div>
+
+<div id="filter-bar"></div>
+<div id="tooltip"></div>
+
+<script>
+// ===================== DATA MODEL =====================
+const CLUSTERS = {
+  personas: {
+    id: 'personas', label: 'Personas y Organizaciones', color: '#3b82f6',
+    x: 30, y: 30, w: 410, h: 720
+  },
+  episodio: {
+    id: 'episodio', label: 'Episodio Clínico', color: '#10b981',
+    x: 490, y: 30, w: 380, h: 350
+  },
+  planificacion: {
+    id: 'planificacion', label: 'Planificación de Cuidados', color: '#8b5cf6',
+    x: 920, y: 30, w: 410, h: 500
+  },
+  clinico: {
+    id: 'clinico', label: 'Documentación Clínica', color: '#f59e0b',
+    x: 490, y: 430, w: 380, h: 510
+  },
+  medicacion: {
+    id: 'medicacion', label: 'Medicación', color: '#ef4444',
+    x: 920, y: 580, w: 410, h: 360
+  },
+  dispositivos: {
+    id: 'dispositivos', label: 'Dispositivos', color: '#06b6d4',
+    x: 1380, y: 30, w: 410, h: 350
+  },
+  scheduling: {
+    id: 'scheduling', label: 'Scheduling', color: '#f97316',
+    x: 1380, y: 430, w: 410, h: 350
+  },
+  transporte: {
+    id: 'transporte', label: 'Transporte y Logística', color: '#ec4899',
+    x: 1380, y: 830, w: 410, h: 360
+  },
+  ubicacion: {
+    id: 'ubicacion', label: 'Ubicación', color: '#6366f1',
+    x: 210, y: 800, w: 230, h: 160
+  }
+};
+
+const ENTITIES = [
+  // ── Personas y Organizaciones ──
+  { id:'Patient', cluster:'personas', x:50, y:75,
+    attrs:[
+      {n:'id',t:'id',k:'pk'},{n:'name',t:'HumanName[]'},{n:'birthDate',t:'date'},
+      {n:'gender',t:'code'},{n:'address',t:'Address[]'},{n:'telecom',t:'ContactPoint[]'},
+      {n:'contact',t:'BackboneElement[]'},{n:'generalPractitioner',t:'Reference',k:'fk'}
+    ],
+    desc:'Paciente que recibe hospitalización domiciliaria. Su address[] define la ubicación del servicio.'
+  },
+  { id:'Practitioner', cluster:'personas', x:50, y:225,
+    attrs:[
+      {n:'id',t:'id',k:'pk'},{n:'name',t:'HumanName[]'},{n:'qualification',t:'BackboneElement[]'},
+      {n:'telecom',t:'ContactPoint[]'},{n:'communication',t:'CodeableConcept[]'}
+    ],
+    desc:'Profesional clínico: médico, enfermero, kinesiólogo que realiza visitas domiciliarias.'
+  },
+  { id:'PractitionerRole', cluster:'personas', x:50, y:375,
+    attrs:[
+      {n:'id',t:'id',k:'pk'},{n:'practitioner',t:'Reference',k:'fk'},{n:'organization',t:'Reference',k:'fk'},
+      {n:'code',t:'CodeableConcept[]'},{n:'specialty',t:'CodeableConcept[]'},
+      {n:'location',t:'Reference[]',k:'fk'},{n:'availableTime',t:'BackboneElement[]'}
+    ],
+    desc:'Rol del profesional en una organización y ubicación específica.'
+  },
+  { id:'RelatedPerson', cluster:'personas', x:240, y:75,
+    attrs:[
+      {n:'id',t:'id',k:'pk'},{n:'patient',t:'Reference',k:'fk'},{n:'relationship',t:'CodeableConcept[]'},
+      {n:'name',t:'HumanName[]'},{n:'address',t:'Address[]'}
+    ],
+    desc:'Cuidador familiar, asistente domiciliario o tutor legal que participa en el cuidado.'
+  },
+  { id:'Organization', cluster:'personas', x:240, y:225,
+    attrs:[
+      {n:'id',t:'id',k:'pk'},{n:'type',t:'CodeableConcept[]'},{n:'name',t:'string'},
+      {n:'address',t:'Address[]'},{n:'partOf',t:'Reference',k:'fk'}
+    ],
+    desc:'Hospital, agencia de cuidados domiciliarios, empresa de transporte, farmacia.'
+  },
+  { id:'CareTeam', cluster:'personas', x:240, y:375,
+    attrs:[
+      {n:'id',t:'id',k:'pk'},{n:'status',t:'code'},{n:'category',t:'CodeableConcept[]'},
+      {n:'subject',t:'Reference',k:'fk'},{n:'encounter',t:'Reference',k:'fk'},
+      {n:'participant',t:'BackboneElement[]'},{n:'managingOrganization',t:'Reference[]',k:'fk'}
+    ],
+    desc:'Equipo multidisciplinario de cuidados domiciliarios: médicos, enfermeros, kinesiólogos, cuidadores.'
+  },
+  { id:'HealthcareService', cluster:'personas', x:140, y:535,
+    attrs:[
+      {n:'id',t:'id',k:'pk'},{n:'category',t:'CodeableConcept[]'},{n:'type',t:'CodeableConcept[]'},
+      {n:'providedBy',t:'Reference',k:'fk'},{n:'location',t:'Reference[]',k:'fk'},
+      {n:'coverageArea',t:'Reference[]',k:'fk'},{n:'availableTime',t:'BackboneElement[]'}
+    ],
+    desc:'Servicios domiciliarios ofrecidos: enfermería domiciliaria, terapia IV, kinesiología a domicilio.'
+  },
+
+  // ── Episodio Clínico ──
+  { id:'EpisodeOfCare', cluster:'episodio', x:510, y:75,
+    attrs:[
+      {n:'id',t:'id',k:'pk'},{n:'status',t:'code'},{n:'type',t:'CodeableConcept[]'},
+      {n:'patient',t:'Reference',k:'fk'},{n:'managingOrganization',t:'Reference',k:'fk'},
+      {n:'period',t:'Period'},{n:'team',t:'Reference[]',k:'fk'},
+      {n:'referralRequest',t:'Reference[]',k:'fk'}
+    ],
+    desc:'Episodio de hospitalización domiciliaria. Agrupa múltiples Encounters bajo un mismo programa.'
+  },
+  { id:'Encounter', cluster:'episodio', x:510, y:225,
+    attrs:[
+      {n:'id',t:'id',k:'pk'},{n:'status',t:'code'},{n:'class',t:'Coding (HH)'},
+      {n:'type',t:'CodeableConcept[]'},{n:'subject',t:'Reference',k:'fk'},
+      {n:'episodeOfCare',t:'Reference[]',k:'fk'},{n:'participant',t:'BackboneElement[]'},
+      {n:'period',t:'Period'},{n:'location',t:'BackboneElement[]'},
+      {n:'hospitalization',t:'BackboneElement'},{n:'serviceProvider',t:'Reference',k:'fk'}
+    ],
+    desc:'Encuentro clínico en domicilio. class=HH (Home Health). Cada visita domiciliaria es un Encounter.'
+  },
+  { id:'Condition', cluster:'episodio', x:700, y:75,
+    attrs:[
+      {n:'id',t:'id',k:'pk'},{n:'clinicalStatus',t:'CodeableConcept'},{n:'verificationStatus',t:'CodeableConcept'},
+      {n:'category',t:'CodeableConcept[]'},{n:'code',t:'CodeableConcept'},
+      {n:'subject',t:'Reference',k:'fk'},{n:'encounter',t:'Reference',k:'fk'},
+      {n:'onset[x]',t:'dateTime|Period'}
+    ],
+    desc:'Diagnóstico/condición que motiva la hospitalización domiciliaria (EPOC, ICC, post-quirúrgico).'
+  },
+  { id:'Flag', cluster:'episodio', x:700, y:225,
+    attrs:[
+      {n:'id',t:'id',k:'pk'},{n:'status',t:'code'},{n:'category',t:'CodeableConcept[]'},
+      {n:'code',t:'CodeableConcept'},{n:'subject',t:'Reference',k:'fk'},
+      {n:'encounter',t:'Reference',k:'fk'},{n:'author',t:'Reference',k:'fk'}
+    ],
+    desc:'Alertas clínicas/admin: riesgo de caída, mascota agresiva, instrucciones de acceso al domicilio.'
+  },
+
+  // ── Planificación ──
+  { id:'CarePlan', cluster:'planificacion', x:940, y:75,
+    attrs:[
+      {n:'id',t:'id',k:'pk'},{n:'status',t:'code'},{n:'intent',t:'code'},
+      {n:'category',t:'CodeableConcept[]'},{n:'subject',t:'Reference',k:'fk'},
+      {n:'encounter',t:'Reference',k:'fk'},{n:'period',t:'Period'},
+      {n:'careTeam',t:'Reference[]',k:'fk'},{n:'goal',t:'Reference[]',k:'fk'},
+      {n:'activity',t:'BackboneElement[]'}
+    ],
+    desc:'Plan de cuidados domiciliarios. Define metas, actividades e intervenciones programadas.'
+  },
+  { id:'Goal', cluster:'planificacion', x:1140, y:75,
+    attrs:[
+      {n:'id',t:'id',k:'pk'},{n:'lifecycleStatus',t:'code'},{n:'category',t:'CodeableConcept[]'},
+      {n:'description',t:'CodeableConcept'},{n:'subject',t:'Reference',k:'fk'},
+      {n:'target',t:'BackboneElement[]'}
+    ],
+    desc:'Objetivos del paciente: alta en 7 días, recuperar movilidad, control de dolor.'
+  },
+  { id:'ServiceRequest', cluster:'planificacion', x:940, y:225,
+    attrs:[
+      {n:'id',t:'id',k:'pk'},{n:'status',t:'code'},{n:'intent',t:'code'},
+      {n:'code',t:'CodeableConcept'},{n:'subject',t:'Reference',k:'fk'},
+      {n:'encounter',t:'Reference',k:'fk'},{n:'requester',t:'Reference',k:'fk'},
+      {n:'performer',t:'Reference[]',k:'fk'},{n:'locationReference',t:'Reference[]',k:'fk'}
+    ],
+    desc:'Orden/derivación: admisión a hospitalización domiciliaria, solicitud de procedimiento, interconsulta.'
+  },
+  { id:'PlanDefinition', cluster:'planificacion', x:1140, y:225,
+    attrs:[
+      {n:'id',t:'id',k:'pk'},{n:'status',t:'code'},{n:'type',t:'CodeableConcept'},
+      {n:'name',t:'string'},{n:'action',t:'BackboneElement[]'}
+    ],
+    desc:'Protocolo estándar para hospitalización domiciliaria (ej: protocolo EPOC, ICC, post-CX).'
+  },
+  { id:'ActivityDefinition', cluster:'planificacion', x:1140, y:375,
+    attrs:[
+      {n:'id',t:'id',k:'pk'},{n:'status',t:'code'},{n:'kind',t:'code'},
+      {n:'code',t:'CodeableConcept'},{n:'timing[x]',t:'Timing|Period'},
+      {n:'location',t:'Reference',k:'fk'},{n:'participant',t:'BackboneElement[]'}
+    ],
+    desc:'Definición de actividad: control de signos vitales diario, administración de medicamento IV.'
+  },
+
+  // ── Documentación Clínica ──
+  { id:'Procedure', cluster:'clinico', x:510, y:475,
+    attrs:[
+      {n:'id',t:'id',k:'pk'},{n:'status',t:'code'},{n:'code',t:'CodeableConcept'},
+      {n:'subject',t:'Reference',k:'fk'},{n:'encounter',t:'Reference',k:'fk'},
+      {n:'performed[x]',t:'dateTime|Period'},{n:'performer',t:'BackboneElement[]'},
+      {n:'location',t:'Reference',k:'fk'}
+    ],
+    desc:'Procedimientos en domicilio: curación de heridas, administración IV, manejo de catéter.'
+  },
+  { id:'Observation', cluster:'clinico', x:700, y:475,
+    attrs:[
+      {n:'id',t:'id',k:'pk'},{n:'status',t:'code'},{n:'category',t:'CodeableConcept[]'},
+      {n:'code',t:'CodeableConcept'},{n:'subject',t:'Reference',k:'fk'},
+      {n:'encounter',t:'Reference',k:'fk'},{n:'effective[x]',t:'dateTime|Period'},
+      {n:'value[x]',t:'Quantity|string|...'},{n:'device',t:'Reference',k:'fk'}
+    ],
+    desc:'Signos vitales, resultados de laboratorio, evaluaciones tomadas en domicilio o monitoreo remoto.'
+  },
+  { id:'DiagnosticReport', cluster:'clinico', x:510, y:625,
+    attrs:[
+      {n:'id',t:'id',k:'pk'},{n:'status',t:'code'},{n:'category',t:'CodeableConcept[]'},
+      {n:'code',t:'CodeableConcept'},{n:'subject',t:'Reference',k:'fk'},
+      {n:'encounter',t:'Reference',k:'fk'},{n:'result',t:'Reference[]',k:'fk'}
+    ],
+    desc:'Informes de laboratorio y diagnóstico de muestras recolectadas en domicilio.'
+  },
+  { id:'QuestionnaireResponse', cluster:'clinico', x:700, y:625,
+    attrs:[
+      {n:'id',t:'id',k:'pk'},{n:'questionnaire',t:'canonical'},{n:'status',t:'code'},
+      {n:'subject',t:'Reference',k:'fk'},{n:'encounter',t:'Reference',k:'fk'},
+      {n:'authored',t:'dateTime'},{n:'item',t:'BackboneElement[]'}
+    ],
+    desc:'Evaluaciones estructuradas: Barthel, escalas de dolor, estado funcional (OASIS).'
+  },
+  { id:'DocumentReference', cluster:'clinico', x:510, y:775,
+    attrs:[
+      {n:'id',t:'id',k:'pk'},{n:'status',t:'code'},{n:'type',t:'CodeableConcept'},
+      {n:'subject',t:'Reference',k:'fk'},{n:'date',t:'instant'},
+      {n:'author',t:'Reference[]',k:'fk'},{n:'content',t:'BackboneElement[]'}
+    ],
+    desc:'Notas clínicas, informes de alta, consentimientos escaneados, fotos de heridas.'
+  },
+  { id:'Composition', cluster:'clinico', x:700, y:775,
+    attrs:[
+      {n:'id',t:'id',k:'pk'},{n:'status',t:'code'},{n:'type',t:'CodeableConcept'},
+      {n:'subject',t:'Reference',k:'fk'},{n:'encounter',t:'Reference',k:'fk'},
+      {n:'date',t:'dateTime'},{n:'author',t:'Reference[]',k:'fk'},
+      {n:'section',t:'BackboneElement[]'}
+    ],
+    desc:'Documentos clínicos estructurados: nota de visita domiciliaria, resumen de alta.'
+  },
+
+  // ── Medicación ──
+  { id:'Medication', cluster:'medicacion', x:940, y:625,
+    attrs:[
+      {n:'id',t:'id',k:'pk'},{n:'code',t:'CodeableConcept'},{n:'form',t:'CodeableConcept'},
+      {n:'ingredient',t:'BackboneElement[]'}
+    ],
+    desc:'Definición de medicamento administrado en domicilio.'
+  },
+  { id:'MedicationRequest', cluster:'medicacion', x:1140, y:625,
+    attrs:[
+      {n:'id',t:'id',k:'pk'},{n:'status',t:'code'},{n:'intent',t:'code'},
+      {n:'medication[x]',t:'CodeableConcept|Ref',k:'fk'},{n:'subject',t:'Reference',k:'fk'},
+      {n:'encounter',t:'Reference',k:'fk'},{n:'dosageInstruction',t:'Dosage[]'},
+      {n:'dispenseRequest',t:'BackboneElement'}
+    ],
+    desc:'Prescripción para medicación domiciliaria: oral, IV, subcutánea.'
+  },
+  { id:'MedicationDispense', cluster:'medicacion', x:940, y:775,
+    attrs:[
+      {n:'id',t:'id',k:'pk'},{n:'status',t:'code'},{n:'medication[x]',t:'CodeableConcept|Ref',k:'fk'},
+      {n:'subject',t:'Reference',k:'fk'},{n:'performer',t:'BackboneElement[]'},
+      {n:'quantity',t:'Quantity'},{n:'destination',t:'Reference',k:'fk'}
+    ],
+    desc:'Despacho de medicamento al paciente/cuidador. destination=domicilio del paciente.'
+  },
+  { id:'MedicationAdministration', cluster:'medicacion', x:1140, y:775,
+    attrs:[
+      {n:'id',t:'id',k:'pk'},{n:'status',t:'code'},{n:'medication[x]',t:'CodeableConcept|Ref',k:'fk'},
+      {n:'subject',t:'Reference',k:'fk'},{n:'context',t:'Reference',k:'fk'},
+      {n:'effective[x]',t:'dateTime|Period'},{n:'performer',t:'BackboneElement[]'},
+      {n:'dosage',t:'BackboneElement'}
+    ],
+    desc:'Registro de administración real de medicamento en domicilio por enfermero, cuidador o auto-administración.'
+  },
+
+  // ── Dispositivos ──
+  { id:'Device', cluster:'dispositivos', x:1400, y:75,
+    attrs:[
+      {n:'id',t:'id',k:'pk'},{n:'type',t:'CodeableConcept'},{n:'status',t:'code'},
+      {n:'patient',t:'Reference',k:'fk'},{n:'owner',t:'Reference',k:'fk'},
+      {n:'location',t:'Reference',k:'fk'},{n:'serialNumber',t:'string'},
+      {n:'deviceName',t:'BackboneElement[]'}
+    ],
+    desc:'Dispositivos médicos en domicilio: bombas IV, concentradores O₂, monitores, glucómetros.'
+  },
+  { id:'DeviceRequest', cluster:'dispositivos', x:1600, y:75,
+    attrs:[
+      {n:'id',t:'id',k:'pk'},{n:'status',t:'code'},{n:'intent',t:'code'},
+      {n:'code[x]',t:'CodeableConcept|Ref',k:'fk'},{n:'subject',t:'Reference',k:'fk'},
+      {n:'encounter',t:'Reference',k:'fk'},{n:'performer',t:'Reference',k:'fk'}
+    ],
+    desc:'Orden para desplegar dispositivo médico al domicilio del paciente.'
+  },
+  { id:'DeviceUseStatement', cluster:'dispositivos', x:1500, y:225,
+    attrs:[
+      {n:'id',t:'id',k:'pk'},{n:'status',t:'code'},{n:'subject',t:'Reference',k:'fk'},
+      {n:'device',t:'Reference',k:'fk'},{n:'timing[x]',t:'Timing|Period|dateTime'},
+      {n:'reasonReference',t:'Reference[]',k:'fk'}
+    ],
+    desc:'Registro de uso de dispositivo por el paciente en domicilio.'
+  },
+
+  // ── Scheduling ──
+  { id:'Appointment', cluster:'scheduling', x:1400, y:475,
+    attrs:[
+      {n:'id',t:'id',k:'pk'},{n:'status',t:'code'},{n:'serviceType',t:'CodeableConcept[]'},
+      {n:'specialty',t:'CodeableConcept[]'},{n:'start',t:'instant'},{n:'end',t:'instant'},
+      {n:'participant',t:'BackboneElement[]'},{n:'slot',t:'Reference[]',k:'fk'},
+      {n:'reasonReference',t:'Reference[]',k:'fk'}
+    ],
+    desc:'Cita de visita domiciliaria. Vincula paciente, profesional, horario y tipo de servicio.'
+  },
+  { id:'Schedule', cluster:'scheduling', x:1600, y:475,
+    attrs:[
+      {n:'id',t:'id',k:'pk'},{n:'actor',t:'Reference[]',k:'fk'},
+      {n:'planningHorizon',t:'Period'},{n:'serviceCategory',t:'CodeableConcept[]'},
+      {n:'serviceType',t:'CodeableConcept[]'}
+    ],
+    desc:'Agenda de disponibilidad de profesionales/equipos para visitas domiciliarias.'
+  },
+  { id:'Slot', cluster:'scheduling', x:1600, y:625,
+    attrs:[
+      {n:'id',t:'id',k:'pk'},{n:'schedule',t:'Reference',k:'fk'},{n:'status',t:'code'},
+      {n:'start',t:'instant'},{n:'end',t:'instant'},
+      {n:'serviceType',t:'CodeableConcept[]'}
+    ],
+    desc:'Bloque horario disponible en la agenda para agendar visita domiciliaria.'
+  },
+
+  // ── Transporte y Logística ──
+  { id:'Transport', cluster:'transporte', x:1400, y:875,
+    r5: true,
+    attrs:[
+      {n:'id',t:'id',k:'pk'},{n:'status',t:'code'},{n:'intent',t:'code'},
+      {n:'code',t:'CodeableConcept'},{n:'focus',t:'Reference',k:'fk'},
+      {n:'for',t:'Reference',k:'fk'},{n:'encounter',t:'Reference',k:'fk'},
+      {n:'requestedLocation',t:'Reference',k:'fk'},{n:'currentLocation',t:'Reference',k:'fk'},
+      {n:'requester',t:'Reference',k:'fk'},{n:'owner',t:'Reference',k:'fk'},
+      {n:'completionTime',t:'dateTime'}
+    ],
+    desc:'R5: Transporte de personal, muestras, equipos o pacientes. En R4 se modela con Task + códigos de transporte.',
+    r4mapping: 'En FHIR R4: usar Task con code="transport". requestedLocation/currentLocation → Task.input. focus → Task.focus. for → Task.for.'
+  },
+  { id:'Task', cluster:'transporte', x:1600, y:875,
+    attrs:[
+      {n:'id',t:'id',k:'pk'},{n:'status',t:'code'},{n:'intent',t:'code'},
+      {n:'code',t:'CodeableConcept'},{n:'focus',t:'Reference',k:'fk'},
+      {n:'for',t:'Reference',k:'fk'},{n:'encounter',t:'Reference',k:'fk'},
+      {n:'executionPeriod',t:'Period'},{n:'requester',t:'Reference',k:'fk'},
+      {n:'owner',t:'Reference',k:'fk'},{n:'input',t:'BackboneElement[]'},
+      {n:'output',t:'BackboneElement[]'},{n:'partOf',t:'Reference[]',k:'fk'}
+    ],
+    desc:'Orquestación de workflow y tareas logísticas. En R4 también modela transporte (mapeo desde Transport R5).'
+  },
+  { id:'SupplyRequest', cluster:'transporte', x:1400, y:1025,
+    attrs:[
+      {n:'id',t:'id',k:'pk'},{n:'status',t:'code'},{n:'category',t:'CodeableConcept'},
+      {n:'item[x]',t:'CodeableConcept|Ref'},{n:'quantity',t:'Quantity'},
+      {n:'occurrence[x]',t:'dateTime|Period'},{n:'requester',t:'Reference',k:'fk'},
+      {n:'deliverFrom',t:'Reference',k:'fk'},{n:'deliverTo',t:'Reference',k:'fk'}
+    ],
+    desc:'Solicitud de insumos médicos para entregar en domicilio: vendas, jeringas, consumibles.'
+  },
+  { id:'SupplyDelivery', cluster:'transporte', x:1600, y:1025,
+    attrs:[
+      {n:'id',t:'id',k:'pk'},{n:'status',t:'code'},{n:'patient',t:'Reference',k:'fk'},
+      {n:'type',t:'CodeableConcept'},{n:'suppliedItem',t:'BackboneElement'},
+      {n:'occurrence[x]',t:'dateTime|Period'},{n:'supplier',t:'Reference',k:'fk'},
+      {n:'destination',t:'Reference',k:'fk'}
+    ],
+    desc:'Registro de entrega real de insumos en domicilio del paciente.'
+  },
+
+  // ── Ubicación (hub central) ──
+  { id:'Location', cluster:'ubicacion', x:230, y:845,
+    attrs:[
+      {n:'id',t:'id',k:'pk'},{n:'status',t:'code'},{n:'name',t:'string'},
+      {n:'mode',t:'code'},{n:'type',t:'CodeableConcept[]'},
+      {n:'address',t:'Address'},{n:'position',t:'BackboneElement'},
+      {n:'physicalType',t:'CodeableConcept'},{n:'managingOrganization',t:'Reference',k:'fk'}
+    ],
+    desc:'Ubicación física: domicilio del paciente (type=patient home), hospital, farmacia, laboratorio, bodega.'
+  }
+];
+
+// ── RELATIONSHIPS ──
+const RELATIONSHIPS = [
+  // Core flow
+  {from:'Patient',to:'EpisodeOfCare',label:'tiene',card:'1..*',color:'#3b82f6'},
+  {from:'EpisodeOfCare',to:'Encounter',label:'contiene',card:'1..*',color:'#10b981'},
+  {from:'Encounter',to:'Location',label:'ubicación',card:'0..*',color:'#10b981'},
+  {from:'Encounter',to:'CareTeam',label:'equipo',card:'0..*',color:'#10b981'},
+  {from:'Patient',to:'Encounter',label:'sujeto',card:'1..*',color:'#3b82f6'},
+
+  // Planning
+  {from:'CarePlan',to:'Encounter',label:'contexto',card:'0..1',color:'#8b5cf6'},
+  {from:'CarePlan',to:'CareTeam',label:'equipo',card:'0..*',color:'#8b5cf6'},
+  {from:'CarePlan',to:'Goal',label:'objetivo',card:'0..*',color:'#8b5cf6'},
+  {from:'CarePlan',to:'ServiceRequest',label:'actividad',card:'0..*',color:'#8b5cf6'},
+  {from:'PlanDefinition',to:'ActivityDefinition',label:'define',card:'0..*',color:'#8b5cf6'},
+
+  // Clinical
+  {from:'Procedure',to:'Encounter',label:'contexto',card:'0..1',color:'#f59e0b'},
+  {from:'Observation',to:'Encounter',label:'contexto',card:'0..1',color:'#f59e0b'},
+  {from:'Observation',to:'Device',label:'dispositivo',card:'0..1',color:'#f59e0b'},
+  {from:'DiagnosticReport',to:'Observation',label:'resultado',card:'0..*',color:'#f59e0b'},
+  {from:'Condition',to:'Encounter',label:'contexto',card:'0..1',color:'#10b981'},
+
+  // Medication lifecycle
+  {from:'MedicationRequest',to:'Medication',label:'medicamento',card:'1..1',color:'#ef4444'},
+  {from:'MedicationRequest',to:'Encounter',label:'contexto',card:'0..1',color:'#ef4444'},
+  {from:'MedicationDispense',to:'MedicationRequest',label:'cumple',card:'0..1',color:'#ef4444'},
+  {from:'MedicationAdministration',to:'MedicationRequest',label:'cumple',card:'0..1',color:'#ef4444'},
+  {from:'MedicationDispense',to:'Location',label:'destino',card:'0..1',color:'#ef4444'},
+
+  // Devices
+  {from:'Device',to:'Patient',label:'asignado a',card:'0..1',color:'#06b6d4'},
+  {from:'Device',to:'Location',label:'ubicación',card:'0..1',color:'#06b6d4'},
+  {from:'DeviceRequest',to:'Encounter',label:'contexto',card:'0..1',color:'#06b6d4'},
+  {from:'DeviceUseStatement',to:'Device',label:'dispositivo',card:'1..1',color:'#06b6d4'},
+
+  // Scheduling chain
+  {from:'Slot',to:'Schedule',label:'agenda',card:'1..1',color:'#f97316'},
+  {from:'Appointment',to:'Slot',label:'slot',card:'0..*',color:'#f97316'},
+  {from:'Appointment',to:'Patient',label:'participante',card:'1..1',color:'#f97316'},
+
+  // Transport & Logistics
+  {from:'Transport',to:'Location',label:'destino (requested)',card:'1..1',color:'#ec4899'},
+  {from:'Transport',to:'Patient',label:'beneficiario',card:'0..1',color:'#ec4899'},
+  {from:'Transport',to:'Task',label:'R4 equivalente',card:'1..1',color:'#ec4899', dashed:true},
+  {from:'SupplyRequest',to:'Location',label:'entregar en',card:'0..1',color:'#ec4899'},
+  {from:'SupplyDelivery',to:'SupplyRequest',label:'cumple',card:'0..1',color:'#ec4899'},
+  {from:'SupplyDelivery',to:'Location',label:'destino',card:'0..1',color:'#ec4899'},
+
+  // Cross
+  {from:'PractitionerRole',to:'Practitioner',label:'profesional',card:'0..1',color:'#3b82f6'},
+  {from:'PractitionerRole',to:'Organization',label:'organización',card:'0..1',color:'#3b82f6'},
+  {from:'RelatedPerson',to:'Patient',label:'paciente',card:'1..1',color:'#3b82f6'},
+  {from:'ServiceRequest',to:'Encounter',label:'contexto',card:'0..1',color:'#8b5cf6'},
+];
+
+// ===================== RENDERING =====================
+const canvas = document.getElementById('canvas');
+const svgLayer = document.getElementById('svg-layer');
+const legend = document.getElementById('legend');
+const filterBar = document.getElementById('filter-bar');
+
+let currentZoom = 1;
+let selectedEntity = null;
+let activeFilters = new Set(Object.keys(CLUSTERS));
+
+// Render legend
+Object.values(CLUSTERS).forEach(c => {
+  const item = document.createElement('div');
+  item.className = 'legend-item';
+  item.innerHTML = `<span class="legend-dot" style="background:${c.color}"></span>${c.label}`;
+  legend.appendChild(item);
+});
+
+// Render filter buttons
+Object.values(CLUSTERS).forEach(c => {
+  const btn = document.createElement('button');
+  btn.className = 'filter-btn active';
+  btn.style.color = c.color;
+  btn.style.borderColor = c.color;
+  btn.textContent = c.label.split(' ')[0];
+  btn.dataset.cluster = c.id;
+  btn.onclick = () => toggleFilter(c.id, btn);
+  filterBar.appendChild(btn);
+});
+
+// Render clusters
+Object.values(CLUSTERS).forEach(c => {
+  const div = document.createElement('div');
+  div.className = 'cluster';
+  div.id = `cluster-${c.id}`;
+  div.style.cssText = `left:${c.x}px;top:${c.y}px;width:${c.w}px;height:${c.h}px;
+    background:${c.color}08;border-color:${c.color}30;`;
+  div.innerHTML = `<span class="cluster-label" style="background:${c.color}20;color:${c.color}">${c.label}</span>`;
+  canvas.appendChild(div);
+});
+
+// Render entities
+const entityEls = {};
+ENTITIES.forEach(e => {
+  const cluster = CLUSTERS[e.cluster];
+  const div = document.createElement('div');
+  div.className = 'entity';
+  div.id = `entity-${e.id}`;
+  div.style.left = e.x + 'px';
+  div.style.top = e.y + 'px';
+  div.style.borderTopColor = cluster.color;
+  div.style.borderTopWidth = '2px';
+
+  const relCount = RELATIONSHIPS.filter(r => r.from === e.id || r.to === e.id).length;
+  const r5Badge = e.r5 ? '<span style="background:linear-gradient(135deg,#ec4899,#8b5cf6);color:#fff;padding:1px 4px;border-radius:3px;font-size:8px;font-weight:700;margin-left:4px">R5</span>' : '';
+
+  let attrsHtml = '';
+  const showAttrs = e.attrs.slice(0, 5);
+  showAttrs.forEach(a => {
+    const icon = a.k === 'pk' ? '<span class="pk">◆</span>' : a.k === 'fk' ? '<span class="fk">→</span>' : '  ';
+    attrsHtml += `<div class="entity-attr">${icon}${a.n} <span class="attr-t">${a.t}</span></div>`;
+  });
+  if (e.attrs.length > 5) attrsHtml += `<div class="entity-attr" style="color:${cluster.color}">  +${e.attrs.length - 5} más...</div>`;
+
+  div.innerHTML = `
+    <div class="entity-header" style="background:${cluster.color}15">
+      ${e.id}${r5Badge}
+      <span class="rel-count">${relCount}</span>
+    </div>
+    <div class="entity-body">${attrsHtml}</div>
+  `;
+
+  div.addEventListener('click', () => showEntityDetail(e));
+  div.addEventListener('mouseenter', () => highlightEntity(e.id));
+  div.addEventListener('mouseleave', () => clearHighlight());
+
+  canvas.appendChild(div);
+  entityEls[e.id] = div;
+});
+
+// Render SVG relationships
+function getEntityCenter(id) {
+  const el = entityEls[id];
+  if (!el) return {x:0,y:0};
+  const x = parseInt(el.style.left) + el.offsetWidth / 2;
+  const y = parseInt(el.style.top) + el.offsetHeight / 2;
+  return {x, y};
+}
+
+function getEdgePoint(fromId, toId) {
+  const fEl = entityEls[fromId];
+  const tEl = entityEls[toId];
+  if (!fEl || !tEl) return {fx:0,fy:0,tx:0,ty:0};
+
+  const f = {
+    x: parseInt(fEl.style.left), y: parseInt(fEl.style.top),
+    w: fEl.offsetWidth, h: fEl.offsetHeight
+  };
+  const t = {
+    x: parseInt(tEl.style.left), y: parseInt(tEl.style.top),
+    w: tEl.offsetWidth, h: tEl.offsetHeight
+  };
+
+  const fcx = f.x + f.w/2, fcy = f.y + f.h/2;
+  const tcx = t.x + t.w/2, tcy = t.y + t.h/2;
+
+  // Determine which edges to connect
+  let fx, fy, tx, ty;
+  const dx = tcx - fcx, dy = tcy - fcy;
+
+  if (Math.abs(dx) > Math.abs(dy)) {
+    // Horizontal connection
+    if (dx > 0) { fx = f.x + f.w; fy = fcy; tx = t.x; ty = tcy; }
+    else { fx = f.x; fy = fcy; tx = t.x + t.w; ty = tcy; }
+  } else {
+    // Vertical connection
+    if (dy > 0) { fx = fcx; fy = f.y + f.h; tx = tcx; ty = t.y; }
+    else { fx = fcx; fy = f.y; tx = tcx; ty = t.y + t.h; }
+  }
+  return {fx, fy, tx, ty};
+}
+
+function renderRelationships() {
+  svgLayer.innerHTML = '';
+  RELATIONSHIPS.forEach((r, i) => {
+    const {fx, fy, tx, ty} = getEdgePoint(r.from, r.to);
+    const mx = (fx + tx) / 2, my = (fy + ty) / 2;
+
+    // Curved path
+    const dx = tx - fx, dy = ty - fy;
+    const cx1 = fx + dx * 0.4, cy1 = fy;
+    const cx2 = fx + dx * 0.6, cy2 = ty;
+
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('d', `M${fx},${fy} C${cx1},${cy1} ${cx2},${cy2} ${tx},${ty}`);
+    path.setAttribute('class', 'rel-line');
+    path.setAttribute('stroke', r.color);
+    path.setAttribute('data-from', r.from);
+    path.setAttribute('data-to', r.to);
+    path.id = `rel-${i}`;
+    if (r.dashed) path.setAttribute('stroke-dasharray', '6,3');
+
+    // Arrow marker
+    const markerId = `arrow-${i}`;
+    const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+    const marker = document.createElementNS('http://www.w3.org/2000/svg', 'marker');
+    marker.setAttribute('id', markerId);
+    marker.setAttribute('viewBox', '0 0 10 7');
+    marker.setAttribute('refX', '10');
+    marker.setAttribute('refY', '3.5');
+    marker.setAttribute('markerWidth', '8');
+    marker.setAttribute('markerHeight', '6');
+    marker.setAttribute('orient', 'auto-start-reverse');
+    const arrow = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+    arrow.setAttribute('points', '0 0, 10 3.5, 0 7');
+    arrow.setAttribute('fill', r.color);
+    marker.appendChild(arrow);
+    defs.appendChild(marker);
+    svgLayer.appendChild(defs);
+    path.setAttribute('marker-end', `url(#${markerId})`);
+
+    svgLayer.appendChild(path);
+
+    // Label
+    const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    label.setAttribute('x', mx);
+    label.setAttribute('y', my - 5);
+    label.setAttribute('text-anchor', 'middle');
+    label.setAttribute('class', 'rel-label');
+    label.setAttribute('data-from', r.from);
+    label.setAttribute('data-to', r.to);
+    label.textContent = `${r.label} [${r.card}]`;
+    svgLayer.appendChild(label);
+  });
+}
+
+// Delay render to let DOM calculate sizes
+setTimeout(renderRelationships, 100);
+
+// ===================== INTERACTIVITY =====================
+function highlightEntity(entityId) {
+  // Dim all
+  ENTITIES.forEach(e => {
+    const el = entityEls[e.id];
+    el.classList.remove('highlighted');
+    el.classList.add('dimmed');
+  });
+  document.querySelectorAll('.rel-line').forEach(l => {
+    l.classList.remove('highlighted');
+    l.classList.add('dimmed');
+  });
+  document.querySelectorAll('.rel-label').forEach(l => {
+    l.classList.remove('highlighted');
+  });
+
+  // Highlight selected and connected
+  const connected = new Set([entityId]);
+  RELATIONSHIPS.forEach((r, i) => {
+    if (r.from === entityId || r.to === entityId) {
+      connected.add(r.from);
+      connected.add(r.to);
+      const line = document.getElementById(`rel-${i}`);
+      if (line) { line.classList.remove('dimmed'); line.classList.add('highlighted'); }
+      const labels = document.querySelectorAll(`.rel-label[data-from="${r.from}"][data-to="${r.to}"]`);
+      labels.forEach(l => l.classList.add('highlighted'));
+    }
+  });
+
+  connected.forEach(id => {
+    const el = entityEls[id];
+    if (el) { el.classList.remove('dimmed'); el.classList.add('highlighted'); }
+  });
+}
+
+function clearHighlight() {
+  if (selectedEntity) return; // Keep highlight if sidebar open
+  ENTITIES.forEach(e => {
+    entityEls[e.id].classList.remove('highlighted', 'dimmed');
+  });
+  document.querySelectorAll('.rel-line').forEach(l => l.classList.remove('highlighted', 'dimmed'));
+  document.querySelectorAll('.rel-label').forEach(l => l.classList.remove('highlighted'));
+}
+
+function showEntityDetail(entity) {
+  selectedEntity = entity.id;
+  highlightEntity(entity.id);
+  const sidebar = document.getElementById('sidebar');
+  const content = document.getElementById('sidebar-content');
+  const cluster = CLUSTERS[entity.cluster];
+
+  const outRels = RELATIONSHIPS.filter(r => r.from === entity.id);
+  const inRels = RELATIONSHIPS.filter(r => r.to === entity.id);
+
+  let html = `
+    <h2>${entity.id}${entity.r5 ? '<span class="r5-badge">FHIR R5</span>' : ''}</h2>
+    <span class="resource-badge" style="background:${cluster.color}20;color:${cluster.color}">${cluster.label}</span>
+    <p style="font-size:12px;color:var(--text-dim);line-height:1.5;margin-bottom:12px">${entity.desc}</p>
+  `;
+
+  if (entity.r4mapping) {
+    html += `<div class="r4-note"><strong>Mapeo R4:</strong> ${entity.r4mapping}</div>`;
+  }
+
+  html += `<div class="section-title">Atributos (${entity.attrs.length})</div><ul class="attr-list">`;
+  entity.attrs.forEach(a => {
+    const icon = a.k === 'pk' ? '◆ ' : a.k === 'fk' ? '→ ' : '';
+    html += `<li><span class="attr-name">${icon}${a.n}</span><span class="attr-type">${a.t}</span></li>`;
+  });
+  html += '</ul>';
+
+  if (outRels.length > 0) {
+    html += `<div class="section-title">Relaciones salientes (${outRels.length})</div><ul class="rel-list">`;
+    outRels.forEach(r => {
+      html += `<li onclick="navigateToEntity('${r.to}')">${r.label} <span class="rel-arrow">→</span> <span class="rel-target">${r.to}</span> <span class="rel-card">[${r.card}]</span></li>`;
+    });
+    html += '</ul>';
+  }
+
+  if (inRels.length > 0) {
+    html += `<div class="section-title">Relaciones entrantes (${inRels.length})</div><ul class="rel-list">`;
+    inRels.forEach(r => {
+      html += `<li onclick="navigateToEntity('${r.from}')"><span class="rel-target">${r.from}</span> <span class="rel-arrow">→</span> ${r.label} <span class="rel-card">[${r.card}]</span></li>`;
+    });
+    html += '</ul>';
+  }
+
+  const fhirBase = entity.r5 ? 'https://hl7.org/fhir/R5' : 'https://hl7.org/fhir/R4';
+  html += `<a class="fhir-link" href="${fhirBase}/${entity.id.toLowerCase()}.html" target="_blank">Ver en especificación FHIR ${entity.r5 ? 'R5' : 'R4'} ↗</a>`;
+
+  content.innerHTML = html;
+  sidebar.classList.add('open');
+}
+
+function navigateToEntity(id) {
+  const entity = ENTITIES.find(e => e.id === id);
+  if (entity) {
+    showEntityDetail(entity);
+    const el = entityEls[id];
+    if (el) el.scrollIntoView({behavior:'smooth', block:'center', inline:'center'});
+  }
+}
+
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  selectedEntity = null;
+  clearHighlight();
+}
+
+// Zoom
+function zoomIn() {
+  currentZoom = Math.min(currentZoom + 0.15, 2);
+  canvas.style.transform = `scale(${currentZoom})`;
+  canvas.style.transformOrigin = 'top left';
+}
+function zoomOut() {
+  currentZoom = Math.max(currentZoom - 0.15, 0.4);
+  canvas.style.transform = `scale(${currentZoom})`;
+  canvas.style.transformOrigin = 'top left';
+}
+function zoomReset() {
+  currentZoom = 1;
+  canvas.style.transform = 'scale(1)';
+}
+
+// Filter clusters
+function toggleFilter(clusterId, btn) {
+  if (activeFilters.has(clusterId)) {
+    activeFilters.delete(clusterId);
+    btn.classList.remove('active');
+    btn.classList.add('inactive');
+  } else {
+    activeFilters.add(clusterId);
+    btn.classList.remove('inactive');
+    btn.classList.add('active');
+  }
+  applyFilters();
+}
+
+function applyFilters() {
+  ENTITIES.forEach(e => {
+    const el = entityEls[e.id];
+    const clusterEl = document.getElementById(`cluster-${e.cluster}`);
+    if (activeFilters.has(e.cluster)) {
+      el.style.display = '';
+      if (clusterEl) clusterEl.style.display = '';
+    } else {
+      el.style.display = 'none';
+      if (clusterEl) clusterEl.style.display = 'none';
+    }
+  });
+  // Re-render relationships
+  renderRelationships();
+  document.querySelectorAll('.rel-line').forEach(line => {
+    const from = line.getAttribute('data-from');
+    const to = line.getAttribute('data-to');
+    const fEntity = ENTITIES.find(e => e.id === from);
+    const tEntity = ENTITIES.find(e => e.id === to);
+    if (fEntity && tEntity && activeFilters.has(fEntity.cluster) && activeFilters.has(tEntity.cluster)) {
+      line.style.display = '';
+    } else {
+      line.style.display = 'none';
+    }
+  });
+  document.querySelectorAll('.rel-label').forEach(label => {
+    const from = label.getAttribute('data-from');
+    const to = label.getAttribute('data-to');
+    const fEntity = ENTITIES.find(e => e.id === from);
+    const tEntity = ENTITIES.find(e => e.id === to);
+    if (fEntity && tEntity && activeFilters.has(fEntity.cluster) && activeFilters.has(tEntity.cluster)) {
+      label.style.display = '';
+    } else {
+      label.style.display = 'none';
+    }
+  });
+}
+
+// Keyboard shortcuts
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeSidebar();
+  if (e.key === '+' || e.key === '=') zoomIn();
+  if (e.key === '-') zoomOut();
+  if (e.key === '0') zoomReset();
+});
+
+// Close sidebar on canvas click
+document.getElementById('canvas-container').addEventListener('click', e => {
+  if (e.target === document.getElementById('canvas-container') || e.target === canvas) {
+    closeSidebar();
+  }
+});
+</script>
+</body>
+</html>
