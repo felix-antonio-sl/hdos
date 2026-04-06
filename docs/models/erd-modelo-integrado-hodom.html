@@ -65,7 +65,7 @@ body {
   overflow: auto;
 }
 #canvas {
-  position: relative; width: 2700px; height: 2100px;
+  position: relative; width: 2700px; height: 2300px;
   transform-origin: top left;
 }
 #svg-layer {
@@ -118,6 +118,16 @@ body {
   color: #fff; padding: 1px 4px; border-radius: 3px;
   font-size: 7px; font-weight: 700; margin-left: 3px;
 }
+.audit-badge {
+  background: linear-gradient(135deg, var(--lime), var(--green));
+  color: #0f172a; padding: 1px 4px; border-radius: 3px;
+  font-size: 7px; font-weight: 700; margin-left: 3px;
+}
+.trigger-indicator {
+  display: inline-block; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--amber); margin-left: 4px; vertical-align: middle;
+  box-shadow: 0 0 4px var(--amber);
+}
 #sidebar {
   position: fixed; top: 72px; right: -380px; bottom: 0; width: 380px;
   background: rgba(30,41,59,0.97); backdrop-filter: blur(12px);
@@ -166,7 +176,7 @@ body {
 <div id="header">
   <div>
     <h1>ERD Modelo Integrado HODOM</h1>
-    <span class="subtitle">Grothendieck ∫F — 4 Capas Autónomas · 32 Entidades · SQLite DDL</span>
+    <span class="subtitle">Grothendieck ∫F — 4 Capas Autónomas · 43 Tablas · 6 Triggers · SQLite DDL (Post-Auditoría)</span>
   </div>
   <div id="legend">
     <div class="legend-item"><div class="legend-dot" style="background:#10b981"></div>Territorial</div>
@@ -174,11 +184,14 @@ body {
     <div class="legend-item"><div class="legend-dot" style="background:#f97316"></div>Operacional</div>
     <div class="legend-item"><div class="legend-dot" style="background:#ef4444"></div>Reporte</div>
     <div class="legend-item"><div class="legend-dot" style="background:linear-gradient(135deg,#ec4899,#f97316)"></div>Cross-layer</div>
+    <div class="legend-item"><div class="legend-dot" style="background:linear-gradient(135deg,#84cc16,#10b981)"></div>Auditoría</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#f59e0b;box-shadow:0 0 4px #f59e0b"></div>Trigger</div>
   </div>
 </div>
 <div id="stats-bar">
-  <div class="stat">Tablas <span class="stat-val">32</span></div>
-  <div class="stat">Índices <span class="stat-val">81</span></div>
+  <div class="stat">Tablas <span class="stat-val">43</span></div>
+  <div class="stat">Triggers <span class="stat-val">6</span></div>
+  <div class="stat">Índices <span class="stat-val">87</span></div>
   <div class="stat">Identity Keys <span class="stat-val">8</span></div>
   <div class="stat">Path Equations <span class="stat-val">10</span></div>
   <div class="stat">Vistas <span class="stat-val">3</span></div>
@@ -209,15 +222,15 @@ const CLUSTERS = {
   },
   clinica: {
     id:'clinica', label:'Capa 1 · Clínica',
-    color:'#3b82f6', x:20, y:370, w:890, h:1020
+    color:'#3b82f6', x:20, y:370, w:890, h:1210
   },
   operacional: {
     id:'operacional', label:'Capa 2 · Operacional',
-    color:'#f97316', x:950, y:370, w:810, h:1020
+    color:'#f97316', x:950, y:370, w:810, h:1210
   },
   reporte: {
     id:'reporte', label:'Capa 4 · Reporte',
-    color:'#ef4444', x:200, y:1430, w:1360, h:440
+    color:'#ef4444', x:200, y:1620, w:1360, h:440
   }
 };
 
@@ -390,6 +403,22 @@ const ENTITIES = [
     ],
     desc:'Encuesta post-egreso (OPM SD1.6). 45 columnas: Likert por profesional, educación al alta, valoración global. 33 registros legacy.'
   },
+  // ── CLÍNICA — Auditoría: lifecycle estadía + episodios fuente ──
+  {id:'evento_estadia', cluster:'clinica', x:660, y:955,
+    attrs:[
+      {n:'event_id',t:'INT',k:'pk'},{n:'stay_id',t:'TEXT',k:'fk'},
+      {n:'timestamp',t:'TIMESTAMP'},{n:'estado_nuevo',t:'ENUM 6'},
+      {n:'proceso_opm',t:'ENUM 7'}
+    ],
+    desc:'AUDITORÍA P6. Lifecycle OPM SD1 materializado. 6 estados: pendiente_evaluacion→elegible→admitido→activo→egresado→fallecido. 7 procesos OPM trazables.'
+  },
+  {id:'estadia_episodio_fuente', cluster:'clinica', x:40, y:1135,
+    attrs:[
+      {n:'stay_id',t:'TEXT',k:'fk'},{n:'episode_id',t:'TEXT',k:'pk'},
+      {n:'source_origin',t:'TEXT'}
+    ],
+    desc:'AUDITORÍA P12. Reemplaza source_episode_ids (TEXT concatenado) con morfismos verificables. Cada referencia a episodio fuente es una FK.'
+  },
 
   // ── OPERACIONAL — Profesionales ──
   {id:'profesional', cluster:'operacional', x:970, y:415,
@@ -483,9 +512,29 @@ const ENTITIES = [
     ],
     desc:'Call log estructurado. ~6000 registros legacy. OPM: Remote Care Regulating + Follow-Up Call Executing. FHIR: Communication.'
   },
+  // ── OPERACIONAL — Auditoría: junction tables ──
+  {id:'requerimiento_orden_mapping', cluster:'operacional', x:1410, y:955,
+    attrs:[
+      {n:'req_id',t:'TEXT',k:'fk'},{n:'order_id',t:'TEXT',k:'fk'}
+    ],
+    desc:'AUDITORÍA P3. Cierra composición plan→requerimiento→orden. El morfismo "se transforma en" materializado como junction.'
+  },
+  {id:'orden_servicio_insumo', cluster:'operacional', x:970, y:1135,
+    attrs:[
+      {n:'order_id',t:'TEXT',k:'fk'},{n:'item_id',t:'TEXT',k:'fk'},
+      {n:'cantidad',t:'INT'}
+    ],
+    desc:'AUDITORÍA P8. Junction M:N OrdenServicio↔Insumo. Pullback sobre service_type materializado.'
+  },
+  {id:'zona_profesional', cluster:'operacional', x:1210, y:1135,
+    attrs:[
+      {n:'zone_id',t:'TEXT',k:'fk'},{n:'provider_id',t:'TEXT',k:'fk'}
+    ],
+    desc:'AUDITORÍA P9. Junction M:N Zona↔Profesional para cobertura. Reemplaza comunas_cobertura (TEXT libre).'
+  },
 
   // ── REPORTE ──
-  {id:'rem_personas_atendidas', cluster:'reporte', x:220, y:1475,
+  {id:'rem_personas_atendidas', cluster:'reporte', x:220, y:1665,
     attrs:[
       {n:'periodo',t:'YYYY-MM',k:'pk'},{n:'establecimiento_id',t:'TEXT',k:'pk'},
       {n:'componente',t:'ENUM 7',k:'pk'},{n:'total',t:'INT'},
@@ -494,14 +543,14 @@ const ENTITIES = [
     ],
     desc:'REM A21 C.1.1. 7 componentes × 14 dimensiones. Derivado de Estadia + Paciente. Validado contra REM julio 2023 real.'
   },
-  {id:'rem_visitas', cluster:'reporte', x:520, y:1475,
+  {id:'rem_visitas', cluster:'reporte', x:520, y:1665,
     attrs:[
       {n:'periodo',t:'YYYY-MM',k:'pk'},{n:'establecimiento_id',t:'TEXT',k:'pk'},
       {n:'profesion_rem',t:'ENUM 9',k:'pk'},{n:'total_visitas',t:'INT'}
     ],
     desc:'REM A21 C.1.2. Visitas por profesión. Derivado de Visita + Profesional WHERE rem_reportable. Validado: matrona/psicólogo/TO = SIN PROFESIONAL en HSC.'
   },
-  {id:'rem_cupos', cluster:'reporte', x:820, y:1475,
+  {id:'rem_cupos', cluster:'reporte', x:820, y:1665,
     attrs:[
       {n:'periodo',t:'YYYY-MM',k:'pk'},{n:'establecimiento_id',t:'TEXT',k:'pk'},
       {n:'componente',t:'ENUM 3',k:'pk'},{n:'total',t:'INT'},
@@ -509,7 +558,7 @@ const ENTITIES = [
     ],
     desc:'REM A21 C.1.3. Cupos: programados/utilizados/disponibles × 6 tipos. Input manual (OPM SD6: Capacity Managing). REM julio 2023: 20/18/2.'
   },
-  {id:'kpi_diario', cluster:'reporte', x:220, y:1640,
+  {id:'kpi_diario', cluster:'reporte', x:220, y:1830,
     attrs:[
       {n:'fecha',t:'DATE',k:'pk'},{n:'zone_id',t:'TEXT',k:'pk'},
       {n:'tasa_cumplimiento',t:'REAL'},{n:'tasa_puntualidad',t:'REAL'},
@@ -517,7 +566,7 @@ const ENTITIES = [
     ],
     desc:'9 KPIs operacionales diarios por zona. Metas: cumplimiento ≥90%, puntualidad ≥85%, EVV ≥98%.'
   },
-  {id:'descomposicion_temporal', cluster:'reporte', x:520, y:1640,
+  {id:'descomposicion_temporal', cluster:'reporte', x:520, y:1830,
     attrs:[
       {n:'visit_id',t:'TEXT',k:'pk'},{n:'travel_min',t:'REAL'},
       {n:'atencion_min',t:'REAL'},{n:'documentacion_min',t:'REAL'},
@@ -525,7 +574,7 @@ const ENTITIES = [
     ],
     desc:'8 segmentos temporales por visita. Calculado desde evento_visita consecutivos. Identifica cuellos de botella.'
   },
-  {id:'reporte_cobertura', cluster:'reporte', x:820, y:1640,
+  {id:'reporte_cobertura', cluster:'reporte', x:820, y:1830,
     attrs:[
       {n:'report_id',t:'TEXT',k:'pk'},{n:'patient_id',t:'TEXT',k:'fk'},
       {n:'order_id',t:'TEXT',k:'fk'},{n:'tasa_cobertura',t:'REAL'},
@@ -533,7 +582,7 @@ const ENTITIES = [
     ],
     desc:'Cobertura por paciente y orden: planificadas vs realizadas. Vincula con reportabilidad REM.'
   },
-  {id:'maquina_estados_ref', cluster:'reporte', x:1120, y:1640,
+  {id:'maquina_estados_ref', cluster:'reporte', x:1120, y:1830,
     attrs:[
       {n:'from_state',t:'TEXT',k:'pk'},{n:'to_state',t:'TEXT',k:'pk'},
       {n:'trigger',t:'TEXT'},{n:'actor',t:'TEXT'}
@@ -561,6 +610,8 @@ const RELATIONSHIPS = [
   {from:'plan_cuidado',to:'necesidad_profesional',label:'necesita',card:'1..*',color:'#8b5cf6'},
   {from:'plan_cuidado',to:'meta',label:'objetivo',card:'0..*',color:'#8b5cf6'},
   {from:'encuesta_satisfaccion',to:'estadia',label:'evalúa',card:'*..1',color:'#3b82f6'},
+  {from:'estadia',to:'evento_estadia',label:'lifecycle',card:'1..*',color:'#3b82f6'},
+  {from:'estadia',to:'estadia_episodio_fuente',label:'fuentes',card:'1..*',color:'#3b82f6'},
 
   // Operacional intra
   {from:'profesional',to:'agenda_profesional',label:'disponibilidad',card:'1..*',color:'#f97316'},
@@ -572,6 +623,14 @@ const RELATIONSHIPS = [
   {from:'visita',to:'evento_visita',label:'registra',card:'1..*',color:'#ec4899'},
   {from:'visita',to:'ruta',label:'pertenece a',card:'*..1',color:'#ec4899'},
   {from:'visita',to:'decision_despacho',label:'evaluado por',card:'1..*',color:'#ec4899'},
+
+  // Operacional — junction tables (auditoría)
+  {from:'requerimiento_cuidado',to:'requerimiento_orden_mapping',label:'se transforma',card:'1..*',color:'#8b5cf6',dashed:true},
+  {from:'requerimiento_orden_mapping',to:'orden_servicio',label:'genera',card:'*..1',color:'#8b5cf6',dashed:true},
+  {from:'orden_servicio',to:'orden_servicio_insumo',label:'requiere',card:'1..*',color:'#f97316'},
+  {from:'insumo',to:'orden_servicio_insumo',label:'requerido por',card:'1..*',color:'#f97316'},
+  {from:'zona',to:'zona_profesional',label:'cobertura',card:'1..*',color:'#6366f1',dashed:true},
+  {from:'profesional',to:'zona_profesional',label:'cubre',card:'1..*',color:'#6366f1',dashed:true},
 
   // Cross-layer: Clínica ↔ Territorial
   {from:'estadia',to:'establecimiento',label:'establecimiento',card:'*..1',color:'#06b6d4',dashed:true},
@@ -597,6 +656,9 @@ const RELATIONSHIPS = [
   {from:'descomposicion_temporal',to:'visita',label:'visit_id',card:'1..1',color:'#ef4444',dashed:true},
 ];
 
+// Entities with triggers (from audit)
+const TRIGGERS = ['visita', 'orden_servicio', 'encuesta_satisfaccion', 'evento_visita', 'profesional'];
+
 // ===================== RENDERING =====================
 const canvas = document.getElementById('canvas');
 const svgLayer = document.getElementById('svg-layer');
@@ -620,7 +682,10 @@ ENTITIES.forEach(e => {
   div.style.cssText = `left:${e.x}px;top:${e.y}px;`;
   const cl = CLUSTERS[e.cluster];
   const rels = RELATIONSHIPS.filter(r => r.from === e.id || r.to === e.id);
-  let html = `<div class="entity-header" style="border-left:3px solid ${cl.color}"><span>${e.id}</span><span class="rel-count">${rels.length}</span></div><div class="entity-body">`;
+  const isAudit = e.desc && e.desc.startsWith('AUDITORÍA');
+  const hasTrigger = TRIGGERS.includes(e.id);
+  const badges = (isAudit ? '<span class="audit-badge">AUDIT</span>' : '') + (hasTrigger ? '<span class="trigger-indicator" title="Tiene trigger"></span>' : '');
+  let html = `<div class="entity-header" style="border-left:3px solid ${cl.color}"><span>${e.id}${badges}</span><span class="rel-count">${rels.length}</span></div><div class="entity-body">`;
   const maxAttrs = 6;
   e.attrs.slice(0, maxAttrs).forEach(a => {
     const icon = a.k === 'pk' ? '<span class="pk">PK</span>' : a.k === 'fk' ? '<span class="fk">→</span>' : '';
