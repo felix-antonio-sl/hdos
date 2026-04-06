@@ -232,18 +232,18 @@ def build_hospitalization_pairs(
     *,
     desde: str = "2025-01-01",
 ) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
-    """Match ingresos → egresos by RUN, return (pairs, orphan_ing, orphan_egr)."""
+    """Match ingresos → egresos by RUN, canon-guided per patient."""
     from collections import defaultdict
     from datetime import datetime
 
-    def pd_date(s: str):
+    def _d(s: str):
         try:
             return datetime.fromisoformat(s).date()
         except Exception:
             return None
 
-    ing = ingresos[ingresos["fecha_ingreso"] >= desde].to_dict("records") if not ingresos.empty else []
-    egr = egresos[egresos["fecha_egreso"] >= desde].to_dict("records") if not egresos.empty else []
+    ing_period = ingresos[ingresos["fecha_ingreso"] >= desde].to_dict("records") if not ingresos.empty else []
+    egr_period = egresos[egresos["fecha_egreso"] >= desde].to_dict("records") if not egresos.empty else []
     all_ing = ingresos.to_dict("records") if not ingresos.empty else []
 
     canon_by_rut: dict[str, list[dict]] = defaultdict(list)
@@ -253,77 +253,156 @@ def build_hospitalization_pairs(
             if rut:
                 canon_by_rut[rut].append(r)
 
+    # Agrupar por RUN
     ing_by_run: dict[str, list[dict]] = defaultdict(list)
     for i in all_ing:
         run = str(i.get("run", "")).strip()
         if run:
             ing_by_run[run].append(i)
 
+    egr_by_run: dict[str, list[dict]] = defaultdict(list)
+    for e in egr_period:
+        run = str(e.get("run", "")).strip()
+        if run:
+            egr_by_run[run].append(e)
+
+    all_runs = set(r.get("run", "") for r in ing_period if r.get("run")) | set(
+        r.get("run", "") for r in egr_period if r.get("run")
+    )
+
+    pairs: list[dict] = []
     used_ing: set[str] = set()
     used_egr: set[str] = set()
-    pairs: list[dict] = []
 
-    for e in sorted(egr, key=lambda x: x.get("fecha_egreso", "")):
-        run = str(e.get("run", "")).strip()
-        if not run:
-            continue
-        fe = e["fecha_egreso"]
-        cands = []
-        for i in ing_by_run.get(run, []):
-            iid = i["ingreso_id"]
-            if iid in used_ing:
+    def _make_pair(run: str, fi: str, fe: str, iid: str, eid: str) -> None:
+        fi_d = _d(fi)
+        fe_d = _d(fe)
+        pairs.append(
+            {
+                "run": run,
+                "fecha_ingreso": fi,
+                "fecha_egreso": fe,
+                "dias_estadia": (fe_d - fi_d).days if fi_d and fe_d else 0,
+                "ingreso_id": iid,
+                "egreso_id": eid,
+            }
+        )
+
+    for run in sorted(all_runs):
+        p_ings = sorted(ing_by_run.get(run, []), key=lambda x: x["fecha_ingreso"])
+        p_egrs = sorted(egr_by_run.get(run, []), key=lambda x: x["fecha_egreso"])
+        p_canons = sorted(
+            [
+                c
+                for c in canon_by_rut.get(run, [])
+                if _d(c.get("fecha_egreso", "")) and _d(c.get("fecha_egreso", "")) >= _d(desde)
+            ],
+            key=lambda x: x.get("fecha_ingreso", ""),
+        )
+
+        local_used_i: set[str] = set()
+        local_used_e: set[str] = set()
+
+        # --- Paso 1: canon-guided (para todos, no solo multi) ---
+        for c in p_canons:
+            c_fi = _d(c.get("fecha_ingreso", ""))
+            c_fe = _d(c.get("fecha_egreso", ""))
+            if not c_fe:
                 continue
-            fi = i["fecha_ingreso"]
-            if fi <= fe:
-                gap = (pd_date(fe) - pd_date(fi)).days  # type: ignore[operator]
-                cands.append((gap, i))
-        if not cands:
-            for s in canon_by_rut.get(run, []):
-                fi = str(s.get("fecha_ingreso", ""))
-                if fi and fi <= fe:
-                    gap = (pd_date(fe) - pd_date(fi)).days  # type: ignore[operator]
-                    cands.append((gap, {"ingreso_id": f"canon_{s['stay_id']}", "run": run, "fecha_ingreso": fi}))
-        if cands:
-            cands.sort(key=lambda x: x[0])
-            gap, best = cands[0]
-            if gap <= 120:
-                pairs.append(
-                    {
-                        "run": run,
-                        "fecha_ingreso": best["fecha_ingreso"],
-                        "fecha_egreso": fe,
-                        "dias_estadia": gap,
-                        "ingreso_id": best["ingreso_id"],
-                        "egreso_id": e["egreso_id"],
-                    }
-                )
-                used_ing.add(best["ingreso_id"])
-                used_egr.add(e["egreso_id"])
 
-    orphan_ing_rows = [i for i in ing if i["ingreso_id"] not in used_ing]
+            # Buscar egreso más cercano al canónico (±7d)
+            best_e = None
+            best_e_gap = 999
+            for e in p_egrs:
+                if e["egreso_id"] in local_used_e:
+                    continue
+                e_d = _d(e["fecha_egreso"])
+                if not e_d:
+                    continue
+                gap = abs((e_d - c_fe).days)
+                if gap <= 7 and gap < best_e_gap:
+                    best_e = e
+                    best_e_gap = gap
+
+            if not best_e:
+                continue
+
+            # Buscar ingreso formulario más cercano al canónico (±7d)
+            best_i = None
+            best_i_gap = 999
+            if c_fi:
+                for i in p_ings:
+                    if i["ingreso_id"] in local_used_i:
+                        continue
+                    i_d = _d(i["fecha_ingreso"])
+                    if not i_d:
+                        continue
+                    gap = abs((i_d - c_fi).days)
+                    if gap <= 7 and gap < best_i_gap:
+                        best_i = i
+                        best_i_gap = gap
+
+            fi = best_i["fecha_ingreso"] if best_i else c.get("fecha_ingreso", "")
+            iid = best_i["ingreso_id"] if best_i else f"canon_{c['stay_id']}"
+
+            _make_pair(run, fi, best_e["fecha_egreso"], iid, best_e["egreso_id"])
+            if best_i:
+                local_used_i.add(best_i["ingreso_id"])
+            local_used_e.add(best_e["egreso_id"])
+
+        # --- Paso 2: cronológico para sobrantes del paciente ---
+        rem_egrs = [e for e in p_egrs if e["egreso_id"] not in local_used_e]
+        for e in rem_egrs:
+            e_d = _d(e["fecha_egreso"])
+            if not e_d:
+                continue
+            best = None
+            best_gap = 999
+            for i in p_ings:
+                if i["ingreso_id"] in local_used_i:
+                    continue
+                i_d = _d(i["fecha_ingreso"])
+                if not i_d or i_d > e_d:
+                    continue
+                gap = (e_d - i_d).days
+                if gap <= 120 and gap < best_gap:
+                    best = i
+                    best_gap = gap
+            if not best:
+                # Fallback canónico
+                for s in canon_by_rut.get(run, []):
+                    fi = s.get("fecha_ingreso", "")
+                    fi_d = _d(fi)
+                    if fi_d and fi_d <= e_d:
+                        gap = (e_d - fi_d).days
+                        if gap <= 120 and gap < best_gap:
+                            best = {"ingreso_id": f"canon_{s['stay_id']}", "fecha_ingreso": fi}
+                            best_gap = gap
+            if best:
+                _make_pair(run, best["fecha_ingreso"], e["fecha_egreso"], best["ingreso_id"], e["egreso_id"])
+                local_used_i.add(best["ingreso_id"])
+                local_used_e.add(e["egreso_id"])
+
+        # Registrar globalmente
+        used_ing.update(local_used_i)
+        used_egr.update(local_used_e)
+
+    # --- Paso 3: rescatar ingresos huérfanos con egreso canónico ---
+    orphan_ing_rows = [i for i in ing_period if i["ingreso_id"] not in used_ing]
     for i in list(orphan_ing_rows):
         run = str(i.get("run", "")).strip()
         if not run:
             continue
-        fi_d = pd_date(i["fecha_ingreso"])
+        fi_d = _d(i["fecha_ingreso"])
         for s in canon_by_rut.get(run, []):
             fe = str(s.get("fecha_egreso", ""))
-            fe_d = pd_date(fe)
+            fe_d = _d(fe)
             if fe_d and fi_d and fe_d >= fi_d and (fe_d - fi_d).days <= 120:
-                pairs.append(
-                    {
-                        "run": run,
-                        "fecha_ingreso": i["fecha_ingreso"],
-                        "fecha_egreso": fe,
-                        "dias_estadia": (fe_d - fi_d).days,
-                        "ingreso_id": i["ingreso_id"],
-                        "egreso_id": f"canon_{s['stay_id']}",
-                    }
-                )
+                _make_pair(run, i["fecha_ingreso"], fe, i["ingreso_id"], f"canon_{s['stay_id']}")
                 orphan_ing_rows.remove(i)
                 break
 
-    orphan_egr_rows = [e for e in egr if e["egreso_id"] not in used_egr]
+    orphan_egr_rows = [e for e in egr_period if e["egreso_id"] not in used_egr]
 
     return (
         pd.DataFrame(pairs) if pairs else pd.DataFrame(),

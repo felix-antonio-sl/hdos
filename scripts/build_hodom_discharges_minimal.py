@@ -270,6 +270,8 @@ def apply_manual_resolution(
                     updated["fecha_egreso"] = new_date
             elif action == "force_pair_canon":
                 updated["force_pair_canon"] = "1"
+            elif action == "add_canon":
+                pass  # handled separately in main
         resolved_rows.append(updated)
     return resolved_rows
 
@@ -405,6 +407,35 @@ def main() -> None:
     identity_lookup = load_identity_run_lookup(args.identity_master)
     minimal_rows = apply_identity_run_backfill(minimal_rows, identity_lookup)
     manual_resolution = load_manual_resolution(args.manual_resolution)
+    # Inject canon-rescued egresos from add_canon resolutions
+    for res_id, res in manual_resolution.items():
+        action = base.normalize_whitespace(res.get("action", "")).lower()
+        if action != "add_canon":
+            continue
+        parts = base.normalize_whitespace(res.get("run", "")).split("|")
+        if len(parts) != 3:
+            continue
+        run, fi, fe = parts
+        import hashlib
+        uid = hashlib.sha256(f"canon_rescue|{run}|{fe}".encode()).hexdigest()[:16]
+        minimal_rows.append(
+            {
+                "egreso_id": f"canon_{uid}",
+                "run": run,
+                "rut_raw": run,
+                "rut_valido": "1",
+                "nombre": base.normalize_whitespace(res.get("notes", "")).split(".")[0],
+                "fecha_ingreso": fi,
+                "fecha_egreso": fe,
+                "motivo_egreso": "",
+                "diagnostico": "",
+                "comuna": "",
+                "direccion_referencia": "",
+                "source_file": "canonical_rescue",
+                "source_sheet": "canon",
+                "source_row_number": "",
+            }
+        )
     minimal_rows = apply_manual_resolution(minimal_rows, manual_resolution)
     strict_rows, rejected_rows = split_strict_minimal_discharge_rows(
         [row for row in minimal_rows if row.get("manual_discard") != "1"]

@@ -27,3 +27,45 @@ alta_84fc77e1273bbd07,discard,,MARIA SAN MARTIN DE LA FUENTES 7831165-7. Sin ing
 sgh_5f933d285e670015,discard,,INADINA VALENZUELA BELMAR 6454659-7 egr=2025-05-19. Estadía sin formulario ingreso. Matching consume ing 2024 incorrectamente.
 alta_5a601188fae65f33,force_pair_canon,,ROSA MUÑOZ AGURTO 8750352-6. Canon: ing=2025-07-30 egr=2025-08-04. Ingreso formulario compartido con otro RUT por bug dedup.
 alta_445f90fc6456c2a9,force_pair_canon,,JUANA MUÑOZ SALINAS 9939529-K. Canon: ing=2025-09-26 egr=2025-10-06. Ingreso formulario compartido con otro RUT por bug dedup.
+sgh_5692d50319364e69,discard,,Duplicado SGH ±3d de altas. 10677524-9 egr=2025-01-03.
+sgh_b4b7446204eeb564,discard,,Duplicado SGH ±3d de altas. 4448868-K egr=2025-01-14.
+sgh_1f8d2a19cf3574ee,discard,,Duplicado SGH ±3d de altas. 14158800-1 egr=2025-02-04.
+sgh_637be033061103d1,discard,,Duplicado SGH ±3d de altas. 8278305-9 egr=2025-02-04.
+sgh_71d6606953c640bf,discard,,Duplicado SGH ±3d de altas. 6524427-6 egr=2025-02-11.
+sgh_d96d1339151313c9,discard,,Duplicado SGH ±3d de altas. 8453631-8 egr=2025-03-11.
+sgh_b7d3e02171074657,discard,,Duplicado SGH ±3d de altas. 6393007-5 egr=2025-03-17.
+sgh_61500c874bdbbb99,discard,,Duplicado SGH ±3d de altas. 14278058-5 egr=2025-03-26.
+sgh_6c3fdcdb3e6b02d4,discard,,Duplicado SGH ±3d de altas. 4038136-8 egr=2025-04-30.
+sgh_45b0452cd349d36b,discard,,Duplicado SGH ±3d de altas. 18489395-9 egr=2025-05-02.
+sgh_ddaf746152855bc7,discard,,Duplicado SGH ±3d de altas. 5359019-5 egr=2025-05-13.
+sgh_20ef2ff25738d3da,discard,,Duplicado SGH ±3d de altas. 10308291-9 egr=2025-05-16.
+sgh_f5aa01e12267e4bf,discard,,Duplicado SGH ±3d de altas. 5011583-6 egr=2025-05-30.
+sgh_e54dfcdf7027544b,discard,,Duplicado SGH ±3d de altas. 9737703-0 egr=2025-06-02.
+sgh_7541b5e7d117e90e,discard,,Duplicado SGH ±3d de altas. 15160412-9 egr=2025-06-16.
+sgh_6ef55c7c2b28e2ce,discard,,Duplicado SGH ±3d de altas. 19823292-0 egr=2025-06-16.
+sgh_24956a79b4082df2,discard,,Duplicado SGH ±3d de altas. 7057166-8 egr=2025-07-18.
+sgh_b6dd04a0f6ac674c,discard,,Duplicado SGH ±3d de altas. 6017365-6 egr=2025-07-21.
+sgh_fb6fa908cfaeb19c,discard,,Duplicado SGH ±3d de altas. 9737703-0 egr=2025-07-25.
+sgh_4f65db7c51d481ee,discard,,Duplicado SGH ±3d de altas. 10191686-3 egr=2025-07-30.
+sgh_77e4c8974daf6ea7,discard,,Duplicado SGH ±3d de altas. 8923769-6 egr=2025-08-07.
+sgh_58d4585defc58c8b,discard,,Duplicado SGH ±3d de altas. 4269182-8 egr=2025-08-22.
+sgh_04e380d11e96276d,discard,,Duplicado SGH ±3d de altas. 3409598-1 egr=2025-10-03.
+sgh_b7b42ddf540b0c6c,discard,,Duplicado SGH ±3d de altas. 5359793-9 egr=2025-10-10.
+sgh_18b5cf4d9e478fb8,discard,,Duplicado SGH ±3d de altas. 10270393-6 egr=2025-10-17.
+sgh_d36f2518a3f00de5,discard,,Duplicado SGH ±3d de altas. 14320262-3 egr=2025-10-20.
+sgh_26be1f0dfa8c15b7,discard,,Duplicado SGH ±3d de altas. 14304500-5 egr=2025-11-24.
+sgh_273a5c5b551b016f,discard,,Duplicado SGH ±3d de altas. 10355590-6 egr=2025-12-09.
+sgh_6205a1036a06a5d9,discard,,Duplicado SGH ±3d de altas. 3702621-2 egr=2025-12-09.
+sgh_ed127d7428b5ae54,discard,,Duplicado SGH ±3d de altas. 3908885-1 egr=2025-12-25.
+sgh_04ca5e5c3b591df4,discard,,Duplicado SGH ±3d de altas. 5052372-1 egr=2025-12-29.
+sgh_80b9b7f02a6a670a,discard,,Duplicado SGH ±3d de altas. 4710140-9 egr=2026-01-05.
+sgh_bc41b5e196f54703,discard,,Duplicado SGH ±3d de altas. 5986351-7 egr=2026-03-06.
+canon_rescue_7341969,add_canon,7341969-7|2025-03-03|2025-03-03,FRESIA NOVOA ESPINOZA. Egreso rescatado del canónico (merged).
+canon_rescue_7323873,add_canon,7323873-0|2025-04-30|2025-05-04,RITA GONZALEZ JELDRES. Egreso rescatado del canónico (consolidated).
+canon_rescue_5938594,add_canon,5938594-1|2025-05-17|2025-05-23,FRESIA MERIÑO GODOY. Egreso rescatado del canónico (merged).
+canon_rescue_8471270,add_canon,8471270-1|2025-06-13|2025-06-13,ELIZABETH SEPULVEDA ORTIZ. Egreso rescatado del canónico (consolidated).
+canon_rescue_9732545,add_canon,9732545-6|2025-06-13|2025-06-19,MANUEL OLGUIN MUÑOZ. Egreso rescatado del canónico (consolidated).
+canon_rescue_19486673,add_canon,19486673-9|2025-07-07|2025-07-08,EMERSON QUEZADA TORRES. Egreso rescatado del canónico (consolidated).
+canon_rescue_6424991,add_canon,6424991-6|2025-09-10|2025-09-20,ERNESTO JARA VALVERDE. Egreso rescatado del canónico (consolidated).
+canon_rescue_2996108,add_canon,2996108-5|2025-12-01|2025-12-16,OLGA MORENO VASQUEZ. Egreso rescatado del canónico (merged).
+canon_rescue_14278775,add_canon,14278775-K|2026-01-29|2026-02-01,SYLVIA RODRIGUEZ. Egreso rescatado del canónico (consolidated).
