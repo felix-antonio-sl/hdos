@@ -1,5 +1,5 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
 set -euo pipefail
 
-cd /Users/felixsanhueza/Developer/_workspaces/hdos
-exec .venv/bin/streamlit run streamlit_app.py "$@"
+cd "$(dirname "$0")/.."
+exec .venv/bin/streamlit run apps/streamlit_dashboard.py "$@"

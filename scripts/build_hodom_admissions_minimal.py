@@ -12,19 +12,26 @@ import migrate_hodom_csv as base
 import openpyxl
 from build_hodom_enriched import canonical_name, dedupe_form_rows, parse_form_workbook
 
+REPO_DIR = Path(__file__).resolve().parents[1]
+DOWNLOADS_DIR = Path.home() / "Downloads"
 
 DEFAULT_FORM_PATHS = [
-    Path("/Users/felixsanhueza/Downloads/2025 FORMULARIO HODOM (1).xlsx"),
-    Path("/Users/felixsanhueza/Downloads/2025 FORMULARIO HODOM (2).xlsx"),
-    Path("/Users/felixsanhueza/Downloads/2025 FORMULARIO HODOM.xlsx"),
-    Path("/Users/felixsanhueza/Downloads/FORMULARIO 2026 RESP (respuestas) (1).xlsx"),
-    Path("/Users/felixsanhueza/Downloads/FORMULARIO 2026 RESP (respuestas) (2).xlsx"),
-    Path("/Users/felixsanhueza/Downloads/FORMULARIO 2026 RESP (respuestas).xlsx"),
-    Path("/Users/felixsanhueza/Developer/_workspaces/hdos/documentacion-legacy/Hodom-hsc-dia-1/2025 FORMULARIO HODOM.xlsx"),
-    Path("/Users/felixsanhueza/Developer/_workspaces/hdos/documentacion-legacy/Hodom-hsc-dia-1/FORMULARIO 2026 RESP (respuestas).xlsx"),
+    DOWNLOADS_DIR / "2025 FORMULARIO HODOM (1).xlsx",
+    DOWNLOADS_DIR / "2025 FORMULARIO HODOM (2).xlsx",
+    DOWNLOADS_DIR / "2025 FORMULARIO HODOM.xlsx",
+    DOWNLOADS_DIR / "FORMULARIO 2026 RESP (respuestas) (1).xlsx",
+    DOWNLOADS_DIR / "FORMULARIO 2026 RESP (respuestas) (2).xlsx",
+    DOWNLOADS_DIR / "FORMULARIO 2026 RESP (respuestas).xlsx",
+    REPO_DIR / "documentacion-legacy" / "Hodom-hsc-dia-1" / "2025 FORMULARIO HODOM.xlsx",
+    REPO_DIR / "documentacion-legacy" / "Hodom-hsc-dia-1" / "FORMULARIO 2026 RESP (respuestas).xlsx",
 ]
 LEGACY_FALLBACK_PATH = Path(
-    "/Users/felixsanhueza/Developer/_workspaces/hdos/input/reference/legacy_imports/form_response_exports/formulario-hodom-2025-copia-export-2024-05-20-respuestas.csv"
+    REPO_DIR
+    / "input"
+    / "reference"
+    / "legacy_imports"
+    / "form_response_exports"
+    / "formulario-hodom-2025-copia-export-2024-05-20-respuestas.csv"
 )
 
 DEFAULT_OUTPUT_PATH = Path("output/spreadsheet/hospitalizaciones/ingresos_minimos.csv")

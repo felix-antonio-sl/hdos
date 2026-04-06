@@ -1,0 +1,2 @@
+episode_discharge_id,discharge_event_id,episode_id,patient_id,fecha_ingreso,fecha_egreso,motivo_egreso,diagnostico,match_score,match_status,resolution_status,episode_origin,source_file,source_sheet,source_row_number
+edc_85d5a004a0533564,alta_8019f3e35dca398c,,pt_efff6feea0eff3e8,2025-11-10,2025-12-09,ALTA,SINDROME INTESTINO CORTO ( NTP),100,matched_exact,AUTO,merged,PLANILLA DE ALTAS 26.xlsx,08 - 14 DE DICIEMBRE 2025,5

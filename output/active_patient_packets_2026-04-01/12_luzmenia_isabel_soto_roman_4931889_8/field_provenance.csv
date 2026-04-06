@@ -1,0 +1,4 @@
+field_provenance_id,entity_type,entity_id,field_name,selected_value,selected_source,selected_confidence,competing_values_json
+fp_be9e894f459a4e40,episode,ep_1b257efe28ec5f3a,request_prestacion,REHABILITACIÓN (KINE + FONO),formulario_hodom,155,"{""baseline"": """", ""form"": ""REHABILITACIÓN (KINE + FONO)""}"
+fp_0f6ce4b0c3b1d0ec,episode,ep_1b257efe28ec5f3a,gestora,melissa sepulveda meriño,formulario_hodom,155,"{""baseline"": """", ""form"": ""melissa sepulveda meriño""}"
+fp_a55ba3d59d40cfdc,patient,pt_d3866ca9d0a8b2c6,domicilio,"lomas de puyaral, los canelos #295",formulario_hodom,155,"{""baseline"": ""LOMAS DE PUYARAL, LOS CANELOS 295"", ""form"": ""lomas de puyaral, los canelos #295""}"

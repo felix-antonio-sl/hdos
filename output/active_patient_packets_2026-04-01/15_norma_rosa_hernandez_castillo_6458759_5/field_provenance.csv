@@ -1,0 +1,10 @@
+field_provenance_id,entity_type,entity_id,field_name,selected_value,selected_source,selected_confidence,competing_values_json
+fp_5def425d8ec976a2,episode,ep_cc5573b7d47c8d43,request_prestacion,CURACION + KNT M + TTO EV,formulario_hodom,100,"{""baseline"": """", ""form"": ""CURACION + KNT M + TTO EV""}"
+fp_201a2e633a07a110,episode,ep_cc5573b7d47c8d43,gestora,CAMILA BUSTAMANTE,formulario_hodom,100,"{""baseline"": """", ""form"": ""CAMILA BUSTAMANTE""}"
+fp_652ae8a29a104808,patient,pt_53860d2bc5566151,rut_raw,6.458.759-5,formulario_hodom,100,"{""baseline"": ""6458759-5"", ""form"": ""6.458.759-5""}"
+fp_163ad6a3849096d4,patient,pt_53860d2bc5566151,nombres,NORMA ROSA,formulario_hodom,100,"{""baseline"": ""NORMA"", ""form"": ""NORMA ROSA""}"
+fp_1cb27071a866d725,patient,pt_53860d2bc5566151,nombre_completo,NORMA ROSA HERNANDEZ CASTILLO,formulario_hodom,100,"{""baseline"": ""NORMA HERNANDEZ CASTILLO"", ""form"": ""NORMA ROSA HERNANDEZ CASTILLO""}"
+fp_31b50d8683b046c2,patient,pt_53860d2bc5566151,fecha_nacimiento_date,1946-08-21,formulario_hodom,100,"{""baseline"": ""1946-08-29"", ""form"": ""1946-08-21""}"
+fp_69ac46640950b2f9,patient,pt_53860d2bc5566151,edad_reportada,79,formulario_hodom,100,"{""baseline"": ""77"", ""form"": ""79""}"
+fp_02696ad5fe0135c5,patient,pt_53860d2bc5566151,domicilio,OSSA 53,formulario_hodom,100,"{""baseline"": ""OSSA"", ""form"": ""OSSA 53""}"
+fp_b2a053b78c8043f5,patient,pt_53860d2bc5566151,cesfam,C. TERESA BALDECCHI,formulario_hodom,100,"{""baseline"": ""C.T.BALDECHI"", ""form"": ""C. TERESA BALDECCHI""}"

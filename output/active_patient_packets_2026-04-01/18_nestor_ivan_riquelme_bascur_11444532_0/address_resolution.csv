@@ -1,0 +1,2 @@
+address_resolution_id,patient_id,episode_id,raw_address,raw_comuna,raw_cesfam,resolved_establishment_id,resolved_locality_id,establishment_match_confidence,locality_match_confidence,resolution_status
+adr_a0aaa3ce083f275a,pt_efff6feea0eff3e8,,millauquen,C. D. TRUJILLO,C. DURÁN TRUJILLO,est_4a50d9e625a5c238,loc_a9685e8eb0af7fb7,1.0,0.3,PARTIAL

@@ -1,0 +1,2 @@
+episode_discharge_id,discharge_event_id,episode_id,patient_id,fecha_ingreso,fecha_egreso,motivo_egreso,diagnostico,match_score,match_status,resolution_status,episode_origin,source_file,source_sheet,source_row_number
+edc_ae42580c202c1d7b,alta_0ce3ecd12c48f871,,pt_bc319465f9a27410,2026-03-21,2026-03-23,REHOSPITALIZACION,BRONCONEUMONIA,125,matched_exact,AUTO,merged,PLANILLA DE ALTAS 26.xlsx,23 - 29 DE MARZO 2026,2

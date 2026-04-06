@@ -1,0 +1,5 @@
+field_provenance_id,entity_type,entity_id,field_name,selected_value,selected_source,selected_confidence,competing_values_json
+fp_d4ccde429a5e0fd9,episode,ep_02551bb3f265128a,request_prestacion,TTO EV,formulario_hodom,135,"{""baseline"": """", ""form"": ""TTO EV""}"
+fp_842f899ef0be648c,episode,ep_02551bb3f265128a,gestora,PIA VASQUEZ M.,formulario_hodom,135,"{""baseline"": """", ""form"": ""PIA VASQUEZ M.""}"
+fp_63c1d1fd1fcef887,patient,pt_6f1e576675f76a4a,nro_contacto,981486458,formulario_hodom,135,"{""baseline"": ""968477964"", ""form"": ""981486458""}"
+fp_79a676fdc24476a7,patient,pt_6f1e576675f76a4a,cesfam,C. TERESA BALDECCHI,formulario_hodom,135,"{""baseline"": ""C.TERESA BALDECHI"", ""form"": ""C. TERESA BALDECCHI""}"

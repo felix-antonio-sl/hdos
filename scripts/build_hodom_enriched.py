@@ -27,15 +27,18 @@ except ImportError:  # pragma: no cover - optional runtime dependency
     pyogrio = None
 
 
+REPO_DIR = Path(__file__).resolve().parents[1]
+DOWNLOADS_DIR = Path.home() / "Downloads"
+
 FORM_SOURCE_PATHS = [
-    Path("/Users/felixsanhueza/Downloads/2025 FORMULARIO HODOM (1).xlsx"),
-    Path("/Users/felixsanhueza/Downloads/2025 FORMULARIO HODOM (2).xlsx"),
-    Path("/Users/felixsanhueza/Downloads/FORMULARIO 2026 RESP (respuestas) (1).xlsx"),
+    DOWNLOADS_DIR / "2025 FORMULARIO HODOM (1).xlsx",
+    DOWNLOADS_DIR / "2025 FORMULARIO HODOM (2).xlsx",
+    DOWNLOADS_DIR / "FORMULARIO 2026 RESP (respuestas) (1).xlsx",
 ]
 
-DISCHARGE_SOURCE_PATH = Path("/Users/felixsanhueza/Downloads/PLANILLA DE ALTAS 26.xlsx")
-GEODB_REFERENCE_PATH = Path("/Users/felixsanhueza/Downloads/Cartografía_censo2024_R16.gdb")
-GEODB_DICTIONARY_PATH = Path("/Users/felixsanhueza/Downloads/Diccionario_variables_geograficas_CPV24.xlsx")
+DISCHARGE_SOURCE_PATH = REPO_DIR / "input" / "reference" / "legacy_imports" / "planilla-altas-2024-2026.xlsx"
+GEODB_REFERENCE_PATH = DOWNLOADS_DIR / "Cartografía_censo2024_R16.gdb"
+GEODB_DICTIONARY_PATH = DOWNLOADS_DIR / "Diccionario_variables_geograficas_CPV24.xlsx"
 DEIS_REFERENCE_URL = "https://www.minsal.cl/wp-content/uploads/2018/12/Listado-Establecimientos-DEIS.pdf"
 INE_GEODATA_URL = "https://www.ine.gob.cl/herramientas/portal-de-mapas/geodatos-abiertos/"
 INE_CENSO_NUBLE_URL = "https://regiones.ine.gob.cl/nuble/prensa/ine-publica-bases-de-datos-a-nivel-de-manzana-y-cartografia-del-censo-de-poblacion-y-vivienda-2024"
@@ -1805,6 +1808,49 @@ def build_enriched_outputs(
 
     enriched_patients = {row["patient_id"]: dict(row) for row in baseline_patients}
     enriched_episodes = {row["episode_id"]: dict(row) for row in baseline_episodes}
+
+    def ensure_enriched_patient(
+        patient_id: str,
+        patient_key: str,
+        patient_key_strategy: str,
+        seed: dict[str, str],
+    ) -> dict[str, str]:
+        patient = enriched_patients.get(patient_id)
+        if patient is not None:
+            return patient
+        patient = {
+            "patient_id": patient_id,
+            "canonical_patient_key": patient_key,
+            "identity_resolution_status": "AUTO" if seed.get("rut") else "AMBIGUOUS",
+            "patient_key": patient_key,
+            "patient_key_strategy": patient_key_strategy,
+            "rut": seed.get("rut", ""),
+            "rut_valido": "1" if seed.get("rut") else "0",
+            "rut_raw": seed.get("rut_raw", ""),
+            "nombres": seed.get("nombres", ""),
+            "apellido_paterno": seed.get("apellido_paterno", ""),
+            "apellido_materno": seed.get("apellido_materno", ""),
+            "apellidos": seed.get("apellidos", ""),
+            "nombre_completo": seed.get("nombre_completo", ""),
+            "sexo": seed.get("sexo", ""),
+            "fecha_nacimiento_date": seed.get("fecha_nacimiento_date", ""),
+            "fecha_nacimiento_raw": seed.get("fecha_nacimiento_raw", ""),
+            "edad_reportada": seed.get("edad_reportada", ""),
+            "nacionalidad": seed.get("nacionalidad", ""),
+            "nro_contacto": seed.get("nro_contacto", ""),
+            "domicilio": seed.get("domicilio", ""),
+            "comuna": seed.get("comuna", ""),
+            "cesfam": seed.get("cesfam", ""),
+            "episode_count": seed.get("episode_count", "1"),
+            "source_files": seed.get("source_files", ""),
+            "patient_resolution_status": "AUTO" if seed.get("rut") else "AMBIGUOUS",
+            "canonical_address_text": seed.get("canonical_address_text", seed.get("domicilio", "")),
+            "canonical_locality_id": seed.get("canonical_locality_id", ""),
+            "canonical_establishment_id": seed.get("canonical_establishment_id", ""),
+        }
+        enriched_patients[patient_id] = patient
+        return patient
+
     for episode in enriched_episodes.values():
         episode["episode_origin"] = "raw"
         episode["resolution_status"] = "AUTO"
@@ -1910,7 +1956,29 @@ def build_enriched_outputs(
                 record_provenance("episode", linked_episode_id, "gestora", form["gestora"], "formulario_hodom", competing, f"{score}")
             episode["form_source_count"] = form["form_source_count"]
 
-            patient = enriched_patients[linked_patient_id]
+            patient = ensure_enriched_patient(
+                linked_patient_id,
+                patient_key,
+                patient_key_strategy,
+                {
+                    "rut": form["rut_norm"],
+                    "rut_raw": form["rut_raw"],
+                    "nombres": form["nombres"],
+                    "apellido_paterno": form["apellido_paterno"],
+                    "apellido_materno": form["apellido_materno"],
+                    "apellidos": form["apellidos"],
+                    "nombre_completo": form["nombre_completo"],
+                    "sexo": form["sexo"],
+                    "fecha_nacimiento_date": form["fecha_nacimiento"],
+                    "fecha_nacimiento_raw": form["fecha_nacimiento"],
+                    "edad_reportada": form["edad_reportada"],
+                    "nro_contacto": form["contact_norm"],
+                    "domicilio": form["direccion"],
+                    "cesfam": form["cesfam"],
+                    "source_files": form["source_files"],
+                    "canonical_address_text": form["direccion"],
+                },
+            )
             for field_name, form_value in {
                 "rut": form["rut_norm"],
                 "rut_raw": form["rut_raw"],
@@ -2038,7 +2106,29 @@ def build_enriched_outputs(
                     record_provenance("episode", linked_episode_id, "gestora", form["gestora"], "formulario_hodom_auto_review", competing, f"{score}")
                 episode["form_source_count"] = form["form_source_count"]
 
-                patient = enriched_patients[linked_patient_id]
+                patient = ensure_enriched_patient(
+                    linked_patient_id,
+                    patient_key,
+                    patient_key_strategy,
+                    {
+                        "rut": form["rut_norm"],
+                        "rut_raw": form["rut_raw"],
+                        "nombres": form["nombres"],
+                        "apellido_paterno": form["apellido_paterno"],
+                        "apellido_materno": form["apellido_materno"],
+                        "apellidos": form["apellidos"],
+                        "nombre_completo": form["nombre_completo"],
+                        "sexo": form["sexo"],
+                        "fecha_nacimiento_date": form["fecha_nacimiento"],
+                        "fecha_nacimiento_raw": form["fecha_nacimiento"],
+                        "edad_reportada": form["edad_reportada"],
+                        "nro_contacto": form["contact_norm"],
+                        "domicilio": form["direccion"],
+                        "cesfam": form["cesfam"],
+                        "source_files": form["source_files"],
+                        "canonical_address_text": form["direccion"],
+                    },
+                )
                 for field_name, form_value in {
                     "rut": form["rut_norm"],
                     "rut_raw": form["rut_raw"],
@@ -2115,15 +2205,12 @@ def build_enriched_outputs(
                     "rescue_priority": rescue_prio,
                 }
             )
-            if linked_patient_id not in enriched_patients:
-                enriched_patients[linked_patient_id] = {
-                    "patient_id": linked_patient_id,
-                    "canonical_patient_key": patient_key,
-                    "identity_resolution_status": "AMBIGUOUS",
-                    "patient_key": patient_key,
-                    "patient_key_strategy": patient_key_strategy,
+            ensure_enriched_patient(
+                linked_patient_id,
+                patient_key,
+                patient_key_strategy,
+                {
                     "rut": form["rut_norm"],
-                    "rut_valido": "1" if form["rut_norm"] else "0",
                     "rut_raw": form["rut_raw"],
                     "nombres": form["nombres"],
                     "apellido_paterno": form["apellido_paterno"],
@@ -2134,18 +2221,13 @@ def build_enriched_outputs(
                     "fecha_nacimiento_date": form["fecha_nacimiento"],
                     "fecha_nacimiento_raw": form["fecha_nacimiento"],
                     "edad_reportada": form["edad_reportada"],
-                    "nacionalidad": "",
                     "nro_contacto": form["contact_norm"],
                     "domicilio": form["direccion"],
-                    "comuna": "",
                     "cesfam": form["cesfam"],
-                    "episode_count": "1",
                     "source_files": form["source_files"],
-                    "patient_resolution_status": "AMBIGUOUS",
                     "canonical_address_text": form["direccion"],
-                    "canonical_locality_id": "",
-                    "canonical_establishment_id": "",
-                }
+                },
+            )
             if materialize_rescue:
                 enriched_episodes[rescue_id] = {
                     "episode_id": rescue_id,
@@ -2274,7 +2356,20 @@ def build_enriched_outputs(
                 if baseline_value != value:
                     episode[field_name] = value
                     record_provenance("episode", linked_episode_id, field_name, value, "planilla_altas", {"baseline": baseline_value, "alta": value}, f"{score}")
-            patient = enriched_patients[linked_patient_id]
+            patient = ensure_enriched_patient(
+                linked_patient_id,
+                patient_key,
+                patient_key_strategy,
+                {
+                    "rut": discharge["rut_norm"],
+                    "rut_raw": discharge["rut_raw"],
+                    "nombre_completo": discharge["nombre_completo"],
+                    "domicilio": discharge["direccion_o_comuna"],
+                    "comuna": discharge["comuna"],
+                    "source_files": discharge["source_file"],
+                    "canonical_address_text": discharge["direccion_o_comuna"],
+                },
+            )
             for field_name, value in {
                 "rut": discharge["rut_norm"],
                 "rut_raw": discharge["rut_raw"],
@@ -2308,37 +2403,20 @@ def build_enriched_outputs(
                     "rescue_priority": rescue_prio,
                 }
             )
-            if linked_patient_id not in enriched_patients:
-                enriched_patients[linked_patient_id] = {
-                    "patient_id": linked_patient_id,
-                    "canonical_patient_key": patient_key,
-                    "identity_resolution_status": "AMBIGUOUS",
-                    "patient_key": patient_key,
-                    "patient_key_strategy": patient_key_strategy,
+            ensure_enriched_patient(
+                linked_patient_id,
+                patient_key,
+                patient_key_strategy,
+                {
                     "rut": discharge["rut_norm"],
-                    "rut_valido": "1" if discharge["rut_norm"] else "0",
                     "rut_raw": discharge["rut_raw"],
-                    "nombres": "",
-                    "apellido_paterno": "",
-                    "apellido_materno": "",
-                    "apellidos": "",
                     "nombre_completo": discharge["nombre_completo"],
-                    "sexo": "",
-                    "fecha_nacimiento_date": "",
-                    "fecha_nacimiento_raw": "",
-                    "edad_reportada": "",
-                    "nacionalidad": "",
-                    "nro_contacto": "",
                     "domicilio": discharge["direccion_o_comuna"],
                     "comuna": discharge["comuna"],
-                    "cesfam": "",
-                    "episode_count": "1",
                     "source_files": discharge["source_file"],
-                    "patient_resolution_status": "AMBIGUOUS",
                     "canonical_address_text": discharge["direccion_o_comuna"],
-                    "canonical_locality_id": "",
-                    "canonical_establishment_id": "",
-                }
+                },
+            )
             enriched_episodes[rescue_episode_id] = {
                 "episode_id": rescue_episode_id,
                 "patient_id": linked_patient_id,
@@ -3209,8 +3287,8 @@ def write_readme(path: Path, outputs: dict[str, list[dict[str, str]]]) -> None:
         "",
         "## Fuentes adicionales",
         "",
-        "- Formularios HODOM 2025/2026 desde `/Users/felixsanhueza/Downloads`.",
-        "- Planilla de altas 2024-2026 desde `/Users/felixsanhueza/Downloads/PLANILLA DE ALTAS 26.xlsx`.",
+        "- Formularios HODOM 2025/2026 desde `~/Downloads` o desde otras rutas entregadas al runner.",
+        "- Planilla de altas 2024-2026 desde `input/reference/legacy_imports/planilla-altas-2024-2026.xlsx`.",
         "- Referencia oficial de establecimientos desde el PDF DEIS.",
         "- Referencia territorial estructurante desde las paginas oficiales INE/Censo 2024.",
         "",

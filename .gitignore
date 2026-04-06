@@ -1,2 +1,10 @@
 .DS_Store
 **/.DS_Store
+.venv/
+.pytest_cache/
+__pycache__/
+**/__pycache__/
+*.py[cod]
+
+# Archivos grandes (>100MB, no soportados por GitHub)
+*.zip

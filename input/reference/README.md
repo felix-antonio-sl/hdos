@@ -35,5 +35,6 @@ El loader intenta reconocer automáticamente nombres como:
 Después de dejar los snapshots en esta carpeta:
 
 ```bash
-python3 /Users/felixsanhueza/Developer/_workspaces/hdos/scripts/build_hodom_enriched.py
+cd "$(git rev-parse --show-toplevel)"
+.venv/bin/python scripts/build_hodom_enriched.py
 ```

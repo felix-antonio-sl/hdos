@@ -1,0 +1,8 @@
+field_provenance_id,entity_type,entity_id,field_name,selected_value,selected_source,selected_confidence,competing_values_json
+fp_d5c5b7281aa301c6,episode,ep_4df28cb93192d1a9,request_prestacion,REHABILITACIÓN,formulario_hodom,145,"{""baseline"": """", ""form"": ""REHABILITACIÓN""}"
+fp_2581be57bcd27f84,episode,ep_4df28cb93192d1a9,gestora,PIA VASQUEZ M,formulario_hodom,145,"{""baseline"": """", ""form"": ""PIA VASQUEZ M""}"
+fp_9245166055251767,patient,pt_f8665241652134c7,cesfam,C. TERESA BALDECCHI,formulario_hodom,145,"{""baseline"": ""TERESA BALDECCHI"", ""form"": ""C. TERESA BALDECCHI""}"
+fp_85a8744ba7bc202f,episode,ep_bce677c63f7198ae,request_prestacion,KTM-KTR,formulario_hodom,145,"{""baseline"": """", ""form"": ""KTM-KTR""}"
+fp_540307bb7a2546bd,episode,ep_bce677c63f7198ae,gestora,MELISSA RIVERA,formulario_hodom,145,"{""baseline"": """", ""form"": ""MELISSA RIVERA""}"
+fp_2f1920d84437e62e,patient,pt_f8665241652134c7,nro_contacto,86520660,formulario_hodom,145,"{""baseline"": ""986520660"", ""form"": ""86520660""}"
+fp_65259a47a325176b,patient,pt_f8665241652134c7,comuna,TERESA BALDECCHI,planilla_altas,125,"{""baseline"": ""SAN CARLOS"", ""alta"": ""TERESA BALDECCHI""}"

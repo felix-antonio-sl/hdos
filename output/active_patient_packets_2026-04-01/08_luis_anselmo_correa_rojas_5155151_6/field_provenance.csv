@@ -1,0 +1,11 @@
+field_provenance_id,entity_type,entity_id,field_name,selected_value,selected_source,selected_confidence,competing_values_json
+fp_bbe9cc6e3001e311,episode,ep_daa5f536d053f9a5,request_prestacion,REHABILITACIÓN (KINE + FONO),formulario_hodom_auto_review,35,"{""baseline"": """", ""form"": ""REHABILITACIÓN (KINE + FONO)""}"
+fp_63a3c608882756f0,episode,ep_daa5f536d053f9a5,gestora,MELISSA RIVERA SEPULVEDA,formulario_hodom_auto_review,35,"{""baseline"": """", ""form"": ""MELISSA RIVERA SEPULVEDA""}"
+fp_ded4e594e674b899,patient,pt_043207819da54134,rut,5155151-6,formulario_hodom_auto_review,35,"{""baseline"": ""9888109-3"", ""form"": ""5155151-6""}"
+fp_4580ee9604f15bea,patient,pt_043207819da54134,rut_raw,5155151-6,formulario_hodom_auto_review,35,"{""baseline"": ""9888109-3"", ""form"": ""5155151-6""}"
+fp_e8980d11587d7a43,patient,pt_043207819da54134,nombres,LUIS,formulario_hodom_auto_review,35,"{""baseline"": ""VICTOR"", ""form"": ""LUIS""}"
+fp_c630f2201e372962,patient,pt_043207819da54134,apellidos,CORREA ROJAS,formulario_hodom_auto_review,35,"{""baseline"": ""BELMAR BELMAR"", ""form"": ""CORREA ROJAS""}"
+fp_8a5daeb3484bd47d,patient,pt_043207819da54134,nombre_completo,LUIS CORREA ROJAS,formulario_hodom_auto_review,35,"{""baseline"": ""VICTOR BELMAR BELMAR"", ""form"": ""LUIS CORREA ROJAS""}"
+fp_3ee7897b3080030b,patient,pt_043207819da54134,fecha_nacimiento_date,1944-05-29,formulario_hodom_auto_review,35,"{""baseline"": ""1964-01-30"", ""form"": ""1944-05-29""}"
+fp_23f782b2faa052b2,patient,pt_043207819da54134,edad_reportada,81,formulario_hodom_auto_review,35,"{""baseline"": ""62"", ""form"": ""81""}"
+fp_1b6f7c5ccd355e94,patient,pt_043207819da54134,domicilio,MATTA 210,formulario_hodom_auto_review,35,"{""baseline"": ""PEDRO LAGOS 121"", ""form"": ""MATTA 210""}"

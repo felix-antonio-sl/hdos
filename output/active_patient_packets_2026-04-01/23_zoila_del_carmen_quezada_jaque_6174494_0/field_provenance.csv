@@ -1,0 +1,6 @@
+field_provenance_id,entity_type,entity_id,field_name,selected_value,selected_source,selected_confidence,competing_values_json
+fp_ddab334c5ea8f074,episode,ep_52192f4d68f3a590,request_prestacion,"TTO EV, KTM-KTR",formulario_hodom,120,"{""baseline"": """", ""form"": ""TTO EV, KTM-KTR""}"
+fp_859e42b099aa7fe3,episode,ep_52192f4d68f3a590,gestora,MELISSA RIVERA,formulario_hodom,120,"{""baseline"": """", ""form"": ""MELISSA RIVERA""}"
+fp_d30dc78eedc496c0,patient,pt_d80e3e10ebdbe55e,fecha_nacimiento_date,1946-06-26,formulario_hodom,120,"{""baseline"": ""1946-06-29"", ""form"": ""1946-06-26""}"
+fp_72b984379e6e1b3c,patient,pt_d80e3e10ebdbe55e,nro_contacto,95116493,formulario_hodom,120,"{""baseline"": ""995116493"", ""form"": ""95116493""}"
+fp_bbb3b7bbb46a0ff9,patient,pt_d80e3e10ebdbe55e,domicilio,"27 DE ABRIL, PJE ROBERTO BUSTAMANTE 713",formulario_hodom,120,"{""baseline"": ""27 DE ABRIL. PJE ROBERTO BUSTAMANTE 713"", ""form"": ""27 DE ABRIL, PJE ROBERTO BUSTAMANTE 713""}"

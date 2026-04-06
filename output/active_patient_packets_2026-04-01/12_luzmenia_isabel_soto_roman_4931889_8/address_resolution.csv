@@ -1,0 +1,2 @@
+address_resolution_id,patient_id,episode_id,raw_address,raw_comuna,raw_cesfam,resolved_establishment_id,resolved_locality_id,establishment_match_confidence,locality_match_confidence,resolution_status
+adr_ea21a3727b85ea04,pt_d3866ca9d0a8b2c6,,"lomas de puyaral, los canelos #295",SAN CARLOS,C. DURÁN TRUJILLO,est_4a50d9e625a5c238,loc_5ef7a9d41fb260f7,1.0,0.3,PARTIAL

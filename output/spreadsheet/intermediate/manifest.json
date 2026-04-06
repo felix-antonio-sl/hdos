@@ -1,23 +1,23 @@
 {
-  "generated_at": "2026-04-01T12:13:31",
+  "generated_at": "2026-04-02T02:36:24",
   "rut_corrections_applied": 67,
   "tables": {
-    "raw_source_file": 31,
-    "raw_source_row": 3774,
-    "normalized_row": 2998,
-    "patient_identity_candidate": 1696,
-    "patient_master": 1218,
-    "patient_identity_link": 1696,
-    "episode": 1696,
-    "episode_source_link": 2998,
-    "episode_diagnosis": 1696,
+    "raw_source_file": 32,
+    "raw_source_row": 5116,
+    "normalized_row": 4335,
+    "patient_identity_candidate": 3028,
+    "patient_master": 1287,
+    "patient_identity_link": 3028,
+    "episode": 3028,
+    "episode_source_link": 4335,
+    "episode_diagnosis": 2426,
     "episode_care_requirement": 4140,
     "episode_professional_need": 1959,
     "patient_contact_point": 1456,
     "patient_address": 1570,
     "episode_location_snapshot": 1696,
-    "data_quality_issue": 1844,
+    "data_quality_issue": 1851,
     "catalog_value": 146,
-    "rut_correction_queue": 0
+    "rut_correction_queue": 2
   }
 }

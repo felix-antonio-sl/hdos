@@ -1,0 +1,3 @@
+quality_issue_id,normalized_row_id,episode_id,issue_type,severity,raw_value,suggested_value,status
+dq_cc331275faa16fb1,nr_907f48231319255b,ep_c9d3c05b86312484,ENUM_NORMALIZED,LOW,,,RESOLVED_AUTO
+dq_47cf55b1f841fd18,nr_45644083dcfa1680,ep_c9d3c05b86312484,ENUM_NORMALIZED,LOW,,,RESOLVED_AUTO

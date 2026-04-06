@@ -358,16 +358,18 @@ def suggested_value(note: str, record: dict[str, str]) -> str:
     return ""
 
 
-def load_raw_source_layers(source_dir: Path) -> tuple[list[dict[str, str]], list[dict[str, str]], dict[str, str]]:
+def load_raw_source_layers(
+    source_dir: Path,
+    sgh_source_path: Path | None = base.DEFAULT_SGH_SOURCE_PATH,
+) -> tuple[list[dict[str, str]], list[dict[str, str]], dict[str, str]]:
     raw_files: list[dict[str, str]] = []
     raw_rows: list[dict[str, str]] = []
     file_id_by_name: dict[str, str] = {}
     imported_at = datetime.now().isoformat(timespec="seconds")
 
-    for path in sorted(source_dir.glob("*.csv")):
+    for path in base.iter_source_paths(source_dir, sgh_source_path):
         file_bytes = path.read_bytes()
-        with path.open("r", encoding="utf-8-sig", newline="") as handle:
-            rows = list(csv.reader(handle))
+        rows = base.read_source_rows(path)
         spec = base.detect_pattern(path.name, rows)
         source_file_id = stable_id("sf", path.name)
         file_id_by_name[path.name] = source_file_id
@@ -1168,10 +1170,11 @@ def write_readme(path: Path, outputs: dict[str, list[dict[str, str]]]) -> None:
         "## Runner",
         "",
         "```bash",
-        "python3 /Users/felixsanhueza/Developer/_workspaces/hdos/scripts/build_hodom_intermediate.py",
+        "cd \"$(git rev-parse --show-toplevel)\"",
+        ".venv/bin/python scripts/build_hodom_intermediate.py",
         "```",
         "",
-        "Si existe `/Users/felixsanhueza/Developer/_workspaces/hdos/input/manual/rut_corrections.csv`, el runner aplica esas correcciones antes de deduplicar.",
+        "Si existe `input/manual/rut_corrections.csv`, el runner aplica esas correcciones antes de deduplicar.",
         "Si no existe, el runner genera ese archivo con la cola actual de RUT inválidos para que puedas completarlo.",
         "",
         "## Capas",
@@ -1209,7 +1212,7 @@ def main() -> None:
     parser.add_argument(
         "--source-dir",
         type=Path,
-        default=Path("salida de csv desde planillas hodom ingresos"),
+        default=Path("input/raw_csv_exports"),
         help="Directorio con CSV fuente.",
     )
     parser.add_argument(
@@ -1224,10 +1227,16 @@ def main() -> None:
         default=Path("input/manual/rut_corrections.csv"),
         help="Archivo opcional con correcciones manuales de RUT.",
     )
+    parser.add_argument(
+        "--sgh-source-path",
+        type=Path,
+        default=base.DEFAULT_SGH_SOURCE_PATH,
+        help="Ruta opcional a la exportación TSV del SGH para usarla como fuente base de ingresos.",
+    )
     args = parser.parse_args()
 
-    raw_files, raw_rows, file_id_by_name = load_raw_source_layers(args.source_dir)
-    raw_records = base.read_records(args.source_dir)
+    raw_files, raw_rows, file_id_by_name = load_raw_source_layers(args.source_dir, args.sgh_source_path)
+    raw_records = base.read_records(args.source_dir, args.sgh_source_path)
     corrections_by_origin, corrections_by_identity = load_rut_corrections(args.rut_corrections)
     corrections_applied = apply_rut_corrections(raw_records, corrections_by_origin, corrections_by_identity)
     kept_records, _ = base.deduplicate_records(raw_records)

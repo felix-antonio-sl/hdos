@@ -4,8 +4,8 @@ Integra formularios 2025/2026, planilla de altas y referencias oficiales para re
 
 ## Fuentes adicionales
 
-- Formularios HODOM 2025/2026 desde `/Users/felixsanhueza/Downloads`.
-- Planilla de altas 2024-2026 desde `/Users/felixsanhueza/Downloads/PLANILLA DE ALTAS 26.xlsx`.
+- Formularios HODOM 2025/2026 desde `~/Downloads` o desde otras rutas entregadas al runner.
+- Planilla de altas 2024-2026 desde `input/reference/legacy_imports/planilla-altas-2024-2026.xlsx`.
 - Referencia oficial de establecimientos desde el PDF DEIS.
 - Referencia territorial estructurante desde las paginas oficiales INE/Censo 2024.
 
@@ -20,19 +20,19 @@ Integra formularios 2025/2026, planilla de altas y referencias oficiales para re
 - `normalized_locality_reference.csv`: `1660` filas
 - `normalized_form_episode_candidate.csv`: `1921` filas
 - `normalized_discharge_episode_candidate.csv`: `1090` filas
-- `patient_master.csv`: `1468` filas
-- `episode_master.csv`: `1848` filas
+- `patient_master.csv`: `1488` filas
+- `episode_master.csv`: `3115` filas
 - `episode_request.csv`: `1921` filas
 - `episode_discharge.csv`: `1090` filas
-- `episode_rescue_candidate.csv`: `293` filas
-- `field_provenance.csv`: `13364` filas
-- `match_review_queue.csv`: `1835` filas
+- `episode_rescue_candidate.csv`: `225` filas
+- `field_provenance.csv`: `13772` filas
+- `match_review_queue.csv`: `1485` filas
 - `identity_review_queue.csv`: `5` filas
 - `establishment_reference.csv`: `86` filas
 - `locality_reference.csv`: `1660` filas
 - `locality_alias.csv`: `4768` filas
-- `address_resolution.csv`: `1468` filas
-- `data_quality_issue.csv`: `2297` filas
+- `address_resolution.csv`: `1488` filas
+- `data_quality_issue.csv`: `2202` filas
 - `reconciliation_report.csv`: `4` filas
 
 ## Fuentes web usadas

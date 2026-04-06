@@ -1,0 +1,3 @@
+episode_discharge_id,discharge_event_id,episode_id,patient_id,fecha_ingreso,fecha_egreso,motivo_egreso,diagnostico,match_score,match_status,resolution_status,episode_origin,source_file,source_sheet,source_row_number
+edc_8e70308f4171095d,alta_e33001a0f28a0198,,pt_559533c865318a0b,2026-02-18,2026-02-27,ALTA,INSUFICIENCIA RESPIRATORIA AGUDA,125,matched_exact,AUTO,merged,PLANILLA DE ALTAS 26.xlsx,23 - 01 MARZO 2026,14
+edc_fd0652147656a530,alta_595a734cfef282e9,,pt_559533c865318a0b,2025-09-04,2025-09-10,ALTA,ITU,125,matched_exact,AUTO,merged,PLANILLA DE ALTAS 26.xlsx,ALTAS 08 - 14 DE SEPTIEMBRE 25,11

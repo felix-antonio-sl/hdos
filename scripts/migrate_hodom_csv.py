@@ -121,12 +121,15 @@ FILE_SUMMARY_COLUMNS = [
 ]
 
 PATTERN_WEIGHTS = {
+    "sgh_tsv": 60,
     "p43": 40,
     "p43_headerless": 30,
     "p40": 25,
     "p27": 20,
     "p26": 15,
 }
+
+DEFAULT_SGH_SOURCE_PATH = Path("input/reference/legacy_imports/ingresos-hodom-2024-marzo-2026.txt")
 
 P43_COLUMNS = [
     "source_row_id",
@@ -276,6 +279,21 @@ P26_COLUMNS = [
     "fonoaudiologia",
 ]
 
+SGH_TSV_COLUMNS = [
+    "source_row_id",
+    "servicio_hodom",
+    "rut_raw",
+    "nombre_completo",
+    "edad_reportada",
+    "fecha_ingreso_raw",
+    "fecha_hospitalizacion_raw",
+    "sala_hospitalizacion",
+    "cama_hospitalizacion",
+    "fecha_egreso_raw",
+    "diagnostico_egreso",
+    "tipo_salida_sgh",
+]
+
 
 @dataclass(frozen=True)
 class PatternSpec:
@@ -285,6 +303,7 @@ class PatternSpec:
 
 
 PATTERN_SPECS = {
+    "sgh_tsv": PatternSpec("sgh_tsv", SGH_TSV_COLUMNS, 1),
     "p26": PatternSpec("p26", P26_COLUMNS, 1),
     "p27": PatternSpec("p27", P27_COLUMNS, 1),
     "p40": PatternSpec("p40", P40_COLUMNS, 1),
@@ -609,6 +628,8 @@ def repair_mapped_row(mapped: dict[str, str], pattern_name: str) -> tuple[dict[s
 
 def file_family(filename: str) -> str:
     upper_name = filename.upper()
+    if filename == DEFAULT_SGH_SOURCE_PATH.name:
+        return "SGH"
     if upper_name.startswith("INGRESOS"):
         return "INGRESOS"
     if upper_name.startswith("EGRESOS"):
@@ -617,6 +638,10 @@ def file_family(filename: str) -> str:
 
 
 def detect_pattern(filename: str, rows: list[list[str]]) -> PatternSpec | None:
+    if filename == DEFAULT_SGH_SOURCE_PATH.name:
+        if rows and [normalize_whitespace(cell) for cell in rows[0][:4]] == ["ID", "SERV", "Rut", "Nombres"]:
+            return PATTERN_SPECS["sgh_tsv"]
+        return None
     if filename == "NO MOD.csv":
         return None
     if filename == "EGRESOS NOVIEMBRE.csv":
@@ -642,6 +667,33 @@ def pad_row(row: list[str], width: int) -> list[str]:
     if len(row) > width:
         return row[:width]
     return row
+
+
+def read_source_rows(path: Path) -> list[list[str]]:
+    if path.suffix.lower() == ".txt":
+        with path.open("r", encoding="utf-8-sig", newline="") as handle:
+            return list(csv.reader(handle, delimiter="\t"))
+    with path.open("r", encoding="utf-8-sig", newline="") as handle:
+        return list(csv.reader(handle))
+
+
+def iter_source_paths(source_dir: Path, sgh_source_path: Path | None = None) -> list[Path]:
+    ordered: list[Path] = []
+    seen: set[Path] = set()
+
+    for path in sorted(source_dir.glob("*.csv")):
+        resolved = path.resolve()
+        if resolved in seen:
+            continue
+        seen.add(resolved)
+        ordered.append(path)
+
+    if sgh_source_path and sgh_source_path.exists():
+        resolved = sgh_source_path.resolve()
+        if resolved not in seen:
+            ordered.append(sgh_source_path)
+
+    return ordered
 
 
 def record_non_empty_fields(record: dict[str, str]) -> int:
@@ -722,6 +774,9 @@ def normalize_record(mapped: dict[str, str], filename: str, row_number: int, pat
     record["source_row_number"] = str(row_number)
     record["source_row_id"] = normalize_whitespace(mapped.get("source_row_id"))
 
+    if pattern_name == "sgh_tsv":
+        mapped["estado"] = "EGRESADO" if normalize_whitespace(mapped.get("fecha_egreso_raw")) else "ACTIVO"
+
     for key in (
         "estado",
         "motivo_egreso",
@@ -780,6 +835,10 @@ def normalize_record(mapped: dict[str, str], filename: str, row_number: int, pat
         record["apellidos"] = join_non_empty(
             [mapped.get("apellido_paterno", ""), mapped.get("apellido_materno", "")]
         )
+
+    if pattern_name == "sgh_tsv":
+        record["servicio_origen"] = ""
+        record["motivo_egreso"] = ""
 
     record["fecha_ingreso_raw"] = normalize_whitespace(mapped.get("fecha_ingreso_raw"))
     egreso_primary = normalize_whitespace(mapped.get("fecha_egreso_raw"))
@@ -867,11 +926,17 @@ def has_meaningful_payload(record: dict[str, str]) -> bool:
     return any(normalize_whitespace(record.get(field)) for field in payload_fields)
 
 
-def read_records(source_dir: Path) -> list[dict[str, str]]:
+def is_test_patient_record(record: dict[str, str]) -> bool:
+    name = canonical_text(record.get("nombre_completo", ""))
+    if not name:
+        return False
+    return "PACIENTE PRUEBA" in name
+
+
+def read_records(source_dir: Path, sgh_source_path: Path | None = DEFAULT_SGH_SOURCE_PATH) -> list[dict[str, str]]:
     records: list[dict[str, str]] = []
-    for path in sorted(source_dir.glob("*.csv")):
-        with path.open("r", encoding="utf-8-sig", newline="") as handle:
-            rows = list(csv.reader(handle))
+    for path in iter_source_paths(source_dir, sgh_source_path):
+        rows = read_source_rows(path)
         spec = detect_pattern(path.name, rows)
         if spec is None:
             continue
@@ -882,6 +947,8 @@ def read_records(source_dir: Path) -> list[dict[str, str]]:
             mapped = dict(zip(spec.columns, pad_row(row, len(spec.columns))))
             record = normalize_record(mapped, path.name, offset, spec.name)
             if not has_meaningful_payload(record):
+                continue
+            if is_test_patient_record(record):
                 continue
             records.append(record)
     return records
@@ -1141,7 +1208,7 @@ def main() -> None:
     parser.add_argument(
         "--source-dir",
         type=Path,
-        default=Path("salida de csv desde planillas hodom ingresos"),
+        default=Path("input/raw_csv_exports"),
         help="Directorio con CSV fuente.",
     )
     parser.add_argument(
@@ -1150,9 +1217,15 @@ def main() -> None:
         default=Path("output/spreadsheet"),
         help="Directorio donde se escribirán los artefactos.",
     )
+    parser.add_argument(
+        "--sgh-source-path",
+        type=Path,
+        default=DEFAULT_SGH_SOURCE_PATH,
+        help="Ruta opcional a la exportación TSV del SGH para usarla como fuente base de ingresos.",
+    )
     args = parser.parse_args()
 
-    raw_records = read_records(args.source_dir)
+    raw_records = read_records(args.source_dir, args.sgh_source_path)
     kept_records, duplicate_rows = deduplicate_records(raw_records)
     patients = build_patients(kept_records)
     summaries = file_summary(raw_records, kept_records)

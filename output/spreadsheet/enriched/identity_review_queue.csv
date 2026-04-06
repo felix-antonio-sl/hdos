@@ -1,5 +1,5 @@
 identity_review_id,issue_type,patient_id,episode_id,patient_name,patient_rut,edad_reportada,fecha_nacimiento_actual,issue_raw_value,suggested_value,fecha_ingreso,fecha_egreso,episode_origin,severity,status
-idr_2751ae7bae22bd59,DATE_PARSE_FAILED,pt_33cf0c9218a883bd,ep_befe590df25f9298,MARIA BADILLA CORREA,,44,,14026459-8,,2025-08-09,2025-08-15,raw,MEDIUM,OPEN
+idr_2751ae7bae22bd59,DATE_PARSE_FAILED,pt_33cf0c9218a883bd,ep_befe590df25f9298,MARIA BADILLA CORREA,14026459-8,44,,14026459-8,,2025-08-09,2025-08-15,merged,MEDIUM,OPEN
 idr_d1109c89792faf2f,BIRTHDATE_AGE_MISMATCH,pt_92d500f267d8f7e2,ep_20eb52ed8f4d3055,RAMON GONZALEZ SALINAS,9160062-5,58,,Tue Feb 28 1956 04:00:00 GMT-0400 (Chile Summer Time),,2024-03-01,2024-03-04,raw,MEDIUM,OPEN
 idr_acc26d94e7bef7b5,BIRTHDATE_AGE_MISMATCH,pt_f7d007b1fe53bc4f,ep_b4de2ce16ae194e6,ANDRES MALDONADO ZUÑIGA,5304150-7,79,,Sun Oct 05 1975 03:00:00 GMT-0400 (Chile Standard Time),,2024-03-20,2024-03-28,merged,MEDIUM,OPEN
 idr_5cb0e406d87e23b5,BIRTHDATE_AGE_MISMATCH,pt_3adf560449d00f99,ep_3203722261ababf9,CARMEN CORDERO NAVARRO,5509892-1,81,,15-01-19458,,2026-03-03,2026-03-11,merged,MEDIUM,OPEN

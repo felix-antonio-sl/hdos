@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-01T12:14:41",
+  "generated_at": "2026-04-02T02:37:51",
   "tables": {
     "raw_form_submission": 3709,
     "raw_discharge_sheet": 1114,
@@ -10,19 +10,19 @@
     "normalized_locality_reference": 1660,
     "normalized_form_episode_candidate": 1921,
     "normalized_discharge_episode_candidate": 1090,
-    "patient_master": 1468,
-    "episode_master": 1848,
+    "patient_master": 1488,
+    "episode_master": 3115,
     "episode_request": 1921,
     "episode_discharge": 1090,
-    "episode_rescue_candidate": 293,
-    "field_provenance": 13364,
-    "match_review_queue": 1835,
+    "episode_rescue_candidate": 225,
+    "field_provenance": 13772,
+    "match_review_queue": 1485,
     "identity_review_queue": 5,
     "establishment_reference": 86,
     "locality_reference": 1660,
     "locality_alias": 4768,
-    "address_resolution": 1468,
-    "data_quality_issue": 2297,
+    "address_resolution": 1488,
+    "data_quality_issue": 2202,
     "reconciliation_report": 4
   }
 }

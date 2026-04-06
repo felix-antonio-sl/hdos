@@ -1,0 +1,2 @@
+address_resolution_id,patient_id,episode_id,raw_address,raw_comuna,raw_cesfam,resolved_establishment_id,resolved_locality_id,establishment_match_confidence,locality_match_confidence,resolution_status
+adr_afeab9a348a1cd11,pt_b6bd8d3dd0e1167c,,MATTA 998,,C. TERESA BALDECCHI,est_afb315ffeb72b6e0,loc_becb920cc2475064,1.0,0.9,RESOLVED

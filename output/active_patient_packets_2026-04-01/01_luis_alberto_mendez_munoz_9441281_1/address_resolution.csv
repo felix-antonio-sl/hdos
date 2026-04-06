@@ -1,0 +1,2 @@
+address_resolution_id,patient_id,episode_id,raw_address,raw_comuna,raw_cesfam,resolved_establishment_id,resolved_locality_id,establishment_match_confidence,locality_match_confidence,resolution_status
+adr_8c7966a0f40a230c,pt_3c52462f7b715590,,hogar san pablo,C.TERESA BALDECHI,C. TERESA BALDECCHI,est_afb315ffeb72b6e0,loc_bc45a162aa43386d,1.0,0.9,RESOLVED

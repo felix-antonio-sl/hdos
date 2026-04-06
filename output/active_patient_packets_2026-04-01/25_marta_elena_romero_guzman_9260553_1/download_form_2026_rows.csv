@@ -1,0 +1,3 @@
+source_file,source_row_number,timestamp,nombre,rut_raw,rut_norm,fecha_nacimiento,edad,servicio_origen_solicitud,diagnostico,prestacion_solicitada,gestora,direccion,cesfam,celular
+FORMULARIO 2026 RESP (respuestas) (2).xlsx,78,2026-02-18 18:49:29.527000,MARTA ROMERO GUZMAN,9260553-1,9260553-1,27-09-1963,62.0,MEDICINA,Insuficiencia respiratoria aguda,ATB + KNT,PIA VASQUEZ M,LUIS ACEVEDO 07,C. TERESA BALDECCHI,964935098 - 990073810
+FORMULARIO 2026 RESP (respuestas) (2).xlsx,135,2026-03-26 19:29:33.566000,MARTA ROMERO GUZMAN,9260553-1,9260553-1,27/09/1963,62.0,UE,"NEUMONIA,","TTO EV, KTM-KTR",PIA VASQUEZ M,LUIS ACEVEDO 07//,C. TERESA BALDECCHI,964935098.0

@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ERD Logística HODOM — Modelo Delivery Clínico</title>
+<style>
+:root {
+  --bg: #0f172a;
+  --surface: #1e293b;
+  --border: #334155;
+  --text: #e2e8f0;
+  --text-dim: #94a3b8;
+  --text-bright: #f8fafc;
+  --blue: #3b82f6;
+  --green: #10b981;
+  --purple: #8b5cf6;
+  --amber: #f59e0b;
+  --red: #ef4444;
+  --cyan: #06b6d4;
+  --orange: #f97316;
+  --pink: #ec4899;
+  --indigo: #6366f1;
+  --lime: #84cc16;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+  background: var(--bg);
+  color: var(--text);
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+}
+#header {
+  position: fixed; top:0; left:0; right:0; z-index:100;
+  background: rgba(15,23,42,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 20px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+#header h1 { font-size: 14px; font-weight: 600; color: var(--text-bright); letter-spacing: 0.5px; }
+#header .subtitle { font-size: 11px; color: var(--text-dim); }
+#legend { display: flex; gap: 12px; align-items: center; }
+.legend-item { display: flex; align-items: center; gap: 4px; font-size: 10px; color: var(--text-dim); }
+.legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+#filter-bar {
+  position: fixed; top: 46px; left:0; right:0; z-index:99;
+  background: rgba(15,23,42,0.9);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border);
+  padding: 6px 20px;
+  display: flex; gap: 6px; align-items: center;
+}
+.filter-btn {
+  font-family: inherit; font-size: 10px; padding: 3px 10px;
+  border: 1px solid; border-radius: 12px;
+  background: transparent; cursor: pointer;
+  transition: all 0.2s;
+}
+.filter-btn.active { background: currentColor; color: var(--bg) !important; font-weight: 700; }
+.filter-btn.inactive { opacity: 0.4; }
+#zoom-controls {
+  position: fixed; bottom: 20px; right: 20px; z-index: 100;
+  display: flex; gap: 4px;
+}
+#zoom-controls button {
+  font-family: inherit; font-size: 16px; width: 32px; height: 32px;
+  border: 1px solid var(--border); border-radius: 6px;
+  background: var(--surface); color: var(--text); cursor: pointer;
+}
+#zoom-controls button:hover { background: var(--border); }
+#canvas-container {
+  position: fixed; top: 78px; left: 0; right: 0; bottom: 0;
+  overflow: auto;
+}
+#canvas {
+  position: relative;
+  width: 2100px;
+  height: 1350px;
+  transform-origin: top left;
+}
+#svg-layer {
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none; z-index: 5;
+}
+.rel-line {
+  fill: none; stroke-width: 1.5; opacity: 0.5;
+  transition: opacity 0.2s, stroke-width 0.2s;
+}
+.rel-line.highlighted { opacity: 1; stroke-width: 2.5; }
+.rel-line.dimmed { opacity: 0.08; }
+.rel-label {
+  font-size: 9px; fill: var(--text-dim);
+  opacity: 0.7; transition: opacity 0.2s;
+  pointer-events: none;
+}
+.rel-label.highlighted { opacity: 1; fill: var(--text-bright); font-weight: 600; }
+.cluster {
+  position: absolute;
+  border: 1px solid;
+  border-radius: 12px;
+  padding: 10px;
+}
+.cluster-label {
+  font-size: 10px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 1.5px;
+  margin-bottom: 8px; padding: 2px 8px;
+  border-radius: 4px; display: inline-block;
+}
+.entity {
+  position: absolute;
+  width: 185px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 10;
+}
+.entity:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  z-index: 20;
+}
+.entity.highlighted { box-shadow: 0 0 20px rgba(255,255,255,0.15); z-index: 20; }
+.entity.dimmed { opacity: 0.2; }
+.entity .entity-header {
+  padding: 8px 10px 6px;
+  border-bottom: 1px solid var(--border);
+  border-radius: 8px 8px 0 0;
+  font-size: 11px; font-weight: 700;
+  color: var(--text-bright);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.entity .entity-header .rel-count {
+  font-size: 9px; padding: 1px 5px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.1);
+  color: var(--text-dim);
+}
+.entity .entity-body { padding: 6px 10px 8px; }
+.entity-attr {
+  font-size: 10px; color: var(--text-dim);
+  padding: 1.5px 0; white-space: nowrap;
+  overflow: hidden; text-overflow: ellipsis;
+}
+.entity-attr .pk { color: var(--amber); font-size: 8px; margin-right: 2px; }
+.entity-attr .fk { color: var(--cyan); font-size: 10px; margin-right: 2px; }
+.attr-t { float: right; font-style: italic; font-size: 9px; opacity: 0.6; }
+.delivery-badge {
+  background: linear-gradient(135deg, var(--pink), var(--orange));
+  color: #fff; padding: 1px 5px; border-radius: 3px;
+  font-size: 8px; font-weight: 700; margin-left: 4px;
+}
+.existing-badge {
+  background: linear-gradient(135deg, var(--green), var(--cyan));
+  color: #fff; padding: 1px 5px; border-radius: 3px;
+  font-size: 8px; font-weight: 700; margin-left: 4px;
+}
+#sidebar {
+  position: fixed; top: 78px; right: -360px; bottom: 0; width: 360px;
+  background: var(--surface);
+  border-left: 1px solid var(--border);
+  z-index: 200;
+  transition: right 0.3s ease;
+  overflow-y: auto;
+  padding: 20px;
+}
+#sidebar.open { right: 0; }
+#sidebar .close-btn {
+  position: absolute; top: 12px; right: 12px;
+  font-size: 18px; cursor: pointer;
+  color: var(--text-dim); background: none; border: none;
+  font-family: inherit;
+}
+#sidebar .close-btn:hover { color: var(--text-bright); }
+#sidebar h2 { font-size: 16px; color: var(--text-bright); font-weight: 600; margin-bottom: 6px; }
+.resource-badge {
+  display: inline-block; font-size: 10px; padding: 2px 8px;
+  border-radius: 4px; margin-bottom: 10px;
+}
+#sidebar .section-title {
+  font-size: 10px; text-transform: uppercase; letter-spacing: 1px;
+  color: var(--text-dim); margin: 16px 0 8px; font-weight: 600;
+}
+#sidebar .attr-list { list-style: none; }
+#sidebar .attr-list li {
+  font-size: 11px; padding: 3px 0;
+  display: flex; justify-content: space-between;
+  border-bottom: 1px solid rgba(51,65,85,0.5);
+}
+#sidebar .attr-name { color: var(--text); }
+#sidebar .attr-type { color: var(--text-dim); font-style: italic; }
+#sidebar .rel-list { list-style: none; }
+#sidebar .rel-list li {
+  font-size: 11px; padding: 4px 0;
+  border-bottom: 1px solid rgba(51,65,85,0.5);
+  cursor: pointer;
+}
+#sidebar .rel-list li:hover { color: var(--text-bright); }
+#sidebar .rel-arrow { color: var(--text-dim); margin: 0 4px; }
+#sidebar .rel-target { font-weight: 600; }
+#sidebar .rel-card { color: var(--text-dim); font-size: 10px; }
+.state-machine { margin-top: 10px; }
+.state-machine .state {
+  display: inline-block; font-size: 9px; padding: 2px 6px;
+  border-radius: 4px; margin: 2px;
+  background: rgba(255,255,255,0.08); color: var(--text-dim);
+}
+.state-machine .state.active { background: var(--green); color: var(--bg); font-weight: 700; }
+.state-machine .arrow { color: var(--text-dim); font-size: 10px; }
+.analogy-box {
+  margin-top: 12px; padding: 8px 10px;
+  background: rgba(236,72,153,0.08);
+  border: 1px solid rgba(236,72,153,0.2);
+  border-radius: 6px; font-size: 11px;
+}
+.analogy-box .label { color: var(--pink); font-weight: 600; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
+</style>
+</head>
+<body>
+
+<div id="header">
+  <div>
+    <h1>ERD Logistica HODOM &mdash; Modelo Delivery Clinico</h1>
+    <span class="subtitle">8 entidades nuevas &middot; 7 existentes &middot; 6 clusters &middot; Inspirado en Uber / DoorDash / Lyft / Instacart</span>
+  </div>
+  <div id="legend"></div>
+</div>
+
+<div id="filter-bar"></div>
+
+<div id="canvas-container">
+  <div id="canvas">
+    <svg id="svg-layer"></svg>
+  </div>
+</div>
+
+<div id="sidebar">
+  <button class="close-btn" onclick="closeSidebar()">&times;</button>
+  <div id="sidebar-content"></div>
+</div>
+
+<div id="zoom-controls">
+  <button onclick="zoomOut()" title="Zoom out (-)">-</button>
+  <button onclick="zoomReset()" title="Reset (0)">&orarr;</button>
+  <button onclick="zoomIn()" title="Zoom in (+)">+</button>
+</div>
+
+<script>
+// ===================== DATA MODEL =====================
+const CLUSTERS = {
+  existente: {
+    id: 'existente', label: 'Capa Canonica (existente)',
+    color: '#10b981', x: 30, y: 30, w: 420, h: 380
+  },
+  ordenes: {
+    id: 'ordenes', label: 'Ordenes de Servicio',
+    color: '#8b5cf6', x: 500, y: 30, w: 420, h: 380
+  },
+  ejecucion: {
+    id: 'ejecucion', label: 'Ejecucion (el "Trip")',
+    color: '#ec4899', x: 30, y: 460, w: 420, h: 500
+  },
+  profesionales: {
+    id: 'profesionales', label: 'Profesionales (el "Driver")',
+    color: '#f97316', x: 500, y: 460, w: 420, h: 500
+  },
+  territorio: {
+    id: 'territorio', label: 'Territorio y Zonas',
+    color: '#6366f1', x: 970, y: 30, w: 420, h: 380
+  },
+  kpi: {
+    id: 'kpi', label: 'KPIs y Metricas',
+    color: '#ef4444', x: 970, y: 460, w: 420, h: 500
+  }
+};
+
+const ENTITIES = [
+  // ── Capa Canonica (existente) ──
+  {
+    id: 'hospitalization_stay', cluster: 'existente', x: 50, y: 75, isExisting: true,
+    attrs: [
+      {n:'stay_id',t:'TEXT',k:'pk'},{n:'patient_id',t:'TEXT',k:'fk'},
+      {n:'fecha_ingreso',t:'DATE'},{n:'fecha_egreso',t:'DATE'},
+      {n:'estado',t:'TEXT'},{n:'diagnostico_principal',t:'TEXT'},
+      {n:'servicio_origen',t:'TEXT'},{n:'establecimiento',t:'TEXT'},
+      {n:'comuna',t:'TEXT'},{n:'latitud',t:'REAL'},
+      {n:'longitud',t:'REAL'},{n:'gestora',t:'TEXT'},
+      {n:'usuario_o2',t:'TEXT'},{n:'confidence_level',t:'TEXT'},
+      {n:'source_episode_ids',t:'TEXT'},{n:'source_episode_count',t:'INT'}
+    ],
+    desc: 'Estadia hospitalaria consolidada. Entidad central del pipeline actual (Stage 4). Agrupa episodios deduplicados con confidence scoring. Genera service_orders en el modelo logistico.',
+    analogy: 'Equivale al "Customer Order History" de DoorDash: la demanda agregada del paciente.'
+  },
+  {
+    id: 'patient_master', cluster: 'existente', x: 255, y: 75, isExisting: true,
+    attrs: [
+      {n:'patient_id',t:'TEXT',k:'pk'},{n:'nombre_completo',t:'TEXT'},
+      {n:'rut',t:'TEXT'},{n:'sexo',t:'TEXT'},
+      {n:'fecha_nacimiento_date',t:'DATE'},{n:'edad_calculada',t:'INT'},
+      {n:'comuna',t:'TEXT'},{n:'cesfam',t:'TEXT'},
+      {n:'prevision',t:'TEXT'},{n:'estado_actual',t:'TEXT'},
+      {n:'total_hospitalizaciones',t:'INT'},{n:'dias_totales_estadia',t:'INT'}
+    ],
+    desc: 'Maestro de pacientes con identidad resuelta, demografia y ubicacion. Equivale al Customer de Uber. Su direccion es el "dropoff location" de cada visita.',
+    analogy: 'El "Customer" de Uber: tiene ubicacion (domicilio), preferencias, historial.'
+  },
+  {
+    id: 'episode_care_req', cluster: 'existente', x: 50, y: 255, isExisting: true,
+    attrs: [
+      {n:'episode_requirement_id',t:'TEXT',k:'pk'},{n:'episode_id',t:'TEXT',k:'fk'},
+      {n:'requirement_type',t:'ENUM'},{n:'requirement_value_norm',t:'TEXT'},
+      {n:'is_active',t:'BOOLEAN'}
+    ],
+    desc: 'Requerimientos de cuidado por episodio: CURACIONES, TTO_EV, TTO_SC, TOMA_MUESTRAS, ELEMENTOS_INVASIVOS, CSV, EDUCACION, REQUERIMIENTO_O2, MANEJO_OSTOMIAS, USUARIO_O2. Se transforma en service_orders.',
+    analogy: 'Los "order items" de DoorDash: que servicios necesita el paciente.'
+  },
+  {
+    id: 'episode_prof_need', cluster: 'existente', x: 255, y: 255, isExisting: true,
+    attrs: [
+      {n:'prof_need_id',t:'TEXT',k:'pk'},{n:'episode_id',t:'TEXT',k:'fk'},
+      {n:'professional_type',t:'ENUM'},{n:'need_level',t:'TEXT'},
+      {n:'source_column',t:'TEXT'}
+    ],
+    desc: 'Necesidades profesionales: ENFERMERIA, KINESIOLOGIA, FONOAUDIOLOGIA, MEDICO, TRABAJO_SOCIAL, FONO, KNT. Define que profesion se requiere para cada service_order.',
+    analogy: 'El "product tier" de Uber: que tipo de driver se necesita (UberX vs Black).'
+  },
+
+  // ── Ordenes de Servicio ──
+  {
+    id: 'service_order', cluster: 'ordenes', x: 520, y: 75,
+    attrs: [
+      {n:'order_id',t:'TEXT',k:'pk'},{n:'stay_id',t:'TEXT',k:'fk'},
+      {n:'patient_id',t:'TEXT',k:'fk'},{n:'service_type',t:'ENUM'},
+      {n:'profesion_requerida',t:'ENUM'},{n:'competencia_requerida',t:'TEXT'},
+      {n:'frecuencia',t:'ENUM'},{n:'duracion_est_min',t:'INT'},
+      {n:'prioridad',t:'ENUM'},{n:'requiere_continuidad',t:'BOOLEAN'},
+      {n:'profesional_asignado',t:'TEXT',k:'fk'},{n:'requiere_vehiculo',t:'BOOLEAN'},
+      {n:'insumos_requeridos',t:'TEXT'},{n:'ventana_preferida',t:'ENUM'},
+      {n:'fecha_inicio',t:'DATE'},{n:'fecha_fin',t:'DATE'},
+      {n:'estado',t:'ENUM'}
+    ],
+    desc: 'Orden de servicio recurrente derivada del plan de cuidados. Puente entre la capa clinica (episode_care_requirement + professional_need) y la capa logistica (visit). Cada orden genera N visitas segun su frecuencia.',
+    analogy: 'La "Order" de DoorDash: tiene items (service_type), prioridad (surge), ventana de entrega (delivery window), y restricciones especiales (requiere_vehiculo = requiere tipo de vehiculo especifico).'
+  },
+  {
+    id: 'sla_target', cluster: 'ordenes', x: 725, y: 75,
+    attrs: [
+      {n:'sla_id',t:'TEXT',k:'pk'},{n:'service_type',t:'TEXT'},
+      {n:'prioridad',t:'ENUM'},{n:'max_hrs_primera_visita',t:'INT'},
+      {n:'frecuencia_minima',t:'TEXT'},{n:'duracion_minima_min',t:'INT'},
+      {n:'ventana_horaria',t:'TEXT'},{n:'max_perdidas_consecutivas',t:'INT'}
+    ],
+    desc: 'Metas de nivel de servicio por tipo de prestacion y prioridad. Define los compromisos de delivery: tiempo maximo hasta primera visita, frecuencia minima, duracion minima.',
+    analogy: 'El SLO framework de DoorDash (14,000 SLOs). Define las "delivery promises" del servicio: en cuanto tiempo, con que frecuencia, por cuanto tiempo minimo.'
+  },
+  {
+    id: 'supply_item', cluster: 'ordenes', x: 520, y: 270,
+    attrs: [
+      {n:'item_id',t:'TEXT',k:'pk'},{n:'nombre',t:'TEXT'},
+      {n:'categoria',t:'ENUM'},{n:'peso_kg',t:'REAL'},
+      {n:'requiere_vehiculo',t:'BOOLEAN'},{n:'stock_actual',t:'INT'},
+      {n:'umbral_reposicion',t:'INT'}
+    ],
+    desc: 'Insumos clinicos transportados por el profesional. Categorias: CURACION, MEDICAMENTO, EQUIPO, OXIGENO, DESCARTABLE. Determina restricciones de vehiculo.',
+    analogy: 'Los "order items" fisicos de Instacart: el shopper carga los productos. El profesional carga set de curacion, O2 portatil, medicamentos.'
+  },
+  {
+    id: 'dispatch_decision', cluster: 'ordenes', x: 725, y: 270,
+    attrs: [
+      {n:'decision_id',t:'TEXT',k:'pk'},{n:'visit_id',t:'TEXT',k:'fk'},
+      {n:'provider_id',t:'TEXT',k:'fk'},{n:'decision',t:'ENUM'},
+      {n:'score_skill',t:'REAL'},{n:'score_distancia',t:'REAL'},
+      {n:'score_continuidad',t:'REAL'},{n:'score_carga',t:'REAL'},
+      {n:'score_logistica',t:'REAL'},{n:'score_total',t:'REAL'},
+      {n:'motivo_rechazo',t:'TEXT'},{n:'created_by',t:'TEXT'}
+    ],
+    desc: 'Log de decisiones de asignacion. Registra el scoring multi-factor para cada candidato evaluado. Permite auditar por que se asigno (o no) un profesional.',
+    analogy: 'El matching log de Lyft: cada arista del grafo bipartito con su peso. DoorDash DeepRed: offer generation + ML prediction + optimization.'
+  },
+
+  // ── Ejecucion (el "Trip") ──
+  {
+    id: 'visit', cluster: 'ejecucion', x: 50, y: 505,
+    attrs: [
+      {n:'visit_id',t:'TEXT',k:'pk'},{n:'order_id',t:'TEXT',k:'fk'},
+      {n:'stay_id',t:'TEXT',k:'fk'},{n:'patient_id',t:'TEXT',k:'fk'},
+      {n:'provider_id',t:'TEXT',k:'fk'},{n:'route_id',t:'TEXT',k:'fk'},
+      {n:'seq_en_ruta',t:'INT'},{n:'fecha',t:'DATE'},
+      {n:'hora_plan_inicio',t:'TIME'},{n:'hora_plan_fin',t:'TIME'},
+      {n:'hora_real_inicio',t:'TIMESTAMP'},{n:'hora_real_fin',t:'TIMESTAMP'},
+      {n:'gps_lat',t:'REAL'},{n:'gps_lng',t:'REAL'},
+      {n:'estado',t:'ENUM (12 estados)'},{n:'resultado',t:'ENUM'},
+      {n:'motivo_no_realizada',t:'ENUM'},{n:'doc_estado',t:'ENUM'},
+      {n:'rem_reportable',t:'BOOLEAN'},{n:'rem_prestacion',t:'TEXT'}
+    ],
+    desc: 'ENTIDAD CENTRAL del modelo logistico. Una visita domiciliaria concreta: profesional X va a paciente Y en fecha Z. Tiene 12 estados desde PROGRAMADA hasta REPORTADA_REM. Incluye los 6 campos EVV obligatorios (tipo servicio, paciente, profesional, fecha, ubicacion GPS, hora inicio/fin).',
+    analogy: 'El "Trip" de Uber: la unidad atomica de trabajo. Compuesto por waypoints (base -> domicilio -> siguiente visita). Con statechart lifecycle: SCHEDULED -> EN_ROUTE -> ARRIVED -> IN_PROGRESS -> COMPLETED.'
+  },
+  {
+    id: 'visit_event', cluster: 'ejecucion', x: 255, y: 505,
+    attrs: [
+      {n:'event_id',t:'INTEGER',k:'pk'},{n:'visit_id',t:'TEXT',k:'fk'},
+      {n:'timestamp',t:'TIMESTAMP'},{n:'estado_previo',t:'TEXT'},
+      {n:'estado_nuevo',t:'TEXT'},{n:'lat',t:'REAL'},
+      {n:'lng',t:'REAL'},{n:'origen',t:'ENUM'},
+      {n:'detalle',t:'JSON'}
+    ],
+    desc: 'Log inmutable de transiciones de estado. Cada cambio en el lifecycle de una visita genera un evento con timestamp, GPS y metadata. Es el audit trail completo de la ejecucion.',
+    analogy: 'Los statechart transitions de Uber + webhooks de DoorDash + los 31 webhook events de Instacart. Cada evento es un "status_changed" webhook.'
+  },
+  {
+    id: 'route', cluster: 'ejecucion', x: 50, y: 735,
+    attrs: [
+      {n:'route_id',t:'TEXT',k:'pk'},{n:'provider_id',t:'TEXT',k:'fk'},
+      {n:'fecha',t:'DATE'},{n:'estado',t:'ENUM'},
+      {n:'origen_lat',t:'REAL'},{n:'origen_lng',t:'REAL'},
+      {n:'hora_salida_plan',t:'TIME'},{n:'hora_salida_real',t:'TIMESTAMP'},
+      {n:'total_visitas',t:'INT'},{n:'km_totales',t:'REAL'},
+      {n:'minutos_viaje',t:'REAL'},{n:'minutos_atencion',t:'REAL'},
+      {n:'ratio_viaje_atencion',t:'REAL'}
+    ],
+    desc: 'Ruta diaria optimizada de un profesional: secuencia ordenada de visitas con metricas agregadas. El ratio_viaje_atencion mide eficiencia (< 0.3 = bueno, > 0.5 = ineficiente).',
+    analogy: 'El Supply Entity de Uber: "an ordered queue of waypoints across one or more trips." El profesional como vehiculo que ejecuta una secuencia de deliveries. Optimizable como VRPTW (Vehicle Routing Problem with Time Windows).'
+  },
+
+  // ── Profesionales (el "Driver") ──
+  {
+    id: 'provider', cluster: 'profesionales', x: 520, y: 505,
+    attrs: [
+      {n:'provider_id',t:'TEXT',k:'pk'},{n:'rut',t:'TEXT'},
+      {n:'nombre',t:'TEXT'},{n:'profesion',t:'ENUM'},
+      {n:'competencias',t:'TEXT[]'},{n:'vehiculo',t:'ENUM'},
+      {n:'comunas_cobertura',t:'TEXT[]'},{n:'max_visitas_dia',t:'INT'},
+      {n:'base_lat',t:'REAL'},{n:'base_lng',t:'REAL'},
+      {n:'estado',t:'ENUM'},{n:'contrato',t:'ENUM'}
+    ],
+    desc: 'Profesional de salud como recurso movil despachable. Profesiones: ENFERMERIA, KINESIOLOGIA, FONOAUDIOLOGIA, MEDICO, TRABAJO_SOCIAL, TENS, NUTRICION. Competencias: curaciones_avanzadas, oxigenoterapia, rehabilitacion_respiratoria, cuidados_paliativos, manejo_ostomias.',
+    analogy: 'El "Driver/Supply" de Uber: tiene vehiculo (form_factor), ubicacion base (home location), estado (online/offline/busy), capacidad (max trips). La diferencia: el driver es fungible, el provider tiene profesion (filtro duro) y competencias (filtro blando).'
+  },
+  {
+    id: 'provider_schedule', cluster: 'profesionales', x: 725, y: 505,
+    attrs: [
+      {n:'schedule_id',t:'TEXT',k:'pk'},{n:'provider_id',t:'TEXT',k:'fk'},
+      {n:'fecha',t:'DATE'},{n:'hora_inicio',t:'TIME'},
+      {n:'hora_fin',t:'TIME'},{n:'tipo',t:'ENUM'},
+      {n:'motivo_bloqueo',t:'TEXT'}
+    ],
+    desc: 'Disponibilidad por dia y turno. Tipos: TURNO (regular), GUARDIA, EXTRA, BLOQUEADO. Motivos de bloqueo: licencia_medica, capacitacion, feriado, administrativo.',
+    analogy: 'El "online/offline status" de Uber convertido en slots estructurados. Como los "service_option time slots" de Instacart: bloques horarios reservables. Como FHIR Schedule + Slot.'
+  },
+
+  // ── Territorio y Zonas ──
+  {
+    id: 'zone', cluster: 'territorio', x: 990, y: 75,
+    attrs: [
+      {n:'zone_id',t:'TEXT',k:'pk'},{n:'nombre',t:'TEXT'},
+      {n:'tipo',t:'ENUM'},{n:'comunas',t:'TEXT[]'},
+      {n:'centroide_lat',t:'REAL'},{n:'centroide_lng',t:'REAL'},
+      {n:'tiempo_acceso_min',t:'INT'},{n:'conectividad',t:'ENUM'},
+      {n:'capacidad_dia',t:'INT'}
+    ],
+    desc: 'Zonificacion operacional del territorio. 4 tipos: URBANO (San Carlos, 6-8 vis/dia), PERIURBANO (Coihueco/Niquen, 4-6), RURAL (Ninhue/San Fabian, 2-4), RURAL_AISLADO (precordillera, 1-2). Determina capacidad efectiva por profesional.',
+    analogy: 'Adaptacion de Uber H3 (hexagonal grid) a la realidad rural de Nuble. H3 particiona el mundo en hexagonos para medir oferta/demanda por celda. Aqui las "celdas" son zonas con caracteristicas logisticas: tiempo de acceso, conectividad movil, capacidad.'
+  },
+  {
+    id: 'distance_matrix', cluster: 'territorio', x: 1195, y: 75,
+    attrs: [
+      {n:'origin_zone_id',t:'TEXT',k:'fk'},{n:'dest_zone_id',t:'TEXT',k:'fk'},
+      {n:'km',t:'REAL'},{n:'minutos',t:'REAL'},
+      {n:'via',t:'TEXT'},{n:'updated_at',t:'TIMESTAMP'}
+    ],
+    desc: 'Matriz de distancias precalculada entre zonas/localidades. Para ~50 localidades activas = 2,500 pares. Cacheable y reutilizable para optimizacion de rutas sin llamadas externas.',
+    analogy: 'La road network de Uber (Gurafu/OSRM): grafo pesado de nodos (intersecciones) y aristas (segmentos). Simplificado a una matriz zona-a-zona para el volumen de Nuble.'
+  },
+  {
+    id: 'locality_ref', cluster: 'territorio', x: 990, y: 240, isExisting: true,
+    attrs: [
+      {n:'locality_id',t:'TEXT',k:'pk'},{n:'nombre_oficial',t:'TEXT'},
+      {n:'comuna',t:'TEXT'},{n:'territory_type',t:'TEXT'},
+      {n:'latitud',t:'REAL'},{n:'longitud',t:'REAL'}
+    ],
+    desc: 'Referencia de localidades con coordenadas (existente en enriched layer). Se vincula a zone para la zonificacion operacional.',
+    analogy: 'Los POIs (points of interest) de Uber: ubicaciones con coordenadas y metadatos.'
+  },
+
+  // ── KPIs y Metricas ──
+  {
+    id: 'kpi_daily', cluster: 'kpi', x: 990, y: 505,
+    attrs: [
+      {n:'fecha',t:'DATE',k:'pk'},{n:'zone_id',t:'TEXT',k:'fk'},
+      {n:'visitas_programadas',t:'INT'},{n:'visitas_completadas',t:'INT'},
+      {n:'visitas_no_realizadas',t:'INT'},{n:'tasa_cumplimiento',t:'REAL'},
+      {n:'tasa_puntualidad',t:'REAL'},{n:'continuidad_profesional',t:'REAL'},
+      {n:'eficiencia_ruta',t:'REAL'},{n:'tasa_documentacion',t:'REAL'},
+      {n:'tasa_evv',t:'REAL'},{n:'carga_equitativa_stddev',t:'REAL'}
+    ],
+    desc: 'Metricas operacionales diarias por zona. 9 KPIs transferidos del framework SLO de DoorDash: cumplimiento (>=90%), puntualidad (>=85%), continuidad (>=75%), eficiencia (>=70%), documentacion (>=95%), EVV (>=98%), perdidas (<=5%), carga equitativa (stddev<=2).',
+    analogy: 'El SLO dashboard de DoorDash (14,000 metricas). El delivery duration decomposition aplicado a visitas domiciliarias.'
+  },
+  {
+    id: 'time_decomposition', cluster: 'kpi', x: 1195, y: 505,
+    attrs: [
+      {n:'visit_id',t:'TEXT',k:'fk'},{n:'orden_a_asignacion_min',t:'REAL'},
+      {n:'asignacion_a_despacho_min',t:'REAL'},{n:'despacho_a_enruta_min',t:'REAL'},
+      {n:'travel_min',t:'REAL'},{n:'parking_acceso_min',t:'REAL'},
+      {n:'atencion_min',t:'REAL'},{n:'documentacion_min',t:'REAL'},
+      {n:'salida_next_min',t:'REAL'}
+    ],
+    desc: 'Descomposicion granular del tiempo de cada visita en 8 segmentos medibles. Cada segmento se calcula desde visit_events consecutivos. Permite identificar cuellos de botella.',
+    analogy: 'La delivery time decomposition de DoorDash: order-to-kitchen, travel, parking, wait, pickup, transit, dropoff. Cada segmento se optimiza por separado.'
+  },
+  {
+    id: 'coverage_report', cluster: 'kpi', x: 990, y: 715,
+    attrs: [
+      {n:'report_id',t:'TEXT',k:'pk'},{n:'periodo',t:'TEXT'},
+      {n:'patient_id',t:'TEXT',k:'fk'},{n:'order_id',t:'TEXT',k:'fk'},
+      {n:'visitas_planificadas',t:'INT'},{n:'visitas_realizadas',t:'INT'},
+      {n:'tasa_cobertura',t:'REAL'},{n:'sla_cumplido',t:'BOOLEAN'},
+      {n:'rem_incluidas',t:'INT'}
+    ],
+    desc: 'Reporte de cobertura por paciente y orden: cuantas visitas se planificaron vs cuantas se realizaron. Vincula directamente con reportabilidad REM.',
+    analogy: 'El "completion rate" de DoorDash por merchant. Aqui es por paciente: se cumplio la promesa de servicio?'
+  },
+  {
+    id: 'state_machine_ref', cluster: 'kpi', x: 1195, y: 715,
+    attrs: [
+      {n:'from_state',t:'TEXT'},{n:'to_state',t:'TEXT'},
+      {n:'trigger',t:'TEXT'},{n:'actor',t:'TEXT'},
+      {n:'uber_equivalent',t:'TEXT'}
+    ],
+    desc: '12 estados de la visita: PROGRAMADA -> ASIGNADA -> DESPACHADA -> EN_RUTA -> LLEGADA -> EN_ATENCION -> COMPLETA|PARCIAL|NO_REALIZADA -> DOCUMENTADA -> VERIFICADA -> REPORTADA_REM. Mas CANCELADA como estado terminal.',
+    analogy: 'Uber trip states: processing->accepted->arriving->in_progress->completed. DoorDash: created->confirmed->enroute_to_pickup->picked_up->delivered. Extendido con estados clinicos post-delivery.'
+  }
+];
+
+// ── RELATIONSHIPS ──
+const RELATIONSHIPS = [
+  // Existente -> Ordenes
+  {from:'hospitalization_stay',to:'service_order',label:'genera',card:'1..*',color:'#8b5cf6'},
+  {from:'patient_master',to:'service_order',label:'paciente',card:'1..*',color:'#10b981'},
+  {from:'episode_care_req',to:'service_order',label:'se transforma en',card:'1..1',color:'#8b5cf6',dashed:true},
+  {from:'episode_prof_need',to:'service_order',label:'define profesion',card:'1..1',color:'#8b5cf6',dashed:true},
+  {from:'hospitalization_stay',to:'patient_master',label:'paciente',card:'*..1',color:'#10b981'},
+
+  // Ordenes -> Ejecucion
+  {from:'service_order',to:'visit',label:'instancia',card:'1..*',color:'#ec4899'},
+  {from:'service_order',to:'sla_target',label:'meta SLA',card:'*..1',color:'#8b5cf6'},
+  {from:'service_order',to:'supply_item',label:'requiere',card:'0..*',color:'#8b5cf6'},
+
+  // Ejecucion interna
+  {from:'visit',to:'visit_event',label:'registra',card:'1..*',color:'#ec4899'},
+  {from:'visit',to:'route',label:'pertenece a',card:'*..1',color:'#ec4899'},
+  {from:'visit',to:'dispatch_decision',label:'evaluado por',card:'1..*',color:'#ec4899'},
+
+  // Profesionales -> Ejecucion
+  {from:'provider',to:'visit',label:'ejecuta',card:'1..*',color:'#f97316'},
+  {from:'provider',to:'route',label:'ruta diaria',card:'1..1',color:'#f97316'},
+  {from:'provider',to:'provider_schedule',label:'disponibilidad',card:'1..*',color:'#f97316'},
+  {from:'provider',to:'dispatch_decision',label:'candidato',card:'0..*',color:'#f97316'},
+  {from:'provider',to:'service_order',label:'asignado (continuidad)',card:'0..*',color:'#f97316',dashed:true},
+
+  // Territorio
+  {from:'zone',to:'distance_matrix',label:'origen/destino',card:'1..*',color:'#6366f1'},
+  {from:'locality_ref',to:'zone',label:'pertenece a',card:'*..1',color:'#6366f1'},
+  {from:'zone',to:'provider',label:'cobertura',card:'*..*',color:'#6366f1',dashed:true},
+  {from:'zone',to:'patient_master',label:'ubicacion',card:'1..*',color:'#6366f1',dashed:true},
+
+  // KPIs
+  {from:'visit',to:'time_decomposition',label:'descompone',card:'1..1',color:'#ef4444'},
+  {from:'zone',to:'kpi_daily',label:'metricas por zona',card:'1..*',color:'#ef4444'},
+  {from:'service_order',to:'coverage_report',label:'cobertura',card:'1..*',color:'#ef4444'},
+  {from:'visit',to:'kpi_daily',label:'alimenta',card:'*..*',color:'#ef4444',dashed:true},
+  {from:'state_machine_ref',to:'visit_event',label:'define transiciones',card:'*..*',color:'#ef4444',dashed:true},
+];
+
+// ===================== RENDERING =====================
+const canvas = document.getElementById('canvas');
+const svgLayer = document.getElementById('svg-layer');
+const legend = document.getElementById('legend');
+const filterBar = document.getElementById('filter-bar');
+let currentZoom = 1;
+let selectedEntity = null;
+let activeFilters = new Set(Object.keys(CLUSTERS));
+
+// Render legend
+Object.values(CLUSTERS).forEach(c => {
+  const item = document.createElement('div');
+  item.className = 'legend-item';
+  item.innerHTML = `<span class="legend-dot" style="background:${c.color}"></span>${c.label.split('(')[0].trim()}`;
+  legend.appendChild(item);
+});
+
+// Render filter buttons
+Object.values(CLUSTERS).forEach(c => {
+  const btn = document.createElement('button');
+  btn.className = 'filter-btn active';
+  btn.style.color = c.color;
+  btn.style.borderColor = c.color;
+  btn.textContent = c.label.split(' ')[0];
+  btn.dataset.cluster = c.id;
+  btn.onclick = () => toggleFilter(c.id, btn);
+  filterBar.appendChild(btn);
+});
+
+// Render clusters
+Object.values(CLUSTERS).forEach(c => {
+  const div = document.createElement('div');
+  div.className = 'cluster';
+  div.id = `cluster-${c.id}`;
+  div.style.cssText = `left:${c.x}px;top:${c.y}px;width:${c.w}px;height:${c.h}px;
+    background:${c.color}08;border-color:${c.color}30;`;
+  div.innerHTML = `<span class="cluster-label" style="background:${c.color}20;color:${c.color}">${c.label}</span>`;
+  canvas.appendChild(div);
+});
+
+// Render entities
+const entityEls = {};
+ENTITIES.forEach(e => {
+  const cluster = CLUSTERS[e.cluster];
+  const div = document.createElement('div');
+  div.className = 'entity';
+  div.id = `entity-${e.id}`;
+  div.style.left = e.x + 'px';
+  div.style.top = e.y + 'px';
+  div.style.borderTopColor = cluster.color;
+  div.style.borderTopWidth = '2px';
+
+  const relCount = RELATIONSHIPS.filter(r => r.from === e.id || r.to === e.id).length;
+  const badge = e.isExisting
+    ? '<span class="existing-badge">EXISTENTE</span>'
+    : '<span class="delivery-badge">DELIVERY</span>';
+
+  let attrsHtml = '';
+  const showAttrs = e.attrs.slice(0, 5);
+  showAttrs.forEach(a => {
+    const icon = a.k === 'pk' ? '<span class="pk">&diams;</span>' : a.k === 'fk' ? '<span class="fk">&rarr;</span>' : ' ';
+    attrsHtml += `<div class="entity-attr">${icon}${a.n} <span class="attr-t">${a.t}</span></div>`;
+  });
+  if (e.attrs.length > 5) attrsHtml += `<div class="entity-attr" style="color:${cluster.color}"> +${e.attrs.length - 5} mas...</div>`;
+
+  div.innerHTML = `
+    <div class="entity-header" style="background:${cluster.color}15">
+      ${e.id.replace(/_/g,'_')}${badge}
+      <span class="rel-count">${relCount}</span>
+    </div>
+    <div class="entity-body">${attrsHtml}</div>
+  `;
+  div.addEventListener('click', () => showEntityDetail(e));
+  div.addEventListener('mouseenter', () => highlightEntity(e.id));
+  div.addEventListener('mouseleave', () => clearHighlight());
+  canvas.appendChild(div);
+  entityEls[e.id] = div;
+});
+
+// SVG relationships
+function getEdgePoint(fromId, toId) {
+  const fEl = entityEls[fromId], tEl = entityEls[toId];
+  if (!fEl || !tEl) return {fx:0,fy:0,tx:0,ty:0};
+  const f = { x:parseInt(fEl.style.left), y:parseInt(fEl.style.top), w:fEl.offsetWidth, h:fEl.offsetHeight };
+  const t = { x:parseInt(tEl.style.left), y:parseInt(tEl.style.top), w:tEl.offsetWidth, h:tEl.offsetHeight };
+  const fcx=f.x+f.w/2, fcy=f.y+f.h/2, tcx=t.x+t.w/2, tcy=t.y+t.h/2;
+  let fx,fy,tx,ty;
+  const dx=tcx-fcx, dy=tcy-fcy;
+  if (Math.abs(dx) > Math.abs(dy)) {
+    if (dx>0) {fx=f.x+f.w;fy=fcy;tx=t.x;ty=tcy;}
+    else {fx=f.x;fy=fcy;tx=t.x+t.w;ty=tcy;}
+  } else {
+    if (dy>0) {fx=fcx;fy=f.y+f.h;tx=tcx;ty=t.y;}
+    else {fx=fcx;fy=f.y;tx=tcx;ty=t.y+t.h;}
+  }
+  return {fx,fy,tx,ty};
+}
+
+function renderRelationships() {
+  svgLayer.innerHTML = '';
+  RELATIONSHIPS.forEach((r,i) => {
+    const fEntity = ENTITIES.find(e => e.id === r.from);
+    const tEntity = ENTITIES.find(e => e.id === r.to);
+    if (fEntity && tEntity && activeFilters.has(fEntity.cluster) && activeFilters.has(tEntity.cluster)) {
+      // visible
+    } else return;
+
+    const {fx,fy,tx,ty} = getEdgePoint(r.from, r.to);
+    const dx=tx-fx, dy=ty-fy;
+    const cx1=fx+dx*0.4, cy1=fy;
+    const cx2=fx+dx*0.6, cy2=ty;
+
+    const markerId = `arrow-${i}`;
+    const defs = document.createElementNS('http://www.w3.org/2000/svg','defs');
+    const marker = document.createElementNS('http://www.w3.org/2000/svg','marker');
+    marker.setAttribute('id',markerId);
+    marker.setAttribute('viewBox','0 0 10 7');
+    marker.setAttribute('refX','10');marker.setAttribute('refY','3.5');
+    marker.setAttribute('markerWidth','8');marker.setAttribute('markerHeight','6');
+    marker.setAttribute('orient','auto-start-reverse');
+    const arrow = document.createElementNS('http://www.w3.org/2000/svg','polygon');
+    arrow.setAttribute('points','0 0, 10 3.5, 0 7');
+    arrow.setAttribute('fill',r.color);
+    marker.appendChild(arrow);defs.appendChild(marker);svgLayer.appendChild(defs);
+
+    const path = document.createElementNS('http://www.w3.org/2000/svg','path');
+    path.setAttribute('d',`M${fx},${fy} C${cx1},${cy1} ${cx2},${cy2} ${tx},${ty}`);
+    path.setAttribute('class','rel-line');
+    path.setAttribute('stroke',r.color);
+    path.setAttribute('data-from',r.from);path.setAttribute('data-to',r.to);
+    path.id = `rel-${i}`;
+    if (r.dashed) path.setAttribute('stroke-dasharray','6,3');
+    path.setAttribute('marker-end',`url(#${markerId})`);
+    svgLayer.appendChild(path);
+
+    const mx=(fx+tx)/2, my=(fy+ty)/2;
+    const label = document.createElementNS('http://www.w3.org/2000/svg','text');
+    label.setAttribute('x',mx);label.setAttribute('y',my-5);
+    label.setAttribute('text-anchor','middle');
+    label.setAttribute('class','rel-label');
+    label.setAttribute('data-from',r.from);label.setAttribute('data-to',r.to);
+    label.textContent = `${r.label} [${r.card}]`;
+    svgLayer.appendChild(label);
+  });
+}
+setTimeout(renderRelationships, 150);
+
+// ===================== INTERACTIVITY =====================
+function highlightEntity(entityId) {
+  ENTITIES.forEach(e => {
+    entityEls[e.id].classList.remove('highlighted');
+    entityEls[e.id].classList.add('dimmed');
+  });
+  document.querySelectorAll('.rel-line').forEach(l => {l.classList.remove('highlighted');l.classList.add('dimmed');});
+  document.querySelectorAll('.rel-label').forEach(l => l.classList.remove('highlighted'));
+
+  const connected = new Set([entityId]);
+  RELATIONSHIPS.forEach((r,i) => {
+    if (r.from===entityId || r.to===entityId) {
+      connected.add(r.from);connected.add(r.to);
+      const line = document.getElementById(`rel-${i}`);
+      if (line) {line.classList.remove('dimmed');line.classList.add('highlighted');}
+      document.querySelectorAll(`.rel-label[data-from="${r.from}"][data-to="${r.to}"]`)
+        .forEach(l => l.classList.add('highlighted'));
+    }
+  });
+  connected.forEach(id => {
+    if (entityEls[id]) {entityEls[id].classList.remove('dimmed');entityEls[id].classList.add('highlighted');}
+  });
+}
+
+function clearHighlight() {
+  if (selectedEntity) return;
+  ENTITIES.forEach(e => entityEls[e.id].classList.remove('highlighted','dimmed'));
+  document.querySelectorAll('.rel-line').forEach(l => l.classList.remove('highlighted','dimmed'));
+  document.querySelectorAll('.rel-label').forEach(l => l.classList.remove('highlighted'));
+}
+
+function showEntityDetail(entity) {
+  selectedEntity = entity.id;
+  highlightEntity(entity.id);
+  const sidebar = document.getElementById('sidebar');
+  const content = document.getElementById('sidebar-content');
+  const cluster = CLUSTERS[entity.cluster];
+  const outRels = RELATIONSHIPS.filter(r => r.from === entity.id);
+  const inRels = RELATIONSHIPS.filter(r => r.to === entity.id);
+
+  let html = `<h2>${entity.id}${entity.isExisting?'<span class="existing-badge" style="margin-left:8px">EXISTENTE</span>':'<span class="delivery-badge" style="margin-left:8px">NUEVO</span>'}</h2>
+    <span class="resource-badge" style="background:${cluster.color}20;color:${cluster.color}">${cluster.label}</span>
+    <p style="font-size:12px;color:var(--text-dim);line-height:1.5;margin-bottom:12px">${entity.desc}</p>`;
+
+  if (entity.analogy) {
+    html += `<div class="analogy-box"><div class="label">Analogia Delivery</div><p style="margin-top:4px;font-size:11px;color:var(--text);line-height:1.5">${entity.analogy}</p></div>`;
+  }
+
+  html += `<div class="section-title">Atributos (${entity.attrs.length})</div><ul class="attr-list">`;
+  entity.attrs.forEach(a => {
+    const icon = a.k==='pk'?'&diams; ':a.k==='fk'?'&rarr; ':'';
+    html += `<li><span class="attr-name">${icon}${a.n}</span><span class="attr-type">${a.t}</span></li>`;
+  });
+  html += '</ul>';
+
+  if (entity.id === 'visit') {
+    html += `<div class="section-title">Maquina de Estados (12)</div><div class="state-machine">
+      <span class="state active">PROGRAMADA</span><span class="arrow">&rarr;</span>
+      <span class="state">ASIGNADA</span><span class="arrow">&rarr;</span>
+      <span class="state">DESPACHADA</span><span class="arrow">&rarr;</span>
+      <span class="state">EN_RUTA</span><span class="arrow">&rarr;</span>
+      <span class="state">LLEGADA</span><span class="arrow">&rarr;</span>
+      <span class="state active">EN_ATENCION</span><span class="arrow">&rarr;</span>
+      <span class="state">COMPLETA</span> | <span class="state">PARCIAL</span> | <span class="state">NO_REALIZADA</span>
+      <span class="arrow">&rarr;</span>
+      <span class="state">DOCUMENTADA</span><span class="arrow">&rarr;</span>
+      <span class="state">VERIFICADA</span><span class="arrow">&rarr;</span>
+      <span class="state active">REPORTADA_REM</span>
+      <br><span class="state" style="background:rgba(239,68,68,0.2);color:var(--red)">CANCELADA</span> (terminal)
+    </div>`;
+  }
+
+  if (entity.id === 'state_machine_ref') {
+    html += `<div class="section-title">Transiciones</div><div style="font-size:10px;color:var(--text-dim);line-height:1.8">
+      PROGRAMADA &rarr; ASIGNADA <span style="color:var(--pink)">(motor matching)</span> = Uber processing&rarr;accepted<br>
+      ASIGNADA &rarr; DESPACHADA <span style="color:var(--pink)">(push notification)</span> = DoorDash confirmed<br>
+      DESPACHADA &rarr; EN_RUTA <span style="color:var(--pink)">(profesional inicia)</span> = Uber driver starts nav<br>
+      EN_RUTA &rarr; LLEGADA <span style="color:var(--pink)">(GPS geofence 200m)</span> = Uber arriving<br>
+      LLEGADA &rarr; EN_ATENCION <span style="color:var(--pink)">(EVV clock-in)</span> = Uber in_progress<br>
+      EN_ATENCION &rarr; COMPLETA <span style="color:var(--pink)">(EVV clock-out)</span> = Uber completed<br>
+      EN_ATENCION &rarr; NO_REALIZADA <span style="color:var(--pink)">(paciente ausente)</span> = Uber rider_canceled<br>
+      COMPLETA &rarr; DOCUMENTADA <span style="color:var(--pink)">(registro clinico)</span> = post-trip (no existe en delivery)<br>
+      DOCUMENTADA &rarr; VERIFICADA <span style="color:var(--pink)">(supervisora)</span> = QA review<br>
+      VERIFICADA &rarr; REPORTADA_REM <span style="color:var(--pink)">(incluida en REM)</span> = payment processed
+    </div>`;
+  }
+
+  if (entity.id === 'dispatch_decision') {
+    html += `<div class="section-title">Factores de Matching (pesos)</div><div style="font-size:10px;color:var(--text-dim);line-height:1.8">
+      <span style="color:var(--amber)">score_skill: 0.25</span> &mdash; competencias requeridas vs disponibles<br>
+      <span style="color:var(--amber)">score_distancia: 0.25</span> &mdash; proximidad geografica (como ETA de Uber)<br>
+      <span style="color:var(--amber)">score_continuidad: 0.25</span> &mdash; historial prof-paciente (no existe en delivery)<br>
+      <span style="color:var(--amber)">score_carga: 0.15</span> &mdash; balance equitativo (como Lyft fairness)<br>
+      <span style="color:var(--amber)">score_logistica: 0.10</span> &mdash; vehiculo adecuado para insumos
+    </div>`;
+  }
+
+  if (outRels.length > 0) {
+    html += `<div class="section-title">Relaciones salientes (${outRels.length})</div><ul class="rel-list">`;
+    outRels.forEach(r => {
+      html += `<li onclick="navigateToEntity('${r.to}')">${r.label} <span class="rel-arrow">&rarr;</span> <span class="rel-target">${r.to}</span> <span class="rel-card">[${r.card}]</span></li>`;
+    });
+    html += '</ul>';
+  }
+  if (inRels.length > 0) {
+    html += `<div class="section-title">Relaciones entrantes (${inRels.length})</div><ul class="rel-list">`;
+    inRels.forEach(r => {
+      html += `<li onclick="navigateToEntity('${r.from}')"><span class="rel-target">${r.from}</span> <span class="rel-arrow">&rarr;</span> ${r.label} <span class="rel-card">[${r.card}]</span></li>`;
+    });
+    html += '</ul>';
+  }
+
+  content.innerHTML = html;
+  sidebar.classList.add('open');
+}
+
+function navigateToEntity(id) {
+  const entity = ENTITIES.find(e => e.id === id);
+  if (entity) {
+    showEntityDetail(entity);
+    const el = entityEls[id];
+    if (el) el.scrollIntoView({behavior:'smooth',block:'center',inline:'center'});
+  }
+}
+
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  selectedEntity = null;
+  clearHighlight();
+}
+
+function zoomIn() { currentZoom=Math.min(currentZoom+0.15,2); canvas.style.transform=`scale(${currentZoom})`; }
+function zoomOut() { currentZoom=Math.max(currentZoom-0.15,0.4); canvas.style.transform=`scale(${currentZoom})`; }
+function zoomReset() { currentZoom=1; canvas.style.transform='scale(1)'; }
+
+function toggleFilter(clusterId, btn) {
+  if (activeFilters.has(clusterId)) { activeFilters.delete(clusterId); btn.classList.remove('active'); btn.classList.add('inactive'); }
+  else { activeFilters.add(clusterId); btn.classList.remove('inactive'); btn.classList.add('active'); }
+  applyFilters();
+}
+
+function applyFilters() {
+  ENTITIES.forEach(e => {
+    const el = entityEls[e.id];
+    const clusterEl = document.getElementById(`cluster-${e.cluster}`);
+    if (activeFilters.has(e.cluster)) { el.style.display=''; if(clusterEl) clusterEl.style.display=''; }
+    else { el.style.display='none'; if(clusterEl) clusterEl.style.display='none'; }
+  });
+  renderRelationships();
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key==='Escape') closeSidebar();
+  if (e.key==='+'||e.key==='=') zoomIn();
+  if (e.key==='-') zoomOut();
+  if (e.key==='0') zoomReset();
+});
+document.getElementById('canvas-container').addEventListener('click', e => {
+  if (e.target===document.getElementById('canvas-container')||e.target===canvas) closeSidebar();
+});
+</script>
+</body>
+</html>

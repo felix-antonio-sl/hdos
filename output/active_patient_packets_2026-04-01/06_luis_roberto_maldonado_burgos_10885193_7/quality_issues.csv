@@ -1,0 +1,2 @@
+quality_issue_id,normalized_row_id,episode_id,issue_type,severity,raw_value,suggested_value,status
+dq_37e22c948b0b4866,frm_76f4c3c1bb48e21b,ep_50c6fcd011717f7e,UNMATCHED_FORM_SUBMISSION,MEDIUM,FLOR CAMPOS SEPULVEDA,ep_50c6fcd011717f7e,RESOLVED_AUTO

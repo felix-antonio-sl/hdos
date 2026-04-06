@@ -5,10 +5,11 @@ Este directorio contiene la tubería materializada por capas para ir desde CSV r
 ## Runner
 
 ```bash
-python3 /Users/felixsanhueza/Developer/_workspaces/hdos/scripts/build_hodom_intermediate.py
+cd "$(git rev-parse --show-toplevel)"
+.venv/bin/python scripts/build_hodom_intermediate.py
 ```
 
-Si existe `/Users/felixsanhueza/Developer/_workspaces/hdos/input/manual/rut_corrections.csv`, el runner aplica esas correcciones antes de deduplicar.
+Si existe `input/manual/rut_corrections.csv`, el runner aplica esas correcciones antes de deduplicar.
 Si no existe, el runner genera ese archivo con la cola actual de RUT inválidos para que puedas completarlo.
 
 ## Capas
@@ -25,23 +26,23 @@ Si no existe, el runner genera ese archivo con la cola actual de RUT inválidos 
 
 ## Conteos de esta corrida
 
-- `raw_source_file.csv`: `31` filas
-- `raw_source_row.csv`: `3774` filas
-- `normalized_row.csv`: `2998` filas
-- `patient_identity_candidate.csv`: `1696` filas
-- `patient_master.csv`: `1218` filas
-- `patient_identity_link.csv`: `1696` filas
-- `episode.csv`: `1696` filas
-- `episode_source_link.csv`: `2998` filas
-- `episode_diagnosis.csv`: `1696` filas
+- `raw_source_file.csv`: `32` filas
+- `raw_source_row.csv`: `5116` filas
+- `normalized_row.csv`: `4335` filas
+- `patient_identity_candidate.csv`: `3028` filas
+- `patient_master.csv`: `1287` filas
+- `patient_identity_link.csv`: `3028` filas
+- `episode.csv`: `3028` filas
+- `episode_source_link.csv`: `4335` filas
+- `episode_diagnosis.csv`: `2426` filas
 - `episode_care_requirement.csv`: `4140` filas
 - `episode_professional_need.csv`: `1959` filas
 - `patient_contact_point.csv`: `1456` filas
 - `patient_address.csv`: `1570` filas
 - `episode_location_snapshot.csv`: `1696` filas
-- `data_quality_issue.csv`: `1844` filas
+- `data_quality_issue.csv`: `1851` filas
 - `catalog_value.csv`: `146` filas
-- `rut_correction_queue.csv`: `0` filas
+- `rut_correction_queue.csv`: `2` filas
 
 ## DDL
 

@@ -1,0 +1,2 @@
+address_resolution_id,patient_id,episode_id,raw_address,raw_comuna,raw_cesfam,resolved_establishment_id,resolved_locality_id,establishment_match_confidence,locality_match_confidence,resolution_status
+adr_4988b002e625116f,pt_f8665241652134c7,,P DEL SUR FREIRE 655,TERESA BALDECCHI,C. TERESA BALDECCHI,est_afb315ffeb72b6e0,loc_48584913da5f05a6,1.0,0.9,RESOLVED

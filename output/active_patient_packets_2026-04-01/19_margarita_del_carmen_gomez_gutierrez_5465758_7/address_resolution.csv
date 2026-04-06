@@ -1,0 +1,2 @@
+address_resolution_id,patient_id,episode_id,raw_address,raw_comuna,raw_cesfam,resolved_establishment_id,resolved_locality_id,establishment_match_confidence,locality_match_confidence,resolution_status
+adr_9dd6691af57e449e,pt_e0e46e8681e42996,,CACHAPOAL ALTO S/N,SAN CARLOS,CACHAPOAL,,loc_f7e032f4211c96ff,0.0,1.0,PARTIAL

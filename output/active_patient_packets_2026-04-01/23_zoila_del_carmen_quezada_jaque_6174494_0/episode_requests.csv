@@ -1,0 +1,2 @@
+episode_request_id,form_submission_id,episode_id,patient_id,submission_timestamp,request_prestacion,gestora,servicio_origen_solicitud,diagnostico,match_score,match_status,resolution_status,episode_origin,source_file,source_rows
+erq_9466ae7a7ed43533,frm_8bac7a7dee563ead,,pt_d80e3e10ebdbe55e,2026-03-19T18:21:38,"TTO EV, KTM-KTR",MELISSA RIVERA,UE,BRONCONEUMONIA,120,matched_exact,AUTO,merged,FORMULARIO 2026 RESP (respuestas) (1).xlsx,FORMULARIO 2026 RESP (respuestas) (1).xlsx:122

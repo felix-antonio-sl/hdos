@@ -1,0 +1,2 @@
+address_resolution_id,patient_id,episode_id,raw_address,raw_comuna,raw_cesfam,resolved_establishment_id,resolved_locality_id,establishment_match_confidence,locality_match_confidence,resolution_status
+adr_da9c4a908652e74e,pt_559533c865318a0b,,LUIS ACEVEDO 07//,T.BALDECHI,C. TERESA BALDECCHI,est_afb315ffeb72b6e0,loc_28357650544b8951,1.0,0.9,RESOLVED

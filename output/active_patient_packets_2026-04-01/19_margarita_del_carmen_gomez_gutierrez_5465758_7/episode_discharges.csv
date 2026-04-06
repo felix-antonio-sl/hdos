@@ -1,0 +1,2 @@
+episode_discharge_id,discharge_event_id,episode_id,patient_id,fecha_ingreso,fecha_egreso,motivo_egreso,diagnostico,match_score,match_status,resolution_status,episode_origin,source_file,source_sheet,source_row_number
+edc_219519b7b24d1891,alta_d5dc69883999183d,,pt_e0e46e8681e42996,2026-02-27,2026-03-09,REHOSPITALIZACION,FRACTURA DE CADERA,125,matched_exact,AUTO,merged,PLANILLA DE ALTAS 26.xlsx,09 - 15 MARZO 2026,2

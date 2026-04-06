@@ -1,0 +1,3 @@
+episode_request_id,form_submission_id,episode_id,patient_id,submission_timestamp,request_prestacion,gestora,servicio_origen_solicitud,diagnostico,match_score,match_status,resolution_status,episode_origin,source_file,source_rows
+erq_246180bfae4f01f7,frm_b43ddb60d73f7c0a,,pt_f8665241652134c7,2026-03-10T18:37:14,REHABILITACIÓN,PIA VASQUEZ M,TMT,FX LATERAL CADERA DERECHA OPERADA,145,matched_exact,AUTO,merged,FORMULARIO 2026 RESP (respuestas) (1).xlsx,FORMULARIO 2026 RESP (respuestas) (1).xlsx:108
+erq_28b5508b5fbb2557,frm_bc353a7784da3911,,pt_f8665241652134c7,2026-03-25T15:38:39,KTM-KTR,MELISSA RIVERA,MEDICINA,FRACTURA DE CADERA,145,matched_exact,AUTO,merged,FORMULARIO 2026 RESP (respuestas) (1).xlsx,FORMULARIO 2026 RESP (respuestas) (1).xlsx:132

@@ -10,6 +10,8 @@ import shutil
 from datetime import date, datetime
 from pathlib import Path
 
+import migrate_hodom_csv as base
+
 
 # ---------------------------------------------------------------------------
 # Constants
@@ -42,6 +44,8 @@ HOSPITALIZATION_STAY_FIELDS: list[str] = [
     "source_episode_count",
     "episode_origin",
     "confidence_level",
+    "origen_derivacion_rem",
+    "fallecido_clasificacion",
     "gestora",
     "usuario_o2",
     "nombre_completo",
@@ -129,7 +133,7 @@ def _compute_rango_etario(edad_str: str) -> str:
     except (ValueError, TypeError):
         return ""
     for low, high, label in AGE_BINS:
-        if low < edad <= high:
+        if low <= edad <= high:
             return label
     return ""
 
@@ -142,6 +146,36 @@ def _parse_date(s: str) -> datetime | None:
         return datetime.strptime(s, "%Y-%m-%d")
     except ValueError:
         return None
+
+
+def infer_origin_derivation(service: str) -> str:
+    """Normaliza servicio/origen a la categoría REM de derivación."""
+    value = str(service or "").strip().upper()
+    if not value:
+        return ""
+    if any(token in value for token in ["APS", "CESFAM", "CECOSF", "PSR", "CONSULTORIO"]):
+        return "APS"
+    if value in {"UE", "EU", "URG", "URG. HOSP", "URGENCIA", "USAT", "URA"}:
+        return "Urgencia"
+    if any(token in value for token in ["CAE", "CDT", "HOSPITAL DE DIA", "CMA", "CMI", "AMB"]):
+        return "Ambulatorio"
+    if "UGCC" in value:
+        return "UGCC"
+    if "LEY" in value and "URG" in value:
+        return "Ley Urgencia"
+    return "Hospitalización"
+
+
+def finalize_stay(stay: dict[str, str]) -> dict[str, str]:
+    """Normaliza campos derivados del stay después de cualquier corrección manual."""
+    if stay.get("fecha_egreso"):
+        stay["estado"] = "EGRESADO"
+    elif not stay.get("estado"):
+        stay["estado"] = "ACTIVO"
+    stay["rango_etario"] = _compute_rango_etario(stay.get("edad_reportada", ""))
+    if not stay.get("origen_derivacion_rem"):
+        stay["origen_derivacion_rem"] = infer_origin_derivation(stay.get("servicio_origen", ""))
+    return stay
 
 
 # ---------------------------------------------------------------------------
@@ -231,6 +265,8 @@ def _build_stay(episodes: list[dict[str, str]]) -> dict[str, str]:
         "source_episode_count": str(source_count),
         "episode_origin": ep_origin,
         "confidence_level": confidence,
+        "origen_derivacion_rem": infer_origin_derivation(best.get("servicio_origen", "")),
+        "fallecido_clasificacion": "",
     }
 
     # Copy direct fields from best episode
@@ -244,8 +280,7 @@ def _build_stay(episodes: list[dict[str, str]]) -> dict[str, str]:
 
     # Compute rango_etario
     stay["rango_etario"] = _compute_rango_etario(stay.get("edad_reportada", ""))
-
-    return stay
+    return finalize_stay(stay)
 
 
 def consolidate_stays(episodes: list[dict[str, str]]) -> list[dict[str, str]]:
@@ -467,12 +502,14 @@ def _merge_adjacent_stays(stays: list[dict[str, str]]) -> list[dict[str, str]]:
                 for field in ("patient_id", "servicio_origen", "establecimiento", "codigo_deis",
                               "comuna", "localidad", "latitud", "longitud",
                               "gestora", "usuario_o2", "motivo_egreso",
+                              "origen_derivacion_rem", "fallecido_clasificacion",
                               "nombre_completo", "rut", "sexo_resuelto", "edad_reportada"):
                     if not prev.get(field, "") and current.get(field, ""):
                         prev[field] = current[field]
 
                 # Regenerate stay_id
                 prev["stay_id"] = make_id("stay", prev["source_episode_ids"])
+                finalize_stay(prev)
             else:
                 merged.append(current)
 
@@ -490,6 +527,42 @@ PATIENT_MASTER_FIELDS = [
     "edad_reportada", "edad_calculada", "comuna", "cesfam", "prevision",
     "total_hospitalizaciones", "primera_fecha_ingreso", "ultima_fecha_egreso",
     "dias_totales_estadia", "estado_actual", "tiene_issues_abiertos",
+]
+
+PATIENT_IDENTITY_MASTER_FIELDS = [
+    "identity_patient_id",
+    "run",
+    "fecha_nacimiento",
+    "nombre",
+    "nombre_normalizado",
+    "nombre_variantes",
+    "source_patient_ids",
+    "source_patient_count",
+    "source_files",
+    "matching_strategy",
+    "matching_confidence",
+]
+
+PATIENT_IDENTITY_MISSING_RUN_REVIEW_FIELDS = [
+    "identity_patient_id",
+    "nombre",
+    "fecha_nacimiento",
+    "source_patient_ids",
+    "source_files",
+    "candidate_count",
+    "candidate_run_1",
+    "candidate_name_1",
+    "candidate_birth_1",
+    "candidate_score_1",
+    "candidate_run_2",
+    "candidate_name_2",
+    "candidate_birth_2",
+    "candidate_score_2",
+    "candidate_run_3",
+    "candidate_name_3",
+    "candidate_birth_3",
+    "candidate_score_3",
+    "recommendation",
 ]
 
 
@@ -614,6 +687,267 @@ def enrich_patient_master(
         enriched.append(enriched_patient)
 
     return enriched
+
+
+def _normalized_name_tokens(value: str) -> list[str]:
+    return [token for token in base.canonical_text(value).split() if token]
+
+
+def _sorted_name_signature(value: str) -> str:
+    return " ".join(sorted(_normalized_name_tokens(value)))
+
+
+def _name_match_score(name_a: str, name_b: str) -> float:
+    canonical_a = name_a.strip()
+    canonical_b = name_b.strip()
+    if not canonical_a or not canonical_b:
+        return 0.0
+
+    seq_ratio = difflib.SequenceMatcher(None, canonical_a, canonical_b).ratio()
+    sorted_ratio = difflib.SequenceMatcher(
+        None,
+        _sorted_name_signature(canonical_a),
+        _sorted_name_signature(canonical_b),
+    ).ratio()
+
+    tokens_a = set(_normalized_name_tokens(canonical_a))
+    tokens_b = set(_normalized_name_tokens(canonical_b))
+    if tokens_a and tokens_b:
+        intersection = len(tokens_a & tokens_b)
+        jaccard = intersection / len(tokens_a | tokens_b)
+        containment = intersection / min(len(tokens_a), len(tokens_b))
+    else:
+        jaccard = 0.0
+        containment = 0.0
+
+    return max(seq_ratio, sorted_ratio, (jaccard + containment) / 2)
+
+
+def _patient_seed_score(patient: dict[str, str]) -> tuple[int, int, int, int]:
+    return (
+        1 if patient.get("rut", "").strip() else 0,
+        1 if patient.get("fecha_nacimiento_date", "").strip() else 0,
+        len(patient.get("nombre_completo", "").strip()),
+        len(patient.get("source_files", "").split(";")),
+    )
+
+
+def _choose_cluster_name(members: list[dict[str, str]]) -> tuple[str, str, list[str]]:
+    normalized_groups: dict[str, list[str]] = {}
+    first_seen: dict[str, int] = {}
+    for member in members:
+        raw_name = (member.get("nombre_completo") or "").strip()
+        normalized_name = raw_name and _sorted_name_signature(raw_name) or ""
+        if not raw_name or not normalized_name:
+            continue
+        normalized_groups.setdefault(normalized_name, []).append(raw_name)
+        first_seen.setdefault(raw_name, len(first_seen))
+
+    if not normalized_groups:
+        return "", "", []
+
+    best_normalized, variants = max(
+        normalized_groups.items(),
+        key=lambda item: (len(item[1]), len(item[0]), max(len(v) for v in item[1])),
+    )
+    ordered_variants = sorted(
+        set(variants),
+        key=lambda value: (-variants.count(value), -len(value), first_seen.get(value, 0), value),
+    )
+    chosen = ordered_variants[0]
+    return chosen, best_normalized, ordered_variants
+
+
+def _choose_cluster_birth_date(members: list[dict[str, str]]) -> str:
+    births: dict[str, int] = {}
+    for member in members:
+        birth = (member.get("fecha_nacimiento_date") or "").strip()
+        if birth:
+            births[birth] = births.get(birth, 0) + 1
+    if not births:
+        return ""
+    return max(births.items(), key=lambda item: (item[1], item[0]))[0]
+
+
+def build_patient_identity_master(patients: list[dict[str, str]]) -> list[dict[str, str]]:
+    clusters: list[dict[str, object]] = []
+    cluster_by_run: dict[str, dict[str, object]] = {}
+    clusters_by_birth: dict[str, list[dict[str, object]]] = {}
+
+    ordered_patients = sorted(
+        patients,
+        key=lambda patient: (
+            0 if patient.get("rut", "").strip() else 1,
+            patient.get("fecha_nacimiento_date", ""),
+            patient.get("nombre_completo", ""),
+        ),
+    )
+
+    for patient in ordered_patients:
+        run = (patient.get("rut") or "").strip()
+        birth = (patient.get("fecha_nacimiento_date") or "").strip()
+        name = base.canonical_text(patient.get("nombre_completo", ""))
+
+        cluster: dict[str, object] | None = None
+        strategy = "singleton"
+        confidence = "low"
+
+        if run:
+            cluster = cluster_by_run.get(run)
+            if cluster is None:
+                cluster = {
+                    "cluster_key": f"run:{run}",
+                    "run": run,
+                    "members": [],
+                    "strategies": [],
+                    "scores": [],
+                }
+                clusters.append(cluster)
+                cluster_by_run[run] = cluster
+                if birth:
+                    clusters_by_birth.setdefault(birth, []).append(cluster)
+            strategy = "run_exact"
+            confidence = "high"
+        else:
+            best_cluster: dict[str, object] | None = None
+            best_score = 0.0
+            if birth and name:
+                for candidate in clusters_by_birth.get(birth, []):
+                    candidate_members = candidate["members"]  # type: ignore[index]
+                    candidate_name, candidate_normalized, _ = _choose_cluster_name(candidate_members)  # type: ignore[arg-type]
+                    candidate_basis = candidate_normalized or base.canonical_text(candidate_name)
+                    score = _name_match_score(name, candidate_basis)
+                    if score > best_score:
+                        best_score = score
+                        best_cluster = candidate
+                if best_cluster and best_score >= 0.80:
+                    cluster = best_cluster
+                    strategy = "birth_name_fuzzy_to_existing_run" if best_cluster.get("run") else "birth_name_fuzzy"
+                    confidence = "high" if best_score >= 0.95 else "medium"
+
+            if cluster is None:
+                cluster = {
+                    "cluster_key": f"fallback:{patient.get('patient_id', '')}",
+                    "run": "",
+                    "members": [],
+                    "strategies": [],
+                    "scores": [],
+                }
+                clusters.append(cluster)
+                if birth:
+                    clusters_by_birth.setdefault(birth, []).append(cluster)
+
+        cluster["members"].append(patient)  # type: ignore[index]
+        cluster["strategies"].append(strategy)  # type: ignore[index]
+        cluster["scores"].append(confidence)  # type: ignore[index]
+
+        if run and not cluster.get("run"):
+            cluster["run"] = run
+
+    identity_rows: list[dict[str, str]] = []
+    for cluster in clusters:
+        members = cluster["members"]  # type: ignore[index]
+        chosen_name, normalized_name, variants = _choose_cluster_name(members)  # type: ignore[arg-type]
+        birth = _choose_cluster_birth_date(members)  # type: ignore[arg-type]
+        run = str(cluster.get("run", "") or "")
+        canonical_value = run or f"{birth}|{normalized_name or chosen_name}"
+        identity_patient_id = make_id("pidm", canonical_value)
+        source_patient_ids = sorted({member.get("patient_id", "") for member in members if member.get("patient_id")})
+        source_files = sorted(
+            {
+                token.strip()
+                for member in members
+                for token in (member.get("source_files", "") or "").split(";")
+                if token.strip()
+            }
+        )
+        strategies = cluster["strategies"]  # type: ignore[index]
+        confidences = cluster["scores"]  # type: ignore[index]
+        identity_rows.append(
+            {
+                "identity_patient_id": identity_patient_id,
+                "run": run,
+                "fecha_nacimiento": birth,
+                "nombre": chosen_name,
+                "nombre_normalizado": normalized_name,
+                "nombre_variantes": " | ".join(sorted(set(variants))),
+                "source_patient_ids": ",".join(source_patient_ids),
+                "source_patient_count": str(len(source_patient_ids)),
+                "source_files": "; ".join(source_files),
+                "matching_strategy": ",".join(sorted(set(strategies))),
+                "matching_confidence": "high" if "high" in confidences else "medium" if "medium" in confidences else "low",
+            }
+        )
+
+    identity_rows.sort(key=lambda row: (row["run"], row["fecha_nacimiento"], row["nombre"]))
+    return identity_rows
+
+
+def build_missing_run_review(identity_rows: list[dict[str, str]]) -> list[dict[str, str]]:
+    with_run = [row for row in identity_rows if row.get("run", "").strip()]
+    missing = [row for row in identity_rows if not row.get("run", "").strip()]
+
+    review_rows: list[dict[str, str]] = []
+    for row in missing:
+        birth = row.get("fecha_nacimiento", "").strip()
+        name = row.get("nombre", "").strip()
+        candidate_pool = with_run
+        if birth:
+            same_birth = [candidate for candidate in with_run if candidate.get("fecha_nacimiento", "").strip() == birth]
+            if same_birth:
+                candidate_pool = same_birth
+
+        candidates: list[tuple[float, dict[str, str]]] = []
+        for candidate in candidate_pool:
+            score = _name_match_score(name, candidate.get("nombre", ""))
+            if score >= 0.72:
+                candidates.append((score, candidate))
+        candidates.sort(
+            key=lambda item: (
+                item[0],
+                item[1].get("fecha_nacimiento", ""),
+                item[1].get("nombre", ""),
+            ),
+            reverse=True,
+        )
+
+        top_score = candidates[0][0] if candidates else 0.0
+        second_score = candidates[1][0] if len(candidates) > 1 else 0.0
+        if birth and top_score >= 0.90 and top_score - second_score >= 0.05:
+            recommendation = "review_high_confidence_birth_name"
+        elif not birth and top_score >= 0.99 and top_score - second_score >= 0.05:
+            recommendation = "review_exact_name_only"
+        elif candidates:
+            recommendation = "review_candidates"
+        else:
+            recommendation = "manual_search"
+
+        review = {
+            "identity_patient_id": row.get("identity_patient_id", ""),
+            "nombre": name,
+            "fecha_nacimiento": birth,
+            "source_patient_ids": row.get("source_patient_ids", ""),
+            "source_files": row.get("source_files", ""),
+            "candidate_count": str(len(candidates)),
+            "recommendation": recommendation,
+        }
+        for idx in range(3):
+            slot = idx + 1
+            if idx < len(candidates):
+                score, candidate = candidates[idx]
+                review[f"candidate_run_{slot}"] = candidate.get("run", "")
+                review[f"candidate_name_{slot}"] = candidate.get("nombre", "")
+                review[f"candidate_birth_{slot}"] = candidate.get("fecha_nacimiento", "")
+                review[f"candidate_score_{slot}"] = f"{score:.3f}"
+            else:
+                review[f"candidate_run_{slot}"] = ""
+                review[f"candidate_name_{slot}"] = ""
+                review[f"candidate_birth_{slot}"] = ""
+                review[f"candidate_score_{slot}"] = ""
+        review_rows.append(review)
+
+    review_rows.sort(key=lambda row: (row["fecha_nacimiento"], row["nombre"]))
+    return review_rows
 
 
 # ---------------------------------------------------------------------------
@@ -1254,6 +1588,30 @@ def apply_resolutions_to_queue(
     return [item for item in queue if item.get("entity_id", "") not in resolved_ids]
 
 
+def apply_resolutions_to_stays(
+    stays: list[dict[str, str]],
+    resolutions: list[dict[str, str]],
+) -> list[dict[str, str]]:
+    """Aplica correcciones manuales dirigidas a stay_id en la capa canónica."""
+    stay_lookup = {stay["stay_id"]: stay for stay in stays}
+    for res in resolutions:
+        if res.get("applied") == "True":
+            continue
+        if res.get("action") != "correct":
+            continue
+        item_id = res.get("item_id", "")
+        field = res.get("field_corrected", "")
+        new_val = res.get("new_value", "")
+        if not item_id or not field or not new_val:
+            continue
+        stay = stay_lookup.get(item_id)
+        if stay is None:
+            continue
+        stay[field] = new_val
+        finalize_stay(stay)
+    return list(stay_lookup.values())
+
+
 # ---------------------------------------------------------------------------
 # Main orchestration
 # ---------------------------------------------------------------------------
@@ -1319,12 +1677,18 @@ def build_canonical_outputs(
     for ep in episodes:
         pid = ep.get("patient_id", "")
         pat = patient_lookup.get(pid, {})
-        ep.setdefault("nombre_completo", pat.get("nombre_completo", ""))
-        ep.setdefault("rut", pat.get("rut", ""))
-        ep.setdefault("sexo_resuelto", pat.get("sexo", ""))
-        ep.setdefault("edad_reportada", str(pat.get("edad_reportada", "")))
-        ep.setdefault("comuna_resuelta", pat.get("comuna", ""))
-        ep.setdefault("cesfam", pat.get("cesfam", ""))
+        if pat.get("nombre_completo"):
+            ep["nombre_completo"] = pat.get("nombre_completo", "")
+        if pat.get("rut"):
+            ep["rut"] = pat.get("rut", "")
+        if pat.get("sexo"):
+            ep["sexo_resuelto"] = pat.get("sexo", "")
+        if pat.get("edad_reportada") not in ("", None):
+            ep["edad_reportada"] = str(pat.get("edad_reportada", ""))
+        if pat.get("comuna"):
+            ep["comuna_resuelta"] = pat.get("comuna", "")
+        if pat.get("cesfam"):
+            ep["cesfam"] = pat.get("cesfam", "")
 
         est_id = ep.get("establishment_id", "")
         est = estab_lookup.get(est_id, {})
@@ -1340,7 +1704,10 @@ def build_canonical_outputs(
 
     # 4. Process
     stays = consolidate_stays(episodes)
+    stays = apply_resolutions_to_stays(stays, resolutions)
     enriched_patients = enrich_patient_master(patients, stays, quality_issues)
+    identity_patients = build_patient_identity_master(patients)
+    missing_run_review = build_missing_run_review(identity_patients)
     episode_sources = build_episode_source(stays, episodes)
     filtered_issues = filter_actionable_quality_issues(quality_issues)
     review_queue = build_unified_review_queue(
@@ -1358,6 +1725,12 @@ def build_canonical_outputs(
 
     write_csv(output_dir / "hospitalization_stay.csv", stays, HOSPITALIZATION_STAY_FIELDS)
     write_csv(output_dir / "patient_master.csv", enriched_patients, PATIENT_MASTER_FIELDS)
+    write_csv(output_dir / "patient_identity_master.csv", identity_patients, PATIENT_IDENTITY_MASTER_FIELDS)
+    write_csv(
+        output_dir / "patient_identity_missing_run_review.csv",
+        missing_run_review,
+        PATIENT_IDENTITY_MISSING_RUN_REVIEW_FIELDS,
+    )
     write_csv(output_dir / "episode_source.csv", episode_sources, EPISODE_SOURCE_FIELDS)
     write_csv(output_dir / "pipeline_health.csv", [health], PIPELINE_HEALTH_FIELDS)
     write_csv(output_dir / "quality_issue.csv", filtered_issues, QUALITY_ISSUE_FIELDS)
@@ -1375,6 +1748,8 @@ def build_canonical_outputs(
     print(f"Canonical outputs written to {output_dir}")
     print(f"  Stays: {len(stays)}")
     print(f"  Patients: {len(enriched_patients)}")
+    print(f"  Identity patients: {len(identity_patients)}")
+    print(f"  Missing-run review rows: {len(missing_run_review)}")
     print(f"  Episode sources: {len(episode_sources)}")
     print(f"  Quality issues (actionable): {len(filtered_issues)}")
     print(f"  Review queue (pending): {len(review_queue)}")

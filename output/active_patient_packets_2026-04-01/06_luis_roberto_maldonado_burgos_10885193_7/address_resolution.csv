@@ -1,0 +1,2 @@
+address_resolution_id,patient_id,episode_id,raw_address,raw_comuna,raw_cesfam,resolved_establishment_id,resolved_locality_id,establishment_match_confidence,locality_match_confidence,resolution_status
+adr_f5210cdbb8a4ebcb,pt_155f17d0ffbbe7e3,,LAS ARBOLEDAS,C. T. BALDECHI,C. T. BALDECCHI,est_afb315ffeb72b6e0,loc_b309a9f358c0f9c8,1.0,0.3,PARTIAL
