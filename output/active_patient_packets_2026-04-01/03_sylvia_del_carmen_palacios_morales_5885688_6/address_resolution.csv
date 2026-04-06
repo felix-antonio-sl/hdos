@@ -1,2 +1,0 @@
-address_resolution_id,patient_id,episode_id,raw_address,raw_comuna,raw_cesfam,resolved_establishment_id,resolved_locality_id,establishment_match_confidence,locality_match_confidence,resolution_status
-adr_d18f028b4256518e,pt_bc319465f9a27410,,AGUA BUENA,C.TERESA BALDECHI,C. TERESA BALDECCHI,est_afb315ffeb72b6e0,loc_bc45a162aa43386d,1.0,0.9,RESOLVED

@@ -1,2 +1,0 @@
-episode_request_id,form_submission_id,episode_id,patient_id,submission_timestamp,request_prestacion,gestora,servicio_origen_solicitud,diagnostico,match_score,match_status,resolution_status,episode_origin,source_file,source_rows
-erq_d1f04694a8669d4a,frm_e672603c39ca6d41,,pt_6e8a6ec7d99936bc,2026-03-16T15:19:16,CURACION + KINE MOTORA,CAMILA BUSTAMANTE,TMT,FRACTURA FEMUR DERECHO,135,matched_exact,AUTO,merged,FORMULARIO 2026 RESP (respuestas) (1).xlsx,FORMULARIO 2026 RESP (respuestas) (1).xlsx:117

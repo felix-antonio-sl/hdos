@@ -1,2 +1,0 @@
-address_resolution_id,patient_id,episode_id,raw_address,raw_comuna,raw_cesfam,resolved_establishment_id,resolved_locality_id,establishment_match_confidence,locality_match_confidence,resolution_status
-adr_eefac041d046dd3b,pt_d80e3e10ebdbe55e,,"27 DE ABRIL, PJE ROBERTO BUSTAMANTE 713",SAN CARLOS,C. TERESA BALDECCHI,est_afb315ffeb72b6e0,loc_5ef7a9d41fb260f7,1.0,0.3,PARTIAL

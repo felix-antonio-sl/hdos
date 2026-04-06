@@ -1,2 +1,0 @@
-episode_request_id,form_submission_id,episode_id,patient_id,submission_timestamp,request_prestacion,gestora,servicio_origen_solicitud,diagnostico,match_score,match_status,resolution_status,episode_origin,source_file,source_rows
-erq_a815dcc6823e2ed7,frm_0900872bf97fdddf,,pt_b431ca68250dee98,2026-03-30T16:44:04,KINE + ENFERMERÍA,MELISSA SEPULVEDA MERIÑO,CMI,FRACTURA DE CADERA,25,unresolved,PROVISIONAL,form_rescued,FORMULARIO 2026 RESP (respuestas) (1).xlsx,FORMULARIO 2026 RESP (respuestas) (1).xlsx:140

@@ -1,0 +1,21 @@
+name: hdos-db
+services:
+  app:
+    build: .
+    container_name: hdos-db
+    restart: unless-stopped
+    volumes:
+      - ./db:/app/db
+      - ./apps/streamlit_db_dashboard.py:/app/apps/streamlit_db_dashboard.py
+    networks:
+      - web
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.hdos.rule=Host(`hdos.sanixai.com`)"
+      - "traefik.http.routers.hdos.entrypoints=websecure"
+      - "traefik.http.routers.hdos.tls.certresolver=myresolver"
+      - "traefik.http.services.hdos.loadbalancer.server.port=8501"
+
+networks:
+  web:
+    external: true

@@ -1,2 +1,0 @@
-episode_request_id,form_submission_id,episode_id,patient_id,submission_timestamp,request_prestacion,gestora,servicio_origen_solicitud,diagnostico,match_score,match_status,resolution_status,episode_origin,source_file,source_rows
-erq_872dc56b5f040958,frm_3463a61f86feb34a,ep_daa5f536d053f9a5,pt_043207819da54134,2026-03-31T13:33:48,REHABILITACIÓN (KINE + FONO),MELISSA RIVERA SEPULVEDA,MEDICINA,ACV,35,matched_review_auto,AUTO,merged,FORMULARIO 2026 RESP (respuestas) (1).xlsx,FORMULARIO 2026 RESP (respuestas) (1).xlsx:141

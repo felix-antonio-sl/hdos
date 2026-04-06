@@ -1,2 +1,0 @@
-episode_discharge_id,discharge_event_id,episode_id,patient_id,fecha_ingreso,fecha_egreso,motivo_egreso,diagnostico,match_score,match_status,resolution_status,episode_origin,source_file,source_sheet,source_row_number
-edc_82820acfacc843b6,alta_752ee204cb80cd56,,pt_f8665241652134c7,2026-03-10,2026-03-13,REHOSPITALIZACION,FX LATERAL CADERA DERECHA OPERADA,125,matched_exact,AUTO,merged,PLANILLA DE ALTAS 26.xlsx,09 - 15 MARZO 2026,8

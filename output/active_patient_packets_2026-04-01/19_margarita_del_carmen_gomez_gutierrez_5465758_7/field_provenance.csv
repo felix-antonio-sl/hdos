@@ -1,9 +1,0 @@
-field_provenance_id,entity_type,entity_id,field_name,selected_value,selected_source,selected_confidence,competing_values_json
-fp_514b5f95657e7621,episode,ep_3375baeac3ec1d76,request_prestacion,CURACIÓN,formulario_hodom,135,"{""baseline"": """", ""form"": ""CURACIÓN""}"
-fp_51e28761b3e4fc82,episode,ep_3375baeac3ec1d76,gestora,MELISSA RIVERA,formulario_hodom,135,"{""baseline"": """", ""form"": ""MELISSA RIVERA""}"
-fp_774663ba8a55067c,patient,pt_e0e46e8681e42996,domicilio,"CACHAPOAL, CAMINO A LAS TOMAS KM 1,5",formulario_hodom,135,"{""baseline"": ""CAMINO LAS TOMAS DE CACHAPOAL 1,5 KM"", ""form"": ""CACHAPOAL, CAMINO A LAS TOMAS KM 1,5""}"
-fp_9dd8e6d4c5b03e8c,patient,pt_e0e46e8681e42996,cesfam,C. DURÁN TRUJILLO,formulario_hodom,135,"{""baseline"": """", ""form"": ""C. DURÁN TRUJILLO""}"
-fp_d82996234e2660d0,episode,ep_b824d0fe4724ecc8,request_prestacion,REHABILITACIÓN (KINE + FONO),formulario_hodom,135,"{""baseline"": """", ""form"": ""REHABILITACIÓN (KINE + FONO)""}"
-fp_5462461269328857,episode,ep_b824d0fe4724ecc8,gestora,PIA VASQUEZ,formulario_hodom,135,"{""baseline"": """", ""form"": ""PIA VASQUEZ""}"
-fp_774663ba8a55067c,patient,pt_e0e46e8681e42996,domicilio,CACHAPOAL ALTO S/N,formulario_hodom,135,"{""baseline"": ""CACHAPOAL, CAMINO A LAS TOMAS KM 1,5"", ""form"": ""CACHAPOAL ALTO S/N""}"
-fp_9dd8e6d4c5b03e8c,patient,pt_e0e46e8681e42996,cesfam,CACHAPOAL,formulario_hodom,135,"{""baseline"": ""C. DURÁN TRUJILLO"", ""form"": ""CACHAPOAL""}"

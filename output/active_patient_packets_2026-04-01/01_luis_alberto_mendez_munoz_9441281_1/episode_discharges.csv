@@ -1,2 +1,0 @@
-episode_discharge_id,discharge_event_id,episode_id,patient_id,fecha_ingreso,fecha_egreso,motivo_egreso,diagnostico,match_score,match_status,resolution_status,episode_origin,source_file,source_sheet,source_row_number
-edc_7f3fa6d63cef1375,alta_af8f868af08b7e70,,pt_3c52462f7b715590,2026-03-24,2026-03-26,ALTA,TUMOR MALIGNO DEL COLON SIGMOIDE,125,matched_exact,AUTO,merged,PLANILLA DE ALTAS 26.xlsx,23 - 29 DE MARZO 2026,7

@@ -1,3 +1,0 @@
-quality_issue_id,normalized_row_id,episode_id,issue_type,severity,raw_value,suggested_value,status
-dq_f9795dd65110df66,frm_9ad0fc976b9945d5,ep_9b8ea39affe57a39,UNMATCHED_FORM_SUBMISSION,MEDIUM,HERNAN POBLETE GALLEGOS,ep_9b8ea39affe57a39,RESOLVED_AUTO
-dq_cfa295765d0c7282,frm_4bd1ee960c3b5106,ep_9b8ea39affe57a39,UNMATCHED_FORM_SUBMISSION,MEDIUM,BERTA VENEGAS SEPULVEDA,ep_9b8ea39affe57a39,RESOLVED_AUTO

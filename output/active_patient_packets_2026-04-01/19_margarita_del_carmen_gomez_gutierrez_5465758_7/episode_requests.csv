@@ -1,3 +1,0 @@
-episode_request_id,form_submission_id,episode_id,patient_id,submission_timestamp,request_prestacion,gestora,servicio_origen_solicitud,diagnostico,match_score,match_status,resolution_status,episode_origin,source_file,source_rows
-erq_6a91f2c4f7b38ade,frm_4e21df7325121333,,pt_e0e46e8681e42996,2026-02-27T09:44:13,CURACIÓN,MELISSA RIVERA,TMT,FRACTURA PERTROCANTERIANA,135,matched_exact,AUTO,merged,FORMULARIO 2026 RESP (respuestas) (1).xlsx,FORMULARIO 2026 RESP (respuestas) (1).xlsx:90
-erq_3242dc8db0844dfe,frm_59e82f61f62753d3,,pt_e0e46e8681e42996,2026-03-26T19:43:37,REHABILITACIÓN (KINE + FONO),PIA VASQUEZ,MEDICINA,"Cetoacidosis diabética moderada, resuelta",135,matched_exact,AUTO,merged,FORMULARIO 2026 RESP (respuestas) (1).xlsx,FORMULARIO 2026 RESP (respuestas) (1).xlsx:136

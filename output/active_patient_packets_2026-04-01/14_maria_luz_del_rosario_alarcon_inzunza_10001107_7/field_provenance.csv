@@ -1,5 +1,0 @@
-field_provenance_id,entity_type,entity_id,field_name,selected_value,selected_source,selected_confidence,competing_values_json
-fp_84b131ca22742f73,episode,ep_4548385aabfcfd36,request_prestacion,CURACION + KINE MOTORA,formulario_hodom,135,"{""baseline"": """", ""form"": ""CURACION + KINE MOTORA""}"
-fp_91b1fcc85a2a3882,episode,ep_4548385aabfcfd36,gestora,CAMILA BUSTAMANTE,formulario_hodom,135,"{""baseline"": """", ""form"": ""CAMILA BUSTAMANTE""}"
-fp_ca6f5b222eae1298,patient,pt_6e8a6ec7d99936bc,nombres,MARIA LUZ DEL ROSARIO,formulario_hodom,135,"{""baseline"": ""MARIA"", ""form"": ""MARIA LUZ DEL ROSARIO""}"
-fp_74e19505e0eb3523,patient,pt_6e8a6ec7d99936bc,nombre_completo,MARIA LUZ DEL ROSARIO ALARCON INZUNZA,formulario_hodom,135,"{""baseline"": ""MARIA ALARCON INZUNZA"", ""form"": ""MARIA LUZ DEL ROSARIO ALARCON INZUNZA""}"
