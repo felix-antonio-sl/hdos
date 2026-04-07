@@ -723,7 +723,7 @@ CREATE TABLE clinical.consentimiento (
     firmante_nombre     TEXT,
     firmante_rut        TEXT,
     firmante_parentesco TEXT,
-    provider_id         TEXT REFERENCES profesional(provider_id),
+    provider_id         TEXT,
     doc_id              TEXT REFERENCES documentacion(doc_id),
     created_at          TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
@@ -736,7 +736,7 @@ CREATE TABLE clinical.valoracion_ingreso (
     assessment_id       TEXT PRIMARY KEY,
     stay_id             TEXT NOT NULL REFERENCES estadia(stay_id),
     patient_id          TEXT NOT NULL REFERENCES paciente(patient_id),
-    provider_id         TEXT REFERENCES profesional(provider_id),
+    provider_id         TEXT,
     tipo                TEXT NOT NULL CHECK (tipo IN (
                             'enfermeria', 'kinesiologia', 'fonoaudiologia',
                             'terapia_ocupacional', 'medica', 'tens'
@@ -831,8 +831,8 @@ CREATE INDEX idx_herida_activas ON clinical.herida(patient_id) WHERE estado = 'a
 CREATE TABLE clinical.seguimiento_herida (
     seguimiento_id      TEXT PRIMARY KEY,
     herida_id           TEXT NOT NULL REFERENCES herida(herida_id),
-    visit_id            TEXT REFERENCES visita(visit_id),
-    provider_id         TEXT REFERENCES profesional(provider_id),
+    visit_id            TEXT,
+    provider_id         TEXT,
     fecha               DATE NOT NULL,
     lugar_grado         TEXT,
     exudacion           TEXT,
@@ -853,7 +853,7 @@ CREATE TABLE clinical.evaluacion_funcional (
     eval_id             TEXT PRIMARY KEY,
     stay_id             TEXT NOT NULL REFERENCES estadia(stay_id),
     patient_id          TEXT NOT NULL REFERENCES paciente(patient_id),
-    provider_id         TEXT REFERENCES profesional(provider_id),
+    provider_id         TEXT,
     momento             TEXT NOT NULL CHECK (momento IN ('ingreso', 'semanal', 'egreso', 'seguimiento')),
     fecha               DATE NOT NULL,
     barthel_score       INTEGER CHECK (barthel_score IS NULL OR (barthel_score >= 0 AND barthel_score <= 100)),
@@ -882,10 +882,10 @@ CREATE INDEX idx_evaluacion_funcional_patient_id ON clinical.evaluacion_funciona
 -- RC-8: Nota de evolución
 CREATE TABLE clinical.nota_evolucion (
     nota_id             TEXT PRIMARY KEY,
-    visit_id            TEXT REFERENCES visita(visit_id),
+    visit_id            TEXT,
     stay_id             TEXT NOT NULL REFERENCES estadia(stay_id),
     patient_id          TEXT NOT NULL REFERENCES paciente(patient_id),
-    provider_id         TEXT REFERENCES profesional(provider_id),
+    provider_id         TEXT,
     tipo                TEXT NOT NULL CHECK (tipo IN (
                             'enfermeria', 'kinesiologia', 'fonoaudiologia',
                             'terapia_ocupacional', 'medica', 'trabajo_social', 'tens'
@@ -905,10 +905,10 @@ CREATE INDEX idx_nota_evolucion_patient_id ON clinical.nota_evolucion(patient_id
 -- RC-9: Sesión de rehabilitación
 CREATE TABLE clinical.sesion_rehabilitacion (
     sesion_id           TEXT PRIMARY KEY,
-    visit_id            TEXT REFERENCES visita(visit_id),
+    visit_id            TEXT,
     stay_id             TEXT NOT NULL REFERENCES estadia(stay_id),
     patient_id          TEXT NOT NULL REFERENCES paciente(patient_id),
-    provider_id         TEXT REFERENCES profesional(provider_id),
+    provider_id         TEXT,
     tipo                TEXT NOT NULL CHECK (tipo IN (
                             'kinesiologia_respiratoria', 'kinesiologia_motora',
                             'terapia_ocupacional', 'fonoaudiologia'
@@ -958,8 +958,8 @@ CREATE INDEX idx_sesion_item ON clinical.sesion_rehabilitacion_item(sesion_id);
 CREATE TABLE clinical.seguimiento_dispositivo (
     seguimiento_id      TEXT PRIMARY KEY,
     device_id           TEXT NOT NULL REFERENCES dispositivo(device_id),
-    visit_id            TEXT REFERENCES visita(visit_id),
-    provider_id         TEXT REFERENCES profesional(provider_id),
+    visit_id            TEXT,
+    provider_id         TEXT,
     fecha               DATE NOT NULL,
     cambio_realizado    BOOLEAN DEFAULT FALSE,
     fecha_instalacion   DATE,
@@ -980,7 +980,7 @@ CREATE TABLE clinical.indicacion_medica (
     indicacion_id       TEXT PRIMARY KEY,
     stay_id             TEXT NOT NULL REFERENCES estadia(stay_id),
     patient_id          TEXT NOT NULL REFERENCES paciente(patient_id),
-    provider_id         TEXT REFERENCES profesional(provider_id),
+    provider_id         TEXT,
     fecha               DATE NOT NULL,
     hora                TEXT,
     tipo                TEXT NOT NULL CHECK (tipo IN (
@@ -1022,7 +1022,7 @@ CREATE TABLE clinical.receta (
     indicacion_id       TEXT REFERENCES indicacion_medica(indicacion_id),
     stay_id             TEXT NOT NULL REFERENCES estadia(stay_id),
     patient_id          TEXT NOT NULL REFERENCES paciente(patient_id),
-    provider_id         TEXT NOT NULL REFERENCES profesional(provider_id),
+    provider_id         TEXT NOT NULL,
     fecha               DATE NOT NULL,
     medicamento         TEXT NOT NULL,
     forma_farmaceutica  TEXT,
@@ -1122,7 +1122,7 @@ CREATE TABLE clinical.prestamo_equipo (
     patient_id          TEXT NOT NULL REFERENCES paciente(patient_id),
     stay_id             TEXT NOT NULL REFERENCES estadia(stay_id),
     fecha_entrega       DATE NOT NULL,
-    entregado_por       TEXT REFERENCES profesional(provider_id),
+    entregado_por       TEXT,
     recibido_por        TEXT,
     condicion_entrega   TEXT,
     fecha_devolucion    DATE,
@@ -1176,7 +1176,7 @@ CREATE TABLE clinical.solicitud_examen (
     solicitud_id        TEXT PRIMARY KEY,
     stay_id             TEXT NOT NULL REFERENCES estadia(stay_id),
     patient_id          TEXT NOT NULL REFERENCES paciente(patient_id),
-    solicitante_id      TEXT REFERENCES profesional(provider_id),
+    solicitante_id      TEXT,
     fecha_solicitud     DATE NOT NULL,
     tipo_examen         TEXT NOT NULL CHECK (tipo_examen IN (
                             'laboratorio', 'imagenologia', 'electrocardiograma',
@@ -1202,8 +1202,8 @@ CREATE INDEX idx_solicitud_examen_patient_id ON clinical.solicitud_examen(patien
 CREATE TABLE clinical.toma_muestra (
     muestra_id          TEXT PRIMARY KEY,
     solicitud_id        TEXT NOT NULL REFERENCES solicitud_examen(solicitud_id),
-    visit_id            TEXT REFERENCES visita(visit_id),
-    tomador_id          TEXT REFERENCES profesional(provider_id),
+    visit_id            TEXT,
+    tomador_id          TEXT,
     fecha               DATE NOT NULL,
     hora                TEXT,
     tipo_muestra        TEXT,
@@ -1249,7 +1249,7 @@ CREATE TABLE clinical.lista_espera (
     requiere_o2         BOOLEAN DEFAULT FALSE,
     requiere_curaciones BOOLEAN DEFAULT FALSE,
     fecha_evaluacion    DATE,
-    evaluador_id        TEXT REFERENCES profesional(provider_id),
+    evaluador_id        TEXT,
     resultado_evaluacion TEXT CHECK (resultado_evaluacion IS NULL OR resultado_evaluacion IN (
                             'elegible', 'no_elegible', 'pendiente_informacion', 'en_evaluacion'
                         )),
@@ -1274,7 +1274,7 @@ CREATE TABLE clinical.evento_adverso (
     evento_id           TEXT PRIMARY KEY,
     patient_id          TEXT REFERENCES paciente(patient_id),
     stay_id             TEXT REFERENCES estadia(stay_id),
-    visit_id            TEXT REFERENCES visita(visit_id),
+    visit_id            TEXT,
     tipo                TEXT NOT NULL REFERENCES tipo_evento_adverso_ref(codigo),
     severidad           TEXT NOT NULL CHECK (severidad IN (
                             'sin_daño', 'leve', 'moderado', 'grave', 'muerte'
@@ -1284,7 +1284,7 @@ CREATE TABLE clinical.evento_adverso (
     lugar               TEXT,
     descripcion         TEXT NOT NULL,
     circunstancias      TEXT,
-    detectado_por_id    TEXT REFERENCES profesional(provider_id),
+    detectado_por_id    TEXT,
     fecha_reporte       DATE NOT NULL,
     accion_inmediata    TEXT,
     requirio_traslado   BOOLEAN DEFAULT FALSE,
@@ -1306,7 +1306,7 @@ CREATE TABLE clinical.notificacion_obligatoria (
     stay_id             TEXT REFERENCES estadia(stay_id),
     tipo                TEXT NOT NULL CHECK (tipo IN ('eno', 'iaas', 'brote', 'ram')),
     fecha_notificacion  DATE NOT NULL,
-    notificador_id      TEXT REFERENCES profesional(provider_id),
+    notificador_id      TEXT,
     diagnostico         TEXT NOT NULL,
     codigo_cie10        TEXT,
     descripcion         TEXT,
@@ -1324,8 +1324,8 @@ CREATE TABLE clinical.educacion_paciente (
     educacion_id        TEXT PRIMARY KEY,
     stay_id             TEXT NOT NULL REFERENCES estadia(stay_id),
     patient_id          TEXT NOT NULL REFERENCES paciente(patient_id),
-    provider_id         TEXT REFERENCES profesional(provider_id),
-    visit_id            TEXT REFERENCES visita(visit_id),
+    provider_id         TEXT,
+    visit_id            TEXT,
     fecha               DATE NOT NULL,
     tema                TEXT NOT NULL REFERENCES tema_educacion_ref(codigo),
     descripcion         TEXT,
@@ -1348,7 +1348,7 @@ CREATE TABLE clinical.evaluacion_paliativa (
     eval_paliativa_id   TEXT PRIMARY KEY,
     stay_id             TEXT NOT NULL REFERENCES estadia(stay_id),
     patient_id          TEXT NOT NULL REFERENCES paciente(patient_id),
-    provider_id         TEXT REFERENCES profesional(provider_id),
+    provider_id         TEXT,
     fecha               DATE NOT NULL,
     esas_dolor          INTEGER CHECK (esas_dolor IS NULL OR (esas_dolor >= 0 AND esas_dolor <= 10)),
     esas_fatiga         INTEGER CHECK (esas_fatiga IS NULL OR (esas_fatiga >= 0 AND esas_fatiga <= 10)),
@@ -1390,7 +1390,7 @@ CREATE TABLE clinical.voluntad_anticipada (
     representante_parentesco TEXT,
     testigo_1_nombre    TEXT,
     testigo_2_nombre    TEXT,
-    provider_id         TEXT REFERENCES profesional(provider_id),
+    provider_id         TEXT,
     estado              TEXT CHECK (estado IN ('vigente', 'revocada')) DEFAULT 'vigente',
     fecha_revocacion    DATE,
     doc_id              TEXT REFERENCES documentacion(doc_id),
@@ -1405,7 +1405,7 @@ CREATE TABLE clinical.teleconsulta (
     teleconsulta_id     TEXT PRIMARY KEY,
     stay_id             TEXT NOT NULL REFERENCES estadia(stay_id),
     patient_id          TEXT NOT NULL REFERENCES paciente(patient_id),
-    provider_id         TEXT REFERENCES profesional(provider_id),
+    provider_id         TEXT,
     fecha               DATE NOT NULL,
     hora_inicio         TEXT,
     hora_fin            TEXT,
@@ -1436,7 +1436,7 @@ CREATE TABLE clinical.epicrisis (
     epicrisis_id        TEXT PRIMARY KEY,
     stay_id             TEXT NOT NULL REFERENCES estadia(stay_id),
     patient_id          TEXT NOT NULL REFERENCES paciente(patient_id),
-    provider_id         TEXT REFERENCES profesional(provider_id),
+    provider_id         TEXT,
     fecha_emision       DATE NOT NULL,
     fecha_ingreso       DATE,
     fecha_egreso        DATE,
@@ -1494,7 +1494,7 @@ CREATE TABLE clinical.informe_social (
     informe_id          TEXT PRIMARY KEY,
     stay_id             TEXT NOT NULL REFERENCES estadia(stay_id),
     patient_id          TEXT NOT NULL REFERENCES paciente(patient_id),
-    provider_id         TEXT REFERENCES profesional(provider_id),
+    provider_id         TEXT,
     tipo                TEXT NOT NULL CHECK (tipo IN ('preliminar', 'completo')),
     fecha               DATE NOT NULL,
     n_integrantes_hogar INTEGER,
@@ -1537,7 +1537,7 @@ CREATE TABLE clinical.interconsulta (
     interconsulta_id    TEXT PRIMARY KEY,
     stay_id             TEXT NOT NULL REFERENCES estadia(stay_id),
     patient_id          TEXT NOT NULL REFERENCES paciente(patient_id),
-    solicitante_id      TEXT REFERENCES profesional(provider_id),
+    solicitante_id      TEXT,
     fecha_solicitud     DATE NOT NULL,
     prioridad           TEXT REFERENCES prioridad_ref(codigo),
     especialidad_destino TEXT NOT NULL,
@@ -1598,7 +1598,7 @@ CREATE TABLE clinical.protocolo_fallecimiento (
     protocolo_id        TEXT PRIMARY KEY,
     stay_id             TEXT NOT NULL REFERENCES estadia(stay_id),
     patient_id          TEXT NOT NULL REFERENCES paciente(patient_id),
-    provider_id         TEXT REFERENCES profesional(provider_id),
+    provider_id         TEXT,
     fecha_fallecimiento DATE NOT NULL,
     hora_fallecimiento  TEXT,
     lugar               TEXT CHECK (lugar IS NULL OR lugar IN ('domicilio', 'traslado_hospital', 'otro')),
@@ -2133,6 +2133,98 @@ ALTER TABLE clinical.medicacion
 
 ALTER TABLE clinical.documentacion
     ADD CONSTRAINT fk_documentacion_visita FOREIGN KEY (visit_id) REFERENCES visita(visit_id);
+
+
+-- Clinical tables referencing operational.profesional (forward refs fixed)
+ALTER TABLE clinical.consentimiento
+    ADD CONSTRAINT fk_consentimiento_provider_id FOREIGN KEY (provider_id) REFERENCES operational.profesional(provider_id);
+
+ALTER TABLE clinical.valoracion_ingreso
+    ADD CONSTRAINT fk_valoracion_ingreso_provider_id FOREIGN KEY (provider_id) REFERENCES operational.profesional(provider_id);
+
+ALTER TABLE clinical.seguimiento_herida
+    ADD CONSTRAINT fk_seguimiento_herida_visit_id FOREIGN KEY (visit_id) REFERENCES operational.visita(visit_id);
+
+ALTER TABLE clinical.seguimiento_herida
+    ADD CONSTRAINT fk_seguimiento_herida_provider_id FOREIGN KEY (provider_id) REFERENCES operational.profesional(provider_id);
+
+ALTER TABLE clinical.evaluacion_funcional
+    ADD CONSTRAINT fk_evaluacion_funcional_provider_id FOREIGN KEY (provider_id) REFERENCES operational.profesional(provider_id);
+
+ALTER TABLE clinical.nota_evolucion
+    ADD CONSTRAINT fk_nota_evolucion_visit_id FOREIGN KEY (visit_id) REFERENCES operational.visita(visit_id);
+
+ALTER TABLE clinical.nota_evolucion
+    ADD CONSTRAINT fk_nota_evolucion_provider_id FOREIGN KEY (provider_id) REFERENCES operational.profesional(provider_id);
+
+ALTER TABLE clinical.sesion_rehabilitacion
+    ADD CONSTRAINT fk_sesion_rehabilitacion_visit_id FOREIGN KEY (visit_id) REFERENCES operational.visita(visit_id);
+
+ALTER TABLE clinical.sesion_rehabilitacion
+    ADD CONSTRAINT fk_sesion_rehabilitacion_provider_id FOREIGN KEY (provider_id) REFERENCES operational.profesional(provider_id);
+
+ALTER TABLE clinical.seguimiento_dispositivo
+    ADD CONSTRAINT fk_seguimiento_dispositivo_visit_id FOREIGN KEY (visit_id) REFERENCES operational.visita(visit_id);
+
+ALTER TABLE clinical.seguimiento_dispositivo
+    ADD CONSTRAINT fk_seguimiento_dispositivo_provider_id FOREIGN KEY (provider_id) REFERENCES operational.profesional(provider_id);
+
+ALTER TABLE clinical.indicacion_medica
+    ADD CONSTRAINT fk_indicacion_medica_provider_id FOREIGN KEY (provider_id) REFERENCES operational.profesional(provider_id);
+
+ALTER TABLE clinical.receta
+    ADD CONSTRAINT fk_receta_provider_id FOREIGN KEY (provider_id) REFERENCES operational.profesional(provider_id);
+
+ALTER TABLE clinical.prestamo_equipo
+    ADD CONSTRAINT fk_prestamo_equipo_entregado_por FOREIGN KEY (entregado_por) REFERENCES operational.profesional(provider_id);
+
+ALTER TABLE clinical.solicitud_examen
+    ADD CONSTRAINT fk_solicitud_examen_solicitante_id FOREIGN KEY (solicitante_id) REFERENCES operational.profesional(provider_id);
+
+ALTER TABLE clinical.toma_muestra
+    ADD CONSTRAINT fk_toma_muestra_visit_id FOREIGN KEY (visit_id) REFERENCES operational.visita(visit_id);
+
+ALTER TABLE clinical.toma_muestra
+    ADD CONSTRAINT fk_toma_muestra_tomador_id FOREIGN KEY (tomador_id) REFERENCES operational.profesional(provider_id);
+
+ALTER TABLE clinical.lista_espera
+    ADD CONSTRAINT fk_lista_espera_evaluador_id FOREIGN KEY (evaluador_id) REFERENCES operational.profesional(provider_id);
+
+ALTER TABLE clinical.evento_adverso
+    ADD CONSTRAINT fk_evento_adverso_visit_id FOREIGN KEY (visit_id) REFERENCES operational.visita(visit_id);
+
+ALTER TABLE clinical.evento_adverso
+    ADD CONSTRAINT fk_evento_adverso_detectado_por_id FOREIGN KEY (detectado_por_id) REFERENCES operational.profesional(provider_id);
+
+ALTER TABLE clinical.notificacion_obligatoria
+    ADD CONSTRAINT fk_notificacion_obligatoria_notificador_id FOREIGN KEY (notificador_id) REFERENCES operational.profesional(provider_id);
+
+ALTER TABLE clinical.educacion_paciente
+    ADD CONSTRAINT fk_educacion_paciente_provider_id FOREIGN KEY (provider_id) REFERENCES operational.profesional(provider_id);
+
+ALTER TABLE clinical.educacion_paciente
+    ADD CONSTRAINT fk_educacion_paciente_visit_id FOREIGN KEY (visit_id) REFERENCES operational.visita(visit_id);
+
+ALTER TABLE clinical.evaluacion_paliativa
+    ADD CONSTRAINT fk_evaluacion_paliativa_provider_id FOREIGN KEY (provider_id) REFERENCES operational.profesional(provider_id);
+
+ALTER TABLE clinical.voluntad_anticipada
+    ADD CONSTRAINT fk_voluntad_anticipada_provider_id FOREIGN KEY (provider_id) REFERENCES operational.profesional(provider_id);
+
+ALTER TABLE clinical.teleconsulta
+    ADD CONSTRAINT fk_teleconsulta_provider_id FOREIGN KEY (provider_id) REFERENCES operational.profesional(provider_id);
+
+ALTER TABLE clinical.epicrisis
+    ADD CONSTRAINT fk_epicrisis_provider_id FOREIGN KEY (provider_id) REFERENCES operational.profesional(provider_id);
+
+ALTER TABLE clinical.informe_social
+    ADD CONSTRAINT fk_informe_social_provider_id FOREIGN KEY (provider_id) REFERENCES operational.profesional(provider_id);
+
+ALTER TABLE clinical.interconsulta
+    ADD CONSTRAINT fk_interconsulta_solicitante_id FOREIGN KEY (solicitante_id) REFERENCES operational.profesional(provider_id);
+
+ALTER TABLE clinical.protocolo_fallecimiento
+    ADD CONSTRAINT fk_protocolo_fallecimiento_provider_id FOREIGN KEY (provider_id) REFERENCES operational.profesional(provider_id);
 
 -- END PART 1
 
