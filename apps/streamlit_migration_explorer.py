@@ -532,8 +532,8 @@ with tab_cli:
 with tab_vis:
     st.header("Operacional")
 
-    sub_visitas, sub_epi, sub_llam, sub_prof = st.tabs(
-        ["Visitas", "Epicrisis", "Llamadas", "Profesionales"]
+    sub_visitas, sub_notas, sub_disp, sub_epi, sub_llam, sub_prof = st.tabs(
+        ["Visitas", "Notas Evolución", "Dispositivos", "Epicrisis", "Llamadas", "Profesionales"]
     )
 
     with sub_visitas:
@@ -579,6 +579,183 @@ with tab_vis:
                 """
             )
             st.bar_chart(df_vis_mes.set_index("mes"))
+
+            # COMPLETA vs PROGRAMADA breakdown
+            st.subheader("Estado: COMPLETA vs PROGRAMADA")
+            df_vis_estado = query_df(
+                """
+                SELECT estado, COUNT(*) AS n
+                FROM operational.visita
+                GROUP BY estado ORDER BY n DESC
+                """
+            )
+            if not df_vis_estado.empty:
+                cols_estado = st.columns(len(df_vis_estado))
+                for i, row in df_vis_estado.iterrows():
+                    cols_estado[i].metric(row["estado"] or "(sin estado)", int(row["n"]))
+                st.bar_chart(df_vis_estado.set_index("estado"))
+
+            st.subheader("Estado de visitas por mes")
+            df_vis_estado_mes = query_df(
+                """
+                SELECT TO_CHAR(fecha, 'YYYY-MM') AS mes, estado, COUNT(*) AS n
+                FROM operational.visita
+                GROUP BY mes, estado ORDER BY mes
+                """
+            )
+            if not df_vis_estado_mes.empty:
+                df_pivot = df_vis_estado_mes.pivot_table(
+                    index="mes", columns="estado", values="n", fill_value=0
+                ).reset_index().set_index("mes")
+                st.bar_chart(df_pivot)
+
+        except Exception as exc:
+            st.error(f"Error: {exc}")
+
+    # ── Notas Evolución ──────────────────────────────────────
+    with sub_notas:
+        try:
+            col_n1, col_n2, col_n3 = st.columns([2, 1, 1])
+            with col_n1:
+                buscar_nota = st.text_input("Buscar paciente (RUT / nombre)", key="nota_buscar")
+            with col_n2:
+                tipos_nota = ["Todos"] + [
+                    "enfermeria", "kinesiologia", "fonoaudiologia",
+                    "terapia_ocupacional", "medica", "trabajo_social", "tens",
+                ]
+                filtro_tipo_nota = st.selectbox("Tipo nota", tipos_nota, key="nota_tipo")
+            with col_n3:
+                col_d1, col_d2 = st.columns(2)
+                with col_d1:
+                    nota_desde = st.date_input("Desde", value=None, key="nota_desde")
+                with col_d2:
+                    nota_hasta = st.date_input("Hasta", value=None, key="nota_hasta")
+
+            df_notas = query_df(
+                """
+                SELECT n.fecha, p.nombre_completo, p.rut, n.tipo,
+                       LEFT(n.notas_clinicas, 120) AS notas_clinicas,
+                       LEFT(n.plan_enfermeria, 120) AS plan_enfermeria,
+                       n.hora
+                FROM clinical.nota_evolucion n
+                JOIN clinical.paciente p ON p.patient_id = n.patient_id
+                ORDER BY n.fecha DESC, n.hora DESC
+                """
+            )
+
+            # Apply filters
+            if buscar_nota:
+                mask = (
+                    df_notas["nombre_completo"].str.upper().str.contains(buscar_nota.upper(), na=False)
+                    | df_notas["rut"].str.contains(buscar_nota, na=False)
+                )
+                df_notas = df_notas[mask]
+            if filtro_tipo_nota != "Todos":
+                df_notas = df_notas[df_notas["tipo"] == filtro_tipo_nota]
+            if nota_desde:
+                df_notas = df_notas[pd.to_datetime(df_notas["fecha"]).dt.date >= nota_desde]
+            if nota_hasta:
+                df_notas = df_notas[pd.to_datetime(df_notas["fecha"]).dt.date <= nota_hasta]
+
+            st.caption(f"{len(df_notas)} notas de evolución")
+            st.dataframe(
+                df_notas,
+                use_container_width=True,
+                hide_index=True,
+                column_config={
+                    "fecha": st.column_config.DateColumn("Fecha"),
+                    "nombre_completo": st.column_config.TextColumn("Paciente", width="medium"),
+                    "rut": st.column_config.TextColumn("RUT", width="small"),
+                    "tipo": st.column_config.TextColumn("Tipo", width="small"),
+                    "notas_clinicas": st.column_config.TextColumn("Notas clínicas", width="large"),
+                    "plan_enfermeria": st.column_config.TextColumn("Plan enfermería", width="large"),
+                    "hora": st.column_config.TextColumn("Hora", width="small"),
+                },
+            )
+
+            st.subheader("Distribución por tipo")
+            df_notas_tipo = query_df(
+                """
+                SELECT tipo, COUNT(*) AS n
+                FROM clinical.nota_evolucion
+                GROUP BY tipo ORDER BY n DESC
+                """
+            )
+            st.bar_chart(df_notas_tipo.set_index("tipo"))
+
+            st.subheader("Notas por mes")
+            df_notas_mes = query_df(
+                """
+                SELECT TO_CHAR(fecha, 'YYYY-MM') AS mes, COUNT(*) AS n
+                FROM clinical.nota_evolucion
+                GROUP BY mes ORDER BY mes
+                """
+            )
+            st.bar_chart(df_notas_mes.set_index("mes"))
+
+        except Exception as exc:
+            st.error(f"Error: {exc}")
+
+    # ── Dispositivos ─────────────────────────────────────────
+    with sub_disp:
+        try:
+            tipos_disp = ["Todos"] + [
+                "VVP", "SNG", "CUP", "DRENAJE", "CONCENTRADOR_O2",
+                "BOMBA_IV", "MONITOR", "GLUCOMETRO", "OTRO",
+            ]
+            filtro_tipo_disp = st.selectbox("Tipo dispositivo", tipos_disp, key="disp_tipo")
+
+            df_disp = query_df(
+                """
+                SELECT p.nombre_completo, p.rut, d.tipo, d.estado, d.serial,
+                       d.asignado_desde, d.asignado_hasta
+                FROM clinical.dispositivo d
+                JOIN clinical.paciente p ON p.patient_id = d.patient_id
+                ORDER BY d.asignado_desde DESC NULLS LAST
+                """
+            )
+
+            if filtro_tipo_disp != "Todos":
+                df_disp = df_disp[df_disp["tipo"] == filtro_tipo_disp]
+
+            # Active devices metric
+            df_activos = query_df(
+                """
+                SELECT COUNT(*) AS n
+                FROM clinical.dispositivo
+                WHERE asignado_hasta IS NULL OR asignado_hasta >= CURRENT_DATE
+                """
+            )
+            cnt_activos = int(df_activos["n"].iloc[0]) if not df_activos.empty else 0
+
+            col_d1, col_d2 = st.columns(2)
+            col_d1.metric("Total dispositivos", len(df_disp))
+            col_d2.metric("Dispositivos activos", cnt_activos)
+
+            st.dataframe(
+                df_disp,
+                use_container_width=True,
+                hide_index=True,
+                column_config={
+                    "nombre_completo": st.column_config.TextColumn("Paciente", width="medium"),
+                    "rut": st.column_config.TextColumn("RUT", width="small"),
+                    "tipo": st.column_config.TextColumn("Tipo", width="small"),
+                    "estado": st.column_config.TextColumn("Estado", width="small"),
+                    "serial": st.column_config.TextColumn("Serial", width="small"),
+                    "asignado_desde": st.column_config.DateColumn("Desde"),
+                    "asignado_hasta": st.column_config.DateColumn("Hasta"),
+                },
+            )
+
+            st.subheader("Distribución por tipo")
+            df_disp_tipo = query_df(
+                """
+                SELECT tipo, COUNT(*) AS n
+                FROM clinical.dispositivo
+                GROUP BY tipo ORDER BY n DESC
+                """
+            )
+            st.bar_chart(df_disp_tipo.set_index("tipo"))
 
         except Exception as exc:
             st.error(f"Error: {exc}")

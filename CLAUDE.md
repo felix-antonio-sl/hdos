@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-HDOS (Hospitalización Domiciliaria) is a Python data pipeline for consolidating, deduplicating, and enriching home hospitalization records for Hospital San Carlos (Ñuble, Chile). Data flows through CSV files — no database. Output feeds two Streamlit dashboards and REM reports for MINSAL.
+HDOS (Hospitalización Domiciliaria) is a Python data pipeline and PostgreSQL migration system for consolidating, deduplicating, and enriching home hospitalization records for Hospital San Carlos (Ñuble, Chile). Two parallel data layers exist: a 4-stage CSV pipeline and a categorical PG migration. Output feeds Streamlit dashboards and REM reports for MINSAL.
 
 ## Commands
 
@@ -39,6 +39,17 @@ scripts/run_streamlit_migration_model_dashboard.sh
 .venv/bin/python scripts/build_hodom_enriched.py        # Stage 3
 .venv/bin/python scripts/build_hodom_canonical.py       # Stage 4
 
+# PostgreSQL categorical migration
+.venv/bin/python scripts/migrate_to_pg/run_migration.py --db-url postgresql://hodom:hodom@localhost:5555/hodom
+.venv/bin/python scripts/migrate_to_pg/run_migration.py --db-url ... --phase F2_pacientes  # single phase
+.venv/bin/python scripts/migrate_to_pg/run_migration.py --db-url ... --dry-run
+
+# Rebuild & deploy dashboard container
+docker compose up -d --build
+
+# Verify PG is alive
+docker exec hodom-pg psql -U hodom -d hodom -c "SELECT count(*) FROM clinical.estadia;"
+
 # Auxiliary scripts
 .venv/bin/python scripts/build_active_patient_packets.py    # Patient summary packets
 .venv/bin/python scripts/build_hodom_admissions_minimal.py  # Minimal admission dataset
@@ -48,31 +59,63 @@ scripts/run_streamlit_migration_model_dashboard.sh
 
 ## Architecture
 
-### 4-Stage Pipeline
+### Two Data Layers
+
+**CSV Pipeline (4 stages)** — historical, deterministic, file-based:
 
 ```
 Stage 1: migrate_hodom_csv.py
   input/raw_csv_exports/ → output/spreadsheet/ (normalized rows, patients, file summary)
 
 Stage 2: build_hodom_intermediate.py
-  Stage 1 output → output/spreadsheet/intermediate/ (20 CSVs: episodes, patients, diagnoses, care requirements, identity candidates, provenance)
+  Stage 1 output → output/spreadsheet/intermediate/ (20 CSVs)
 
 Stage 3: build_hodom_enriched.py
-  intermediate/ + XLSX forms + DEIS reference + INE geodata → output/spreadsheet/enriched/ (26 CSVs: episode_master, patient_master, address_resolution, locality_reference, etc.)
+  intermediate/ + XLSX forms + DEIS + INE geodata → output/spreadsheet/enriched/ (26 CSVs)
 
 Stage 4: build_hodom_canonical.py
-  enriched/ + input/manual/ corrections → output/spreadsheet/canonical/ (12 CSVs: hospitalization_stay, patient_identity_master, patient_master, review_queue, coverage_gap, episode_source, pipeline_health, etc.)
+  enriched/ + input/manual/ corrections → output/spreadsheet/canonical/ (12 CSVs)
 ```
 
-Each stage imports the previous one as a Python module via `sys.path`. Stage 3 imports both `build_hodom_intermediate` (as `core`) and `migrate_hodom_csv` (as `base`). Stage 4 imports `migrate_hodom_csv` (as `base`).
+Each stage imports the previous one as a Python module via `sys.path`. Stage 3 imports `build_hodom_intermediate` (as `core`) and `migrate_hodom_csv` (as `base`). Stage 4 imports `migrate_hodom_csv` (as `base`).
+
+**PostgreSQL Migration (categorical)** — current source of truth:
+
+```
+scripts/migrate_to_pg/
+├── run_migration.py          # CLI: --db-url, --phase, --dry-run
+├── framework/
+│   ├── category.py           # Functor base class + PathEquation (diagram commutativity checks)
+│   ├── runner.py             # ComposedFunctor orchestrator, MigrationSources, MigrationReport
+│   ├── hash_ids.py           # Deterministic ID generation
+│   └── provenance.py         # Field-level provenance tracking
+└── functors/                 # 13 functors: F₀ bootstrap → F₁₁ entregas turno
+    ├── f0_bootstrap.py       # DDL, schema init
+    ├── f1_territorial.py     # Geographic master data
+    ├── f2_pacientes.py       # Patient records
+    ├── f3_estadias.py        # Hospitalization stays
+    ├── f4_episode_source.py  # Episode source tracking
+    ├── f5_clinical_enrichment.py  # Diagnoses, conditions
+    ├── f6_profesionales.py   # Healthcare professionals
+    ├── f7_visitas.py         # Scheduled visits
+    ├── f7b_visitas_realizadas.py  # Realized visits (RUTAS 2025-2026)
+    ├── f8_epicrisis.py       # Clinical summaries
+    ├── f9_operacional.py     # Operational data (calls, routes)
+    ├── f10_kpi_diario.py     # Daily KPIs
+    └── f11_entregas_turno.py # Shift handovers + evolution notes + devices
+```
+
+Each functor implements `apply(conn, sources) → report` and optionally declares `PathEquation`s for categorical invariant checks (diagram commutativity). The `ComposedFunctor` orchestrator runs them in order and validates all equations.
+
+**SQL corrections** (`scripts/corr_*.sql`): 7 ad-hoc correction scripts applied directly to PG after migration (solapamientos, establecimiento, completitud, etc.).
 
 ### Key Design Principles
 
-- **PostgreSQL is the canonical source**: As of 2026-04-06, the PG database (Docker container `hodom-pg`, port 5555) with all validated corrections IS the source of truth. CSV pipeline outputs and `db/hdos.db` are historical migration sources, not the current truth. Corrections go directly into PG.
-- **Deterministic & reproducible**: Hashed IDs (`hashlib`), sorted output. Re-running a stage with the same input produces identical output.
+- **PostgreSQL is the canonical source**: PG database (container `hodom-pg`, port 5555) with validated corrections IS the source of truth. CSV pipeline and `db/hdos.db` (SQLite) are historical migration sources.
+- **Deterministic & reproducible**: Hashed IDs (`hashlib`), sorted output. Same input → identical output.
 - **Source trust hierarchy**: `manual > enriched > forms > altas > SGH`. Origin weights: merged(4) > raw(3) > alta_rescued(2) > form_rescued(1).
-- **Conservative deduplication**: Exact match → RUT ±2 days → nombre ±2 days. The pipeline prefers false negatives over false positives.
-- **Field-level provenance**: `migration.provenance` table in PG tracks where every migrated value came from (source_type, source_file, phase, field_name).
+- **Conservative deduplication**: Exact match → RUT ±2 days → nombre ±2 days. Prefers false negatives over false positives.
+- **Field-level provenance**: `migration.provenance` table tracks where every migrated value came from (source_type, source_file, phase, field_name).
 - **Manual override cycle**: Quality issues → review queues → `input/manual/manual_resolution.csv` → re-run stage 4.
 
 ### Identity Resolution Strategies
@@ -84,34 +127,47 @@ Each stage imports the previous one as a Python module via `sys.path`. Stage 3 i
 
 ### Consolidation Algorithm (Stage 4)
 
-Episodes are grouped into stays by: exact (patient_id + fecha_ingreso + fecha_egreso) → RUT ±2 days → nombre ±2 days. Best episode per group selected by origin weight + non-empty field count. Adjacent stays for same patient (gap ≤1 day) are merged.
+Episodes grouped into stays by: exact (patient_id + fecha_ingreso + fecha_egreso) → RUT ±2 days → nombre ±2 days. Best episode per group selected by origin weight + non-empty field count. Adjacent stays for same patient (gap ≤1 day) are merged.
 
 ### Dashboards
 
-- **`apps/streamlit_dashboard.py`** — Main dashboard: geospatial visualization, episode filtering, patient search, aggregations by origin/age/sex.
-- **`apps/streamlit_admin_dashboard.py`** — Admin dashboard: review queues, quality issues, manual corrections, pipeline health. Uses lazy loading and pagination.
-- **`apps/streamlit_migration_model_dashboard.py`** — Migration model dashboard.
+| App | Purpose | Deploy |
+|-----|---------|--------|
+| `apps/streamlit_dashboard.py` | Main: geospatial, episode filtering, patient search | Port 8502 local |
+| `apps/streamlit_admin_dashboard.py` | Admin: review queues, quality issues, corrections | Local |
+| `apps/streamlit_migration_model_dashboard.py` | Migration model | Local |
+| `apps/streamlit_migration_explorer.py` | PG migration explorer (8 tabs) | Docker → hdos.sanixai.com |
 
 Streamlit config in `.streamlit/config.toml`: port 8502, headless, light theme (primary `#0B6E4F`).
 
+### Infrastructure
+
+- **PG container**: `hodom-pg` (postgres:14-alpine), port 5555, creds `hodom:hodom`, DB `hodom`. Network `web`.
+- **Dashboard container**: `hdos-app` (Dockerfile.migra, python:3.12-slim + streamlit + pandas + psycopg), port 8501 internal. Traefik routes `hdos.sanixai.com` to it.
+- **Rebuild**: `docker compose up -d --build`. If name conflict: `docker rm -f hdos-app` first.
+
 ### Data Directories
 
-- `input/raw_csv_exports/` — Raw source CSVs (SGH exports, etc.)
+- `input/raw_csv_exports/` — Raw source CSVs (SGH exports)
 - `input/manual/` — Manual corrections (`manual_resolution.csv`, `rut_corrections.csv`)
 - `input/reference/` — Reference data, legacy imports
-- `output/spreadsheet/intermediate/` — Stage 2 output
-- `output/spreadsheet/enriched/` — Stage 3 output
-- `output/spreadsheet/canonical/` — Stage 4 output (final)
+- `output/spreadsheet/{intermediate,enriched,canonical}/` — Pipeline stage outputs
+- `documentacion-legacy/` — Historical backups, non-normalized material consumed by some utilities
+- `db/hdos.db` — Historical SQLite (NOT current truth)
 
 ### Testing
 
-Tests use `sys.path.insert` to import pipeline modules from `scripts/`. Shared fixtures in `tests/conftest.py` provide sample episodes, patients, quality issues, and a `write_csv_to_path` helper for creating temp CSVs. Tests are organized by canonical layer (stays, patients, health, queues) plus stage-specific tests.
+Tests use `sys.path.insert` to import pipeline modules from `scripts/`. Config in `pytest.ini`.
+
+**Shared fixtures** (`tests/conftest.py`): `sample_episodes`, `sample_patients`, `sample_quality_issues`, `sample_match_review_queue`, `sample_identity_review`, `sample_discharge_events`. Helper `write_csv_to_path(path, rows)` for creating temp CSVs. `tmp_enriched_dir` fixture writes all fixture data as CSVs for integration tests.
+
+**Test organization**: `tests/test_canonical_*.py` (stays, patients, health, queues), `tests/test_migration/` (category framework, functors F0-F3, provenance, sprint integration).
 
 ## Dependencies
 
-Python 3.14. Runtime: `streamlit>=1.43`, `pandas>=2.2`, `openpyxl`, `requests`. GIS: `geopandas`, `pyogrio`, `pyproj`, `shapely`. PDF: `PyMuPDF`. Geospatial viz: `pydeck`.
+Python 3.12 (Docker) / 3.14 (local .venv). Runtime: `streamlit>=1.43`, `pandas>=2.2`, `openpyxl`, `psycopg[binary]>=3.1`. GIS: `geopandas`, `pyogrio`, `pyproj`, `shapely`. PDF: `PyMuPDF`. Geospatial viz: `pydeck`.
 
-Virtual environment at `.venv/`. No `pyproject.toml` — dependencies managed via `requirements-dashboard.txt` and direct pip installs.
+Virtual environment at `.venv/`. Dependencies managed via `requirements-dashboard.txt` (minimal: streamlit + pandas) and direct pip installs — no pyproject.toml or comprehensive requirements file.
 
 ## Domain Context
 
@@ -128,4 +184,4 @@ Virtual environment at `.venv/`. No `pyproject.toml` — dependencies managed vi
 - Editable manual data lives in `input/manual/`. External reference data in `input/reference/`.
 - Pipeline artifacts materialize under `output/spreadsheet/`.
 - Historical/non-normalized backups live in `documentacion-legacy/`.
-- Active documentation in `docs/` (models, specs, session logs, audit reports).
+- Active documentation in `docs/` (models, specs, session logs, audit reports). Normative docs reference current layout; old material stays in `docs/sessions/`.

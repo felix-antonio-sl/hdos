@@ -33,6 +33,7 @@ from functors.f8_epicrisis import F8Epicrisis
 from functors.f9_operacional import F9Operacional
 from functors.f10_kpi_diario import F10KpiDiario
 from functors.f11_entregas_turno import F11EntregasTurno
+from functors.f12_domicilios import F12Domicilios
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 
@@ -50,6 +51,7 @@ ALL_FUNCTORS = [
     F9Operacional(),
     F10KpiDiario(),
     F11EntregasTurno(),
+    F12Domicilios(),
 ]
 
 FUNCTOR_MAP = {f.name: f for f in ALL_FUNCTORS}
@@ -81,7 +83,7 @@ def main():
 
     conn = psycopg.connect(args.db_url)
     composed = ComposedFunctor(phases)
-    report = composed.run(conn, sources, dry_run=args.dry_run)
+    report = composed.run(conn, sources, dry_run=args.dry_run, skip_deps=bool(args.phase))
     print(report.summary())
     conn.close()
     sys.exit(0 if report.all_passed else 1)

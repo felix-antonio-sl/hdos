@@ -1,128 +1,177 @@
-# Handoff — Próxima Sesión de Continuidad
+# Handoff — Próxima Sesión
 
 ## Contexto rápido
 
-Migración categorial de HODOM legacy a PostgreSQL completada en sesión 2026-04-07. 13 functores, ~18,800 objetos, 18 tablas, 7 correcciones manuales. Dashboard live en hdos.sanixai.com.
+Sesión 2026-04-07 (segunda). Modelo de domicilio georeferenciado implementado. 671 localizaciones, 646 geocodificadas con Google Maps. Dashboard actualizado con Sprint 3+. 4 correcciones aplicadas (CORR-08 a CORR-11).
 
 **DB**: `postgresql://hodom:hodom@localhost:5555/hodom` (container `hodom-pg`)
 **Dashboard**: container `hdos-app` via Traefik → hdos.sanixai.com
-**Handoff completo**: `docs/handoff-2026-04-07.md`
 
 ## Para retomar
 
 ```bash
 cd /home/felix/projects/hdos
 
-# Verificar que PG está vivo
+# Verificar PG
 docker exec hodom-pg psql -U hodom -d hodom -c "SELECT count(*) FROM clinical.estadia;"
 # Esperado: 779
+
+# Verificar domicilios
+docker exec hodom-pg psql -U hodom -d hodom -c "
+  SELECT precision_geo, count(*) FROM territorial.localizacion GROUP BY precision_geo ORDER BY count(*) DESC;"
+# Esperado: exacta 262, aproximada 234, centroide_localidad 150, NULL 25
 
 # Verificar dashboard
 curl -s https://hdos.sanixai.com/_stcore/health
 # Esperado: ok
 
-# Si PG no existe (server reiniciado):
-docker start hodom-pg  # o recrear con:
-# docker run --name hodom-pg -e POSTGRES_DB=hodom -e POSTGRES_USER=hodom -e POSTGRES_PASSWORD=hodom -p 5555:5432 -d postgres:14-alpine
-# docker network connect web hodom-pg
-# Luego re-ejecutar migración completa:
-# .venv/bin/python scripts/migrate_to_pg/run_migration.py --db-url postgresql://hodom:hodom@localhost:5555/hodom
+# Si PG no responde:
+docker start hodom-pg
 
 # Si dashboard no responde:
-docker compose up -d --build
+docker rm -f hdos-app && docker compose up -d
 ```
+
+## Lo que se hizo esta sesión
+
+### 1. Dashboard Sprint 3+ (P0.1)
+- 3 sub-tabs nuevos en Operacional: Visitas (COMPLETA vs PROGRAMADA), Notas Evolución (1417), Dispositivos (155)
+- Archivo: `apps/streamlit_migration_explorer.py`
+
+### 2. CORR-08: Estadías sin establecimiento (P0.2)
+- 84/123 estadías resueltas por inferencia dirección → comuna → CESFAM
+- Cobertura establecimiento: 84.2% → 95.0%
+- Script: `scripts/corr_08_establecimiento_por_direccion.py`
+- 39 restantes sin dirección ni comuna
+
+### 3. Modelo domicilio georeferenciado (nuevo)
+- `territorial.localizacion` — 671 puntos geográficos con coords obligatorias
+- `clinical.domicilio` — binding temporal paciente ↔ localización (tipo: principal/alternativo/temporal/eleam)
+- `operational.visita` — columnas `localizacion_id` + `domicilio_id` para uso futuro
+- Trigger PE1/PE2: coherencia visita-domicilio
+- Exclusión PE4: máximo 1 principal vigente por paciente
+- Vista: `clinical.v_domicilio_vigente`
+- DDL: `scripts/migrate_to_pg/ddl_domicilio.sql`
+- Functor: `scripts/migrate_to_pg/functors/f12_domicilios.py`
+- `latitud`/`longitud` ahora nullable (PE3 relajado: mejor NULL honesto que centroide falso)
+
+### 4. CORR-09: Normalización de direcciones
+- 480 direcciones normalizadas: Title Case, tipo de vía, localidades INE, typos
+- Norma IDE Chile 2023 + INE Censo + features.csv (634 entidades rurales)
+- Script: `scripts/corr_09_normalizar_direcciones.py`
+
+### 5. CORR-10: Enriquecimiento desde redundancia pipeline
+- 260 direcciones mejoradas cruzando variantes de `patient_address.csv` (intermediate)
+- 158 pacientes sin dirección que sí la tenían en episodios previos
+- 95 números de calle rescatados
+- Script: `scripts/corr_10_enriquecer_direcciones_redundancia.py`
+
+### 6. CORR-11: Direcciones recuperadas del DAU hospitalario
+- 28/33 pacientes restantes resueltos via CLI `h` → DAU → texto_resumen
+- Parsing: `Dirección : X Comuna : Y` del texto DAU
+- SQL: `scripts/corr_11_direcciones_dau.sql`
+
+### 7. Geocoding Google Maps
+- 646/671 localizaciones geocodificadas
+- 262 exacta (39%), 234 aproximada (35%), 150 centroide_localidad (22%)
+- 25 sin coordenadas (5 sin dirección + 20 irresolubles)
+- API key: `AIzaSyDNhu45OKX0jwYrbD9wcdz4LsG5utS-rss` (Geocoding API habilitado)
+- Script: `scripts/geocode_localizaciones.py`
+
+### 8. CLAUDE.md mejorado
+- Documentación PG migration, infra Docker, functores, testing
+
+### 9. Runner fix
+- `--phase` ahora funciona con `skip_deps` para ejecutar fases individuales
+- Archivo: `scripts/migrate_to_pg/framework/runner.py`
+
+## Estado actual de la base de datos
+
+| Entidad | N |
+|---|---|
+| Pacientes | 673 |
+| Estadías | 779 (740 con establecimiento, 95.0%) |
+| Localizaciones | 671 (646 geocodificadas, 96.3%) |
+| Domicilios | 671 (todos vigentes) |
+| Visitas | 7,594 |
+| Notas evolución | 1,417 |
+| Dispositivos | 155 |
+| Provenance total | ~22,000 |
+
+### Distribución de precisión geográfica
+| Precisión | N | % |
+|---|---|---|
+| exacta | 262 | 39.0% |
+| aproximada | 234 | 34.9% |
+| centroide_localidad | 150 | 22.4% |
+| NULL (sin coordenada) | 25 | 3.7% |
 
 ## Tareas pendientes por prioridad
 
-### P0 — Valor inmediato
-
-1. **Actualizar dashboard** con datos de Sprint 3+
-   - El dashboard tiene 8 tabs pero NO muestra F₇b (visitas realizadas), F₁₁ (notas evolución), ni dispositivos
-   - Agregar: sub-tab "Visitas Realizadas" con gráfico COMPLETA vs PROGRAMADA
-   - Agregar: sub-tab "Notas Evolución" con búsqueda por paciente y filtro por fecha
-   - Agregar: listado de dispositivos activos por paciente
-   - Archivo: `apps/streamlit_migration_explorer.py`
-
-2. **Resolver 123 estadías sin establecimiento** via CLI hospitalario
-   - Requiere proxy `c17102493` (100.77.30.26) ONLINE en el hospital
-   - Verificar: `tailscale status` → buscar `c17102493 active`
-   - Luego: `/home/felix/.local/bin/h hx <rut> --hosp` para cada paciente solo-SGH
-   - El SGH puede tener sala/servicio que permita inferir CESFAM
-   - RUTs pendientes se pueden extraer con:
-     ```sql
-     SELECT p.rut FROM clinical.estadia e
-     JOIN clinical.paciente p ON p.patient_id = e.patient_id
-     WHERE e.establecimiento_id IS NULL;
-     ```
-
 ### P1 — Enriquecimiento
 
-3. **Texto de epicrisis** — 295 DOCX sin parsear
-   - F₈ solo cargó metadata (nombre archivo → paciente)
-   - Parsear contenido DOCX con python-docx/zipfile para extraer texto clínico
-   - Poblar `clinical.epicrisis.resumen_evolucion` con texto real
-   - Directorio: `documentacion-legacy/drive-hodom/EPICRISIS ENFERMERIA /`
+1. **Texto de epicrisis** — 295 DOCX sin parsear
+   - F₈ solo cargó metadata; parsear contenido con python-docx
+   - Poblar `clinical.epicrisis.resumen_evolucion`
+   - Dir: `documentacion-legacy/drive-hodom/EPICRISIS ENFERMERIA /`
 
-4. **Mapeo prestaciones REM**
-   - 120 tipos de visita normalizados (KTM, TTO_EV, CA, etc.)
-   - Necesitan mapeo a `reference.catalogo_prestacion` para reporting MINSAL
-   - Tabla de referencia ya existe en DDL con seed data
+2. **Mapeo prestaciones REM**
+   - 120 tipos de visita → `reference.catalogo_prestacion`
+   - Necesario para reporting MINSAL
 
-5. **Satisfacción usuaria** — 33 encuestas
+3. **Satisfacción usuaria** — 33 encuestas
    - `documentacion-legacy/drive-hodom/RESPUESTA SATISFACCIÓN USUARIA.xlsx`
-   - Pequeño pero útil para indicadores de calidad
-   - No hay tabla específica en DDL; podría ir en un schema `reporting`
 
 ### P2 — Calidad
 
-6. **104 pacientes con comuna "OTRO"**
-   - Muchos tienen dirección (`clinical.paciente.direccion`) que podría inferir comuna
-   - Ej: si dirección contiene "ÑIQUÉN" → comuna NIQUEN
+4. **25 localizaciones sin coordenadas** — requieren geocoding manual o GPS terreno
 
-7. **Bug Stage 3 CSV pipeline** (`build_hodom_enriched.py` ~L1039)
-   - Registra CEFSAMs como localidades con comuna vacía
-   - No afecta PG pero contamina los CSV canonical
-   - Fix: pasar la comuna correcta a `register_locality()` o no registrar CEFSAMs como localidades
+5. **39 estadías sin establecimiento** — sin dirección ni comuna, irresolubles sin dato externo
+
+6. **Bug Stage 3 CSV** (`build_hodom_enriched.py` ~L1039)
+   - CEFSAMs registrados como localidades con comuna vacía
+   - No afecta PG pero contamina CSVs
+
+### P3 — Dashboard
+
+7. **Agregar mapa de domicilios** al dashboard
+   - Ahora que hay coordenadas reales, mostrar mapa con pydeck/folium
+   - Colores por precisión (exacta=verde, aproximada=amarillo, etc.)
+
+8. **Sub-tab Domicilios** en dashboard
+   - Vista de domicilios vigentes, búsqueda por paciente, filtro por comuna
 
 ### P3 — Futuro
 
-8. **55 tablas DDL vacías** — dominios clínicos granulares (medicación, GES, interconsultas, recetas, etc.)
-   - Requieren sistema operacional en producción, no existen en legacy
-   - Cuando se implemente el sistema HODOM operacional, estas tablas se poblarán nativamente
+9. **Vincular visitas futuras** a domicilios
+   - Las columnas `localizacion_id` / `domicilio_id` en visita están listas
+   - Trigger PE1 auto-completa localización desde domicilio
 
-## Arquitectura
+10. **Geocoding incremental** — cuando se registren nuevos pacientes/domicilios
+    - Script reutilizable: `scripts/geocode_localizaciones.py`
 
-```
-input/raw_csv_exports/     → Stage 1-4 CSV pipeline → output/spreadsheet/canonical/
-input/reference/legacy/    ─┐
-documentacion-legacy/      ─┤→ scripts/migrate_to_pg/functors/F₀-F₁₁ → PostgreSQL (hodom-pg:5555)
-db/hdos.db (SQLite)        ─┘
-                                                                          ↓
-                                                          apps/streamlit_migration_explorer.py
-                                                          → Docker hdos-app → hdos.sanixai.com
-```
-
-## Archivos clave
+## Archivos clave de esta sesión
 
 | Archivo | Propósito |
 |---|---|
-| `scripts/migrate_to_pg/run_migration.py` | CLI migración: `--db-url --phase --dry-run` |
-| `scripts/migrate_to_pg/functors/f*.py` | 13 functores (F₀-F₁₁) |
-| `scripts/corr_*.sql` | 7 correcciones manuales documentadas |
-| `apps/streamlit_migration_explorer.py` | Dashboard Streamlit (8 tabs) |
-| `docker-compose.yml` | Deploy hdos-app → hdos.sanixai.com |
-| `Dockerfile.migra` | Image Streamlit + psycopg |
-| `docs/handoff-2026-04-07.md` | Handoff detallado de esta sesión |
-| `docs/models/hodom-integrado-pg-v4.sql` | DDL canónico (100 tablas) |
-| `docs/models/migracion-legacy-pg-v4.md` | Diseño de migración (11 fases) |
+| `scripts/migrate_to_pg/ddl_domicilio.sql` | DDL modelo domicilio |
+| `scripts/migrate_to_pg/functors/f12_domicilios.py` | Functor F₁₂ |
+| `scripts/corr_08_establecimiento_por_direccion.py` | CORR-08 generador |
+| `scripts/corr_09_normalizar_direcciones.py` | CORR-09 normalización |
+| `scripts/corr_10_enriquecer_direcciones_redundancia.py` | CORR-10 redundancia |
+| `scripts/corr_11_direcciones_dau.sql` | CORR-11 DAU hospitalario |
+| `scripts/geocode_localizaciones.py` | Geocoding Google Maps |
+| `apps/streamlit_migration_explorer.py` | Dashboard (6 sub-tabs Operacional) |
+| `docs/reporte-cambios-domicilio-2026-04-07.md` | Reporte para stakeholders |
 
 ## CLI hospitalario (h)
 
 ```bash
 /home/felix/.local/bin/h status          # verificar conectividad
-/home/felix/.local/bin/h who <rut>       # identificar paciente
-/home/felix/.local/bin/h hx <rut> --hosp # hospitalizaciones previas
-/home/felix/.local/bin/h ctx <id>        # contexto clínico completo
+/home/felix/.local/bin/h who <rut>       # identidad (nombre, CP)
+/home/felix/.local/bin/h hx <rut>        # urgencias + hospitalizaciones
+/home/felix/.local/bin/h dau <atencion_id>  # DAU completo (tiene dirección en texto_resumen)
 ```
 
-Requiere Tailscale activo + proxy `c17102493` online. Manual completo en `~/.openclaw/kv_commons/outbox/AGENT-MANUAL.md`.
+Requiere Tailscale activo + proxy `c17102493` online.
+Patrón para extraer dirección del DAU: `re.search(r'Dirección\s*:\s*(.+?)\s*Comuna\s*:', texto_resumen)`

@@ -66,17 +66,18 @@ class ComposedFunctor:
     def __init__(self, phases: list[Functor]) -> None:
         self.phases = phases
 
-    def run(self, conn: psycopg.Connection, sources: MigrationSources, *, dry_run: bool = False) -> MigrationReport:
+    def run(self, conn: psycopg.Connection, sources: MigrationSources, *, dry_run: bool = False, skip_deps: bool = False) -> MigrationReport:
         ensure_provenance_table(conn)
         conn.commit()
         report = MigrationReport()
         completed: set[str] = set()
         for functor in self.phases:
-            for dep in functor.depends_on:
-                if dep not in completed:
-                    report.halted_at = functor.name
-                    report.all_passed = False
-                    return report
+            if not skip_deps:
+                for dep in functor.depends_on:
+                    if dep not in completed:
+                        report.halted_at = functor.name
+                        report.all_passed = False
+                        return report
             t0 = time.monotonic()
             if dry_run:
                 pr = PhaseReport(
