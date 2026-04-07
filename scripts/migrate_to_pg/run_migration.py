@@ -32,6 +32,7 @@ from functors.f7b_visitas_realizadas import F7bVisitasRealizadas
 from functors.f8_epicrisis import F8Epicrisis
 from functors.f9_operacional import F9Operacional
 from functors.f10_kpi_diario import F10KpiDiario
+from functors.f11_entregas_turno import F11EntregasTurno
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 
@@ -48,6 +49,7 @@ ALL_FUNCTORS = [
     F8Epicrisis(),
     F9Operacional(),
     F10KpiDiario(),
+    F11EntregasTurno(),
 ]
 
 FUNCTOR_MAP = {f.name: f for f in ALL_FUNCTORS}
