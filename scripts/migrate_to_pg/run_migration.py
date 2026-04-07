@@ -24,6 +24,8 @@ from functors.f0_bootstrap import F0Bootstrap
 from functors.f1_territorial import F1Territorial
 from functors.f2_pacientes import F2Pacientes
 from functors.f3_estadias import F3Estadias
+from functors.f4_episode_source import F4EpisodeSource
+from functors.f5_clinical_enrichment import F5ClinicalEnrichment
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 
@@ -32,6 +34,8 @@ ALL_FUNCTORS = [
     F1Territorial(),
     F2Pacientes(),
     F3Estadias(),
+    F4EpisodeSource(),
+    F5ClinicalEnrichment(),
 ]
 
 FUNCTOR_MAP = {f.name: f for f in ALL_FUNCTORS}
