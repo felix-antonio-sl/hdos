@@ -36,8 +36,8 @@ st.title("HDOS — Migración Explorer")
 st.caption("Explorador read-only de entidades migradas a PostgreSQL v4")
 
 # ── Tabs ──────────────────────────────────────────────────────
-tab_overview, tab_pac, tab_est, tab_cli, tab_kpi, tab_ter, tab_prov = st.tabs(
-    ["Overview", "Pacientes", "Estadías", "Clínico", "KPI Diario", "Territorial", "Proveniencia"]
+tab_overview, tab_pac, tab_est, tab_cli, tab_vis, tab_kpi, tab_ter, tab_prov = st.tabs(
+    ["Overview", "Pacientes", "Estadías", "Clínico", "Operacional", "KPI Diario", "Territorial", "Proveniencia"]
 )
 
 
@@ -69,12 +69,17 @@ with tab_overview:
         col4.metric("Requerimientos", cnt_reqs)
         col5.metric("Provenance", cnt_provenance)
 
+        cnt_visitas = query_df("SELECT COUNT(*) AS n FROM operational.visita")["n"].iloc[0]
+        cnt_profesionales = query_df("SELECT COUNT(*) AS n FROM operational.profesional")["n"].iloc[0]
+        cnt_epicrisis = query_df("SELECT COUNT(*) AS n FROM clinical.epicrisis")["n"].iloc[0]
+        cnt_llamadas = query_df("SELECT COUNT(*) AS n FROM operational.registro_llamada")["n"].iloc[0]
+
         col6, col7, col8, col9, col10 = st.columns(5)
-        col6.metric("Necesidades prof.", cnt_needs)
-        col7.metric("Episode sources", cnt_ep_src)
-        col8.metric("KPI días", cnt_kpi)
-        col9.metric("Establecimientos", cnt_establecimientos)
-        col10.metric("Ubicaciones", cnt_ubicaciones)
+        col6.metric("Visitas prog.", cnt_visitas)
+        col7.metric("Profesionales", cnt_profesionales)
+        col8.metric("Epicrisis", cnt_epicrisis)
+        col9.metric("Llamadas", cnt_llamadas)
+        col10.metric("KPI días", cnt_kpi)
 
         # Alertas
         rechazadas = int(cnt_strict_hosp) - int(cnt_estadias)
@@ -522,7 +527,147 @@ with tab_cli:
 
 
 # ═══════════════════════════════════════════════════════════════
-# TAB 5 — KPI Diario (F₁₀)
+# TAB 5 — Operacional (F₆-F₉)
+# ═══════════════════════════════════════════════════════════════
+with tab_vis:
+    st.header("Operacional")
+
+    sub_visitas, sub_epi, sub_llam, sub_prof = st.tabs(
+        ["Visitas", "Epicrisis", "Llamadas", "Profesionales"]
+    )
+
+    with sub_visitas:
+        try:
+            buscar_vis = st.text_input("Buscar paciente (RUT / nombre)", key="vis_buscar")
+            df_vis = query_df(
+                """
+                SELECT v.fecha, p.nombre_completo, p.rut, v.rem_prestacion AS tipo,
+                       v.estado, est.nombre AS establecimiento
+                FROM operational.visita v
+                JOIN clinical.paciente p ON p.patient_id = v.patient_id
+                JOIN clinical.estadia e ON e.stay_id = v.stay_id
+                LEFT JOIN territorial.establecimiento est ON est.establecimiento_id = e.establecimiento_id
+                ORDER BY v.fecha DESC
+                """
+            )
+            if buscar_vis:
+                mask = (
+                    df_vis["nombre_completo"].str.upper().str.contains(buscar_vis.upper(), na=False)
+                    | df_vis["rut"].str.contains(buscar_vis, na=False)
+                )
+                df_vis = df_vis[mask]
+            st.caption(f"{len(df_vis)} visitas")
+            st.dataframe(df_vis, use_container_width=True, hide_index=True)
+
+            st.subheader("Top prestaciones programadas")
+            df_top_prest = query_df(
+                """
+                SELECT rem_prestacion AS prestacion, COUNT(*) AS n
+                FROM operational.visita
+                WHERE rem_prestacion IS NOT NULL
+                GROUP BY rem_prestacion ORDER BY n DESC LIMIT 15
+                """
+            )
+            st.bar_chart(df_top_prest.set_index("prestacion"))
+
+            st.subheader("Visitas por mes")
+            df_vis_mes = query_df(
+                """
+                SELECT TO_CHAR(fecha, 'YYYY-MM') AS mes, COUNT(*) AS n
+                FROM operational.visita
+                GROUP BY mes ORDER BY mes
+                """
+            )
+            st.bar_chart(df_vis_mes.set_index("mes"))
+
+        except Exception as exc:
+            st.error(f"Error: {exc}")
+
+    with sub_epi:
+        try:
+            df_epi = query_df(
+                """
+                SELECT ep.fecha_emision, p.nombre_completo, p.rut,
+                       ep.fecha_ingreso, ep.fecha_egreso, ep.resumen_evolucion
+                FROM clinical.epicrisis ep
+                JOIN clinical.paciente p ON p.patient_id = ep.patient_id
+                ORDER BY ep.fecha_emision DESC
+                """
+            )
+            st.caption(f"{len(df_epi)} epicrisis (metadata)")
+            st.dataframe(
+                df_epi, use_container_width=True, hide_index=True,
+                column_config={
+                    "fecha_emision": st.column_config.DateColumn("Emisión"),
+                    "nombre_completo": st.column_config.TextColumn("Paciente", width="large"),
+                    "rut": st.column_config.TextColumn("RUT", width="small"),
+                    "fecha_ingreso": st.column_config.DateColumn("Ingreso"),
+                    "fecha_egreso": st.column_config.DateColumn("Egreso"),
+                    "resumen_evolucion": st.column_config.TextColumn("Documento", width="large"),
+                },
+            )
+        except Exception as exc:
+            st.error(f"Error: {exc}")
+
+    with sub_llam:
+        try:
+            df_llam = query_df(
+                """
+                SELECT l.fecha, l.hora, l.tipo, l.motivo, l.duracion,
+                       COALESCE(p.nombre_completo, '(no match)') AS paciente,
+                       l.nombre_familiar, l.estado_paciente, l.observaciones
+                FROM operational.registro_llamada l
+                LEFT JOIN clinical.paciente p ON p.patient_id = l.patient_id
+                ORDER BY l.fecha DESC, l.hora DESC
+                """
+            )
+            st.caption(f"{len(df_llam)} llamadas")
+            st.dataframe(df_llam, use_container_width=True, hide_index=True)
+
+            st.subheader("Llamadas por motivo")
+            df_llam_motivo = query_df(
+                """
+                SELECT COALESCE(motivo, '(sin motivo)') AS motivo, COUNT(*) AS n
+                FROM operational.registro_llamada
+                GROUP BY motivo ORDER BY n DESC
+                """
+            )
+            st.bar_chart(df_llam_motivo.set_index("motivo"))
+
+        except Exception as exc:
+            st.error(f"Error: {exc}")
+
+    with sub_prof:
+        try:
+            df_prof = query_df(
+                """
+                SELECT pr.nombre, pr.profesion, pr.profesion_rem, pr.estado,
+                       COUNT(v.visit_id) AS visitas_asignadas
+                FROM operational.profesional pr
+                LEFT JOIN operational.visita v ON v.provider_id = pr.provider_id
+                GROUP BY pr.provider_id
+                ORDER BY pr.profesion, pr.nombre
+                """
+            )
+            st.caption(f"{len(df_prof)} profesionales")
+            st.dataframe(df_prof, use_container_width=True, hide_index=True)
+
+            st.subheader("Por estamento")
+            df_est_prof = query_df(
+                """
+                SELECT profesion, COUNT(*) AS n
+                FROM operational.profesional
+                GROUP BY profesion ORDER BY n DESC
+                """
+            )
+            st.bar_chart(df_est_prof.set_index("profesion"))
+
+        except Exception as exc:
+            st.error(f"Error: {exc}")
+
+
+# ═══════════════════════════════════════════════════════════════
+# TAB 6 — KPI Diario (F₁₀)
 # ═══════════════════════════════════════════════════════════════
 with tab_kpi:
     st.header("KPI Diario")
