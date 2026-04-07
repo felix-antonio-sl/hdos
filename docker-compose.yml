@@ -1,12 +1,13 @@
-name: hdos-db
+name: hdos
 services:
   app:
-    build: .
-    container_name: hdos-db
+    build:
+      context: .
+      dockerfile: Dockerfile.migra
+    container_name: hdos-app
     restart: unless-stopped
-    volumes:
-      - ./db:/app/db
-      - ./apps/streamlit_db_dashboard.py:/app/apps/streamlit_db_dashboard.py
+    environment:
+      - DATABASE_URL=postgresql://hodom:hodom@hodom-pg:5432/hodom
     networks:
       - web
     labels:
