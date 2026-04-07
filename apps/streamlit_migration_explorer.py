@@ -36,8 +36,8 @@ st.title("HDOS — Migración Explorer")
 st.caption("Explorador read-only de entidades migradas a PostgreSQL v4")
 
 # ── Tabs ──────────────────────────────────────────────────────
-tab_overview, tab_pac, tab_est, tab_ter, tab_prov = st.tabs(
-    ["Overview", "Pacientes", "Estadías", "Territorial", "Proveniencia"]
+tab_overview, tab_pac, tab_est, tab_cli, tab_kpi, tab_ter, tab_prov = st.tabs(
+    ["Overview", "Pacientes", "Estadías", "Clínico", "KPI Diario", "Territorial", "Proveniencia"]
 )
 
 
@@ -56,12 +56,25 @@ with tab_overview:
         cnt_provenance = query_df("SELECT COUNT(*) AS n FROM migration.provenance")["n"].iloc[0]
         cnt_strict_hosp = query_df("SELECT COUNT(*) AS n FROM strict.hospitalizacion")["n"].iloc[0]
 
+        cnt_condiciones = query_df("SELECT COUNT(*) AS n FROM clinical.condicion")["n"].iloc[0]
+        cnt_reqs = query_df("SELECT COUNT(*) AS n FROM clinical.requerimiento_cuidado")["n"].iloc[0]
+        cnt_needs = query_df("SELECT COUNT(*) AS n FROM clinical.necesidad_profesional")["n"].iloc[0]
+        cnt_kpi = query_df("SELECT COUNT(*) AS n FROM reporting.kpi_diario")["n"].iloc[0]
+        cnt_ep_src = query_df("SELECT COUNT(*) AS n FROM operational.estadia_episodio_fuente")["n"].iloc[0]
+
         col1, col2, col3, col4, col5 = st.columns(5)
         col1.metric("Pacientes", cnt_pacientes)
         col2.metric("Estadías", cnt_estadias)
-        col3.metric("Establecimientos", cnt_establecimientos)
-        col4.metric("Ubicaciones", cnt_ubicaciones)
-        col5.metric("Registros provenance", cnt_provenance)
+        col3.metric("Condiciones", cnt_condiciones)
+        col4.metric("Requerimientos", cnt_reqs)
+        col5.metric("Provenance", cnt_provenance)
+
+        col6, col7, col8, col9, col10 = st.columns(5)
+        col6.metric("Necesidades prof.", cnt_needs)
+        col7.metric("Episode sources", cnt_ep_src)
+        col8.metric("KPI días", cnt_kpi)
+        col9.metric("Establecimientos", cnt_establecimientos)
+        col10.metric("Ubicaciones", cnt_ubicaciones)
 
         # Alertas
         rechazadas = int(cnt_strict_hosp) - int(cnt_estadias)
@@ -398,7 +411,180 @@ with tab_est:
 
 
 # ═══════════════════════════════════════════════════════════════
-# TAB 4 — Territorial
+# TAB 4 — Clínico (F₅)
+# ═══════════════════════════════════════════════════════════════
+with tab_cli:
+    st.header("Enriquecimiento Clínico")
+
+    sub_cond, sub_req, sub_need = st.tabs(["Condiciones / Dx", "Requerimientos", "Necesidades Prof."])
+
+    with sub_cond:
+        try:
+            buscar_dx = st.text_input("Buscar diagnóstico (CIE-10 o texto)", key="cli_dx_buscar")
+            df_cond = query_df(
+                """
+                SELECT c.condition_id, p.nombre_completo, p.rut,
+                       e.fecha_ingreso, c.codigo_cie10, c.descripcion, c.estado_clinico
+                FROM clinical.condicion c
+                JOIN clinical.estadia e ON e.stay_id = c.stay_id
+                JOIN clinical.paciente p ON p.patient_id = c.patient_id
+                ORDER BY e.fecha_ingreso DESC, c.descripcion
+                """
+            )
+            if buscar_dx:
+                mask = (
+                    df_cond["descripcion"].str.upper().str.contains(buscar_dx.upper(), na=False)
+                    | df_cond["codigo_cie10"].str.upper().str.contains(buscar_dx.upper(), na=False)
+                )
+                df_cond = df_cond[mask]
+            st.caption(f"{len(df_cond)} condiciones")
+            st.dataframe(
+                df_cond.drop(columns=["condition_id"]),
+                use_container_width=True, hide_index=True,
+                column_config={
+                    "nombre_completo": st.column_config.TextColumn("Paciente", width="medium"),
+                    "rut": st.column_config.TextColumn("RUT", width="small"),
+                    "fecha_ingreso": st.column_config.DateColumn("Ingreso"),
+                    "codigo_cie10": st.column_config.TextColumn("CIE-10", width="small"),
+                    "descripcion": st.column_config.TextColumn("Descripción", width="large"),
+                    "estado_clinico": st.column_config.TextColumn("Estado", width="small"),
+                },
+            )
+
+            # Top diagnósticos
+            st.subheader("Top diagnósticos")
+            df_top_dx = query_df(
+                """
+                SELECT COALESCE(codigo_cie10, '(sin código)') AS cie10,
+                       descripcion, COUNT(*) AS n
+                FROM clinical.condicion
+                GROUP BY codigo_cie10, descripcion
+                ORDER BY n DESC
+                LIMIT 20
+                """
+            )
+            st.dataframe(df_top_dx, use_container_width=True, hide_index=True)
+
+        except Exception as exc:
+            st.error(f"Error: {exc}")
+
+    with sub_req:
+        try:
+            df_req = query_df(
+                """
+                SELECT r.tipo, r.valor_normalizado, r.activo, COUNT(*) AS n
+                FROM clinical.requerimiento_cuidado r
+                GROUP BY r.tipo, r.valor_normalizado, r.activo
+                ORDER BY r.tipo, n DESC
+                """
+            )
+            st.caption(f"{len(df_req)} combinaciones tipo/valor")
+            st.dataframe(df_req, use_container_width=True, hide_index=True)
+
+            st.subheader("Distribución por tipo")
+            df_req_tipo = query_df(
+                """
+                SELECT tipo, COUNT(*) AS n
+                FROM clinical.requerimiento_cuidado
+                GROUP BY tipo ORDER BY n DESC
+                """
+            )
+            st.bar_chart(df_req_tipo.set_index("tipo"))
+
+        except Exception as exc:
+            st.error(f"Error: {exc}")
+
+    with sub_need:
+        try:
+            df_need = query_df(
+                """
+                SELECT profesion_requerida, nivel_necesidad, COUNT(*) AS n
+                FROM clinical.necesidad_profesional
+                GROUP BY profesion_requerida, nivel_necesidad
+                ORDER BY n DESC
+                """
+            )
+            st.caption(f"{len(df_need)} combinaciones profesión/nivel")
+            st.dataframe(df_need, use_container_width=True, hide_index=True)
+
+            st.subheader("Distribución por profesión")
+            df_need_prof = query_df(
+                """
+                SELECT profesion_requerida AS profesion, COUNT(*) AS n
+                FROM clinical.necesidad_profesional
+                GROUP BY profesion_requerida ORDER BY n DESC
+                """
+            )
+            st.bar_chart(df_need_prof.set_index("profesion"))
+
+        except Exception as exc:
+            st.error(f"Error: {exc}")
+
+
+# ═══════════════════════════════════════════════════════════════
+# TAB 5 — KPI Diario (F₁₀)
+# ═══════════════════════════════════════════════════════════════
+with tab_kpi:
+    st.header("KPI Diario")
+
+    try:
+        df_kpi = query_df(
+            """
+            SELECT fecha, pacientes_activos, visitas_realizadas
+            FROM reporting.kpi_diario
+            ORDER BY fecha
+            """
+        )
+
+        if df_kpi.empty:
+            st.info("Sin datos de KPI diario")
+        else:
+            col_k1, col_k2, col_k3 = st.columns(3)
+            col_k1.metric("Días con datos", len(df_kpi))
+            col_k2.metric("Promedio visitas/día", f"{df_kpi['visitas_realizadas'].mean():.1f}")
+            col_k3.metric("Promedio pacientes activos", f"{df_kpi['pacientes_activos'].mean():.1f}")
+
+            st.subheader("Visitas realizadas por día")
+            chart_data = df_kpi.set_index("fecha")[["visitas_realizadas", "pacientes_activos"]]
+            st.line_chart(chart_data)
+
+            st.subheader("Resumen mensual")
+            df_kpi["mes"] = pd.to_datetime(df_kpi["fecha"]).dt.to_period("M").astype(str)
+            df_monthly = df_kpi.groupby("mes").agg(
+                dias=("fecha", "count"),
+                visitas_total=("visitas_realizadas", "sum"),
+                visitas_promedio=("visitas_realizadas", "mean"),
+                pacientes_promedio=("pacientes_activos", "mean"),
+            ).reset_index()
+            df_monthly["visitas_promedio"] = df_monthly["visitas_promedio"].round(1)
+            df_monthly["pacientes_promedio"] = df_monthly["pacientes_promedio"].round(1)
+            st.dataframe(df_monthly, use_container_width=True, hide_index=True)
+
+            # Desglose por profesión (desde provenance)
+            st.subheader("Desglose por profesión (último mes con datos)")
+            df_prof = query_df(
+                """
+                SELECT field_name, SUM(
+                    CAST(
+                        SPLIT_PART(SPLIT_PART(source_key, '|', 2), '=', 2) AS INTEGER
+                    )
+                ) AS total_visitas
+                FROM migration.provenance
+                WHERE phase = 'F10' AND field_name LIKE 'visitas_%'
+                GROUP BY field_name
+                ORDER BY total_visitas DESC
+                """
+            )
+            if not df_prof.empty:
+                df_prof["profesion"] = df_prof["field_name"].str.replace("visitas_", "")
+                st.bar_chart(df_prof.set_index("profesion")["total_visitas"])
+
+    except Exception as exc:
+        st.error(f"Error: {exc}")
+
+
+# ═══════════════════════════════════════════════════════════════
+# TAB 6 — Territorial
 # ═══════════════════════════════════════════════════════════════
 with tab_ter:
     st.header("Territorial")
