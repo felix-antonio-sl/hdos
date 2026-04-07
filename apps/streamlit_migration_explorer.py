@@ -7,6 +7,7 @@ from contextlib import contextmanager
 
 import pandas as pd
 import psycopg
+import pydeck as pdk
 import streamlit as st
 
 DATABASE_URL = os.environ.get(
@@ -36,8 +37,8 @@ st.title("HDOS — Migración Explorer")
 st.caption("Explorador read-only de entidades migradas a PostgreSQL v4")
 
 # ── Tabs ──────────────────────────────────────────────────────
-tab_overview, tab_pac, tab_est, tab_cli, tab_vis, tab_kpi, tab_ter, tab_prov = st.tabs(
-    ["Overview", "Pacientes", "Estadías", "Clínico", "Operacional", "KPI Diario", "Territorial", "Proveniencia"]
+tab_overview, tab_pac, tab_est, tab_cli, tab_vis, tab_kpi, tab_ter, tab_mapa, tab_satis, tab_prov = st.tabs(
+    ["Overview", "Pacientes", "Estadías", "Clínico", "Operacional", "KPI Diario", "Territorial", "Mapa", "Satisfacción", "Proveniencia"]
 )
 
 
@@ -80,6 +81,17 @@ with tab_overview:
         col8.metric("Epicrisis", cnt_epicrisis)
         col9.metric("Llamadas", cnt_llamadas)
         col10.metric("KPI días", cnt_kpi)
+
+        cnt_prestaciones = query_df("SELECT COUNT(*) AS n FROM reference.catalogo_prestacion")["n"].iloc[0]
+        cnt_encuestas = query_df("SELECT COUNT(*) AS n FROM reporting.encuesta_satisfaccion")["n"].iloc[0]
+        cnt_domicilios = query_df("SELECT COUNT(*) AS n FROM clinical.domicilio")["n"].iloc[0]
+        cnt_localizaciones = query_df("SELECT COUNT(*) AS n FROM territorial.localizacion")["n"].iloc[0]
+
+        col11, col12, col13, col14 = st.columns(4)
+        col11.metric("Prestaciones catálogo", cnt_prestaciones)
+        col12.metric("Encuestas satisfacción", cnt_encuestas)
+        col13.metric("Domicilios", cnt_domicilios)
+        col14.metric("Localizaciones", cnt_localizaciones)
 
         # Alertas
         rechazadas = int(cnt_strict_hosp) - int(cnt_estadias)
@@ -532,8 +544,8 @@ with tab_cli:
 with tab_vis:
     st.header("Operacional")
 
-    sub_visitas, sub_notas, sub_disp, sub_epi, sub_llam, sub_prof = st.tabs(
-        ["Visitas", "Notas Evolución", "Dispositivos", "Epicrisis", "Llamadas", "Profesionales"]
+    sub_visitas, sub_notas, sub_disp, sub_epi, sub_prest, sub_llam, sub_prof = st.tabs(
+        ["Visitas", "Notas Evolución", "Dispositivos", "Epicrisis", "Prestaciones REM", "Llamadas", "Profesionales"]
     )
 
     with sub_visitas:
@@ -762,27 +774,115 @@ with tab_vis:
 
     with sub_epi:
         try:
+            buscar_epi = st.text_input("Buscar paciente", key="epi_buscar")
             df_epi = query_df(
                 """
                 SELECT ep.fecha_emision, p.nombre_completo, p.rut,
-                       ep.fecha_ingreso, ep.fecha_egreso, ep.resumen_evolucion
+                       ep.diagnostico_ingreso, ep.servicio_origen,
+                       LEFT(ep.resumen_evolucion, 200) AS evolucion,
+                       ep.examen_fisico_ingreso AS examen_fisico,
+                       ep.derivacion_aps
                 FROM clinical.epicrisis ep
                 JOIN clinical.paciente p ON p.patient_id = ep.patient_id
                 ORDER BY ep.fecha_emision DESC
                 """
             )
-            st.caption(f"{len(df_epi)} epicrisis (metadata)")
+            if buscar_epi:
+                mask = (
+                    df_epi["nombre_completo"].str.upper().str.contains(buscar_epi.upper(), na=False)
+                    | df_epi["rut"].astype(str).str.contains(buscar_epi, na=False)
+                )
+                df_epi = df_epi[mask]
+
+            col_e1, col_e2, col_e3 = st.columns(3)
+            col_e1.metric("Total epicrisis", len(df_epi))
+            col_e2.metric("Con diagnóstico", int(df_epi["diagnostico_ingreso"].notna().sum()))
+            col_e3.metric("Con examen físico", int(df_epi["examen_fisico"].notna().sum()))
+
             st.dataframe(
                 df_epi, use_container_width=True, hide_index=True,
                 column_config={
                     "fecha_emision": st.column_config.DateColumn("Emisión"),
-                    "nombre_completo": st.column_config.TextColumn("Paciente", width="large"),
+                    "nombre_completo": st.column_config.TextColumn("Paciente", width="medium"),
                     "rut": st.column_config.TextColumn("RUT", width="small"),
-                    "fecha_ingreso": st.column_config.DateColumn("Ingreso"),
-                    "fecha_egreso": st.column_config.DateColumn("Egreso"),
-                    "resumen_evolucion": st.column_config.TextColumn("Documento", width="large"),
+                    "diagnostico_ingreso": st.column_config.TextColumn("Diagnóstico", width="large"),
+                    "servicio_origen": st.column_config.TextColumn("Servicio", width="small"),
+                    "evolucion": st.column_config.TextColumn("Evolución", width="large"),
+                    "examen_fisico": st.column_config.TextColumn("Examen físico", width="medium"),
+                    "derivacion_aps": st.column_config.TextColumn("Derivación APS", width="medium"),
                 },
             )
+
+            st.subheader("Top diagnósticos epicrisis")
+            df_top_diag = query_df(
+                """
+                SELECT diagnostico_ingreso AS diagnostico, COUNT(*) AS n
+                FROM clinical.epicrisis
+                WHERE diagnostico_ingreso IS NOT NULL
+                GROUP BY diagnostico_ingreso ORDER BY n DESC LIMIT 15
+                """
+            )
+            if not df_top_diag.empty:
+                st.bar_chart(df_top_diag.set_index("diagnostico"))
+
+            st.subheader("Servicios de origen")
+            df_serv = query_df(
+                """
+                SELECT COALESCE(servicio_origen, '(no registrado)') AS servicio, COUNT(*) AS n
+                FROM clinical.epicrisis
+                GROUP BY servicio_origen ORDER BY n DESC
+                """
+            )
+            if not df_serv.empty:
+                st.bar_chart(df_serv.set_index("servicio"))
+
+        except Exception as exc:
+            st.error(f"Error: {exc}")
+
+    with sub_prest:
+        try:
+            st.subheader("Catálogo de Prestaciones")
+            df_cat = query_df(
+                """
+                SELECT cp.prestacion_id AS codigo, cp.nombre_prestacion AS prestacion,
+                       cp.estamento, cp.macroproceso,
+                       COUNT(vp.visit_id) AS visitas
+                FROM reference.catalogo_prestacion cp
+                LEFT JOIN reporting.visita_prestacion vp USING (prestacion_id)
+                GROUP BY cp.prestacion_id, cp.nombre_prestacion, cp.estamento, cp.macroproceso
+                ORDER BY visitas DESC
+                """
+            )
+            st.dataframe(df_cat, use_container_width=True, hide_index=True)
+
+            st.subheader("Prestaciones por estamento")
+            df_est_prest = query_df(
+                """
+                SELECT cp.estamento, COUNT(vp.visit_id) AS visitas
+                FROM reporting.visita_prestacion vp
+                JOIN reference.catalogo_prestacion cp USING (prestacion_id)
+                GROUP BY cp.estamento ORDER BY visitas DESC
+                """
+            )
+            if not df_est_prest.empty:
+                st.bar_chart(df_est_prest.set_index("estamento"))
+
+            st.subheader("Prestaciones por mes")
+            df_prest_mes = query_df(
+                """
+                SELECT TO_CHAR(v.fecha, 'YYYY-MM') AS mes, cp.estamento, COUNT(*) AS n
+                FROM reporting.visita_prestacion vp
+                JOIN operational.visita v USING (visit_id)
+                JOIN reference.catalogo_prestacion cp USING (prestacion_id)
+                GROUP BY mes, cp.estamento ORDER BY mes
+                """
+            )
+            if not df_prest_mes.empty:
+                df_pivot = df_prest_mes.pivot_table(
+                    index="mes", columns="estamento", values="n", fill_value=0
+                ).reset_index().set_index("mes")
+                st.area_chart(df_pivot)
+
         except Exception as exc:
             st.error(f"Error: {exc}")
 
@@ -911,7 +1011,7 @@ with tab_kpi:
 with tab_ter:
     st.header("Territorial")
 
-    sub_estab, sub_ubic = st.tabs(["Establecimientos", "Ubicaciones"])
+    sub_estab, sub_ubic, sub_dom = st.tabs(["Establecimientos", "Ubicaciones", "Domicilios"])
 
     with sub_estab:
         try:
@@ -974,6 +1074,262 @@ with tab_ter:
             )
         except Exception as exc:
             st.error(f"Error: {exc}")
+
+    with sub_dom:
+        try:
+            df_dom = query_df(
+                """
+                SELECT p.nombre_completo, p.rut, l.direccion_texto, l.comuna,
+                       l.precision_geo, l.latitud, l.longitud,
+                       d.tipo AS tipo_domicilio, d.vigente_desde, d.vigente_hasta
+                FROM clinical.domicilio d
+                JOIN clinical.paciente p ON p.patient_id = d.patient_id
+                JOIN territorial.localizacion l ON l.localizacion_id = d.localizacion_id
+                ORDER BY p.nombre_completo
+                """
+            )
+
+            col_d1, col_d2, col_d3, col_d4 = st.columns(4)
+            col_d1.metric("Total domicilios", len(df_dom))
+            col_d2.metric("Geocodificados", int(df_dom["latitud"].notna().sum()))
+            col_d3.metric("Comunas", int(df_dom["comuna"].nunique()))
+            col_d4.metric("Precisión exacta", int((df_dom["precision_geo"] == "exacta").sum()))
+
+            buscar_dom = st.text_input("Buscar paciente", key="dom_buscar")
+            comunas_dom = ["Todas"] + sorted(df_dom["comuna"].dropna().unique().tolist())
+            filtro_comuna_dom = st.selectbox("Filtrar por comuna", comunas_dom, key="dom_comuna")
+
+            df_show = df_dom
+            if buscar_dom:
+                mask = (
+                    df_show["nombre_completo"].str.upper().str.contains(buscar_dom.upper(), na=False)
+                    | df_show["rut"].astype(str).str.contains(buscar_dom, na=False)
+                )
+                df_show = df_show[mask]
+            if filtro_comuna_dom != "Todas":
+                df_show = df_show[df_show["comuna"] == filtro_comuna_dom]
+
+            st.caption(f"{len(df_show)} domicilios")
+            st.dataframe(
+                df_show, use_container_width=True, hide_index=True,
+                column_config={
+                    "nombre_completo": st.column_config.TextColumn("Paciente", width="medium"),
+                    "rut": st.column_config.TextColumn("RUT", width="small"),
+                    "direccion_norm": st.column_config.TextColumn("Dirección", width="large"),
+                    "comuna": st.column_config.TextColumn("Comuna"),
+                    "precision_geo": st.column_config.TextColumn("Precisión", width="small"),
+                    "latitud": st.column_config.NumberColumn("Lat", format="%.5f"),
+                    "longitud": st.column_config.NumberColumn("Lng", format="%.5f"),
+                    "tipo_domicilio": st.column_config.TextColumn("Tipo", width="small"),
+                    "vigente_desde": st.column_config.DateColumn("Desde"),
+                    "vigente_hasta": st.column_config.DateColumn("Hasta"),
+                },
+            )
+
+            st.subheader("Distribución por comuna")
+            df_dom_comuna = query_df(
+                """
+                SELECT l.comuna, COUNT(*) AS n
+                FROM clinical.domicilio d
+                JOIN territorial.localizacion l ON l.localizacion_id = d.localizacion_id
+                WHERE l.comuna IS NOT NULL
+                GROUP BY l.comuna ORDER BY n DESC
+                """
+            )
+            if not df_dom_comuna.empty:
+                st.bar_chart(df_dom_comuna.set_index("comuna"))
+
+            st.subheader("Precisión geocodificación")
+            df_prec = query_df(
+                """
+                SELECT COALESCE(l.precision_geo, 'sin coordenada') AS precision, COUNT(*) AS n
+                FROM territorial.localizacion l
+                GROUP BY l.precision_geo ORDER BY n DESC
+                """
+            )
+            if not df_prec.empty:
+                st.bar_chart(df_prec.set_index("precision"))
+
+        except Exception as exc:
+            st.error(f"Error: {exc}")
+
+
+# ═══════════════════════════════════════════════════════════════
+# TAB — Mapa de Domicilios
+# ═══════════════════════════════════════════════════════════════
+with tab_mapa:
+    st.header("Mapa de Domicilios")
+
+    try:
+        df_map = query_df(
+            """
+            SELECT l.latitud AS lat, l.longitud AS lon,
+                   l.direccion_texto AS direccion, l.comuna,
+                   l.precision_geo AS precision,
+                   p.nombre_completo AS paciente
+            FROM territorial.localizacion l
+            JOIN clinical.domicilio d ON d.localizacion_id = l.localizacion_id
+            JOIN clinical.paciente p ON p.patient_id = d.patient_id
+            WHERE l.latitud IS NOT NULL AND l.longitud IS NOT NULL
+            """
+        )
+
+        if df_map.empty:
+            st.info("Sin localizaciones geocodificadas")
+        else:
+            col_f1, col_f2 = st.columns(2)
+            with col_f1:
+                comunas_map = ["Todas"] + sorted(df_map["comuna"].dropna().unique().tolist())
+                filtro_com = st.selectbox("Comuna", comunas_map, key="map_comuna")
+            with col_f2:
+                prec_map = ["Todas"] + sorted(df_map["precision"].dropna().unique().tolist())
+                filtro_prec = st.selectbox("Precisión", prec_map, key="map_prec")
+
+            df_filtered = df_map
+            if filtro_com != "Todas":
+                df_filtered = df_filtered[df_filtered["comuna"] == filtro_com]
+            if filtro_prec != "Todas":
+                df_filtered = df_filtered[df_filtered["precision"] == filtro_prec]
+
+            st.caption(f"{len(df_filtered)} domicilios en mapa")
+
+            color_map = {
+                "exacta": [34, 139, 34, 200],
+                "aproximada": [255, 193, 7, 200],
+                "centroide_localidad": [255, 87, 34, 200],
+            }
+            df_filtered = df_filtered.copy()
+            df_filtered["color"] = df_filtered["precision"].map(
+                lambda x: color_map.get(x, [128, 128, 128, 200])
+            )
+
+            center_lat = df_filtered["lat"].mean()
+            center_lon = df_filtered["lon"].mean()
+
+            layer = pdk.Layer(
+                "ScatterplotLayer",
+                data=df_filtered,
+                get_position=["lon", "lat"],
+                get_color="color",
+                get_radius=200,
+                pickable=True,
+                auto_highlight=True,
+            )
+
+            view = pdk.ViewState(
+                latitude=center_lat,
+                longitude=center_lon,
+                zoom=10,
+                pitch=0,
+            )
+
+            tooltip = {
+                "html": "<b>{paciente}</b><br/>{direccion}<br/>{comuna}<br/><i>{precision}</i>",
+                "style": {"backgroundColor": "steelblue", "color": "white"},
+            }
+
+            st.pydeck_chart(pdk.Deck(
+                layers=[layer],
+                initial_view_state=view,
+                tooltip=tooltip,
+                map_provider="carto",
+                map_style="light",
+            ))
+
+            st.markdown(
+                "**Leyenda:** :green_circle: Exacta &ensp; :yellow_circle: Aproximada &ensp; :orange_circle: Centroide localidad"
+            )
+
+            st.subheader("Distribución geográfica")
+            col_s1, col_s2 = st.columns(2)
+            with col_s1:
+                df_por_com = df_filtered.groupby("comuna").size().reset_index(name="n").sort_values("n", ascending=False)
+                st.bar_chart(df_por_com.set_index("comuna"))
+            with col_s2:
+                df_por_prec = df_filtered.groupby("precision").size().reset_index(name="n").sort_values("n", ascending=False)
+                st.bar_chart(df_por_prec.set_index("precision"))
+
+    except Exception as exc:
+        st.error(f"Error: {exc}")
+
+
+# ═══════════════════════════════════════════════════════════════
+# TAB — Satisfacción Usuaria
+# ═══════════════════════════════════════════════════════════════
+with tab_satis:
+    st.header("Satisfacción Usuaria")
+
+    try:
+        df_enc = query_df(
+            """
+            SELECT e.nombre_paciente, e.parentesco, e.fecha_encuesta,
+                   e.fecha_ingreso, e.fecha_alta,
+                   e.sat_conocimiento, e.sat_informacion, e.sat_confidencialidad,
+                   e.sat_escucha, e.sat_amabilidad,
+                   e.score_satisfaccion, e.mejoria_percibida,
+                   e.volveria_hodom, e.atencion_telefonica
+            FROM reporting.encuesta_satisfaccion e
+            ORDER BY e.fecha_encuesta DESC
+            """
+        )
+
+        if df_enc.empty:
+            st.info("Sin encuestas de satisfacción")
+        else:
+            col1, col2, col3, col4 = st.columns(4)
+            col1.metric("Total encuestas", len(df_enc))
+            col2.metric("Score promedio", f"{df_enc['score_satisfaccion'].mean():.2f}/5")
+            si_volveria = (df_enc["volveria_hodom"] == "Sí, volvería").sum()
+            col3.metric("Sí volverían", f"{si_volveria}/{len(df_enc)}")
+            mejora_total = df_enc["mejoria_percibida"].isin(["TOTALMENTE", "MUCHO"]).sum()
+            col4.metric("Mejoría total/mucho", f"{mejora_total}/{len(df_enc)}")
+
+            st.dataframe(
+                df_enc, use_container_width=True, hide_index=True,
+                column_config={
+                    "nombre_paciente": st.column_config.TextColumn("Paciente", width="medium"),
+                    "parentesco": st.column_config.TextColumn("Parentesco", width="small"),
+                    "fecha_encuesta": st.column_config.DateColumn("Fecha"),
+                    "fecha_ingreso": st.column_config.DateColumn("Ingreso"),
+                    "fecha_alta": st.column_config.DateColumn("Alta"),
+                    "sat_conocimiento": st.column_config.NumberColumn("Conocim.", width="small"),
+                    "sat_informacion": st.column_config.NumberColumn("Inform.", width="small"),
+                    "sat_confidencialidad": st.column_config.NumberColumn("Confid.", width="small"),
+                    "sat_escucha": st.column_config.NumberColumn("Escucha", width="small"),
+                    "sat_amabilidad": st.column_config.NumberColumn("Amabil.", width="small"),
+                    "score_satisfaccion": st.column_config.NumberColumn("Score", format="%.2f", width="small"),
+                    "mejoria_percibida": st.column_config.TextColumn("Mejoría", width="small"),
+                    "volveria_hodom": st.column_config.TextColumn("Volvería", width="small"),
+                },
+            )
+
+            st.subheader("Satisfacción por dimensión")
+            dims = {
+                "Conocimiento": df_enc["sat_conocimiento"].mean(),
+                "Información": df_enc["sat_informacion"].mean(),
+                "Confidencialidad": df_enc["sat_confidencialidad"].mean(),
+                "Escucha": df_enc["sat_escucha"].mean(),
+                "Amabilidad": df_enc["sat_amabilidad"].mean(),
+            }
+            df_dims = pd.DataFrame({"Dimensión": list(dims.keys()), "Score": list(dims.values())})
+            st.bar_chart(df_dims.set_index("Dimensión"))
+
+            st.subheader("Distribución de respuestas")
+            col_v1, col_v2 = st.columns(2)
+            with col_v1:
+                st.markdown("**Volvería a HODOM**")
+                df_volveria = df_enc.groupby("volveria_hodom").size().reset_index(name="n")
+                st.bar_chart(df_volveria.set_index("volveria_hodom"))
+            with col_v2:
+                st.markdown("**Mejoría percibida**")
+                df_mejoria = df_enc["mejoria_percibida"].dropna()
+                if not df_mejoria.empty:
+                    df_mej = df_mejoria.value_counts().reset_index()
+                    df_mej.columns = ["mejoria", "n"]
+                    st.bar_chart(df_mej.set_index("mejoria"))
+
+    except Exception as exc:
+        st.error(f"Error: {exc}")
 
 
 # ═══════════════════════════════════════════════════════════════

@@ -2,7 +2,7 @@
 
 ## Contexto rápido
 
-Sesión 2026-04-07 (segunda). Modelo de domicilio georeferenciado implementado. 671 localizaciones, 646 geocodificadas con Google Maps. Dashboard actualizado con Sprint 3+. 4 correcciones aplicadas (CORR-08 a CORR-11).
+Sesión 2026-04-07 (tercera). Enriquecimiento P1 completado: epicrisis parseadas, catálogo REM poblado, satisfacción cargada. 7 correcciones aplicadas (CORR-08 a CORR-14).
 
 **DB**: `postgresql://hodom:hodom@localhost:5555/hodom` (container `hodom-pg`)
 **Dashboard**: container `hdos-app` via Traefik → hdos.sanixai.com
@@ -34,56 +34,41 @@ docker rm -f hdos-app && docker compose up -d
 
 ## Lo que se hizo esta sesión
 
-### 1. Dashboard Sprint 3+ (P0.1)
-- 3 sub-tabs nuevos en Operacional: Visitas (COMPLETA vs PROGRAMADA), Notas Evolución (1417), Dispositivos (155)
-- Archivo: `apps/streamlit_migration_explorer.py`
+### CORR-12: Epicrisis DOCX parseadas (P1.1)
+- 295 DOCX parseados, 126 vinculados a pacientes en PG (169 sin paciente en DB — períodos no migrados)
+- Campos extraídos: diagnóstico (126), evolución clínica (126), examen físico/invasivos/heridas (102), servicio origen (7), derivación APS (6)
+- Parsing robusto: regex para EVOLUCIÓN, INVASIVOS, HERIDAS, OSTOMÍAS, PLAN DE ENFERMERÍA
+- Script idempotente: `scripts/corr_12_parsear_epicrisis_docx.py`
+- Dependencia: `python-docx` (instalado en .venv)
 
-### 2. CORR-08: Estadías sin establecimiento (P0.2)
-- 84/123 estadías resueltas por inferencia dirección → comuna → CESFAM
-- Cobertura establecimiento: 84.2% → 95.0%
-- Script: `scripts/corr_08_establecimiento_por_direccion.py`
-- 39 restantes sin dirección ni comuna
+### CORR-13: Catálogo prestaciones REM (P1.2)
+- 16 prestaciones atómicas en `reference.catalogo_prestacion` (KTM, KTR, FONO, TTO_EV, CA, CS, etc.)
+- 7,590/7,594 visitas mapeadas a `prestacion_id` (código primario)
+- `reporting.visita_prestacion` — tabla junction M:N con 11,926 filas (descomposición de 145 combinaciones → atómicas)
+- Normalización: VM_INGRESO→VM_ING, VM_EGRESO→VM_EGR
+- SQL idempotente: `scripts/corr_13_catalogo_prestaciones_rem.sql`
 
-### 3. Modelo domicilio georeferenciado (nuevo)
-- `territorial.localizacion` — 671 puntos geográficos con coords obligatorias
-- `clinical.domicilio` — binding temporal paciente ↔ localización (tipo: principal/alternativo/temporal/eleam)
-- `operational.visita` — columnas `localizacion_id` + `domicilio_id` para uso futuro
-- Trigger PE1/PE2: coherencia visita-domicilio
-- Exclusión PE4: máximo 1 principal vigente por paciente
-- Vista: `clinical.v_domicilio_vigente`
-- DDL: `scripts/migrate_to_pg/ddl_domicilio.sql`
-- Functor: `scripts/migrate_to_pg/functors/f12_domicilios.py`
-- `latitud`/`longitud` ahora nullable (PE3 relajado: mejor NULL honesto que centroide falso)
+### CORR-14: Satisfacción usuaria (P1.3)
+- 33 encuestas cargadas en `reporting.encuesta_satisfaccion` (30 vinculadas a paciente, 3 sin match)
+- 45 columnas del formulario Google → campos estructurados (Likert 1-5, booleanos, texto)
+- Score promedio: 4.76/5.0 | Volverían: 20 sí + 8 prob. sí + 3 prob. no + 2 no
+- Script idempotente: `scripts/corr_14_satisfaccion_usuaria.py`
 
-### 4. CORR-09: Normalización de direcciones
-- 480 direcciones normalizadas: Title Case, tipo de vía, localidades INE, typos
-- Norma IDE Chile 2023 + INE Censo + features.csv (634 entidades rurales)
-- Script: `scripts/corr_09_normalizar_direcciones.py`
+### Dashboard Sprint 4 (P3)
+- **Tab Mapa**: pydeck con 646 domicilios geocodificados, colores por precisión, tooltips, filtros comuna/precisión
+- **Sub-tab Domicilios** en Territorial: tabla con búsqueda, filtros, métricas de cobertura
+- **Sub-tab Prestaciones REM** en Operacional: catálogo, distribución por estamento, área chart por mes
+- **Sub-tab Epicrisis** actualizado: diagnósticos, evolución clínica, examen físico (antes solo metadata)
+- **Tab Satisfacción**: scores Likert, dimensiones, distribución volvería/mejoría
+- **Overview** actualizado: métricas de prestaciones, encuestas, domicilios, localizaciones
+- Dependencia: `pydeck` agregado a Dockerfile.migra
 
-### 5. CORR-10: Enriquecimiento desde redundancia pipeline
-- 260 direcciones mejoradas cruzando variantes de `patient_address.csv` (intermediate)
-- 158 pacientes sin dirección que sí la tenían en episodios previos
-- 95 números de calle rescatados
-- Script: `scripts/corr_10_enriquecer_direcciones_redundancia.py`
-
-### 6. CORR-11: Direcciones recuperadas del DAU hospitalario
-- 28/33 pacientes restantes resueltos via CLI `h` → DAU → texto_resumen
-- Parsing: `Dirección : X Comuna : Y` del texto DAU
-- SQL: `scripts/corr_11_direcciones_dau.sql`
-
-### 7. Geocoding Google Maps
-- 646/671 localizaciones geocodificadas
-- 262 exacta (39%), 234 aproximada (35%), 150 centroide_localidad (22%)
-- 25 sin coordenadas (5 sin dirección + 20 irresolubles)
-- API key: `AIzaSyDNhu45OKX0jwYrbD9wcdz4LsG5utS-rss` (Geocoding API habilitado)
-- Script: `scripts/geocode_localizaciones.py`
-
-### 8. CLAUDE.md mejorado
-- Documentación PG migration, infra Docker, functores, testing
-
-### 9. Runner fix
-- `--phase` ahora funciona con `skip_deps` para ejecutar fases individuales
-- Archivo: `scripts/migrate_to_pg/framework/runner.py`
+### Sesión anterior (resumen)
+- Dashboard Sprint 3+ (3 sub-tabs Operacional)
+- CORR-08: establecimiento por dirección (95.0%)
+- Modelo domicilio georeferenciado (671 localizaciones, 646 geocodificadas)
+- CORR-09 a CORR-11: normalización + enriquecimiento direcciones
+- Geocoding Google Maps
 
 ## Estado actual de la base de datos
 
@@ -93,34 +78,22 @@ docker rm -f hdos-app && docker compose up -d
 | Estadías | 779 (740 con establecimiento, 95.0%) |
 | Localizaciones | 671 (646 geocodificadas, 96.3%) |
 | Domicilios | 671 (todos vigentes) |
-| Visitas | 7,594 |
+| Visitas | 7,594 (7,590 con prestación mapeada) |
+| Prestaciones (catálogo) | 16 atómicas |
+| Visita↔Prestación (M:N) | 11,926 |
+| Epicrisis | 126 (con evolución clínica real) |
+| Encuestas satisfacción | 33 (30 vinculadas, score 4.76/5) |
 | Notas evolución | 1,417 |
 | Dispositivos | 155 |
-| Provenance total | ~22,000 |
-
-### Distribución de precisión geográfica
-| Precisión | N | % |
-|---|---|---|
-| exacta | 262 | 39.0% |
-| aproximada | 234 | 34.9% |
-| centroide_localidad | 150 | 22.4% |
-| NULL (sin coordenada) | 25 | 3.7% |
+| Provenance total | ~30,600 |
 
 ## Tareas pendientes por prioridad
 
-### P1 — Enriquecimiento
+### P1 — Enriquecimiento (COMPLETADO)
 
-1. **Texto de epicrisis** — 295 DOCX sin parsear
-   - F₈ solo cargó metadata; parsear contenido con python-docx
-   - Poblar `clinical.epicrisis.resumen_evolucion`
-   - Dir: `documentacion-legacy/drive-hodom/EPICRISIS ENFERMERIA /`
-
-2. **Mapeo prestaciones REM**
-   - 120 tipos de visita → `reference.catalogo_prestacion`
-   - Necesario para reporting MINSAL
-
-3. **Satisfacción usuaria** — 33 encuestas
-   - `documentacion-legacy/drive-hodom/RESPUESTA SATISFACCIÓN USUARIA.xlsx`
+~~1. Texto epicrisis~~ → CORR-12 (126 registros con evolución real)
+~~2. Mapeo prestaciones REM~~ → CORR-13 (16 atómicas, 11,926 descomposiciones)
+~~3. Satisfacción usuaria~~ → CORR-14 (33 encuestas, score 4.76/5)
 
 ### P2 — Calidad
 
@@ -132,14 +105,10 @@ docker rm -f hdos-app && docker compose up -d
    - CEFSAMs registrados como localidades con comuna vacía
    - No afecta PG pero contamina CSVs
 
-### P3 — Dashboard
+### P3 — Dashboard (COMPLETADO)
 
-7. **Agregar mapa de domicilios** al dashboard
-   - Ahora que hay coordenadas reales, mostrar mapa con pydeck/folium
-   - Colores por precisión (exacta=verde, aproximada=amarillo, etc.)
-
-8. **Sub-tab Domicilios** en dashboard
-   - Vista de domicilios vigentes, búsqueda por paciente, filtro por comuna
+~~7. Mapa de domicilios~~ → Tab Mapa con pydeck (646 puntos, colores por precisión)
+~~8. Sub-tab Domicilios~~ → En Territorial (búsqueda, filtros, métricas)
 
 ### P3 — Futuro
 
@@ -154,6 +123,13 @@ docker rm -f hdos-app && docker compose up -d
 
 | Archivo | Propósito |
 |---|---|
+| `scripts/corr_12_parsear_epicrisis_docx.py` | CORR-12: parser DOCX epicrisis → PG |
+| `scripts/corr_13_catalogo_prestaciones_rem.sql` | CORR-13: catálogo + descomposición REM |
+| `scripts/corr_14_satisfaccion_usuaria.py` | CORR-14: encuestas satisfacción → PG |
+
+### Sesión anterior
+| Archivo | Propósito |
+|---|---|
 | `scripts/migrate_to_pg/ddl_domicilio.sql` | DDL modelo domicilio |
 | `scripts/migrate_to_pg/functors/f12_domicilios.py` | Functor F₁₂ |
 | `scripts/corr_08_establecimiento_por_direccion.py` | CORR-08 generador |
@@ -162,7 +138,6 @@ docker rm -f hdos-app && docker compose up -d
 | `scripts/corr_11_direcciones_dau.sql` | CORR-11 DAU hospitalario |
 | `scripts/geocode_localizaciones.py` | Geocoding Google Maps |
 | `apps/streamlit_migration_explorer.py` | Dashboard (6 sub-tabs Operacional) |
-| `docs/reporte-cambios-domicilio-2026-04-07.md` | Reporte para stakeholders |
 
 ## CLI hospitalario (h)
 
