@@ -2,7 +2,7 @@
 
 ## Contexto rápido
 
-Sesión 2026-04-07 (tercera). Enriquecimiento P1 completado: epicrisis parseadas, catálogo REM poblado, satisfacción cargada. 7 correcciones aplicadas (CORR-08 a CORR-14).
+Sesión 2026-04-07 (tercera). Enriquecimiento P1 completado. Dashboard Sprint 4 (10 tabs, mapa pydeck). Visitas 100% vinculadas a domicilios. 80/80 tests passing. 7 correcciones nuevas (CORR-08 a CORR-14).
 
 **DB**: `postgresql://hodom:hodom@localhost:5555/hodom` (container `hodom-pg`)
 **Dashboard**: container `hdos-app` via Traefik → hdos.sanixai.com
@@ -16,10 +16,13 @@ cd /home/felix/projects/hdos
 docker exec hodom-pg psql -U hodom -d hodom -c "SELECT count(*) FROM clinical.estadia;"
 # Esperado: 779
 
-# Verificar domicilios
+# Verificar domicilios + visitas vinculadas
 docker exec hodom-pg psql -U hodom -d hodom -c "
-  SELECT precision_geo, count(*) FROM territorial.localizacion GROUP BY precision_geo ORDER BY count(*) DESC;"
-# Esperado: exacta 262, aproximada 234, centroide_localidad 150, NULL 25
+  SELECT count(*) AS localizaciones FROM territorial.localizacion;"
+# Esperado: 673
+docker exec hodom-pg psql -U hodom -d hodom -c "
+  SELECT count(*) AS total, count(domicilio_id) AS con_domicilio FROM operational.visita;"
+# Esperado: 7594 / 7594 (100%)
 
 # Verificar dashboard
 curl -s https://hdos.sanixai.com/_stcore/health
@@ -55,7 +58,7 @@ docker rm -f hdos-app && docker compose up -d
 - Script idempotente: `scripts/corr_14_satisfaccion_usuaria.py`
 
 ### Dashboard Sprint 4 (P3)
-- **Tab Mapa**: pydeck con 646 domicilios geocodificados, colores por precisión, tooltips, filtros comuna/precisión
+- **Tab Mapa**: pydeck + CartoDB, 646 domicilios geocodificados, colores por precisión, tooltips, filtros
 - **Sub-tab Domicilios** en Territorial: tabla con búsqueda, filtros, métricas de cobertura
 - **Sub-tab Prestaciones REM** en Operacional: catálogo, distribución por estamento, área chart por mes
 - **Sub-tab Epicrisis** actualizado: diagnósticos, evolución clínica, examen físico (antes solo metadata)
@@ -63,12 +66,16 @@ docker rm -f hdos-app && docker compose up -d
 - **Overview** actualizado: métricas de prestaciones, encuestas, domicilios, localizaciones
 - Dependencia: `pydeck` agregado a Dockerfile.migra
 
-### Sesión anterior (resumen)
-- Dashboard Sprint 3+ (3 sub-tabs Operacional)
-- CORR-08: establecimiento por dirección (95.0%)
-- Modelo domicilio georeferenciado (671 localizaciones, 646 geocodificadas)
-- CORR-09 a CORR-11: normalización + enriquecimiento direcciones
-- Geocoding Google Maps
+### Vinculación visitas ↔ domicilios
+- 7,594/7,594 visitas vinculadas a domicilio + localización (100%)
+- 2 pacientes resueltos via DAU: Antonio Cerda (Durazno 927) y John Sepúlveda (Santa Rosa Ñiquihue)
+- Trigger PE1 auto-llenó `localizacion_id` desde `domicilio_id`
+
+### Tests
+- 80/80 tests passing (pytest)
+
+### docs/specs commiteados
+- 31 archivos de diseño MVP HODOM-HSC (paquete consolidado + paquete inicial)
 
 ## Estado actual de la base de datos
 
@@ -76,9 +83,9 @@ docker rm -f hdos-app && docker compose up -d
 |---|---|
 | Pacientes | 673 |
 | Estadías | 779 (740 con establecimiento, 95.0%) |
-| Localizaciones | 671 (646 geocodificadas, 96.3%) |
-| Domicilios | 671 (todos vigentes) |
-| Visitas | 7,594 (7,590 con prestación mapeada) |
+| Localizaciones | 673 (648 geocodificadas, 96.3%) |
+| Domicilios | 673 (todos vigentes) |
+| Visitas | 7,594 (100% con domicilio, 7,590 con prestación) |
 | Prestaciones (catálogo) | 16 atómicas |
 | Visita↔Prestación (M:N) | 11,926 |
 | Epicrisis | 126 (con evolución clínica real) |
@@ -112,11 +119,9 @@ docker rm -f hdos-app && docker compose up -d
 
 ### P3 — Futuro
 
-9. **Vincular visitas futuras** a domicilios
-   - Las columnas `localizacion_id` / `domicilio_id` en visita están listas
-   - Trigger PE1 auto-completa localización desde domicilio
+~~9. Vincular visitas a domicilios~~ → 7,594/7,594 (100%), trigger PE1 activo
 
-10. **Geocoding incremental** — cuando se registren nuevos pacientes/domicilios
+10. **Geocoding incremental** — 2 localizaciones nuevas (Cerda, Sepúlveda) + 25 anteriores sin coords
     - Script reutilizable: `scripts/geocode_localizaciones.py`
 
 ## Archivos clave de esta sesión
