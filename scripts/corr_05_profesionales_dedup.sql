@@ -1,0 +1,25 @@
+-- CORR-05: Consolidación de profesionales duplicados
+-- Fecha: 2026-04-07
+-- Contexto: 52 profesionales con múltiples variantes de nombre para la misma persona.
+-- Resultado: 22 profesionales canónicos. 29 duplicados mergeados, 1 placeholder eliminado.
+--
+-- Proceso: para cada grupo de duplicados, se reasignan las FK (visita.provider_id,
+-- registro_llamada.provider_id, epicrisis.provider_id) al registro canónico,
+-- luego se eliminan los duplicados.
+--
+-- Ejecutado via Python (merge groups manuales).
+-- Proveniencia implícita en migration.provenance fase F6 (registros originales).
+--
+-- Profesionales canónicos (22):
+--   ENFERMERIA (17): Anastasia Davison, Andrea Navarrete López, Berenice Mella,
+--     Camila Andrade, Camila Bustamante Albornoz, Doris González San Martín,
+--     Helen López Hernández, Juan Zúñiga, Karen Henríquez Urrutia,
+--     Maritza Biernay Morales, Melissa Rivera Sepúlveda, Melissa Sepúlveda Meriño,
+--     Nadia Zobarzo Castillo, Norma Fuentes, Pía Vallejos, Pía Vásquez Moraga, Vania Leal
+--   FONOAUDIOLOGIA (1): Fonoaudiólogo HODOM
+--   KINESIOLOGIA (1): Kinesiólogo HODOM
+--   MEDICO (1): Héctor Vergara Espejo
+--   TENS (1): Carlos Muñoz
+--   TRABAJO_SOCIAL (1): Trabajador Social HODOM
+--
+-- Corrección adicional: Héctor Vergara Espejo reclasificado de ENFERMERIA a MEDICO.
