@@ -71,6 +71,12 @@ docker rm -f hdos-app && docker compose up -d
 - 2 pacientes resueltos via DAU: Antonio Cerda (Durazno 927) y John Sepúlveda (Santa Rosa Ñiquihue)
 - Trigger PE1 auto-llenó `localizacion_id` desde `domicilio_id`
 
+### Enriquecimiento quick wins
+- **Códigos MAI**: 11/16 prestaciones en catálogo ahora tienen código MAI oficial (CANASTA HODOM.xlsx)
+- **Actividad profesional diaria**: 88 días en `reporting.actividad_profesional_diaria` (enfermería 9.1/día, kine 8.9/día, fono 4.1/día, médico 2.7/día)
+- **Fechas nacimiento**: 672/673 ya tenían fecha — sin acción
+- **resp antiguo**: solo 5/47 match — sin acción
+
 ### Tests
 - 80/80 tests passing (pytest)
 
