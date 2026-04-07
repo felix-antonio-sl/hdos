@@ -28,6 +28,7 @@ from functors.f4_episode_source import F4EpisodeSource
 from functors.f5_clinical_enrichment import F5ClinicalEnrichment
 from functors.f6_profesionales import F6Profesionales
 from functors.f7_visitas import F7Visitas
+from functors.f7b_visitas_realizadas import F7bVisitasRealizadas
 from functors.f8_epicrisis import F8Epicrisis
 from functors.f9_operacional import F9Operacional
 from functors.f10_kpi_diario import F10KpiDiario
@@ -43,6 +44,7 @@ ALL_FUNCTORS = [
     F5ClinicalEnrichment(),
     F6Profesionales(),
     F7Visitas(),
+    F7bVisitasRealizadas(),
     F8Epicrisis(),
     F9Operacional(),
     F10KpiDiario(),
