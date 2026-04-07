@@ -2,12 +2,15 @@
 """
 F2: Pacientes — strict ⊕ canonical -> clinical.paciente
 
-Source:  strict.paciente (673, trust=1.0) ⊕ canonical/patient_master.csv (trust=0.8)
+Source:  strict.paciente (673, trust=1.0)
+         ⊕ canonical/patient_master.csv (trust=0.8)
+         ⊕ input/manual/sexo_inferred.csv (trust=0.9, name-based inference)
 Target:  clinical.paciente (673)
 
 The pushout over the pullback by RUT:
   - strict provides: rut, nombre, fecha_nacimiento (ALWAYS wins)
   - canonical enriches: sexo, comuna, cesfam, prevision, contacto, estado_actual
+  - manual/sexo_inferred.csv overrides sexo when canonical is NULL
 """
 
 from __future__ import annotations
@@ -60,6 +63,17 @@ class F2Pacientes(Functor):
                 if rut:
                     canonical_by_rut[rut] = row
 
+        # Load manual sex corrections (inferred from name)
+        manual_sexo: dict[str, str] = {}
+        sexo_path = sources.strict_db.parent.parent / "input" / "manual" / "sexo_inferred.csv"
+        if sexo_path.exists():
+            with open(sexo_path, newline="", encoding="utf-8") as f:
+                for row in csv.DictReader(f):
+                    rut = row.get("rut", "").strip()
+                    sexo_val = row.get("sexo", "").strip()
+                    if rut and sexo_val:
+                        manual_sexo[rut] = sexo_val
+
         # For each strict patient
         strict_patients = conn.execute(
             "SELECT rut, nombre, fecha_nacimiento FROM strict.paciente"
@@ -72,6 +86,12 @@ class F2Pacientes(Functor):
 
             sexo_raw = canon.get("sexo", "").strip()
             sexo = _SEXO_MAP.get(sexo_raw)
+            # Manual override: inferred from name when canonical is NULL
+            if sexo is None and rut in manual_sexo:
+                sexo = manual_sexo[rut]
+                sexo_source = "sexo_inferred.csv"
+            else:
+                sexo_source = "patient_master.csv" if sexo else None
 
             comuna = canon.get("comuna", "").strip() or None
             cesfam = canon.get("cesfam", "").strip() or None
@@ -105,22 +125,22 @@ class F2Pacientes(Functor):
                 phase="F2",
             )
 
-            # Provenance: field-level from canonical enrichment
-            for fname, fval in {
-                "sexo": sexo,
-                "comuna": comuna,
-                "cesfam": cesfam,
-                "prevision": prevision,
-                "contacto_telefono": contacto,
-                "estado_actual": estado,
-            }.items():
-                if fval is not None:
+            # Provenance: field-level enrichment
+            for fname, fval, fsource in [
+                ("sexo", sexo, sexo_source),
+                ("comuna", comuna, "patient_master.csv"),
+                ("cesfam", cesfam, "patient_master.csv"),
+                ("prevision", prevision, "patient_master.csv"),
+                ("contacto_telefono", contacto, "patient_master.csv"),
+                ("estado_actual", estado, "patient_master.csv"),
+            ]:
+                if fval is not None and fsource is not None:
                     eta.record(
                         conn,
                         target_table="clinical.paciente",
                         target_pk=pid,
-                        source_type="canonical",
-                        source_file="patient_master.csv",
+                        source_type="manual" if fsource == "sexo_inferred.csv" else "canonical",
+                        source_file=fsource,
                         source_key=rut,
                         phase="F2",
                         field_name=fname,
