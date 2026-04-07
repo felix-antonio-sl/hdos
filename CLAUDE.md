@@ -144,6 +144,16 @@ Notable relationships:
 - `domicilio` → temporal binding `paciente` ↔ `localizacion` (tipo: principal/alternativo/temporal)
 - `localizacion` → geocoded addresses (646/671 with coordinates, precision: exacta/aproximada/centroide)
 
+### Known Architectural Debt
+
+**Redundant `patient_id` in 33 clinical tables**: Tables like `nota_evolucion`, `epicrisis`, `condicion`, etc. have both `stay_id → estadia` and `patient_id → paciente`. Since `estadia.patient_id` is NOT NULL, `patient_id` is categorically redundant — it's the diagonal of a commutative triangle:
+
+```
+  T.patient_id = estadia.patient_id  (path equation, 0 violations)
+```
+
+Trigger `check_stay_coherence` enforces the invariant. **Decision**: keep for now (33-table refactor not worth the blast radius), but **do not propagate** to new tables. Any new table with `stay_id NOT NULL` should derive patient via JOIN, not store a redundant FK.
+
 ### Key Design Principles
 
 - **PostgreSQL is the canonical source**: PG database (container `hodom-pg`, port 5555) with validated corrections IS the source of truth. CSV pipeline and `db/hdos.db` (SQLite) are historical migration sources.
