@@ -54,6 +54,8 @@ docker exec hodom-pg psql -U hodom -d hodom -c "SELECT count(*) FROM clinical.es
 .venv/bin/python scripts/corr_12_parsear_epicrisis_docx.py                       # Parse DOCX → epicrisis
 docker exec -i hodom-pg psql -U hodom -d hodom < scripts/corr_13_catalogo_prestaciones_rem.sql  # REM catalog
 .venv/bin/python scripts/corr_14_satisfaccion_usuaria.py                         # Satisfaction surveys
+.venv/bin/python scripts/corr_15_entrega_kine.py                                # Kine shift handover → notas
+.venv/bin/python scripts/corr_16_epicrisis_medica_pdf.py                        # Medical epicrisis PDFs
 
 # Auxiliary scripts
 .venv/bin/python scripts/build_active_patient_packets.py    # Patient summary packets
@@ -113,7 +115,7 @@ scripts/migrate_to_pg/
 
 Each functor implements `apply(conn, sources) → report` and optionally declares `PathEquation`s for categorical invariant checks (diagram commutativity). The `ComposedFunctor` orchestrator runs them in order and validates all equations.
 
-**SQL/Python corrections** (`scripts/corr_*.{sql,py}`): 14 ad-hoc correction scripts applied directly to PG after migration:
+**SQL/Python corrections** (`scripts/corr_*.{sql,py}`): 16 ad-hoc correction scripts applied directly to PG after migration:
 
 | Script | Purpose |
 |--------|---------|
@@ -125,6 +127,8 @@ Each functor implements `apply(conn, sources) → report` and optionally declare
 | `corr_12_parsear_epicrisis_docx.py` | Parsear 295 DOCX epicrisis → campos clínicos (evolución, diagnóstico, examen) |
 | `corr_13_catalogo_prestaciones_rem.sql` | Catálogo 16 prestaciones REM + descomposición visitas M:N |
 | `corr_14_satisfaccion_usuaria.py` | 33 encuestas satisfacción → `reporting.encuesta_satisfaccion` |
+| `corr_15_entrega_kine.py` | 933 notas kinesiología (112 hojas diarias XLSX) → `clinical.nota_evolucion` |
+| `corr_16_epicrisis_medica_pdf.py` | 738 epicrisis médicas (1996 PDFs DAU/SGH vía PyMuPDF) → `clinical.epicrisis` |
 
 ### PG Schema (10 schemas, key tables)
 
@@ -134,7 +138,7 @@ Each functor implements `apply(conn, sources) → report` and optionally declare
 | `territorial` | `establecimiento`, `ubicacion`, `localizacion` | Geography + geocoding |
 | `operational` | `visita`, `profesional`, `orden_servicio`, `ruta`, `registro_llamada` | Operations |
 | `reference` | `catalogo_prestacion`, `service_type_ref`, `prioridad_ref` | Master data |
-| `reporting` | `kpi_diario`, `visita_prestacion` (M:N), `encuesta_satisfaccion` | Analytics + REM |
+| `reporting` | `kpi_diario`, `visita_prestacion` (M:N), `encuesta_satisfaccion`, `actividad_profesional_diaria` | Analytics + REM |
 | `migration` | `provenance` | Field-level lineage tracking |
 | `strict` | `hospitalizacion` | Validated stays (1:1 with `clinical.estadia`) |
 
@@ -142,7 +146,10 @@ Notable relationships:
 - `visita.prestacion_id` → `catalogo_prestacion` (primary prestación per visit)
 - `visita_prestacion` → decomposed compound codes (e.g., "KTM+FONO" → 2 rows)
 - `domicilio` → temporal binding `paciente` ↔ `localizacion` (tipo: principal/alternativo/temporal)
-- `localizacion` → geocoded addresses (646/671 with coordinates, precision: exacta/aproximada/centroide)
+- `localizacion` → geocoded addresses (648/673 with coordinates, precision: exacta/aproximada/centroide)
+- `visita.domicilio_id` → 7,594/7,594 visits linked to domicilios (100%)
+- `epicrisis` → 864 total (738 medical from PDF + 126 nursing from DOCX)
+- `nota_evolucion` → 2,350 total (1,417 nursing + 933 kinesiology)
 
 ### Known Architectural Debt
 
