@@ -6,6 +6,18 @@ Fecha: 2026-04-06
 
 ---
 
+## 0. Decisión Arquitectural: PG es la Fuente Canónica
+
+**A partir del Sprint 1 (2026-04-06), la base PostgreSQL con sus modificaciones validadas es la fuente canónica del sistema HODOM.**
+
+- La migración es un proceso **one-shot** (bootstrap). No se re-ejecuta periódicamente.
+- Las correcciones (ej: inferencia de sexo, ajustes manuales) se aplican **directo en PG**.
+- `db/hdos.db` y `output/spreadsheet/canonical/` son fuentes históricas de la migración, no la verdad actual.
+- Los sprints futuros (2-3) son **aditivos**: insertan nuevas tablas/datos sin destruir lo ya validado.
+- El dashboard de exploración (`localhost:8504`) refleja el estado canónico real.
+
+---
+
 ## 1. Modelo Categorial
 
 ### 1.1 Categoría Índice de Fuentes

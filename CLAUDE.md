@@ -68,10 +68,11 @@ Each stage imports the previous one as a Python module via `sys.path`. Stage 3 i
 
 ### Key Design Principles
 
+- **PostgreSQL is the canonical source**: As of 2026-04-06, the PG database (Docker container `hodom-pg`, port 5555) with all validated corrections IS the source of truth. CSV pipeline outputs and `db/hdos.db` are historical migration sources, not the current truth. Corrections go directly into PG.
 - **Deterministic & reproducible**: Hashed IDs (`hashlib`), sorted output. Re-running a stage with the same input produces identical output.
 - **Source trust hierarchy**: `manual > enriched > forms > altas > SGH`. Origin weights: merged(4) > raw(3) > alta_rescued(2) > form_rescued(1).
 - **Conservative deduplication**: Exact match → RUT ±2 days → nombre ±2 days. The pipeline prefers false negatives over false positives.
-- **Field-level provenance**: `field_provenance.csv` tracks where every value came from.
+- **Field-level provenance**: `migration.provenance` table in PG tracks where every migrated value came from (source_type, source_file, phase, field_name).
 - **Manual override cycle**: Quality issues → review queues → `input/manual/manual_resolution.csv` → re-run stage 4.
 
 ### Identity Resolution Strategies
