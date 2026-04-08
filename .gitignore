@@ -8,3 +8,27 @@ __pycache__/
 
 # Archivos grandes (>100MB, no soportados por GitHub)
 *.zip
+
+# Generated pipeline outputs (regenerable from stages 1-4)
+output/spreadsheet/intermediate/
+output/spreadsheet/enriched/
+output/spreadsheet/canonical/
+output/spreadsheet/hospitalizaciones/
+output/spreadsheet/hodom_*
+output/clinical/
+output/scans/
+
+# Generated SQL (from corresponding Python scripts)
+scripts/corr_08_establecimiento_por_direccion.sql
+scripts/corr_09_normalizar_direcciones.sql
+scripts/corr_10_enriquecer_direcciones_redundancia.sql
+scripts/geocode_localizaciones.sql
+
+# Binary reference files (visual-only, not consumed by code)
+*.db
+!db/hdos.db
+input/reference/formatos_registros/
+input/reference/insumos_varios/*.pptx
+input/reference/insumos_varios/*.pdf
+input/reference/insumos_varios/*.docx
+input/reference/insumos_varios/*.DOCX

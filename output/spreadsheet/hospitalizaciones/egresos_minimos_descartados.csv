@@ -1,2 +1,0 @@
-egreso_id,run,rut_raw,rut_valido,nombre,fecha_ingreso,fecha_egreso,motivo_egreso,diagnostico,comuna,direccion_referencia,discard_reason,source_file,source_sheet,source_row_number
-alta_377f26e7d0147ab8,7438762-4,1951-09-17 00:00:00,1,IRMA ANDRADES IRRIBARRA,2025-07-14,,ALTA,FX SUPRACONDILEA EN FEMUR,OTRO,INDEPENDENCIA 1165,missing_fecha_egreso,planilla-altas-2024-2026.xlsx,ALTAS 28 - 03 DE AGOSTO 2025,9
