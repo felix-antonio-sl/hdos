@@ -98,7 +98,34 @@ docker rm -f hdos-app && docker compose up -d
 | Encuestas satisfacción | 33 (30 vinculadas, score 4.76/5) |
 | Notas evolución | 1,417 |
 | Dispositivos | 155 |
-| Provenance total | ~30,600 |
+| GPS posiciones | 124,626 (3 vehículos, ene-abr 2026, NavPro.cl) |
+| Segmentos telemetría | 11,374 (9,650 drives + 1,724 stops) |
+| Stops con visita match | 176 (correlación GPS ↔ domicilio <150m) |
+| Resúmenes diarios | 250 (km, min drive/stop, vmax por vehículo) |
+| Vehículos | 3 (PFFF57, RGHB14, TZXS94) |
+| Provenance total | ~32,300 |
+
+## SYNC-GPS: NavPro.cl → PG telemetry (2026-04-08)
+
+### Script: `scripts/sync_gps_navpro.py`
+- `--poll`: posición actual 3 vehículos (cada 30 min, 07:00-21:00 Chile)
+- sin flag: sync completo CSV + detección paradas + matching visitas (diario 21:30 Chile)
+- Backfill: 124,626 posiciones, 11,374 segmentos, 176 matches
+- Cron configurado en crontab (usuario felix)
+- Logs: `/var/log/hdos-gps-poll.log`, `/var/log/hdos-gps-sync.log`
+- Credenciales NavPro: `NAVPRO_USER`/`NAVPRO_PASS` env vars (fallback hardcoded)
+- Requiere: `cloudscraper` (bypass Cloudflare)
+
+### Tablas creadas
+- `telemetry.gps_posicion` — puntos GPS raw (dt, lat, lng, speed, motion, ignition, ...)
+- `telemetry.posicion_actual` — 1 fila por vehículo, UPSERT cada 30 min
+- `operational.vehiculo` — 3 vehículos HODOM con patente y GPS device name
+- `telemetry.telemetria_dispositivo` — 3 dispositivos GPS vinculados a vehículos
+
+### Matching GPS ↔ visitas
+- Haversine <150m entre parada GPS y `territorial.localizacion` del paciente
+- Coincidencia temporal: misma fecha que `operational.visita`
+- Score de correlación 0.61-0.97 (176 matches sobre 1,724 stops)
 
 ## Tareas pendientes por prioridad
 

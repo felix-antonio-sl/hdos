@@ -57,6 +57,12 @@ docker exec -i hodom-pg psql -U hodom -d hodom < scripts/corr_13_catalogo_presta
 .venv/bin/python scripts/corr_15_entrega_kine.py                                # Kine shift handover → notas
 .venv/bin/python scripts/corr_16_epicrisis_medica_pdf.py                        # Medical epicrisis PDFs
 
+# GPS sync from NavPro.cl (automated via cron)
+.venv/bin/python scripts/sync_gps_navpro.py                                      # Incremental sync (last dt+1 → yesterday)
+.venv/bin/python scripts/sync_gps_navpro.py --poll                               # Poll current positions (every 30 min)
+.venv/bin/python scripts/sync_gps_navpro.py --from-date 2026-01-01               # Backfill from date
+.venv/bin/python scripts/sync_gps_navpro.py --device PFFF57 --dry-run            # Single vehicle, dry-run
+
 # Auxiliary scripts
 .venv/bin/python scripts/build_active_patient_packets.py    # Patient summary packets
 .venv/bin/python scripts/build_hodom_admissions_minimal.py  # Minimal admission dataset
@@ -136,9 +142,10 @@ Each functor implements `apply(conn, sources) → report` and optionally declare
 |--------|-----------|---------|
 | `clinical` | `paciente`, `estadia`, `epicrisis`, `condicion`, `nota_evolucion`, `domicilio`, `dispositivo` | Clinical domain |
 | `territorial` | `establecimiento`, `ubicacion`, `localizacion` | Geography + geocoding |
-| `operational` | `visita`, `profesional`, `orden_servicio`, `ruta`, `registro_llamada` | Operations |
+| `operational` | `visita`, `profesional`, `orden_servicio`, `ruta`, `registro_llamada`, `vehiculo`, `conductor` | Operations |
 | `reference` | `catalogo_prestacion`, `service_type_ref`, `prioridad_ref` | Master data |
 | `reporting` | `kpi_diario`, `visita_prestacion` (M:N), `encuesta_satisfaccion`, `actividad_profesional_diaria` | Analytics + REM |
+| `telemetry` | `gps_posicion`, `posicion_actual`, `telemetria_dispositivo`, `telemetria_segmento`, `telemetria_resumen_diario` | GPS tracking from NavPro |
 | `migration` | `provenance` | Field-level lineage tracking |
 | `strict` | `hospitalizacion` | Validated stays (1:1 with `clinical.estadia`) |
 
@@ -150,6 +157,10 @@ Notable relationships:
 - `visita.domicilio_id` → 7,594/7,594 visits linked to domicilios (100%)
 - `epicrisis` → 864 total (738 medical from PDF + 126 nursing from DOCX)
 - `nota_evolucion` → 2,350 total (1,417 nursing + 933 kinesiology)
+- `gps_posicion` → 124,626 GPS points (3 vehicles, Jan-Apr 2026, from NavPro.cl)
+- `telemetria_segmento` → 11,374 segments (9,650 drives + 1,724 stops), 176 matched to patient visits
+- `telemetria_resumen_diario` → 250 daily summaries (km, drive/stop minutes, max speed)
+- `posicion_actual` → real-time position of 3 vehicles (polled every 30 min via cron)
 
 ### Known Architectural Debt
 
@@ -217,7 +228,7 @@ Tests use `sys.path.insert` to import pipeline modules from `scripts/`. Config i
 
 ## Dependencies
 
-Python 3.12 (Docker) / 3.14 (local .venv). Runtime: `streamlit>=1.43`, `pandas>=2.2`, `openpyxl`, `psycopg[binary]>=3.1`. GIS: `geopandas`, `pyogrio`, `pyproj`, `shapely`. PDF: `PyMuPDF`. Geospatial viz: `pydeck`. DOCX parsing: `python-docx`.
+Python 3.12 (Docker) / 3.14 (local .venv). Runtime: `streamlit>=1.43`, `pandas>=2.2`, `openpyxl`, `psycopg[binary]>=3.1`. GIS: `geopandas`, `pyogrio`, `pyproj`, `shapely`. PDF: `PyMuPDF`. Geospatial viz: `pydeck`. DOCX parsing: `python-docx`. GPS sync: `cloudscraper` (Cloudflare bypass for NavPro.cl).
 
 Virtual environment at `.venv/`. Dependencies managed via `requirements-dashboard.txt` (minimal: streamlit + pandas) and direct pip installs — no pyproject.toml or comprehensive requirements file.
 
