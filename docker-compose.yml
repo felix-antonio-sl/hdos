@@ -1,10 +1,10 @@
 name: hdos
 services:
-  app:
+  dashboard:
     build:
       context: .
-      dockerfile: Dockerfile.migra
-    container_name: hdos-app
+      dockerfile: Dockerfile
+    container_name: hdos-dashboard
     restart: unless-stopped
     environment:
       - DATABASE_URL=postgresql://hodom:hodom@hodom-pg:5432/hodom
