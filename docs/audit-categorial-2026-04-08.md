@@ -14,7 +14,7 @@
 | Path equations (PE-1 patient_id) | **0 violaciones** en tablas pobladas |
 | Tablas pobladas | **45 de 115** (39%) |
 | Tablas vacías | **70 de 115** (61%) — schema aspiracional |
-| Drift DDL↔PG | **5 tablas** en PG sin DDL (portal_*, audit_log) |
+| Drift DDL↔PG | **5 tablas** en PG sin DDL (portal_*, audit_log) — usadas por hdos-app |
 | FKs duplicadas | **1 anomalía** (encuesta_satisfaccion dual schema) |
 | Enums sin CHECK | **~35 columnas** TEXT sin constraint |
 | Triggers activos | Todos habilitados (O = origin-enabled) |
@@ -80,9 +80,9 @@ Verificación exhaustiva: **0 violaciones** en todas las tablas pobladas (nota_e
 | `operational.portal_acceso_log` | NO | Sistema portal paciente (futuro) |
 | `operational.audit_log` | NO | Auditoría de accesos |
 
-Todas vacías. Tienen FKs válidas (verificado). Probablemente creadas en una sesión anterior y no incorporadas al DDL canónico.
+Todas vacías. Tienen FKs válidas. **Son usadas activamente por `/home/felix/projects/hdos-app`** (Next.js + Drizzle ORM) en 8 archivos TypeScript: portal-auth, mensajes-portal, invitaciones, auditoría.
 
-**Dictamen**: Incorporar al DDL v4 o eliminar si no se usarán. El drift entre DDL y PG es un riesgo de consistencia.
+**Dictamen**: Incorporar al DDL v4. **NO eliminar** — son infraestructura del portal paciente de hdos-app.
 
 ---
 
@@ -233,7 +233,7 @@ La provenance cubre las migraciones F0-F12 y correcciones CORR-01 a SYNC-GPS, pe
 | # | Acción | Resultado |
 |---|--------|-----------|
 | R1 | DROP `clinical.encuesta_satisfaccion` | Eliminada (0 filas, duplicaba `reporting.encuesta_satisfaccion`) |
-| R2 | DROP 5 tablas portal_*/audit_log | Eliminadas (vacías, sin DDL canónico) |
+| R2 | ~~DROP 5 tablas portal_*/audit_log~~ | **REVERTIDO**: usadas por hdos-app (Next.js + Drizzle ORM). Recreadas. |
 | R3 | DROP `visita.location_id` | Eliminada (0/7594, dead FK a ubicacion) |
 | R4 | DROP `visita.localizacion_id` | Eliminada (100% redundante con domicilio.localizacion_id) |
 | R5 | 4 CHECK en tablas pobladas | condicion.estado_clinico, condicion.verificacion, dispositivo.estado, profesional.contrato |
@@ -243,7 +243,9 @@ La provenance cubre las migraciones F0-F12 y correcciones CORR-01 a SYNC-GPS, pe
 | R9 | Recrear v_consolidado_atenciones_diarias | Sin location_id |
 | R10 | Recrear mv_kpi_diario | Sin location_id, usa zona universal |
 
-**Post-remediación**: 109 tablas, 210 FKs, 144 CHECKs (11 nuevos).
+**Post-remediación**: 114 tablas, 221 FKs, 155 CHECKs (11 nuevos + 11 restaurados).
+
+**Nota R2**: Las tablas portal_*/audit_log fueron eliminadas erróneamente — son usadas por `hdos-app` (Next.js + Drizzle ORM, 8 archivos TS). Fueron recreadas fielmente desde el schema Drizzle.
 
 ### Lo que está bien
 
