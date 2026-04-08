@@ -205,29 +205,29 @@ Episodes grouped into stays by: exact (patient_id + fecha_ingreso + fecha_egreso
 
 | App | Purpose | Deploy |
 |-----|---------|--------|
-| `apps/streamlit_dashboard.py` | Main: geospatial, episode filtering, patient search | Port 8502 local |
-| `apps/streamlit_admin_dashboard.py` | Admin: review queues, quality issues, corrections | Local |
-| `apps/streamlit_migration_model_dashboard.py` | Migration model | Local |
 | `apps/streamlit_migration_explorer.py` | PG migration explorer (10 tabs incl. Mapa pydeck, Satisfacción) | Docker → hdos.sanixai.com |
+| `apps/streamlit_dashboard.py` | Main: geospatial, episode filtering, patient search | Local only (CSV-based) |
+| `apps/streamlit_admin_dashboard.py` | Admin: review queues, quality issues, corrections | Local only (CSV-based) |
+| `apps/streamlit_migration_model_dashboard.py` | Migration model | Local only (CSV-based) |
 
 Streamlit config in `.streamlit/config.toml`: port 8502, headless, light theme (primary `#0B6E4F`).
 
 ### Infrastructure
 
 - **PG container**: `hodom-pg` (postgres:14-alpine), port 5555, creds `hodom:hodom`, DB `hodom`. Network `web`. **Shared by hdos (Python pipeline) AND hdos-app (Next.js + Drizzle ORM at `/home/felix/projects/hdos-app`)**. Always grep hdos-app before DDL changes.
-- **Dashboard container**: `hdos-app` (Dockerfile.migra, python:3.12-slim + streamlit + pandas + psycopg + pydeck), port 8501 internal. Traefik routes `hdos.sanixai.com` to it.
-- **hdos-app**: Next.js app consuming same PG via Drizzle ORM. Schema: `src/db/drizzle/schema.ts`. Drizzle filter: clinical, operational, reporting, portal, reference, territorial (NOT telemetry/strict/migration). Portal tables (portal_usuario, portal_mensaje, portal_invitacion, portal_acceso_log) and audit_log are owned by hdos-app.
+- **Dashboard container**: `hdos-dashboard` (Dockerfile, python:3.12-slim + streamlit + pandas + psycopg + pydeck), port 8501 internal. Traefik routes `hdos.sanixai.com` to it.
+- **hdos-app**: Next.js app consuming same PG via Drizzle ORM at `/home/felix/projects/hdos-app`. Schema: `src/db/drizzle/schema.ts`. Drizzle filter: clinical, operational, reporting, portal, reference, territorial (NOT telemetry/strict/migration). Portal tables (portal_usuario, portal_mensaje, portal_invitacion, portal_acceso_log) and audit_log are owned by hdos-app.
 - **GPS sync cron**: poll every 30 min (07:00-21:00 Chile), full sync daily 21:30. Logs: `/var/log/hdos-gps-{poll,sync}.log`.
-- **Rebuild**: `docker compose up -d --build`. If name conflict: `docker rm -f hdos-app` first.
+- **Rebuild**: `docker compose up -d --build`.
 
 ### Data Directories
 
 - `input/raw_csv_exports/` — Raw source CSVs (SGH exports)
 - `input/manual/` — Manual corrections (`manual_resolution.csv`, `rut_corrections.csv`)
 - `input/reference/` — Reference data, legacy imports
-- `output/spreadsheet/{intermediate,enriched,canonical}/` — Pipeline stage outputs
-- `documentacion-legacy/` — Historical backups, non-normalized material consumed by some utilities
-- `db/hdos.db` — Historical SQLite (NOT current truth)
+- `output/spreadsheet/{intermediate,enriched,canonical}/` — Pipeline stage outputs (.gitignored, regenerable)
+- `output/reports/` — Hand-curated reports (tracked)
+- `db/hdos.db` — SQLite migration source for F0 bootstrap (read-only, not current truth)
 
 ### Testing
 
@@ -256,6 +256,6 @@ Virtual environment at `.venv/`. Dependencies managed via `requirements-dashboar
 
 - No working files in the repo root — content lives under `apps/`, `scripts/`, `tests/`, `input/`, `output/`, `docs/`.
 - Editable manual data lives in `input/manual/`. External reference data in `input/reference/`.
-- Pipeline artifacts materialize under `output/spreadsheet/`.
-- Historical/non-normalized backups live in `documentacion-legacy/`.
-- Active documentation in `docs/` (models, specs, session logs, audit reports). Normative docs reference current layout; old material stays in `docs/sessions/`.
+- Pipeline artifacts materialize under `output/spreadsheet/` (.gitignored — regenerable from pipeline stages).
+- Generated SQL from Python correction scripts (corr_08/09/10, geocode) are .gitignored.
+- Active documentation in `docs/` (models, specs, audit reports). Current spec package: `docs/specs/paquete-consolidado-hodom/`. Current DDL: `docs/models/hodom-integrado-pg-v4.sql`.
