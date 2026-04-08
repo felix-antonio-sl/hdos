@@ -1,11 +1,11 @@
 # scripts/migrate_to_pg/functors/f7b_visitas_realizadas.py
 """
-F₇b: Visitas Realizadas — legacy RUTAS XLSX → operational.visita (estado=COMPLETA)
+F₇b: Visitas Programadas (RUTAS) — legacy RUTAS XLSX → operational.visita (estado=PROGRAMADA)
 
 Source:  RUTAS/RUTAS 2025/ (12 files) + RUTAS/2026/ (4 files)
 Target:  operational.visita
 
-Unlike F₇ (programación → PROGRAMADA), this functor loads actual visits
+Like F₇ (programación mensual → PROGRAMADA), this functor loads planned visits
 from daily route sheets with:
   - fecha, hora (real schedule)
   - paciente (nombre → fuzzy match to clinical.paciente)
@@ -14,14 +14,13 @@ from daily route sheets with:
   - dirección del paciente
 
 The functor is a coproduct with F₇:
-  visita_total = F₇(PROGRAMADA) ⊕ F₇b(COMPLETA)
+  visita_total = F₇(PROGRAMADA_mensual) ⊕ F₇b(PROGRAMADA_diaria)
 
 Deduplication: if a (patient_id, fecha, prestación) already exists from F₇,
-F₇b updates it to COMPLETA and adds provider/hora. Otherwise inserts new.
+F₇b enriches it with provider/hora. Otherwise inserts new.
 
-Categorical note: F₇b acts as a left Kan extension of the route data
-along the inclusion functor RUTAS ↪ operational.visita, enriching
-existing programmed visits with execution data.
+RUTAS are the daily route programming (who visits whom, when), NOT the
+record of the visit having occurred. Estado remains PROGRAMADA.
 """
 
 from __future__ import annotations
@@ -275,7 +274,7 @@ class F7bVisitasRealizadas(Functor):
                     if existing_vid:
                         conn.execute(
                             """UPDATE operational.visita
-                               SET estado = 'COMPLETA', hora_plan_inicio = %s,
+                               SET hora_plan_inicio = %s,
                                    provider_id = COALESCE(provider_id, %s),
                                    updated_at = NOW()
                                WHERE visit_id = %s AND estado = 'PROGRAMADA'""",
@@ -290,7 +289,7 @@ class F7bVisitasRealizadas(Functor):
                             """INSERT INTO operational.visita
                                 (visit_id, stay_id, patient_id, provider_id,
                                  fecha, hora_plan_inicio, estado, rem_prestacion)
-                               VALUES (%s, %s, %s, %s, %s, %s, 'COMPLETA', %s)
+                               VALUES (%s, %s, %s, %s, %s, %s, 'PROGRAMADA', %s)
                                ON CONFLICT (visit_id) DO NOTHING""",
                             (visit_id, stay_id, patient_id, primary_provider,
                              fecha, hora, prestacion),
@@ -329,8 +328,8 @@ class F7bVisitasRealizadas(Functor):
                 expected="empty",
             ),
             PathEquation(
-                name="PE-F7b-COMPLETAS",
-                sql="SELECT COUNT(*) FROM operational.visita WHERE estado = 'COMPLETA'",
+                name="PE-F7b-PROGRAMADAS",
+                sql="SELECT COUNT(*) FROM operational.visita WHERE estado = 'PROGRAMADA'",
                 expected=0,  # will be > 0
                 severity="warning",
             ),

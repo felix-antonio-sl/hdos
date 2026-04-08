@@ -32,3 +32,6 @@ input/reference/insumos_varios/*.pptx
 input/reference/insumos_varios/*.pdf
 input/reference/insumos_varios/*.docx
 input/reference/insumos_varios/*.DOCX
+
+# Raw incremental data drops (consumed by ingest scripts, not tracked)
+input/actualizacion_*/

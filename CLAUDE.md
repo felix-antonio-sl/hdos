@@ -136,6 +136,12 @@ Each functor implements `apply(conn, sources) → report` and optionally declare
 | `corr_15_entrega_kine.py` | 933 notas kinesiología (112 hojas diarias XLSX) → `clinical.nota_evolucion` |
 | `corr_16_epicrisis_medica_pdf.py` | 738 epicrisis médicas (1996 PDFs DAU/SGH vía PyMuPDF) → `clinical.epicrisis` |
 
+**Incremental ingestion** (`scripts/ingest_abril_2026.py`): Parses raw data drops from `input/actualizacion_al_8_abril/` (census, PROGRAMACIÓN, RUTAS, kine handover) → normalizes, deduplicates, reconciles with PG, inserts patients/stays/visits/notes. Idempotent (ON CONFLICT DO NOTHING). Run: `.venv/bin/python scripts/ingest_abril_2026.py --dry-run` then `--execute`.
+
+### RUTAS = Programación, no registro
+
+RUTAS (hojas de ruta diarias) son la **programación** de visitas domiciliarias, no el registro de que la visita ocurrió. Todas las visitas de RUTAS tienen `estado = 'PROGRAMADA'`. Esto aplica tanto a F7b como al script de ingesta incremental.
+
 ### PG Schema (10 schemas, key tables)
 
 | Schema | Key Tables | Purpose |
@@ -154,11 +160,12 @@ Notable relationships:
 - `visita_prestacion` → decomposed compound codes (e.g., "KTM+FONO" → 2 rows)
 - `domicilio` → temporal binding `paciente` ↔ `localizacion` (tipo: principal/alternativo/temporal)
 - `localizacion` → geocoded addresses (648/673 with coordinates, precision: exacta/aproximada/centroide)
-- `visita.domicilio_id` → 7,594/7,594 visits linked to domicilios (100%)
+- `visita.domicilio_id` → 7,594/7,681 visits linked to domicilios
 - `visita.localizacion_id` → redundant with domicilio.localizacion_id (kept for hdos-app compat)
-- `visita.location_id` → legacy, 0/7594 populated (kept for hdos-app vistas)
+- `visita.location_id` → legacy, 0/7681 populated (kept for hdos-app vistas)
+- `visita.estado` → all 7,681 visits are `PROGRAMADA` (RUTAS = programming, not execution record)
 - `epicrisis` → 864 total (738 medical from PDF + 126 nursing from DOCX)
-- `nota_evolucion` → 2,350 total (1,417 nursing + 933 kinesiology)
+- `nota_evolucion` → 2,380 total (1,417 nursing + 963 kinesiology)
 - `gps_posicion` → 124,626 GPS points (3 vehicles, Jan-Apr 2026, from NavPro.cl)
 - `telemetria_segmento` → 11,374 segments (9,650 drives + 1,724 stops), 176 matched to patient visits
 - `telemetria_resumen_diario` → 250 daily summaries (km, drive/stop minutes, max speed)
