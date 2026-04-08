@@ -232,10 +232,10 @@ La provenance cubre las migraciones F0-F12 y correcciones CORR-01 a SYNC-GPS, pe
 
 | # | Acción | Resultado |
 |---|--------|-----------|
-| R1 | DROP `clinical.encuesta_satisfaccion` | Eliminada (0 filas, duplicaba `reporting.encuesta_satisfaccion`) |
+| R1 | ~~DROP `clinical.encuesta_satisfaccion`~~ | **REVERTIDO**: hdos-app INSERT/SELECT contra clinical.encuesta_satisfaccion. Recreada. |
 | R2 | ~~DROP 5 tablas portal_*/audit_log~~ | **REVERTIDO**: usadas por hdos-app (Next.js + Drizzle ORM). Recreadas. |
-| R3 | DROP `visita.location_id` | Eliminada (0/7594, dead FK a ubicacion) |
-| R4 | DROP `visita.localizacion_id` | Eliminada (100% redundante con domicilio.localizacion_id) |
+| R3 | ~~DROP `visita.location_id`~~ | **REVERTIDO**: hdos-app queries JOIN con location_id. Restaurada. |
+| R4 | ~~DROP `visita.localizacion_id`~~ | **REVERTIDO**: hdos-app rutas API JOIN con localizacion_id. Restaurada + repoblada (7594). |
 | R5 | 4 CHECK en tablas pobladas | condicion.estado_clinico, condicion.verificacion, dispositivo.estado, profesional.contrato |
 | R6 | COMMENT `profesional.vehiculo` | Documentado como legacy, FK futura |
 | R7 | DROP `telemetria_segmento.location_id` | Eliminada (dead FK, usa start_lat/lng) |
@@ -243,9 +243,9 @@ La provenance cubre las migraciones F0-F12 y correcciones CORR-01 a SYNC-GPS, pe
 | R9 | Recrear v_consolidado_atenciones_diarias | Sin location_id |
 | R10 | Recrear mv_kpi_diario | Sin location_id, usa zona universal |
 
-**Post-remediación**: 114 tablas, 221 FKs, 155 CHECKs (11 nuevos + 11 restaurados).
+**Post-remediación**: 115 tablas (igual al inicio), 11 CHECK constraints nuevos, `telemetria_segmento.location_id` eliminada (no usada por hdos-app).
 
-**Nota R2**: Las tablas portal_*/audit_log fueron eliminadas erróneamente — son usadas por `hdos-app` (Next.js + Drizzle ORM, 8 archivos TS). Fueron recreadas fielmente desde el schema Drizzle.
+**Nota**: R1-R4 fueron revertidos tras descubrir que `hdos-app` (Next.js + Drizzle ORM) consume directamente clinical.encuesta_satisfaccion, visita.location_id, y visita.localizacion_id. Las remediaciones que sobrevivieron son: R5 (4 CHECKs en tablas pobladas), R7 (segmento.location_id, no usado por hdos-app), y R8 (7 CHECKs en tablas futuras).
 
 ### Lo que está bien
 
