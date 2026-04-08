@@ -226,6 +226,25 @@ La provenance cubre las migraciones F0-F12 y correcciones CORR-01 a SYNC-GPS, pe
 | 9 | **INFO** | strict.hospitalizacion superset (834 vs 779) | Documentar delta de 55 registros rechazados. |
 | 10 | **BAJA** | profesional.vehiculo TEXT vs FK vehiculo_id | Corregir cuando se use operacionalmente. |
 
+---
+
+## 12. Remediaciones aplicadas (2026-04-08)
+
+| # | Acción | Resultado |
+|---|--------|-----------|
+| R1 | DROP `clinical.encuesta_satisfaccion` | Eliminada (0 filas, duplicaba `reporting.encuesta_satisfaccion`) |
+| R2 | DROP 5 tablas portal_*/audit_log | Eliminadas (vacías, sin DDL canónico) |
+| R3 | DROP `visita.location_id` | Eliminada (0/7594, dead FK a ubicacion) |
+| R4 | DROP `visita.localizacion_id` | Eliminada (100% redundante con domicilio.localizacion_id) |
+| R5 | 4 CHECK en tablas pobladas | condicion.estado_clinico, condicion.verificacion, dispositivo.estado, profesional.contrato |
+| R6 | COMMENT `profesional.vehiculo` | Documentado como legacy, FK futura |
+| R7 | DROP `telemetria_segmento.location_id` | Eliminada (dead FK, usa start_lat/lng) |
+| R8 | 7 CHECK en tablas futuras | alerta.categoria, herida.grado, evaluacion_funcional.dep_motora/resp, observacion.categoria, informe_social.red_familiar/comunitaria |
+| R9 | Recrear v_consolidado_atenciones_diarias | Sin location_id |
+| R10 | Recrear mv_kpi_diario | Sin location_id, usa zona universal |
+
+**Post-remediación**: 109 tablas, 210 FKs, 144 CHECKs (11 nuevos).
+
 ### Lo que está bien
 
 - **0 violaciones FK** en 237 foreign keys
