@@ -258,16 +258,16 @@ Riesgos:   PE-1 sin guard en condicion (1246 filas vivas)
            Drizzle schema drift (11 CHECKs no reflejados)
 ```
 
-## Reparaciones por prioridad
+## Reparaciones aplicadas (2026-04-08)
 
-| # | Sev | Patrón | Acción | Blast radius |
-|---|-----|--------|--------|---|
-| 1 | HIGH | BROKEN-DIAGRAM | Bind `check_pe1` a 9 tablas faltantes (condicion es urgente) | Bajo — trigger solo valida, no modifica |
-| 2 | HIGH | REDUNDANT-BISIMILAR | Unificar encuesta: migrar 33 filas reporting→clinical, o crear vista coproducto | Medio — afecta hdos pipeline + dashboard |
-| 3 | MED | VERSION-MISMATCH | `drizzle-kit pull` en hdos-app | Bajo — solo regenera schema.ts |
-| 4 | MED | BROKEN-DIAGRAM | Bind `check_stay_coherence` a `documentacion` | Bajo |
-| 5 | LOW | NON-FUNCTORIAL | `profesional.vehiculo` → FK cuando se use | Ninguno (vacío) |
-| 6 | LOW | DANGLING-REF | Documentar cadena geográfica canónica | Ninguno |
+| # | Sev | Patrón | Acción | Estado |
+|---|-----|--------|--------|--------|
+| 1 | HIGH | BROKEN-DIAGRAM | PE-1 trigger en 14 tablas faltantes (9 NOT NULL + 5 con WHEN guard) | **APLICADO** — 40/40 tablas cubiertas |
+| 2 | HIGH | REDUNDANT-BISIMILAR | Vista coproducto `clinical.v_encuesta_unificada` (ι₁ clinical ⊔ ι₂ reporting) | **APLICADO** — 33 filas unificadas |
+| 3 | MED | VERSION-MISMATCH | `drizzle-kit pull` en hdos-app | **PENDIENTE** — ejecutar en sesión hdos-app |
+| 4 | MED | BROKEN-DIAGRAM | `check_stay_coherence` en documentacion | **APLICADO** — 7/7 tablas cubiertas |
+| 5 | LOW | NON-FUNCTORIAL | `profesional.vehiculo` documentado como gap formal | **APLICADO** — COMMENT ON COLUMN |
+| 6 | LOW | DANGLING-REF | Cadena geográfica documentada en COMMENTs | **APLICADO** — 4 columnas documentadas |
 
 ## Functor Information Loss
 
