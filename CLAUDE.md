@@ -155,12 +155,21 @@ Notable relationships:
 - `domicilio` → temporal binding `paciente` ↔ `localizacion` (tipo: principal/alternativo/temporal)
 - `localizacion` → geocoded addresses (648/673 with coordinates, precision: exacta/aproximada/centroide)
 - `visita.domicilio_id` → 7,594/7,594 visits linked to domicilios (100%)
+- `visita.localizacion_id` → redundant with domicilio.localizacion_id (kept for hdos-app compat)
+- `visita.location_id` → legacy, 0/7594 populated (kept for hdos-app vistas)
 - `epicrisis` → 864 total (738 medical from PDF + 126 nursing from DOCX)
 - `nota_evolucion` → 2,350 total (1,417 nursing + 933 kinesiology)
 - `gps_posicion` → 124,626 GPS points (3 vehicles, Jan-Apr 2026, from NavPro.cl)
 - `telemetria_segmento` → 11,374 segments (9,650 drives + 1,724 stops), 176 matched to patient visits
 - `telemetria_resumen_diario` → 250 daily summaries (km, drive/stop minutes, max speed)
 - `posicion_actual` → real-time position of 3 vehicles (polled every 30 min via cron)
+- `v_encuesta_unificada` → coproduct view unifying clinical (hdos-app) ⊔ reporting (pipeline) encuestas
+
+Categorical invariants (trigger-enforced):
+- **PE-1**: `T.patient_id = estadia.patient_id` — 40/40 tables covered (14 with WHEN guard for nullable stay_id)
+- **stay_coherence**: `visit_id → visita.stay_id = T.stay_id` — 7/7 tables covered
+- **PE-T1**: `segmento.start_at::date = visita.fecha` — telemetry trigger
+- **State machines**: estadia (6 states) and visita (13 states) with guard + sync triggers
 
 ### Known Architectural Debt
 
@@ -205,8 +214,10 @@ Streamlit config in `.streamlit/config.toml`: port 8502, headless, light theme (
 
 ### Infrastructure
 
-- **PG container**: `hodom-pg` (postgres:14-alpine), port 5555, creds `hodom:hodom`, DB `hodom`. Network `web`.
+- **PG container**: `hodom-pg` (postgres:14-alpine), port 5555, creds `hodom:hodom`, DB `hodom`. Network `web`. **Shared by hdos (Python pipeline) AND hdos-app (Next.js + Drizzle ORM at `/home/felix/projects/hdos-app`)**. Always grep hdos-app before DDL changes.
 - **Dashboard container**: `hdos-app` (Dockerfile.migra, python:3.12-slim + streamlit + pandas + psycopg + pydeck), port 8501 internal. Traefik routes `hdos.sanixai.com` to it.
+- **hdos-app**: Next.js app consuming same PG via Drizzle ORM. Schema: `src/db/drizzle/schema.ts`. Drizzle filter: clinical, operational, reporting, portal, reference, territorial (NOT telemetry/strict/migration). Portal tables (portal_usuario, portal_mensaje, portal_invitacion, portal_acceso_log) and audit_log are owned by hdos-app.
+- **GPS sync cron**: poll every 30 min (07:00-21:00 Chile), full sync daily 21:30. Logs: `/var/log/hdos-gps-{poll,sync}.log`.
 - **Rebuild**: `docker compose up -d --build`. If name conflict: `docker rm -f hdos-app` first.
 
 ### Data Directories
