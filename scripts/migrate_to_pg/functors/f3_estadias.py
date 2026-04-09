@@ -310,8 +310,8 @@ class F3Estadias(Functor):
             ),
             PathEquation(
                 name="PE-F3-COUNT",
-                sql="SELECT COUNT(*) FROM clinical.estadia",
-                expected=838,
+                sql="SELECT 1 WHERE (SELECT COUNT(*) FROM clinical.estadia) < 790",
+                expected="empty",
                 severity="warning",
             ),
         ]

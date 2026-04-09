@@ -180,13 +180,15 @@ Categorical invariants (trigger-enforced):
 
 ### Known Architectural Debt
 
-**Redundant `patient_id` in 33 clinical tables**: Tables like `nota_evolucion`, `epicrisis`, `condicion`, etc. have both `stay_id → estadia` and `patient_id → paciente`. Since `estadia.patient_id` is NOT NULL, `patient_id` is categorically redundant — it's the diagonal of a commutative triangle:
+**Redundant `patient_id` in 43 tables** (38 clinical + 3 operational + 1 reporting + estadia itself): Tables like `nota_evolucion`, `epicrisis`, `condicion`, etc. have both `stay_id → estadia` and `patient_id → paciente`. Since `estadia.patient_id` is NOT NULL, `patient_id` is categorically redundant — it's the diagonal of a commutative triangle:
 
 ```
-  T.patient_id = estadia.patient_id  (path equation, 0 violations)
+  T.patient_id = estadia.patient_id  (path equation, 0 violations across 17 verified tables)
 ```
 
-Trigger `check_stay_coherence` enforces the invariant. **Decision**: keep for now (33-table refactor not worth the blast radius), but **do not propagate** to new tables. Any new table with `stay_id NOT NULL` should derive patient via JOIN, not store a redundant FK.
+Trigger `check_pe1()` enforces the invariant on INSERT+UPDATE (90 triggers across 45 tables). **Decision**: keep for now (43-table refactor not worth the blast radius), but **do not propagate** to new tables. Any new table with `stay_id NOT NULL` should derive patient via JOIN, not store a redundant FK.
+
+**Dead column `visita.location_id`**: 0/7,681 rows populated. Legacy FK to `territorial.ubicacion`. Superseded by `visita.localizacion_id` (7,594 populated) and `visita.domicilio_id` (7,594 populated). Present in hdos-app Drizzle schema but not used in any page/API. Candidate for removal once hdos-app schema is updated.
 
 ### Key Design Principles
 
