@@ -135,6 +135,7 @@ Each functor implements `apply(conn, sources) → report` and optionally declare
 | `corr_14_satisfaccion_usuaria.py` | 33 encuestas satisfacción → `reporting.encuesta_satisfaccion` |
 | `corr_15_entrega_kine.py` | 933 notas kinesiología (112 hojas diarias XLSX) → `clinical.nota_evolucion` |
 | `corr_16_epicrisis_medica_pdf.py` | 738 epicrisis médicas (1996 PDFs DAU/SGH vía PyMuPDF) → `clinical.epicrisis` |
+| `corr_19_fix_trigger_events.sql` | Auditoría 360°: drop índice GPS duplicado (8.6 MB), +27 FK indexes. Trigger recreations were no-op (already correct). |
 
 **Incremental ingestion** (`scripts/ingest_abril_2026.py`): Parses raw data drops from `input/actualizacion_al_8_abril/` (census, PROGRAMACIÓN, RUTAS, kine handover) → normalizes, deduplicates, reconciles with PG, inserts patients/stays/visits/notes. Idempotent (ON CONFLICT DO NOTHING). Run: `.venv/bin/python scripts/ingest_abril_2026.py --dry-run` then `--execute`.
 
