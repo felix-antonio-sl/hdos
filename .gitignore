@@ -26,7 +26,6 @@ scripts/geocode_localizaciones.sql
 
 # Binary reference files (visual-only, not consumed by code)
 *.db
-!db/hdos.db
 input/reference/formatos_registros/
 input/reference/insumos_varios/*.pptx
 input/reference/insumos_varios/*.pdf

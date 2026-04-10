@@ -1,0 +1,883 @@
+00000
+“PROYECTO ADQUISICION DE
+EQUIPOS Y RECURSO HUMANO PARA
+IMPLEMENTACIÓN PERMANENTE DE
+HOSPITALIZACIÓN DOMICILIARIA HSC”
+CÓDIGO BIP: 40059567-0
+H O S P I T A L D E S A N C A R L O S
+D R. B E N I C I O A R Z O L A M E D I N A
+FEBRERO 2026
+1.- INTRODUCCIÓN
+En los últimos años se han producido cambios importantes en el perfil epidemiológico evidenciado en el
+aumento de la esperanza de vida con el correspondiente envejecimiento poblacional, aumento de la
+prevalencia de patologías crónicas, pandemia Covid-19, entre otros; lo que conlleva un incremento de la
+demanda de atención en salud. Este aumento significativo de la demanda hace que el recurso cama sea
+necesario lo que nos obliga a crear estrategias para suplir esta necesidad y dar respuesta satisfactoria a las
+distintas necesidades de nuestros usuarios. Una de estas es la Hospitalización Domiciliaria (HODOM).
+La HODOM es una estrategia asistencial alternativa a la hospitalización tradicional, en donde el usuario recibe
+cuidados similares a los otorgados en los establecimientos hospitalarios, tanto en calidad como en cantidad,
+en atención a lo exigido por su estado de salud para su manejo clínico y terapéutico, y sin los cuales habría
+sido necesaria su permanencia en el establecimiento de atención cerrada.
+Esta estrategia se ha implementado en nuestro Hospital en 3 oportunidades los últimos años en el contexto
+de campaña de invierno, sólo por un periodo acotado. Durante los meses de funcionamiento ha resultado
+fundamental para la mejora del proceso de hospitalización, en especial frente a la demanda creciente de
+pacientes en espera de cama de dotación en la Unidad de Emergencia. Además, nos ha permitido destinar
+recurso cama hospitalaria a otro paciente de mayor riesgo cuyo tratamiento es más complejo y que no es
+posible realizar en domicilio para asegurar una evolución favorable según condición clínica de cada paciente.
+Por otro lado, nos ha sido posible entregar cuidados integrales por un equipo multidisciplinario con una
+atención humanizada e incorporando a la familia lo que favorece la pronta recuperación del paciente y su
+reinserción en su medio familiar y social.
+Durante la permanencia del paciente en esta modalidad de hospitalización, se realizan las coordinaciones
+necesarias para lograr la continuidad de la atención con el nivel primario y secundario según corresponda; de
+esta manera, la hospitalización domiciliaria se constituye como una interfaz entre los niveles asistenciales de
+mayor complejidad y el nivel primario.
+2.- DIAGNÓSTICO DE LA SITUACIÓN ACTUAL E IDENTIFICACIÓN DEL PROBLEMA.
+2.1.
+- IDENTIFICACION DEL PROBLEMA.
+Durante la última década hospitalaria se ha observado un incremento sostenido en la demanda de atenciones
+y consultas de usuarios de distintos grupos etarios en las Unidades de Emergencia de la comuna. Este aumento
+ha derivado en un mayor requerimiento de hospitalizaciones, asociado a la diversidad y complejidad de las
+patologías que afectan tanto a la población comunal como provincial.
+Dicha situación ha impactado negativamente en los indicadores de oportunidad de hospitalización, generando
+retrasos en el acceso a camas y en el inicio oportuno de procedimientos y tratamientos. Lo anterior se ve
+agravado por la brecha existente entre la disponibilidad de camas hospitalarias y el número de habitantes de
+la región, lo que produce inequidades en el acceso a una atención hospitalaria oportuna y de calidad, con el
+consiguiente aumento de la insatisfacción usuaria.
+1
+Unidad de Proyectos e Inversiones – HSC
+aldo.quiroz@redsalud.gov.cl Anexo Red MINSAL: 426260
+En este contexto, y gracias a los fondos asignados a través de campañas del Ministerio de Salud (MINSAL), se
+ha iniciado la estrategia de Hospitalización Domiciliaria, la cual ha demostrado ser una herramienta efectiva
+para reducir la presión asistencial y descongestionar el Servicio de Urgencias del Hospital de San Carlos. Esta
+modalidad ha permitido atender a los usuarios de acuerdo con su complejidad y nivel de cuidados requeridos,
+priorizando especialmente a la población adulta mayor.
+No obstante, se vuelve imperativo consolidar y disponer de manera permanente de la Hospitalización
+Domiciliaria, con el fin de garantizar a la comunidad de la provincia de Punilla el acceso a un modelo de
+atención hospitalaria que favorezca la recuperación del estado de salud de las personas y permita resolver de
+forma oportuna las diversas necesidades de cuidado de la población.
+Adicionalmente, debe considerarse la atención de usuarios provenientes de otras regiones y redes
+asistenciales que consultan directamente en la Unidad de Emergencia del Hospital de San Carlos. Tal es el caso
+de usuarios de la Región del Maule, particularmente de las comunas de Parral y Talca, quienes acuden de
+manera espontánea y cuya atención no puede ser rechazada. Asimismo, se registra la demanda de usuarios
+pertenecientes a la red asistencial de la comuna de Chillán, quienes también consultan directamente en este
+establecimiento.
+Esta situación incrementa aún más la presión sobre la capacidad resolutiva del hospital, reforzando la
+necesidad de fortalecer estrategias como la Hospitalización Domiciliaria, que permitan optimizar los recursos
+disponibles y mejorar la oportunidad y calidad de la atención hospitalaria.
+2
+Unidad de Proyectos e Inversiones – HSC
+aldo.quiroz@redsalud.gov.cl Anexo Red MINSAL: 426260
+2.2.- ARBOL DE PROBLEMAS.
+3
+Unidad de Proyectos e Inversiones – HSC
+aldo.quiroz@redsalud.gov.cl Anexo Red MINSAL: 426260
+2.3.
+-OBJETIVOS DEL PROYECTO
+2.3.1.- OBJETIVO GENERAL:
+Implementar en forma permanente la Unidad de Hospitalización Domiciliaria (HODOM) en el Hospital de San
+Carlos Dr. Benicio Arzola Medina, como un modelo para prestar servicios de salud en el domicilio de los
+usuarios y usuarias que viven en las comunas de San Carlos, San Nicolás, San Fabián, Ñiquén y los diferentes
+sectores rurales aledaños, resguardando el cumpliendo de los estándares de calidad que se establecen en la
+norma Ministerial, favoreciendo el autocuidado y contribuyendo a fortalecer la participación de la familia en
+el tratamiento y recuperación de los pacientes, permitiendo a la vez, optimizar el recurso cama hospitalaria y
+contribuir a la contención de costos, mediante la utilización racional de los recursos hospitalario.
+2.3.2.- OBJETIVOS ESPECÍFICOS:
+• Optimizar el recurso cama dentro del establecimiento.
+• Estandarizar el proceso de atención de hospitalización en domicilio del Hospital San Carlos.
+• Favorecer la calidad de vida y confort asistencial de la persona enferma manteniéndolo en su entorno
+social y familiar.
+• Entregar una atención multidisciplinaria, segura y de calidad en su domicilio.
+• Disminuir complicaciones secundarias a la hospitalización prolongada (Infecciones asociadas a
+atención de salud, Delirium, entre otros).
+• Disminuir los días de estada y los costos asociados a la hospitalización tradicional.
+3.- DESCRIPCIÓN DEL HOSPITAL DE SAN CARLOS.
+El Hospital de San Carlos es el segundo de mayor complejidad en Ñuble, y cuenta en la actualidad con una
+dotación de 130 camas, distribuidas en servicios clínicos con dotación de camas de carácter indiferenciadas
+adulto e infantil; entre ellos está el Servicio de Ginecología y Obstetricia, Pediatría, Cirugía, Medicina,
+Traumatología, CMI, UCHIP, UTI y UCI. Estos servicios clínicos cuentan con unidades funcionales de cuidados
+(camas de hospitalización) que dan respuesta a la demanda de salud de la comuna de San Carlos y la Red de
+Ñuble.
+4
+Unidad de Proyectos e Inversiones – HSC
+aldo.quiroz@redsalud.gov.cl Anexo Red MINSAL: 426260
+Dotación de Camas Hospital de San Carlos
+CODIGOS UNIDADES FUNCIONALES DOTACION
+401 AREA MEDICA ADULTO DE CUIDADOS BASICOS 8
+Medicina indiferenciada
+402 AREA MEDICA ADULTOS DE CUIDADOS MEDIOS 42
+Medicina indiferenciada
+403 AREA MEDICO QUIRURGICO DE CUIDADOS BASICOS 11
+Cirugía básica
+404 AREA MEDICO QUIRURGICA DE CUIDADOS MEDIOS 28
+Cirugía indiferenciada
+405 AREA DE CUIDADOS INTENSIVOS ADULTO 6
+UCI adulto
+406 AREA DE CUIDADOS INTERMEDIOS ADULTO 12
+UTI adulto
+409 AREA MEDICA QUIRURGICA PEDIATRICA DE CUIDADOS
+7
+BASICOS
+Pediatría general indiferenciada
+410 AREA MEDICA QUIRURGICA PEDIATRICA DE CUIDADOS
+3
+MEDIOS
+Pediatría Cuidados Medios
+413 AREA NEONATOLOGIA DE CUIDADOS BASICOS 3
+Neonatología básica
+416 AREA OBTETRICIA 10
+Obstetricia
+TOTAL CAMAS HOSPITAL DE SAN CARLOS 130
+Resolución Ex. 5H2/N° 17
+La superficie que dispone el establecimiento es de 15.370,3 m2; en esta área se encuentra emplazado lo
+siguiente:
+Torre Hospitalaria: En donde se encuentran habilitados los servicios clínicos de Ginecología y Obstetricia,
+Cirugía, Medicina Agudos, Pediatría, UCI y la Unidad de Tratamientos Intermedios (UTI).
+CAE Norte: Consultorio Adosado de Especialidades (CAE), SOME, Servicio de Rehabilitación y anexo Policlínico
+de Cirugía y Neurología Infantil.
+Edificio Antiguo: Servicio Dental, Telemedicina y Unidad de Referencia Cardiológica, Consultorio Adosado de
+Especialidades (CAE Sur), Servicio de Alimentación y Nutrición, Unidad de Apoyo de Laboratorio, Unidad de
+Medicina Transfusional, Unidad de Imagenología y Farmacia, Servicio de Traumatología y otras unidades
+administrativas.
+5
+Unidad de Proyectos e Inversiones – HSC
+aldo.quiroz@redsalud.gov.cl Anexo Red MINSAL: 426260
+Edificio de Urgencias: Se encuentra la Unidad de Emergencia para la Atención de Morbilidad Adulto, Pediátrica
+y Materno Infantil; Anestesia y Pabellón Quirúrgico, en donde esta última cuenta con 5 pabellones, de los
+cuales 2 se encuentran habilitados en forma indiferenciada, para intervenciones de cirugía general
+programadas y cirugía infantil, 1 para intervenciones quirúrgicas de emergencia y 2 para intervenciones
+quirúrgicas gineco-obstétricas, estos 2 últimos pabellones se encuentran ubicados en el servicio de
+Ginecología y Obstetricia.
+El recurso humano existente es de 922 funcionarios titulares, a contrata y honorarios.
+El Hospital de San Carlos, es el centro de referencia de toda la red norte asignada. Este, forma parte de una
+Red de Salud Pública Integrada además por consultorios municipales, postas, consultorios de especialidad y
+otros hospitales; cada uno de estos establecimientos atiende problemas de salud de diferente complejidad.
+Junto con el Hospital Clínico Herminda Martin de Chillán, son los centros de salud público de mayor
+complejidad en la nueva región de Ñuble y forman parte de una red constituida por 21 comunas, La red del
+Hospital de san Carlos (red norte), la constituyen 10 comunas, estas son; San Carlos, San Fabián, Ñiquén, San
+Nicolás, Ninhue, Quirihue, Coelemu, Cobquecura, Trehuaco y Ránquil.
+En el Hospital de San Carlos se desarrollan distintos procesos asistenciales:
+- Atención abierta: En la modalidad de atención abierta, el Hospital cuenta con el Servicio de Pre-emergencia
+Hospitalaria (SAMU), el Servicio de Urgencia, los policlínicos de especialidades infantiles, adultos y materno,
+Dental, Kinesiología, Traumatología, Cirugía Mayor Ambulatoria y Endoscopía.
+- Atención cerrada: En hospitalización no crítica se encuentran Cirugía, Medicina, Ginecología y Obstetricia,
+Pediatría y Pensionado. En Hospitalización Semicrítica, se encuentra Medicina Agudos, Unidad Preferencial de
+Accidente Cerebrovascular (UPAC), la Unidad de Tratamientos Intermedios (UTI) Y LA Unidad de Cuidados
+Intensivos (UCI)
+- Atención de Especialidades: Las especialidades que atiende este hospital son las de Medicina Interna, Cirugía,
+Neurología infantil, Dermatología, Oftalmología, Otorrinolaringología, Obstetricia y Ginecología,
+Traumatología, Pediatría, Telemedicina, Kinesiología, Proc. Neumología, Imagenología, Dental, Medicina
+Transfusional, Psicología, Endoscopía y recientemente Cardiología.
+3.1.- DETALLE RED ASISTENCIAL ASIGNADA.
+ESTABLECIMIENTOS DE ATENCION PRIMARIA
+SERVICIO DE SALUD ÑUBLE
+COMUNA CONSULTORIOS POSTAS E.M.R.
+SAN CARLOS CESFAM SAN CARLOS “JOSE DURAN
+TRUJILLO” Torrecillas Chicalindo
+Monte Banco El ejemplo
+Ribera Ñuble Culenco
+Toquihua
+Arizona
+CESFAM SAN CARLOS “TERESA
+BALDECCHI”
+HOSPITAL SAN CARLOS
+6
+Unidad de Proyectos e Inversiones – HSC
+aldo.quiroz@redsalud.gov.cl Anexo Red MINSAL: 426260
+SAN FABIÁN CESFAM SAN FABIAN El Caracol Trabuncura ÑIQUÉN CESFAM SAN GREGORIO CHACAY
+La Gloria
+Belén
+Ñiquén
+Zemita
+SAN NICOLÁS CESFAM SAN NICOLÁS Puente Ñuble NINHUE CESFAM NINHUE El Rincón El Sauce QUIRIHUE CA H. QUIRIHUE Los Remates DESAMU QUIRIHUE COBQUECURA CESFAM COBQUECURA Buchupureo Colmuyao TREHUACO CESFAM TREHUACO Dénecan M. de Leuque Boca Itata
+COELEMU CA H. COELEMU Ranguelmo Guarilihue DESAMU COELEMU Vegas de Itata
+RANQUIL CESFAM ÑIPAS Nueva Aldea
+S.I. de Palomares
+CECOF Pertenecientes a la Micro Red San Carlos
+CECOSF CESFAM al que pertenece Valle Hondo CESFAM Teresa Baldecchi Cachapoal CESFAM José Duran Trujillo Fuente: Unidad de Proyectos e Inversiones HSC
+Unidad de Proyectos e Inversiones – HSC
+aldo.quiroz@redsalud.gov.cl Anexo Red MINSAL: 426260
+Paso Ancho
+Los Sauces
+Piedra Lisa
+Bajo el Ala
+Santa Rosa
+Lajuela
+El Manzano
+Talhuan
+Reloca
+San José
+Copín
+Chanco
+La Quebrada
+Las Delicias
+El Durazno
+Culenco
+Los Temos
+San J. de La Raya
+Quilé
+San José
+Pullay
+Cantero
+Tauco
+Sta. Filomena
+Perales
+Comuna
+San Carlos
+San Carlos
+7
+4.
+- MARCO LEGAL QUE AVALA EL PROYECTO.
+• Decreto 1. Aprueba reglamento de establecimientos que otorgan prestaciones de hospitalización
+domiciliaria Ministerio de Salud; subsecretaría de salud pública fecha publicación: 26-sep-2022 |
+fecha promulgación: 05-ene-2022
+• Ley Nº 20.584 “Derechos y Deberes de los pacientes” Publicado en el Diario Oficial de 24.04.2012.
+• Parte del reglamento orgánico de los Servicios de Salud (Dcto. 140 de 2004, publicado en el Diario
+Oficial el 21-04-05).
+• Garantías Explicitas En Salud Del Régimen General De Garantías En Salud: Decreto N° 44 De 2007;
+Publicado en el Diario Oficial de 31.01.07.
+• Reglamento Del Sistema De Acreditación Para Los Prestadores Institucionales De Salud: DECRETO N°
+15 DE 2007. Publicado en el Diario Oficial de 03.07.07.
+• Reglamento Decreto Nº 140 del 2004, que establece la estructura organización y funciones de los
+Servicios de Salud.
+• Resolución Exenta N° 876 de 2006, del Ministerio de Salud; Resolución Exenta N° 60 de 2007, del
+Ministerio de Salud; Guías Clínicas del Ministerio de Salud.
+Referencias:
+• Orientación Técnica de Hospitalización Domiciliaria. Ministerio de Salud. Subsecretaría de Redes
+Asistenciales. División de Gestión de la Red Asistencial. Abril 2021.
+• Resolución exenta N° 1031, del 17 de octubre de 2012 “Aprueba procesos clínicos priorizados de
+apoyo a la gestión de la red asistencial.”
+• Protocolo de Hospitalización Domiciliaria Hospital de San Carlos. Marzo 2022.
+5.
+- IDENTIFICACIÓN DEL ÁREA DE ESTUDIO Y DE INFLUENCIA.
+A) El Área de Estudio: Corresponde al área que comprende a toda la Región de Ñuble. Esta se encuentra
+situada en la zona central de Chile, aproximadamente a 370 kilómetros al sur de Santiago, Se extiende entre
+los paralelos 36° 08° y 37° y 18°de latitud sur y desde 71° 00° de longitud Oeste hasta el Océano Pacífico.
+Límites:
+Norte: VII Región del Maule
+Sur: Provincias de Concepción y Bío-Bío
+Este: República Argentina
+Oeste: Océano Pacífico
+Su superficie territorial corresponde a 13.951 KM2. Su población es de 517.060 habitantes.
+8
+Unidad de Proyectos e Inversiones – HSC
+aldo.quiroz@redsalud.gov.cl Anexo Red MINSAL: 426260
+B) El Área de Influencia: Está comprendida por las 10 comunas asignadas a la red asistencial de San Carlos,
+con una superficie total 5.889 KM2, según el siguiente detalle:
+Cobquecura : 570 km2.
+Coelemu : 342 km2.
+Ninhue : 401 km2.
+Ñiquén : 493 km2.
+Quirihue : 589 km2.
+San Carlos : 874 km2.
+San Fabián : 1.568 km2.
+San Nicolás : 491 km2.
+Ránquil : 248 km2.
+Trehuaco : 313 km2.
+Población Comunal Asignada Red Hospital de San Carlos 2025
+(todos los grupos etarios)
+COMUNAS HOMBRES MUJERES TOTAL
+San Carlos 27.566 29.656 57.222
+San Fabián 2.352 2.471 4.823
+San Nicolás 6.106 6.450 12.556
+Ñiquén 5.705 5.807 11.512
+Quirihue 5.969 6.275 12.244
+Coelemu 8.264 8.642 16.906
+Cobquecura 2.532 2.679 5.211
+Ninhue 2.605 2.732 5.337
+Trehuaco 2.847 2.932 5.779
+Ránquil 3.068 3.226 6.294
+TOTALES 67.014 70.870 137.884
+Fuente: INE, CENSO 2017
+5.1.
+- POBLACION OBJETIVO:
+Para este proyecto, la población objetivo se situará dentro de una microrred conformada por las comunas
+más cercanas al Hospital de San Carlos como son; San Carlos, San Fabián, san Nicolás, Ñiquén y sectores rurales
+aledaños; específicamente abarcando un radio de 20 kilómetros a la redonda desde Hospital San Carlos como
+punto central.
+9
+Unidad de Proyectos e Inversiones – HSC
+aldo.quiroz@redsalud.gov.cl Anexo Red MINSAL: 426260
+El área de influencia es la provincia de Punilla, con las diferentes comunas:
+- Norte: Hasta la comuna de San Gregorio centro y los siguientes sectores: Onihue, Ñiquen Estación,
+San Pedro de Ñiquen, las Miras, las Rosas, Tiuquilemu, Chacay, Buli, Buli oriente, Buli estación, Agua
+Buena, Gaona, Cape, entre otros.
+- Sur: Hasta San Nicolás y Puente Ñuble (kilómetro 397 de Ruta 5 sur). Además de los siguientes
+sectores: Santa Josefina, San Miguel de Ablemo, San Pedro de Lilahue, Ninquihue, Santa Isabel, sector
+Chorrillos, La Primavera, Cocharcas, Huampangue, Huerto Bonito, El Manzano, Roble Viejo, Las
+Lomas, Dadinco, entre otros
+- Este: Hasta la localidad de Cachapoal, Cachapoal alta, tres esquinas, Zemita y alrededores, San
+Fabian.
+- Oeste: Hasta comuna de San Nicolás (urbano).
+Así entonces, la población asignada a este proyecto es detallada de la siguiente forma:
+Población Objetivo HODOM
+Hombres y mujeres mayores de 18 años
+COMUNAS HOMBRES MUJERES TOTAL
+San Carlos 20.979 23.296 44.275
+San Fabián 1.817 1.929 3.746
+San Nicolás 4.688 5.062 9.750
+Ñiquén 4.565 4.698 9.263
+TOTALES 32.049 34.985 67.034
+Fuente: INE, CENSO 2017
+COMUNAS BENEFICIARIAS HODOM SAN CARLOS
+10
+Unidad de Proyectos e Inversiones – HSC
+aldo.quiroz@redsalud.gov.cl Anexo Red MINSAL: 426260
+6.
+- ANALISIS DE LA OFERTA (Diagnóstico)
+6.1.- OFERTA ACTUAL
+Actualmente la oferta de Hospitalización Domiciliaria que se dispone en el establecimiento es a través de
+campaña de invierno y por compra de servicio. En esta modalidad se ha mantenido desde junio del año 2023
+a la fecha. Con una capacidad de 20/21 cupos con un promedio de 8 días de estada. Los resultados de la
+gestión de este año son los siguientes: 2023,2024 y 2025.
+COMPONENTES TOTAL 2023
+ALTAS 280
+DIAS PERSONAS ATENDIDAS 4.037
+FALLECIDOS – Esperados 13
+FALLECIDOS – No esperados 0
+INGRESOS 307
+PERSONAS ATENDIDAS 307
+REINGRESOS A HOSPITALIZACIÓN TRADICIONAL 16
+Fuente: Unidad de Gestión de Pacientes y Movilización HSC
+RRHH N° VISITAS POR ESTAMENTO 2023
+MEDICO 266
+ENFERMERA 2.424
+KINIESIOLOGO 1.466
+FONOAUDIÓLOGA 544
+TRABAJADORA SOCIAL 448
+TOTAL 5.148
+Fuente: Unidad de Gestión de Pacientes y Movilización HSC
+COMPONENTES TOTAL 2024
+ALTAS 850
+DIAS PERSONAS ATENDIDAS 6.508
+FALLECIDOS – Esperados 16
+FALLECIDOS – No esperados 0
+INGRESOS 843
+PERSONAS ATENDIDAS 1077
+REINGRESOS A HOSPITALIZACIÓN TRADICIONAL 28
+Fuente: Unidad de Gestión de Pacientes y Movilización HSC
+11
+Unidad de Proyectos e Inversiones – HSC
+aldo.quiroz@redsalud.gov.cl Anexo Red MINSAL: 426260
+RRHH N° VISITAS POR ESTAMENTO 2024
+MEDICO 1.280
+ENFERMERA 4.688
+KINIESIOLOGO 3.195
+FONOAUDIÓLOGA 1.279
+TRABAJADORA SOCIAL 1.120
+TOTAL 11.562
+Fuente: Unidad de Gestión de Pacientes y Movilización HSC
+COMPONENTES TOTAL 2025
+ALTAS 629
+DIAS PERSONAS ATENDIDAS 5.480
+FALLECIDOS – Esperados 7
+FALLECIDOS – No esperados 0
+INGRESOS 598
+PERSONAS ATENDIDAS 751
+REINGRESOS A HOSPITALIZACIÓN TRADICIONAL 28
+Fuente: Unidad de Gestión de Pacientes y Movilización HSC
+RRHH N° VISITAS POR ESTAMENTO 2025
+MEDICO 1.390
+ENFERMERA 3.184
+KINIESIOLOGO 3.064
+FONOAUDIÓLOGA 1.368
+TRABAJADORA SOCIAL 0
+TENS 422
+TOTAL 9.428
+*El año 2025 dentro del Recurso Humano, no se contaba con Trabajadora Social.
+12
+Unidad de Proyectos e Inversiones – HSC
+aldo.quiroz@redsalud.gov.cl Anexo Red MINSAL: 426260
+6.2.
+- SITUACION ACTUAL DEL ESPACIO FISICO:
+Desde que la Unidad de Hospitalización Domiciliaria se ha mantenido activa en el establecimiento, ha
+funcionado en distintos espacios físicos, rotando por diversas oficinas y dependencias del hospital.
+A comienzos del año 2024, la unidad fue destinada de manera provisoria a un sector de la ex capilla, ubicada
+en el frontis del hospital.
+En este espacio se concentran actualmente las áreas administrativas, el almacenamiento de insumos y el área
+de estar destinada al personal de la unidad. Sin embargo, las dimensiones del recinto, equivalentes a 5.130 m
+por 2.045 m, junto con las condiciones físicas del lugar, resultan insuficientes para el adecuado desarrollo de
+las labores diarias. Esta situación obliga al personal a compartir un espacio reducido, lo que dificulta y afecta
+las condiciones generales de trabajo.
+13
+Unidad de Proyectos e Inversiones – HSC
+aldo.quiroz@redsalud.gov.cl Anexo Red MINSAL: 426260
+Unidad de Proyectos e Inversiones – HSC
+aldo.quiroz@redsalud.gov.cl Anexo Red MINSAL: 426260
+14
+Unidad de Proyectos e Inversiones – HSC
+aldo.quiroz@redsalud.gov.cl Anexo Red MINSAL: 426260
+15
+6.3. OFERTA PROYECTADA.
+Este proyecto tiene el objetivo de implementar Hospitalización Domiciliaria de forma permanente en el
+Hospital de San Carlos. Para ello, se requerirá recurso humano especializado y equipamiento Clínico. Cabe
+mencionar que el hospital ya se dispone de las dependencias con las áreas establecidas en el DS N°1 artículo
+19 título VII y de 3 móviles de transporte para atender las labores diarias.
+La oferta proyectada se contempla en la atención de 20 a 25 pacientes por cada 7 días como promedio días
+de estada, lo que se traduce en aproximadamente 75 pacientes al mes, y por tanto unos 900 pacientes al año.
+Esto se logrará optimizando y planificando un mejor flujo de acceso a las distintas rutas de las comunas
+beneficiarias, y optimizando la distribución del recurso humano en terreno.
+7.
+- ANALISIS DE LA DEMANDA.
+7.1.
+- PROYECCIÓN DE LA POBLACIÓN OBJETIVO:
+Para los próximos años, la población objetivo HSC proyectada para este proyecto es la siguiente:
+Proyección Población mayores de 18 años
+AÑO HOMBRES MUJERES TOTAL
+2023 32226 35.253 67.479
+2024 32.401 35.521 67.922
+2025 32.582 35.784 68.366
+2026 32.763 36.055 68.818
+2027 32.960 36.316 69.276
+16
+Unidad de Proyectos e Inversiones – HSC
+aldo.quiroz@redsalud.gov.cl Anexo Red MINSAL: 426260
+2028 33.138 36.570 69.708
+2029 33.311 36.817 70.128
+2030 33.455 37.029 70.484
+2031 33.582 37.219 70.801
+2032 33.709 37.410 71.119
+2033 33.833 37.610 71.443
+2034 33.938 37.790 71.728
+2035 34.026 37.936 71.962
+2036 34.281 38.273 72.554
+2037 34.412 38.472 72.884
+Fuente: INE, CENSO 2017
+7.2.
+- PROYECCION DE LA DEMANDA.
+7.2.1.
+- Cálculo de la Tasa.
+Para el cálculo de la tasa, consideramos el total de producción HODOM año 2023.
+(Año base/población año base)*1000
+Año 2025
+anual Usuarios atendidos 2025 629
+Población Red Asistencial 67.034
+Tasa 9,67
+La tasa resultante para proyectar la demanda quirúrgica es de 9,67. La proyección anual (648) se calculó
+considerando los usuarios atendidos dentro de los 5 meses de HODOM de este 2022 y convirtiéndolos a 12
+meses de un año, logrando así los 648.
+7.2.2.- Demanda Proyectada.
+Se proyecta la población de manera que permita, de acuerdo al coeficiente elegido, obtener la proyección de
+demanda de intervenciones quirúrgicas en los próximos años.
+(Tasa de consultas año 1 * población año 1) / 1000 hbtes.
+(9,67 * 67.479)/1000 hbtes.
+Proyección Demanda año 2026 – 2037
+AÑO POBLACION DEMANDA
+PROYECTADA
+2026 68.818 665
+2027 69.276 670
+2028 69.708 674
+2029 70.128 678
+2030 70.484 682
+2031 70.801 685
+2032 71.119 688
+2033 71.443 691
+17
+Unidad de Proyectos e Inversiones – HSC
+aldo.quiroz@redsalud.gov.cl Anexo Red MINSAL: 426260
+2034 71.728 694
+2035 71.962 696
+2036 72.554 702
+2037 72.884 705
+Fuente: INE, CENSO 2017
+8.- DEMANDA DE CAMAS.
+La constante y sostenida demanda de camas en nuestro establecimiento ha impulsado con más fuerza la necesidad
+de implementar HODOM de manera permanente en nuestro establecimiento. Nuestro índice ocupacional de los
+principales servicios clínicos como cirugía, medicina y traumatología, ha provocado un número importante de
+hospitalizaciones en la unidad de urgencias a la espera que se desocupe una cama en los servicios mencionados.
+A continuación, podrá visualizarse la gran cantidad de usuarios que quedaron hospitalizados en la Unidad de
+Urgencias particularmente en los años 2022 y 2023. Esta realidad se ha implantado en el establecimiento, sin
+posibilidad de mejorar si no se implementa una opción de atención que permita descongestionar los servicios
+clínicos más demandadas por nuestra población usuaria.
+Oportunidad de Hospitalización en 12 hrs Adulto y Pediátrico
+Hospitalizado
+Periodo Hospitalizado
+≤ 12 hrs
+Hospitalizado
+12 hrs < x ≤ 24
+> 24 hrs
+Permanece
+en UEH Total Cumplimiento
+hrs
+2019 3.641 93 0 18 3.752 97,0%
+2020 3.402 25 0 0 3.427 99,3%
+2021 3.359 371 23 9 3.762 89,3%
+2022 2.775 692 93 337 3.897 71,2%
+2023 1.694 679 58 218 2.649 63,9%
+2024 2.625 784 709 337 4.455 58,9 %
+2025 2179 1.040 1.038 372 4.629 47,0%
+Fuente: Departamento de la Información para la Gestión HSC
+Oportunidad de Hospitalización en 12 hrs Adulto
+Hospitalizado
+Periodo Hospitalizado
+≤ 12 hrs
+Hospitalizado
+Permanece
+12 hrs < x ≤ 24
+Total Cumplimiento
+> 24 hrs
+en UEH
+hrs
+2019 3.234 89 0 17 3.340 96,8%
+2020 3.185 23 0 0 3.208 99,3%
+2021 3.150 370 23 9 3.552 88,7%
+2022 2.450 663 93 319 3.525 69,5%
+2023 1.427 647 57 207 2.338 61,0%
+18
+Unidad de Proyectos e Inversiones – HSC
+aldo.quiroz@redsalud.gov.cl Anexo Red MINSAL: 426260
+2024 2.176 759 700 325 3.960 54,9 %
+2025 1.650 1.015 1.035 368 4.068 40,6 %
+Fuente: Departamento de la Información para la Gestión HSC
+8.1.- INDICE OCUPACIONAL ULTIMOS AÑOS.
+Tal como lo mencionado anteriormente, el elevado índice ocupacional de los servicios de medicina, cirugía y
+traumatología han propiciado el alto número de hospitalizaciones generados en la unidad de urgencias.
+INDICE OCUPACIONAL 2019 2022 2023 2024 2025
+MEDICINA 92,6 91,2 94,0 81,6 97,5
+UTI 72,2 83,4 74,7 93,8 83,0
+CIRUGIA 89,9 91,1 96,7 78,2 96,0
+AREA QUIRURGICA -- 4,5 80,9 93,4 98,1
+TRAUMATOLOGIA 93,0 92,8 95,9 82,9 97,9
+OBSTETRICIA 59,2 95,5 87,4 93,1 67,7
+GINECOLOGIA 61,1 32,0 37,1 62,5 62,4
+PEDIATRIA 10,3 36,7 51,8 42,9 70,3
+NEONATOLOGIA 17,8 31,3 31,5 62,9 33,8
+UCI -- 76,0 69,5 25,0 64,6
+UHCIP -- -- -- 65,0 86,4
+TOTAL 77,4 79,9 81,9 81,6 86,6
+Fuente: Departamento de la Información para la Gestión HSC
+9.- RECURSO HUMANO REQUERIDO.
+A continuación, se detalla el recurso humano requerido para el adecuado funcionamiento de HODOM y que
+es el mismo que se ha dispuesto actualmente para el HODOM de campaña de invierno en nuestro
+establecimiento.
+Con respecto a los usuarios que serán atendidos en HODOM con este RRHH, se incluyen pacientes con las
+siguientes patologías:
+• Pielonefritis aguda.
+• ITU multirresistente sin compromiso hemodinámico.
+• NAC o Infecciones Respiratorias asociadas a atención de salud (IAAS) con o sin patología crónica, sin
+insuficiencia respiratoria aguda.
+• Celulitis.
+• Patologías crónicas descompensadas: EPOC, Asma, LCFA, ICC.
+• Pacientes quirúrgicos intervenidos estables o con patología médica estable que requieren tratamientos
+endovenosos, curaciones avanzadas y/o atención kinésica y/o atención de fonoaudiólogo.
+19
+Unidad de Proyectos e Inversiones – HSC
+aldo.quiroz@redsalud.gov.cl Anexo Red MINSAL: 426260
+• Patologías Cerebrovasculares.
+• Terapia anticoagulante para pacientes con TVP confirmada u otra patología que requiera ajuste de terapia
+anticoagulante.
+• Rehabilitación neurológica.
+• Rehabilitación motora y respiratoria.
+• Rehabilitación deglutoria y/o del habla.
+• Asistencia y asesoría con ayudas sociales desde CESFAM y/o I. Municipalidad local.
+9.- DETALLE RECURSO HUMANO REQUERIDO.
+N° Jornada semanal Gr. Unit. Bruto Total mensual Total Anual
+1 Médico General 44 hrs - $2.221.135 $2.221.135 $26.653.620
+1 Médico General 22 hrs .
+- $1.110.568 $1.110.568 $13.326.810
+1 Enfermera Coordinadora 12 $2.070.788 $2.070.788 $24.849.456
+1 Trabajadora Social 15 $1.593.182 $1.593.182 $19.118.184
+1 Fonoaudiólogo 15 $1.593.182 $1.593.182 $19.118.184
+4 Conductores (Cuarto turno modificado) 24 $734.884 $2.939.536 $35.274.432
+1 Conductor diurno 24 $563.574 $563.574 $6.762.888
+1 Administrativo 22 $661.544 $661.544 $7.938.528
+4 Enfermeros (Cuarto turno modificado) 15 $2.080.089 $8.320.356 $99.844.272
+2 T.E.N.S. (Cuarto turno modificado) 21 $941.309 $1.882.618 $22.591.416
+2 Kinesiólogos (Cuarto turno modificado) 15 $2.080.089 $4.160.178 $49.922.136
+1 Kinesiólogo diurno 15 $1.593.182 $1.593.182 $19.118.184
+TOTAL $28.709.843 $344.518.110
+Fuente: Sub. de Gestión y Desarrollo de las Personas HSC - Se considera compra de servicios de traslados (solo vehículos)
+(En sistemas de turno se considera una asignación de cuarto turno para el cálculo. El cual puede variar,
+debido que en este caso se cancelará según lo que supere las 44 hrs. Semanales.)
+(*) Se necesita este enfermero para visita domiciliaria integral en conjunto con otros profesionales del equipo
+para optimizar los tiempos de los viajes. Durante esta visita se realizarán procedimientos tales como:
+• Registro clínico de enfermería diaria.
+• Plan de cuidados de Enfermería.
+• Ejecución de procedimientos (instalación de vías venosas, instalación de sondas, toma de muestra de
+exámenes, toma de electrocardiogramas, administración de fármacos endovenosos, curaciones, etc.)
+• Evaluación de intervenciones de enfermería.
+• La educación a usuario y familiar o cuidador responsable sobre los cuidados del paciente.
+• Coordinación con Unidades de apoyo del HSC y/o con la red.
+• Control de signos vitales.
+20
+Unidad de Proyectos e Inversiones – HSC
+aldo.quiroz@redsalud.gov.cl Anexo Red MINSAL: 426260
+• Educación a paciente y/o familia: farmacoterapia, insulinoterapia, manejo de dispositivos invasivos (sonda
+Foley, sonda nasogástrica, Gastrostomía, traqueotomía, drenajes.), prevención de lesiones por presión,
+prevención de caídas, aseo y confort, movilización de paciente, etc.
+• Instalación de Sonda Nasogástrica.
+• Instalación de catéter urinario permanente.
+• Instalación de catéter urinario intermitente.
+• Tratamiento intramuscular, subcutáneo y endovenoso cada 12 horas.
+• Instalación de vía subcutánea.
+• Instalación de vía venosa periférica para administración de tratamientos endovenosos y/o fleboclisis.
+• Toma exámenes sanguíneos venosos y arteriales.
+• Toma de cultivos: urocultivo, hemocultivo, cultivo de herida.
+• Curación simple.
+• Curación avanzada de herida y manejo de ostomías.
+• Contención emocional a pacientes LET y/o de paliativos y familia.
+• Administración y manejo de nutrición parenteral.
+• Reposo indicado y prevención de riesgos, según se establece en protocolos de prevención de caídas y de
+prevención de lesiones por presión (LPP).
+• Cuidados de los accesos y dispositivos invasivos. Horarios de administración de medicamentos por vía oral.
+9.2- SISTEMA DE COBERTURA HODOM.
+N° Profesional Jornada semanal Días de cobertura
+1 Médico Diurna – 44 horas Lunes a viernes
+1 Enfermera Coordinadora Diurna – 44 horas Lunes a viernes
+1 Kinesiólogo diurno Diurna – 44 horas Lunes a viernes
+1 Trabajadora Social Diurna – 44 horas Lunes a viernes
+1 Fonoaudióloga Diurna – 44 horas Lunes a viernes
+1 Conductor Diurna – 44 horas Lunes a viernes
+4 Enfermeros clínicos 4 Enfermeros en cuarto turno
+modificado de 08:00 a 20:00 horas. Largo – largo – libre – libre
+2 T.E.N.S. 2 TENS en cuarto turno modificado de
+08:00 a 20:00 horas. Largo – largo – libre – libre
+2 Kinesiólogos 2 Kinesiólogos en cuarto turno
+modificado de 08:00 a 20:00 horas. Largo – largo – libre – libre
+4 Conductores 4 Conductores en cuarto turno
+modificado de 08:00 a 20:00 horas. Largo – largo – libre – libre
+Fuente: Unidad de Gestión de Pacientes y Movilización HSC
+21
+Unidad de Proyectos e Inversiones – HSC
+aldo.quiroz@redsalud.gov.cl Anexo Red MINSAL: 426260
+10.- FLUJOGRAMA DE INGRESO A HODOM.
+Fuente: Unidad de Gestión de Pacientes y Movilización HSC
+11.- EQUIPOS MEDICOS REQUERIDOS.
+Para implementar adecuadamente HODOM en nuestro establecimiento y de forma permanente, se necesita
+adquirir distinto equipamiento que sea exclusivo de HODOM HSC y no facilitados de otras áreas clínicas.
+Cant. Descripción Costo Unit. Costo Total
+3 Oxímetros de pulso (Massimo Rad 5) $2.790.000 $8.370.000
+6 Maletines sanitarios $218.000 $1.308.000
+3 Equipos DEA $1.839.000 $5.517.000
+10 Colchones antiescaras con flotación de aire $197.500 $1.975.000
+4 Electro estimuladores $890.000 $3.560.000
+4 Pimómetros digitales $4.462.500 $17.850.000
+4 Computadores, pantalla de 27” $749.990 $2.999.960
+1 Impresoras láser multifuncionales dúplex. $355.000 $355.000
+2 Equipos celulares Smartphone $450.000 $900.000
+3 ECG portátil $2.638.706 $7.916.118
+3 Monitor multiparámetros $2.970.000 $8.910.000
+TOTAL $59.661.078
+Fuente: Unidad de Proyectos e Inversiones HSC
+22
+Unidad de Proyectos e Inversiones – HSC
+aldo.quiroz@redsalud.gov.cl Anexo Red MINSAL: 426260
+12.- INFRAESTRUCTURA.
+Respecto a la infraestructura requerida para el correcto funcionamiento de HODOM, se tiene contemplado
+un recinto que se encuentra al frente del establecimiento y que sería arrendado con cargo al subtitulo 22 del
+establecimiento. Esto es necesario ya que las actuales dependencias de HODOM son insuficientes para realizar
+las labores que se realizan actualmente y las que se esperan realizar a fututo considerando la demanda y las
+crecientes y sostenidas exigencias.
+Estas dependencias destinadas para HODOM HSC contarían con todos los espacios adecuados para llevar a
+cabo debidamente la labor clínica diaria. Entre estos espacios se cuenta; sala área sucia y limpia, vestidores,
+estaciones de trabajo, bodega de insumos, oficina Enfermero coordinador y sala multiuso.
+13.- VAC/CAE EQUIPOS CLINICOS.
+Para los equipos solicitados en este proyecto, el VAC obtenido es de 89.952.342, y el CAE es de -12.221.641.
+-
+VAC CAE 0 1 2 3 4 5 6 7 8 9 10
+1 7.567.601 -8.021.658 50.135.360 -45.121.824
+2 18.008.750 -9.822.636 50.135.360 0 -36.097.459
+3 28.258.620 -10.571.827 50.135.360 0 4.010.829 -30.307.025
+4 37.834.146 -10.918.613 50.135.360 0 4.010.829 4.787.726 -25.111.556
+5 46.783.994 -11.106.352 50.135.360 0 4.010.829 4.787.726 4.969.660 -19.909.173
+6 55.153.375 -11.216.135 50.135.360 0 4.010.829 4.787.726 4.969.660 5.158.507 -14.699.614
+7 64.093.198 -11.481.336 50.135.360 0 4.010.829 4.787.726 4.969.660 5.158.507 5.354.530 -7.815.205
+8 72.510.525 -11.676.801 50.135.360 0 4.010.829 4.787.726 4.969.660 5.158.507 5.354.530 7.225.403 -2.527.103
+9 80.442.040 -11.826.769 50.135.360 0 4.010.829 4.787.726 4.969.660 5.158.507 5.354.530 7.225.403 7.499.968 2.771.431
+# 89.952.342 -12.221.641 50.135.360 0 4.010.829 4.787.726 4.969.660 5.158.507 5.354.530 7.225.403 7.499.968 7.784.967 11.717.154
+Inversion Inicial
+50.135.360 1 2 3 4 5 6 7 8 9 10
+Costos de operación
+0 0 0 0 0 0 0 0 0 0 0
+Costos de mantención
+0 0 4.010.829 4.787.726 4.969.660 5.158.507 5.354.530 7.225.403 7.499.968 7.784.967 11.717.154
+Costos operación + mantención
+0 0 4.010.829 4.787.726 4.969.660 5.158.507 5.354.530 7.225.403 7.499.968 7.784.967 11.717.154
+Valor Residual
+5.013.536 45.121.824 40.108.288 35.094.752 30.081.216 25.067.680 20.054.144 15.040.608 10.027.072 5.013.536 0
+Fuente: Unidad de Proyectos e Inversiones HSC
+14.- ALTERNATIVA ARRIENDO EQUIPOS.
+La alternativa de arriendo de equipos es ineficiente económicamente, ya que lo que se termina pagando en
+muy superior al valor de compra. Prueba de ello es la licitación pública 1057501-407-LP25 donde, por ejemplo,
+se oferta un arriendo de monitores multiparámetros por un valor unitario de $ 102.900.
+- neto mensual. El
+valor de compra neto de un monitor multiparámetros es de $2.495.798.
+-. Por tanto, si multiplicamos esos
+$ 102.900 por 12 meses y por los 10 años de horizonte de evaluación, el resultado es $12.348.000, valor
+considerablemente mayor al precio de compra del equipo.
+23
+Unidad de Proyectos e Inversiones – HSC
+aldo.quiroz@redsalud.gov.cl Anexo Red MINSAL: 426260
+Si eso lo proyectamos, resulta lo siguiente:
+Arriendo Monitor multiparámetros:
+VAC CAE 0 1 2 3 4 5 6 7 8 9 10
+1 1.164.906 -1.234.800 0 1.234.800
+2 2.305.634 -1.257.578 0 1.234.800 1.281.722
+3 3.422.687 -1.280.461 0 1.234.800 1.281.722 1.330.428
+4 4.516.556 -1.303.440 0 1.234.800 1.281.722 1.330.428 1.380.984
+5 5.587.721 -1.326.505 0 1.234.800 1.281.722 1.330.428 1.380.984 1.433.462
+6 6.636.656 -1.349.648 0 1.234.800 1.281.722 1.330.428 1.380.984 1.433.462 1.487.933
+7 7.663.819 -1.372.858 0 1.234.800 1.281.722 1.330.428 1.380.984 1.433.462 1.487.933 1.544.474
+8 8.669.665 -1.396.128 0 1.234.800 1.281.722 1.330.428 1.380.984 1.433.462 1.487.933 1.544.474 1.603.165
+9 9.654.634 -1.419.446 0 1.234.800 1.281.722 1.330.428 1.380.984 1.433.462 1.487.933 1.544.474 1.603.165 1.664.085
+# 10.619.160 -1.442.804 0 1.234.800 1.281.722 1.330.428 1.380.984 1.433.462 1.487.933 1.544.474 1.603.165 1.664.085 1.727.320
+Inversion Inicial
+0 1 2 3 4 5 6 7 8 9 10
+Costos de operación
+0 0 0 0 0 0 0 0 0 0 0
+Costos de ARRIENDO ANUAL
+0 1.234.800 1.281.722 1.330.428 1.380.984 1.433.462 1.487.933 1.544.474 1.603.165 1.664.085 1.727.320
+Costos operación + mantención
+0 1.234.800 1.281.722 1.330.428 1.380.984 1.433.462 1.487.933 1.544.474 1.603.165 1.664.085 1.727.320
+Valor Residual
+0 0 0 0 0 0 0 0 0 0 0
+Fuente: Unidad de Proyectos e Inversiones HSC
+Compra monitor multiparámetros:
+VAC CAE 0 1 2 3 4 5 6 7 8 9 10
+1 376.724 -399.328 2.495.798 -2.246.218
+2 896.497 -488.983 2.495.798 0 -1.796.975
+3 1.406.748 -526.278 2.495.798 0 199.664 -1.508.720
+4 1.883.429 -543.542 2.495.798 0 199.664 238.339 -1.250.083
+5 2.328.963 -552.888 2.495.798 0 199.664 238.339 247.396 -991.102
+6 2.745.601 -558.353 2.495.798 0 199.664 238.339 247.396 256.797 -731.764
+7 3.190.636 -571.555 2.495.798 0 199.664 238.339 247.396 256.797 266.555 -389.050
+8 3.609.661 -581.285 2.495.798 0 199.664 238.339 247.396 256.797 266.555 359.689 -125.802
+9 4.004.501 -588.751 2.495.798 0 199.664 238.339 247.396 256.797 266.555 359.689 373.357 137.965
+# 4.477.935 -608.408 2.495.798 0 199.664 238.339 247.396 256.797 266.555 359.689 373.357 387.545 583.294
+Inversion Inicial
+2.495.798 1 2 3 4 5 6 7 8 9 10
+Costos de operación
+0 0 0 0 0 0 0 0 0 0 0
+Costos de mantención 0 0 199.664 238.339 247.396 256.797 266.555 359.689 373.357 387.545 583.294
+Costos operación + mantención
+0 0 199.664 238.339 247.396 256.797 266.555 359.689 373.357 387.545 583.294
+Valor Residual
+249.580 2.246.218 1.996.639 1.747.059 1.497.479 1.247.899 998.319 748.739 499.160 249.580 0
+Fuente: Unidad de Proyectos e Inversiones HSC
+24
+Unidad de Proyectos e Inversiones – HSC
+aldo.quiroz@redsalud.gov.cl Anexo Red MINSAL: 426260
+DESCRIPCIÓN CAE
+ALTERNATIVA DE ARRIENDO -1.442.804
+ALTERNATIVA DE COMPRA -608.408
+Por lo anterior, a la alternativa más viable económicamente es la de comprar los equipos requeridos y
+solicitados en este proyecto.
+La mantención de los equipos que se adquieran, estará a cargo de la Sección Equipos Médicos del Hospital de
+San Carlos.
+15.
+- CUADRO RESUMEN DE LO SOLICITADO.
+DESCRIPCIÓN SUBTITULO COSTO TOTAL
+INVERSIONES
+COSTO OPERACIONAL
+ANUAL
+EQUIPOS MÉDICOS 29 $59.661.078 ---
+RECURSOS HUMANOS 21 --- $344.518.110
+TOTALES $59.661.078 $344.518.110
+Fuente: Unidad de Proyectos e Inversiones HSC
+16.
+- ANÁLISIS FINAL DEL PROYECTO.
+16.1.- Coherencia entre diagnóstico, objetivos y solución propuesta.
+El proyecto presenta una alta coherencia técnica y estratégica entre:
+- El diagnóstico institucional (sobredemanda, déficit estructural de camas, saturación de urgencias).
+- Los objetivos planteados (optimización del recurso cama, continuidad asistencial, humanización de
+la atención).
+- La solución propuesta, que es la implementación permanente de la Hospitalización Domiciliaria.
+El diagnóstico se encuentra sólidamente respaldado por:
+- Series históricas de índice ocupacional superiores al 90% en servicios críticos (medicina, cirugía,
+traumatología).
+- Un deterioro progresivo de la oportunidad de hospitalización ≤12 horas, que cae desde cifras
+cercanas al 97% en 2019 a 47% en 2025, evidenciando un problema estructural y no coyuntural.
+Esto demuestra que la presión asistencial no es transitoria, por lo que mantener HODOM solo como estrategia
+de campaña resulta insuficiente.
+25
+Unidad de Proyectos e Inversiones – HSC
+aldo.quiroz@redsalud.gov.cl Anexo Red MINSAL: 426260
+16.2.-. Pertinencia epidemiológica y territorial.
+El proyecto se alinea de forma precisa con:
+- El envejecimiento progresivo de la población de la provincia de Punilla.
+- El aumento de patologías crónicas, respiratorias, infecciosas y neurológicas, todas altamente
+compatibles con manejo domiciliario.
+- Una amplia ruralidad, que hace especialmente valiosa una estrategia de atención territorializada y
+flexible.
+La delimitación clara de:
+- Área de estudio (Región de Ñuble),
+- Área de influencia (10 comunas de la red norte),
+- Y población objetivo priorizada (≈67.000 adultos),
+otorga robustez metodológica a las proyecciones de demanda y evita la sobreestimación de beneficios.
+16.3.
+-
+. Evidencia empírica de efectividad del modelo HODOM.
+Uno de los mayores puntos fuertes del proyecto es que no se trata de un modelo teórico, sino de una
+estrategia ya probada en el Hospital de San Carlos:
+- Más de 2.100 personas atendidas entre 2023 y 2025.
+- Cero fallecimientos no esperados en todos los períodos analizados.
+- Bajísima tasa de reingreso a hospitalización tradicional (≈3–4%).
+- Alto volumen de atenciones multidisciplinarias domiciliarias (hasta 11.562 visitas anuales).
+Estos indicadores confirman que HODOM:
+- Es segura,
+- Es resolutiva,
+- Y mantiene estándares clínicos equivalentes a la hospitalización cerrada.
+16.4.
+-
+. Impacto en la gestión del recurso cama y la urgencia hospitalaria.
+Desde una perspectiva de gestión sanitaria, la implementación permanente de HODOM:
+- Libera camas de mediana complejidad para pacientes de mayor riesgo.
+- Reduce hospitalizaciones prolongadas en Urgencia.
+- Disminuye el riesgo de IAAS, delirium, deterioro funcional y descompensaciones asociadas a
+estancias largas.
+-
+Dado que el proyecto proyecta atender ≈900 pacientes al año, con una estada promedio de 7 días, se estaría
+liberando el equivalente a más de 6.000 días-cama anuales, lo que constituye un impacto estructural sobre la
+red hospitalaria local.
+26
+Unidad de Proyectos e Inversiones – HSC
+aldo.quiroz@redsalud.gov.cl Anexo Red MINSAL: 426260
+16.5.
+-
+. Análisis del recurso humano y sostenibilidad operativa.
+El recurso humano propuesto:
+- Es realista.
+- Se basa en experiencia previa.
+- Y está correctamente dimensionado según cobertura horaria y perfil de pacientes.
+La estructura en cuarto turno modificado permite:
+- Continuidad asistencial.
+- Respuesta oportuna ante eventos intercurrentes.
+- Optimización de rutas y tiempos de desplazamiento.
+El costo anual estimado (~$345 millones) debe analizarse no solo como gasto, sino como inversión,
+considerando:
+- Ahorro por días-cama evitados.
+- Disminución de eventos adversos.
+- Mejor desempeño en indicadores de gestión hospitalaria y satisfacción usuaria.
+16.6.
+-
+. Alineación normativa y estratégica.
+El proyecto cumple plenamente con:
+- Decreto Supremo N°1 de Hospitalización Domiciliaria.
+- Normativa de derechos y deberes del paciente.
+- Lineamientos ministeriales de continuidad asistencial y gestión de la red.
+Además, fortalece el rol del Hospital de San Carlos como nodo articulador entre el nivel secundario y la APS,
+consolidando un modelo moderno, integrado y centrado en las personas.
+17.
+- CONCLUSIONES FINALES.
+1.- La implementación permanente de la Hospitalización Domiciliaria en el Hospital de San Carlos es técnica,
+clínica y sanitariamente justificada, dada la presión estructural sobre el recurso cama y la urgencia
+hospitalaria.
+2.- El proyecto demuestra que HODOM es una alternativa segura, eficaz y costo-efectiva, con resultados
+comprobados en años previos y con alto impacto en la calidad de la atención.
+3.- La estrategia permite optimizar recursos hospitalarios sin sacrificar calidad, fortaleciendo la humanización
+del cuidado y la participación familiar.
+4.- La evidencia presentada confirma que mantener HODOM solo como estrategia estacional limita su
+potencial, por lo que su consolidación permanente es una necesidad más que una opción.
+27
+Unidad de Proyectos e Inversiones – HSC
+aldo.quiroz@redsalud.gov.cl Anexo Red MINSAL: 426260
+5.- La implementación del proyecto contribuirá directamente a:
+- Mejorar indicadores de oportunidad.
+- Reducir hospitalizaciones evitables.
+- Fortalecer la red asistencial norte de Ñuble.
+- Aumentar la satisfacción usuaria y del equipo clínico.
+6.- En conclusión, este proyecto no solo responde a una brecha actual, sino que se anticipa al crecimiento
+futuro de la demanda, constituyéndose en una política sanitaria local sostenible y alineada con el modelo de
+salud integral promovido por el MINSAL.
+28
+Unidad de Proyectos e Inversiones – HSC
+aldo.quiroz@redsalud.gov.cl Anexo Red MINSAL: 426260

@@ -1,0 +1,977 @@
+=== SD ===
+Sistema de Hospitalizacion Domiciliaria es un objeto, físico.
+Hospitalizar en Domicilio es un proceso, físico.
+Paciente es un objeto, físico.
+Condicion Clinica es un objeto, informático.
+Cuidador es un objeto, físico.
+Grupo Familiar es un objeto, físico.
+Consentimiento Informado es un objeto, informático.
+Ficha Clinica es un objeto, informático.
+Plan Terapeutico es un objeto, informático.
+Plan de Cuidados de Enfermeria es un objeto, informático.
+Epicrisis es un objeto, informático.
+Resumen Clinico en Domicilio es un objeto, informático.
+Indicacion Medica es un objeto, informático.
+Receta es un objeto, informático.
+Interconsulta es un objeto, informático.
+Informe Social es un objeto, informático.
+Encuesta de Satisfaccion Usuaria es un objeto, informático.
+Formulario de Ingreso es un objeto, informático.
+Carta de Derechos y Deberes es un objeto, informático.
+Manual de Normas-Procedimientos es un objeto, informático.
+Manual de Organizacion Interna es un objeto, informático.
+Protocolo Clinico es un objeto, informático.
+Manual de Procedimientos es un objeto, informático.
+Plan de Capacitacion Anual es un objeto, informático.
+Programa de Prevencion de IAAS es un objeto, informático.
+Programa de Mantencion Preventiva es un objeto, informático.
+Autorizacion Sanitaria es un objeto, informático.
+Convenio es un objeto, informático.
+Registro de Llamadas es un objeto, informático.
+Domicilio es un objeto, físico.
+Dependencia Administrativa es un objeto, físico.
+Bodega de Insumos es un objeto, físico.
+Farmacia-Botiquin es un objeto, físico.
+Vehiculo de Transporte es un objeto, físico.
+Equipamiento Medico es un objeto, físico.
+Dispositivo de Uso Medico es un objeto, físico.
+Insumo Clinico es un objeto, físico.
+Medicamento es un objeto, físico.
+Residuo Especial es un objeto, físico.
+Elemento de Proteccion Personal es un objeto, físico.
+Sistema Telefonico es un objeto, físico.
+Soporte Informatico es un objeto, informático.
+Personal de Salud es un objeto, físico.
+Profesional de Salud es un objeto, físico.
+Tecnico de Salud es un objeto, físico.
+Auxiliar de Salud es un objeto, físico.
+Director Tecnico es un objeto, físico.
+Coordinador es un objeto, físico.
+Medico de Atencion Directa es un objeto, físico.
+Medico Regulador es un objeto, físico.
+Enfermero Clinico es un objeto, físico.
+Kinesiologo es un objeto, físico.
+Trabajador Social es un objeto, físico.
+Auxiliar Paramedico de Enfermeria es un objeto, físico.
+Tecnico de Nivel Medio de Enfermeria es un objeto, físico.
+Tecnico de Nivel Superior de Enfermeria es un objeto, físico.
+Prestador de Hospitalizacion Domiciliaria es un objeto, físico.
+Prestador Publico es un objeto, físico.
+Prestador Privado es un objeto, físico.
+Causal de Egreso es un objeto, informático.
+Alta Medica es un objeto, informático.
+Alta por Cumplimiento de Plan es un objeto, informático.
+Reingreso Hospitalario es un objeto, informático.
+Fallecimiento es un objeto, informático.
+Renuncia Voluntaria es un objeto, informático.
+Alta Disciplinaria es un objeto, informático.
+Evolucion Clinica es un objeto, informático.
+Listado de Prestaciones es un objeto, informático.
+Horario de Funcionamiento es un objeto, informático.
+Solicitud de Autorizacion es un objeto, informático.
+SEREMI es un objeto, físico, ambiental.
+Establecimiento de Atencion Cerrada es un objeto, físico, ambiental.
+Superintendencia de Salud es un objeto, informático, ambiental.
+MINSAL es un objeto, físico, ambiental.
+Servicio de Salud es un objeto, físico, ambiental.
+Institucion Derivadora es un objeto, físico, ambiental.
+Medico Tratante es un objeto, físico, ambiental.
+Enfermar es un proceso, físico, ambiental.
+
+Paciente exhibe Condicion Clinica.
+Sistema de Hospitalizacion Domiciliaria exhibe Hospitalizar en Domicilio.
+Sistema de Hospitalizacion Domiciliaria exhibe Listado de Prestaciones.
+
+Condicion Clinica puede estar agudo-reagudizado, estable, recuperado, sano, ingresado, en-tratamiento, reinternado, fallecido o egresado.
+Estado agudo-reagudizado de Condicion Clinica es inicial.
+Estado recuperado de Condicion Clinica es final.
+
+Consentimiento Informado puede estar pendiente o firmado.
+Ficha Clinica puede estar abierta o cerrada.
+Autorizacion Sanitaria puede estar solicitada, otorgada, vigente, vencida o sin-efecto.
+Plan Terapeutico puede estar formulado, en-ejecucion o cumplido.
+Plan de Cuidados de Enfermeria puede estar formulado, en-ejecucion o cumplido.
+Domicilio puede estar evaluado-como-apto o evaluado-como-no-apto.
+Equipamiento Medico puede estar operativo, en-mantencion o fuera-de-servicio.
+Medicamento puede estar disponible, administrado o agotado.
+Vehiculo de Transporte puede estar disponible, en-ruta o en-mantencion.
+Encuesta de Satisfaccion Usuaria puede estar pendiente o completada.
+Informe Social puede estar pendiente o elaborado.
+Residuo Especial puede estar generado, almacenado-transitoriamente o retirado.
+
+Sistema de Hospitalizacion Domiciliaria consta de Dependencia Administrativa, Equipamiento Medico, Vehiculo de Transporte, Farmacia-Botiquin, Bodega de Insumos, Protocolo Clinico y Sistema Telefonico.
+
+Ficha Clinica consta de Formulario de Ingreso, Evolucion Clinica, Indicacion Medica, Plan Terapeutico, Plan de Cuidados de Enfermeria y Epicrisis.
+
+Manual de Organizacion Interna consta de Horario de Funcionamiento.
+
+Domicilio exhibe Condicion Sanitaria y Accesibilidad Vial.
+Condicion Sanitaria es un objeto, informático.
+Accesibilidad Vial es un objeto, informático.
+
+Profesional de Salud, Tecnico de Salud y Auxiliar de Salud son Personal de Salud.
+Director Tecnico, Coordinador, Medico de Atencion Directa, Medico Regulador, Enfermero Clinico, Kinesiologo y Trabajador Social son Profesional de Salud.
+Auxiliar Paramedico de Enfermeria, Tecnico de Nivel Medio de Enfermeria y Tecnico de Nivel Superior de Enfermeria son Tecnico de Salud.
+Prestador Publico y Prestador Privado son Prestador de Hospitalizacion Domiciliaria.
+Alta Medica, Alta por Cumplimiento de Plan, Reingreso Hospitalario, Fallecimiento, Renuncia Voluntaria y Alta Disciplinaria son Causal de Egreso.
+
+Prestador de Hospitalizacion Domiciliaria tiene convenio con Establecimiento de Atencion Cerrada.
+SEREMI fiscaliza Sistema de Hospitalizacion Domiciliaria.
+SEREMI otorga Autorizacion Sanitaria.
+Superintendencia de Salud habilita Personal de Salud.
+Director Tecnico representa Sistema de Hospitalizacion Domiciliaria.
+Institucion Derivadora deriva Paciente.
+Cuidador cuida a Paciente.
+
+Director Tecnico maneja Hospitalizar en Domicilio.
+Coordinador maneja Hospitalizar en Domicilio.
+Medico de Atencion Directa maneja Hospitalizar en Domicilio.
+Enfermero Clinico maneja Hospitalizar en Domicilio.
+
+Hospitalizar en Domicilio requiere Equipamiento Medico.
+Hospitalizar en Domicilio requiere Ficha Clinica.
+Hospitalizar en Domicilio requiere Protocolo Clinico.
+Hospitalizar en Domicilio requiere Sistema Telefonico.
+Hospitalizar en Domicilio requiere Vehiculo de Transporte.
+
+Hospitalizar en Domicilio cambia Condicion Clinica de agudo-reagudizado a recuperado.
+Hospitalizar en Domicilio consume Insumo Clinico.
+Hospitalizar en Domicilio consume Medicamento.
+Hospitalizar en Domicilio genera Ficha Clinica.
+Hospitalizar en Domicilio genera Epicrisis.
+Hospitalizar en Domicilio genera Encuesta de Satisfaccion Usuaria.
+Hospitalizar en Domicilio genera Residuo Especial.
+
+Enfermar cambia Condicion Clinica de sano a agudo-reagudizado.
+
+=== SD1 ===
+SD se refina por descomposicion de Hospitalizar en Domicilio en SD1.
+
+Autorizar Establecimiento es un proceso, informático.
+Evaluar Elegibilidad es un proceso, informático.
+Ingresar Paciente es un proceso, informático.
+Tratar en Domicilio es un proceso, físico.
+Egresar Paciente es un proceso, informático.
+Fiscalizar Establecimiento es un proceso, informático.
+
+Condicion Clinica es un objeto, informático.
+Condicion Clinica puede estar agudo-reagudizado, estable, recuperado, sano, ingresado, en-tratamiento, reinternado, fallecido o egresado.
+Paciente es un objeto, físico.
+Paciente exhibe Condicion Clinica.
+Autorizacion Sanitaria es un objeto, informático.
+Autorizacion Sanitaria puede estar solicitada, otorgada, vigente, vencida o sin-efecto.
+Solicitud de Autorizacion es un objeto, informático.
+Consentimiento Informado es un objeto, informático.
+Consentimiento Informado puede estar pendiente o firmado.
+Ficha Clinica es un objeto, informático.
+Ficha Clinica puede estar abierta o cerrada.
+Plan Terapeutico es un objeto, informático.
+Plan Terapeutico puede estar formulado, en-ejecucion o cumplido.
+Plan de Cuidados de Enfermeria es un objeto, informático.
+Plan de Cuidados de Enfermeria puede estar formulado, en-ejecucion o cumplido.
+Epicrisis es un objeto, informático.
+Encuesta de Satisfaccion Usuaria es un objeto, informático.
+Encuesta de Satisfaccion Usuaria puede estar pendiente o completada.
+Formulario de Ingreso es un objeto, informático.
+Resumen Clinico en Domicilio es un objeto, informático.
+Equipamiento Medico es un objeto, físico.
+Equipamiento Medico puede estar operativo, en-mantencion o fuera-de-servicio.
+Vehiculo de Transporte es un objeto, físico.
+Vehiculo de Transporte puede estar disponible, en-ruta o en-mantencion.
+Protocolo Clinico es un objeto, informático.
+Sistema Telefonico es un objeto, físico.
+Insumo Clinico es un objeto, físico.
+Medicamento es un objeto, físico.
+Evolucion Clinica es un objeto, informático.
+Residuo Especial es un objeto, físico.
+Residuo Especial puede estar generado, almacenado-transitoriamente o retirado.
+Domicilio es un objeto, físico.
+Domicilio puede estar evaluado-como-apto o evaluado-como-no-apto.
+Informe Social es un objeto, informático.
+Informe Social puede estar pendiente o elaborado.
+Sistema de Hospitalizacion Domiciliaria es un objeto, físico.
+Indicacion Medica es un objeto, informático.
+Soporte Informatico es un objeto, informático.
+Cuidador es un objeto, físico.
+Grupo Familiar es un objeto, físico.
+Causal de Egreso es un objeto, informático.
+
+Director Tecnico es un objeto, físico.
+Coordinador es un objeto, físico.
+Medico de Atencion Directa es un objeto, físico.
+Enfermero Clinico es un objeto, físico.
+Kinesiologo es un objeto, físico.
+Trabajador Social es un objeto, físico.
+Medico Regulador es un objeto, físico.
+SEREMI es un objeto, físico, ambiental.
+Establecimiento de Atencion Cerrada es un objeto, físico, ambiental.
+Institucion Derivadora es un objeto, físico, ambiental.
+Medico Tratante es un objeto, físico, ambiental.
+
+Hospitalizar en Domicilio se descompone en Autorizar Establecimiento, Evaluar Elegibilidad, Ingresar Paciente, Tratar en Domicilio, Egresar Paciente y Fiscalizar Establecimiento, en esa secuencia.
+
+Autorizar Establecimiento cambia Autorizacion Sanitaria de solicitada a otorgada.
+Autorizar Establecimiento ocurre si Solicitud de Autorizacion existe, de lo contrario Autorizar Establecimiento se omite.
+Autorizar Establecimiento consume Solicitud de Autorizacion.
+SEREMI maneja Autorizar Establecimiento.
+
+Evaluar Elegibilidad cambia Condicion Clinica de agudo-reagudizado a estable.
+Evaluar Elegibilidad afecta Domicilio.
+Evaluar Elegibilidad genera Informe Social.
+Evaluar Elegibilidad requiere Ficha Clinica.
+Medico de Atencion Directa maneja Evaluar Elegibilidad.
+Enfermero Clinico maneja Evaluar Elegibilidad.
+Trabajador Social maneja Evaluar Elegibilidad.
+
+Ingresar Paciente cambia Condicion Clinica de estable a ingresado.
+Ingresar Paciente requiere Consentimiento Informado.
+Ingresar Paciente requiere Domicilio.
+Ingresar Paciente genera Formulario de Ingreso.
+Ingresar Paciente genera Plan Terapeutico.
+Ingresar Paciente genera Plan de Cuidados de Enfermeria.
+Ingresar Paciente genera Resumen Clinico en Domicilio.
+Medico de Atencion Directa maneja Ingresar Paciente.
+Enfermero Clinico maneja Ingresar Paciente.
+
+Tratar en Domicilio cambia Condicion Clinica de ingresado a en-tratamiento.
+Tratar en Domicilio cambia Plan Terapeutico de formulado a en-ejecucion.
+Tratar en Domicilio cambia Plan de Cuidados de Enfermeria de formulado a en-ejecucion.
+Tratar en Domicilio consume Insumo Clinico.
+Tratar en Domicilio consume Medicamento.
+Tratar en Domicilio genera Evolucion Clinica.
+Tratar en Domicilio genera Residuo Especial.
+Tratar en Domicilio requiere Equipamiento Medico.
+Tratar en Domicilio requiere Vehiculo de Transporte.
+Tratar en Domicilio requiere Protocolo Clinico.
+Tratar en Domicilio requiere Sistema Telefonico.
+Tratar en Domicilio requiere Ficha Clinica.
+Medico de Atencion Directa maneja Tratar en Domicilio.
+Enfermero Clinico maneja Tratar en Domicilio.
+Kinesiologo maneja Tratar en Domicilio.
+
+Egresar Paciente cambia Condicion Clinica de en-tratamiento a egresado.
+Egresar Paciente cambia Plan Terapeutico de en-ejecucion a cumplido.
+Egresar Paciente genera Epicrisis.
+Egresar Paciente genera Encuesta de Satisfaccion Usuaria.
+Egresar Paciente cambia Ficha Clinica de abierta a cerrada.
+Egresar Paciente requiere Ficha Clinica.
+Medico de Atencion Directa maneja Egresar Paciente.
+Enfermero Clinico maneja Egresar Paciente.
+
+Fiscalizar Establecimiento afecta Sistema de Hospitalizacion Domiciliaria.
+Fiscalizar Establecimiento requiere Autorizacion Sanitaria.
+SEREMI maneja Fiscalizar Establecimiento.
+
+SD se refina por descomposicion de Autorizar Establecimiento en SD2.
+SD1 se refina por descomposicion de Evaluar Elegibilidad en SD1.2.
+SD1 se refina por descomposicion de Ingresar Paciente en SD1.3.
+SD1 se refina por descomposicion de Tratar en Domicilio en SD1.4.
+SD1 se refina por descomposicion de Egresar Paciente en SD1.5.
+SD se refina por descomposicion de Hospitalizar en Domicilio en SD1.
+
+=== SD2 ===
+SD se refina por descomposicion de Autorizar Establecimiento en SD2.
+
+Presentar Solicitud es un proceso, informático.
+Evaluar Antecedentes es un proceso, informático.
+Otorgar Autorizacion es un proceso, informático.
+Renovar Autorizacion es un proceso, informático.
+
+Autorizacion Sanitaria es un objeto, informático.
+Autorizacion Sanitaria puede estar solicitada, otorgada, vigente, vencida o sin-efecto.
+Solicitud de Autorizacion es un objeto, informático.
+Director Tecnico es un objeto, físico.
+SEREMI es un objeto, físico, ambiental.
+Identificacion del Establecimiento es un objeto, informático.
+Documento de Dominio de Inmueble es un objeto, informático.
+Certificado Municipal es un objeto, informático.
+Escritura de Constitucion es un objeto, informático.
+Individualizacion de Director Tecnico es un objeto, informático.
+Nomina de Personal Habilitado es un objeto, informático.
+Plano de Planta Fisica es un objeto, informático.
+Certificado de Instalaciones es un objeto, informático.
+Listado de Equipos es un objeto, informático.
+Programa de Mantencion Preventiva es un objeto, informático.
+Listado de Elementos de Proteccion Personal es un objeto, informático.
+Horario de Funcionamiento es un objeto, informático.
+Manual de Normas-Procedimientos es un objeto, informático.
+Reglamento Interno es un objeto, informático.
+Listado de Prestaciones es un objeto, informático.
+Protocolo de Manejo de Residuos es un objeto, informático.
+
+Solicitud de Autorizacion consta de Identificacion del Establecimiento, Documento de Dominio de Inmueble, Certificado Municipal, Escritura de Constitucion, Individualizacion de Director Tecnico, Nomina de Personal Habilitado, Plano de Planta Fisica, Certificado de Instalaciones, Listado de Equipos, Programa de Mantencion Preventiva, Listado de Elementos de Proteccion Personal, Horario de Funcionamiento, Manual de Normas-Procedimientos, Reglamento Interno, Listado de Prestaciones y Protocolo de Manejo de Residuos.
+
+Autorizar Establecimiento se descompone en Presentar Solicitud, Evaluar Antecedentes, Otorgar Autorizacion y Renovar Autorizacion, en esa secuencia.
+
+Presentar Solicitud genera Solicitud de Autorizacion.
+Director Tecnico maneja Presentar Solicitud.
+Presentar Solicitud consume Identificacion del Establecimiento.
+Presentar Solicitud consume Documento de Dominio de Inmueble.
+Presentar Solicitud consume Certificado Municipal.
+Presentar Solicitud consume Escritura de Constitucion.
+Presentar Solicitud consume Individualizacion de Director Tecnico.
+Presentar Solicitud consume Nomina de Personal Habilitado.
+Presentar Solicitud consume Plano de Planta Fisica.
+Presentar Solicitud consume Certificado de Instalaciones.
+Presentar Solicitud consume Listado de Equipos.
+Presentar Solicitud consume Programa de Mantencion Preventiva.
+Presentar Solicitud consume Listado de Elementos de Proteccion Personal.
+Presentar Solicitud consume Horario de Funcionamiento.
+Presentar Solicitud consume Manual de Normas-Procedimientos.
+Presentar Solicitud consume Reglamento Interno.
+Presentar Solicitud consume Listado de Prestaciones.
+Presentar Solicitud consume Protocolo de Manejo de Residuos.
+
+Evaluar Antecedentes consume Solicitud de Autorizacion.
+SEREMI maneja Evaluar Antecedentes.
+
+Otorgar Autorizacion genera Autorizacion Sanitaria.
+SEREMI maneja Otorgar Autorizacion.
+
+Renovar Autorizacion cambia Autorizacion Sanitaria de vigente a vigente.
+SEREMI maneja Renovar Autorizacion.
+
+=== SD1.2 ===
+SD1 se refina por descomposicion de Evaluar Elegibilidad en SD1.2.
+
+Evaluar Condicion Clinica es un proceso, informático.
+Evaluar Domicilio es un proceso, informático.
+Evaluar Red de Apoyo es un proceso, informático.
+Verificar Consentimiento es un proceso, informático.
+
+Condicion Clinica es un objeto, informático.
+Condicion Clinica puede estar agudo-reagudizado, estable, recuperado, sano, ingresado, en-tratamiento, reinternado, fallecido o egresado.
+Paciente es un objeto, físico.
+Paciente exhibe Condicion Clinica.
+Domicilio es un objeto, físico.
+Domicilio puede estar evaluado-como-apto o evaluado-como-no-apto.
+Consentimiento Informado es un objeto, informático.
+Consentimiento Informado puede estar pendiente o firmado.
+Informe Social es un objeto, informático.
+Informe Social puede estar pendiente o elaborado.
+Cuidador es un objeto, físico.
+Carta de Derechos y Deberes es un objeto, informático.
+Medico de Atencion Directa es un objeto, físico.
+Enfermero Clinico es un objeto, físico.
+Trabajador Social es un objeto, físico.
+
+Evaluar Elegibilidad se descompone en Evaluar Condicion Clinica, Evaluar Domicilio, Evaluar Red de Apoyo y Verificar Consentimiento, en esa secuencia.
+
+Evaluar Condicion Clinica afecta Paciente.
+Medico de Atencion Directa maneja Evaluar Condicion Clinica.
+
+Evaluar Domicilio cambia Domicilio de evaluado-como-no-apto a evaluado-como-apto.
+Evaluar Domicilio genera Informe Social.
+Trabajador Social maneja Evaluar Domicilio.
+
+Evaluar Red de Apoyo afecta Cuidador.
+Trabajador Social maneja Evaluar Red de Apoyo.
+
+Verificar Consentimiento cambia Consentimiento Informado de pendiente a firmado.
+Verificar Consentimiento genera Carta de Derechos y Deberes.
+Enfermero Clinico maneja Verificar Consentimiento.
+
+=== SD1.3 ===
+SD1 se refina por descomposicion de Ingresar Paciente en SD1.3.
+
+Formular Plan Terapeutico es un proceso, informático.
+Formular Plan de Cuidados es un proceso, informático.
+Registrar Ingreso es un proceso, informático.
+Entregar Resumen Clinico es un proceso, informático.
+
+Condicion Clinica es un objeto, informático.
+Condicion Clinica puede estar agudo-reagudizado, estable, recuperado, sano, ingresado, en-tratamiento, reinternado, fallecido o egresado.
+Paciente es un objeto, físico.
+Paciente exhibe Condicion Clinica.
+Consentimiento Informado es un objeto, informático.
+Consentimiento Informado puede estar pendiente o firmado.
+Plan Terapeutico es un objeto, informático.
+Plan Terapeutico puede estar formulado, en-ejecucion o cumplido.
+Plan de Cuidados de Enfermeria es un objeto, informático.
+Plan de Cuidados de Enfermeria puede estar formulado, en-ejecucion o cumplido.
+Formulario de Ingreso es un objeto, informático.
+Resumen Clinico en Domicilio es un objeto, informático.
+Ficha Clinica es un objeto, informático.
+Ficha Clinica puede estar abierta o cerrada.
+Domicilio es un objeto, físico.
+Domicilio puede estar evaluado-como-apto o evaluado-como-no-apto.
+Medico de Atencion Directa es un objeto, físico.
+Enfermero Clinico es un objeto, físico.
+
+Ingresar Paciente se descompone en Formular Plan Terapeutico, Formular Plan de Cuidados, Registrar Ingreso y Entregar Resumen Clinico, en esa secuencia.
+
+Ingresar Paciente ocurre si Consentimiento Informado está en firmado, de lo contrario Ingresar Paciente se omite.
+
+Formular Plan Terapeutico genera Plan Terapeutico.
+Medico de Atencion Directa maneja Formular Plan Terapeutico.
+
+Formular Plan de Cuidados genera Plan de Cuidados de Enfermeria.
+Enfermero Clinico maneja Formular Plan de Cuidados.
+
+Registrar Ingreso genera Formulario de Ingreso.
+Registrar Ingreso afecta Ficha Clinica.
+Enfermero Clinico maneja Registrar Ingreso.
+
+Entregar Resumen Clinico genera Resumen Clinico en Domicilio.
+Enfermero Clinico maneja Entregar Resumen Clinico.
+
+=== SD1.4 ===
+SD1 se refina por descomposicion de Tratar en Domicilio en SD1.4.
+
+Programar Visita Domiciliaria es un proceso, informático.
+Ejecutar Visita Domiciliaria es un proceso, físico.
+Evaluar Evolucion es un proceso, informático.
+Administrar Tratamiento es un proceso, físico.
+Gestionar Cuidados de Enfermeria es un proceso, físico.
+Otorgar Terapia Kinesiologica es un proceso, físico.
+Educar Paciente y Familia es un proceso, informático.
+Regular a Distancia es un proceso, informático.
+Registrar Evolucion Clinica es un proceso, informático.
+
+Condicion Clinica es un objeto, informático.
+Paciente es un objeto, físico.
+Plan Terapeutico es un objeto, informático.
+Plan Terapeutico puede estar formulado, en-ejecucion o cumplido.
+Plan de Cuidados de Enfermeria es un objeto, informático.
+Plan de Cuidados de Enfermeria puede estar formulado, en-ejecucion o cumplido.
+Equipamiento Medico es un objeto, físico.
+Equipamiento Medico puede estar operativo, en-mantencion o fuera-de-servicio.
+Vehiculo de Transporte es un objeto, físico.
+Vehiculo de Transporte puede estar disponible, en-ruta o en-mantencion.
+Protocolo Clinico es un objeto, informático.
+Sistema Telefonico es un objeto, físico.
+Ficha Clinica es un objeto, informático.
+Insumo Clinico es un objeto, físico.
+Medicamento es un objeto, físico.
+Evolucion Clinica es un objeto, informático.
+Residuo Especial es un objeto, físico.
+Domicilio es un objeto, físico.
+Domicilio puede estar evaluado-como-apto o evaluado-como-no-apto.
+Indicacion Medica es un objeto, informático.
+Soporte Informatico es un objeto, informático.
+Cuidador es un objeto, físico.
+Grupo Familiar es un objeto, físico.
+Programacion de Ruta es un objeto, informático.
+
+Coordinador es un objeto, físico.
+Medico de Atencion Directa es un objeto, físico.
+Enfermero Clinico es un objeto, físico.
+Kinesiologo es un objeto, físico.
+Medico Regulador es un objeto, físico.
+
+Tratar en Domicilio se descompone en Programar Visita Domiciliaria, Ejecutar Visita Domiciliaria, Evaluar Evolucion, Administrar Tratamiento, Gestionar Cuidados de Enfermeria, Otorgar Terapia Kinesiologica, Educar Paciente y Familia, Regular a Distancia y Registrar Evolucion Clinica, en esa secuencia.
+
+Programar Visita Domiciliaria genera Programacion de Ruta.
+Programar Visita Domiciliaria requiere Vehiculo de Transporte.
+Coordinador maneja Programar Visita Domiciliaria.
+
+Ejecutar Visita Domiciliaria afecta Paciente.
+Ejecutar Visita Domiciliaria requiere Vehiculo de Transporte.
+Ejecutar Visita Domiciliaria requiere Equipamiento Medico.
+Ejecutar Visita Domiciliaria requiere Domicilio.
+Medico de Atencion Directa maneja Ejecutar Visita Domiciliaria.
+Enfermero Clinico maneja Ejecutar Visita Domiciliaria.
+
+Evaluar Evolucion afecta Paciente.
+Evaluar Evolucion requiere Ficha Clinica.
+Enfermero Clinico maneja Evaluar Evolucion.
+
+Administrar Tratamiento consume Medicamento.
+Administrar Tratamiento consume Insumo Clinico.
+Administrar Tratamiento afecta Paciente.
+Administrar Tratamiento requiere Indicacion Medica.
+Administrar Tratamiento genera Residuo Especial.
+Medico de Atencion Directa maneja Administrar Tratamiento.
+
+Gestionar Cuidados de Enfermeria cambia Plan de Cuidados de Enfermeria de formulado a en-ejecucion.
+Enfermero Clinico maneja Gestionar Cuidados de Enfermeria.
+
+Otorgar Terapia Kinesiologica afecta Paciente.
+Otorgar Terapia Kinesiologica ocurre si Indicacion Medica existe, de lo contrario Otorgar Terapia Kinesiologica se omite.
+Kinesiologo maneja Otorgar Terapia Kinesiologica.
+
+Educar Paciente y Familia afecta Cuidador.
+Educar Paciente y Familia afecta Grupo Familiar.
+Enfermero Clinico maneja Educar Paciente y Familia.
+
+Regular a Distancia afecta Paciente.
+Regular a Distancia requiere Sistema Telefonico.
+Regular a Distancia requiere Soporte Informatico.
+Medico Regulador maneja Regular a Distancia.
+
+Registrar Evolucion Clinica genera Evolucion Clinica.
+Registrar Evolucion Clinica afecta Ficha Clinica.
+Enfermero Clinico maneja Registrar Evolucion Clinica.
+Medico de Atencion Directa maneja Registrar Evolucion Clinica.
+
+=== SD1.5 ===
+SD1 se refina por descomposicion de Egresar Paciente en SD1.5.
+
+Determinar Causal de Egreso es un proceso, informático.
+Elaborar Epicrisis es un proceso, informático.
+Aplicar Encuesta de Satisfaccion es un proceso, informático.
+Cerrar Ficha Clinica es un proceso, informático.
+Dar Alta Medica es un proceso, informático.
+Dar Alta por Cumplimiento es un proceso, informático.
+Reingresar a Hospital es un proceso, informático.
+Registrar Fallecimiento es un proceso, informático.
+Registrar Renuncia Voluntaria es un proceso, informático.
+Dar Alta Disciplinaria es un proceso, informático.
+
+Condicion Clinica es un objeto, informático.
+Condicion Clinica puede estar agudo-reagudizado, estable, recuperado, sano, ingresado, en-tratamiento, reinternado, fallecido o egresado.
+Paciente es un objeto, físico.
+Paciente exhibe Condicion Clinica.
+Ficha Clinica es un objeto, informático.
+Ficha Clinica puede estar abierta o cerrada.
+Plan Terapeutico es un objeto, informático.
+Plan Terapeutico puede estar formulado, en-ejecucion o cumplido.
+Epicrisis es un objeto, informático.
+Encuesta de Satisfaccion Usuaria es un objeto, informático.
+Encuesta de Satisfaccion Usuaria puede estar pendiente o completada.
+Causal de Egreso es un objeto, informático.
+Vehiculo de Transporte es un objeto, físico.
+Vehiculo de Transporte puede estar disponible, en-ruta o en-mantencion.
+Establecimiento de Atencion Cerrada es un objeto, físico, ambiental.
+
+Director Tecnico es un objeto, físico.
+Medico de Atencion Directa es un objeto, físico.
+Enfermero Clinico es un objeto, físico.
+
+Egresar Paciente se descompone en Determinar Causal de Egreso, Elaborar Epicrisis, Aplicar Encuesta de Satisfaccion y Cerrar Ficha Clinica, en esa secuencia.
+
+Determinar Causal de Egreso genera Causal de Egreso.
+Medico de Atencion Directa maneja Determinar Causal de Egreso.
+
+Elaborar Epicrisis genera Epicrisis.
+Medico de Atencion Directa maneja Elaborar Epicrisis.
+
+Aplicar Encuesta de Satisfaccion cambia Encuesta de Satisfaccion Usuaria de pendiente a completada.
+Enfermero Clinico maneja Aplicar Encuesta de Satisfaccion.
+
+Cerrar Ficha Clinica cambia Ficha Clinica de abierta a cerrada.
+Enfermero Clinico maneja Cerrar Ficha Clinica.
+
+Dar Alta Medica, Dar Alta por Cumplimiento, Reingresar a Hospital, Registrar Fallecimiento, Registrar Renuncia Voluntaria y Dar Alta Disciplinaria son Determinar Causal de Egreso.
+
+Dar Alta Medica cambia Condicion Clinica de en-tratamiento a recuperado.
+Medico de Atencion Directa maneja Dar Alta Medica.
+
+Dar Alta por Cumplimiento cambia Plan Terapeutico de en-ejecucion a cumplido.
+Medico de Atencion Directa maneja Dar Alta por Cumplimiento.
+
+Reingresar a Hospital cambia Condicion Clinica de en-tratamiento a reinternado.
+Reingresar a Hospital requiere Vehiculo de Transporte.
+Reingresar a Hospital requiere Establecimiento de Atencion Cerrada.
+Medico de Atencion Directa maneja Reingresar a Hospital.
+
+Registrar Fallecimiento cambia Condicion Clinica de en-tratamiento a fallecido.
+Medico de Atencion Directa maneja Registrar Fallecimiento.
+
+Registrar Renuncia Voluntaria cambia Condicion Clinica de en-tratamiento a egresado.
+Medico de Atencion Directa maneja Registrar Renuncia Voluntaria.
+
+Dar Alta Disciplinaria cambia Condicion Clinica de en-tratamiento a egresado.
+Director Tecnico maneja Dar Alta Disciplinaria.
+
+=== SD3 ===
+SD se refina por descomposicion de Dirigir Tecnicamente en SD3.
+
+Dirigir Tecnicamente es un proceso, informático.
+Aprobar Manuales es un proceso, informático.
+Aprobar Turnos es un proceso, informático.
+Mantener Stock es un proceso, físico.
+Verificar Mantencion de Equipos es un proceso, físico.
+Supervisar IAAS es un proceso, informático.
+Gestionar Calidad es un proceso, informático.
+Gestionar Capacitacion es un proceso, informático.
+Coordinar con Derivadores es un proceso, informático.
+Asegurar Traslado Oportuno es un proceso, físico.
+
+Sistema de Hospitalizacion Domiciliaria es un objeto, físico.
+Manual de Normas-Procedimientos es un objeto, informático.
+Manual de Organizacion Interna es un objeto, informático.
+Protocolo Clinico es un objeto, informático.
+Horario de Funcionamiento es un objeto, informático.
+Medicamento es un objeto, físico.
+Insumo Clinico es un objeto, físico.
+Farmacia-Botiquin es un objeto, físico.
+Bodega de Insumos es un objeto, físico.
+Equipamiento Medico es un objeto, físico.
+Vehiculo de Transporte es un objeto, físico.
+Vehiculo de Transporte puede estar disponible, en-ruta o en-mantencion.
+Programa de Mantencion Preventiva es un objeto, informático.
+Programa de Prevencion de IAAS es un objeto, informático.
+Plan de Capacitacion Anual es un objeto, informático.
+Personal de Salud es un objeto, físico.
+Paciente es un objeto, físico.
+Director Tecnico es un objeto, físico.
+Institucion Derivadora es un objeto, físico, ambiental.
+Medico Tratante es un objeto, físico, ambiental.
+Establecimiento de Atencion Cerrada es un objeto, físico, ambiental.
+
+Dirigir Tecnicamente afecta Sistema de Hospitalizacion Domiciliaria.
+Director Tecnico maneja Dirigir Tecnicamente.
+
+Dirigir Tecnicamente se descompone en Aprobar Manuales, Aprobar Turnos, Mantener Stock, Verificar Mantencion de Equipos, Supervisar IAAS, Gestionar Calidad, Gestionar Capacitacion, Coordinar con Derivadores y Asegurar Traslado Oportuno, en esa secuencia.
+
+Aprobar Manuales afecta Manual de Normas-Procedimientos.
+Aprobar Manuales afecta Manual de Organizacion Interna.
+Aprobar Manuales afecta Protocolo Clinico.
+Director Tecnico maneja Aprobar Manuales.
+
+Aprobar Turnos afecta Horario de Funcionamiento.
+Director Tecnico maneja Aprobar Turnos.
+
+Mantener Stock afecta Medicamento.
+Mantener Stock afecta Insumo Clinico.
+Mantener Stock requiere Farmacia-Botiquin.
+Mantener Stock requiere Bodega de Insumos.
+Director Tecnico maneja Mantener Stock.
+
+Verificar Mantencion de Equipos afecta Equipamiento Medico.
+Verificar Mantencion de Equipos afecta Vehiculo de Transporte.
+Verificar Mantencion de Equipos requiere Programa de Mantencion Preventiva.
+Director Tecnico maneja Verificar Mantencion de Equipos.
+
+Supervisar IAAS afecta Programa de Prevencion de IAAS.
+Director Tecnico maneja Supervisar IAAS.
+
+Gestionar Calidad afecta Sistema de Hospitalizacion Domiciliaria.
+Director Tecnico maneja Gestionar Calidad.
+
+Gestionar Capacitacion afecta Personal de Salud.
+Gestionar Capacitacion requiere Plan de Capacitacion Anual.
+Director Tecnico maneja Gestionar Capacitacion.
+
+Coordinar con Derivadores afecta Paciente.
+Coordinar con Derivadores requiere Institucion Derivadora.
+Coordinar con Derivadores requiere Medico Tratante.
+Director Tecnico maneja Coordinar con Derivadores.
+
+Asegurar Traslado Oportuno afecta Paciente.
+Asegurar Traslado Oportuno requiere Vehiculo de Transporte.
+Asegurar Traslado Oportuno requiere Establecimiento de Atencion Cerrada.
+Director Tecnico maneja Asegurar Traslado Oportuno.
+
+=== SD4 ===
+SD se refina por descomposicion de Coordinar Operaciones en SD4.
+
+Coordinar Operaciones es un proceso, informático.
+Supervisar Manuales es un proceso, informático.
+Supervisar Procesos Clinicos es un proceso, informático.
+Gestionar Personal es un proceso, informático.
+Supervisar Calidad de Cuidados es un proceso, informático.
+Gestionar Insumos Operacionales es un proceso, físico.
+Coordinar Continuidad Asistencial es un proceso, informático.
+
+Sistema de Hospitalizacion Domiciliaria es un objeto, físico.
+Manual de Organizacion Interna es un objeto, informático.
+Ficha Clinica es un objeto, informático.
+Personal de Salud es un objeto, físico.
+Plan de Cuidados de Enfermeria es un objeto, informático.
+Equipamiento Medico es un objeto, físico.
+Insumo Clinico es un objeto, físico.
+Programa de Mantencion Preventiva es un objeto, informático.
+Paciente es un objeto, físico.
+Coordinador es un objeto, físico.
+Institucion Derivadora es un objeto, físico, ambiental.
+Establecimiento de Atencion Cerrada es un objeto, físico, ambiental.
+
+Coordinar Operaciones afecta Sistema de Hospitalizacion Domiciliaria.
+Coordinador maneja Coordinar Operaciones.
+
+Coordinar Operaciones se descompone en Supervisar Manuales, Supervisar Procesos Clinicos, Gestionar Personal, Supervisar Calidad de Cuidados, Gestionar Insumos Operacionales y Coordinar Continuidad Asistencial, en esa secuencia.
+
+Supervisar Manuales afecta Manual de Organizacion Interna.
+Coordinador maneja Supervisar Manuales.
+
+Supervisar Procesos Clinicos afecta Ficha Clinica.
+Coordinador maneja Supervisar Procesos Clinicos.
+
+Gestionar Personal afecta Personal de Salud.
+Coordinador maneja Gestionar Personal.
+
+Supervisar Calidad de Cuidados afecta Plan de Cuidados de Enfermeria.
+Coordinador maneja Supervisar Calidad de Cuidados.
+
+Gestionar Insumos Operacionales afecta Equipamiento Medico.
+Gestionar Insumos Operacionales afecta Insumo Clinico.
+Gestionar Insumos Operacionales requiere Programa de Mantencion Preventiva.
+Coordinador maneja Gestionar Insumos Operacionales.
+
+Coordinar Continuidad Asistencial afecta Paciente.
+Coordinar Continuidad Asistencial requiere Institucion Derivadora.
+Coordinar Continuidad Asistencial requiere Establecimiento de Atencion Cerrada.
+Coordinador maneja Coordinar Continuidad Asistencial.
+
+=== SD5 ===
+SD se refina por descomposicion de Gestionar Registros en SD5.
+
+Gestionar Registros es un proceso, informático.
+Mantener Ficha Clinica es un proceso, informático.
+Registrar Consentimiento es un proceso, informático.
+Mantener Resumen Clinico es un proceso, informático.
+Registrar Llamadas es un proceso, informático.
+Resguardar Confidencialidad es un proceso, informático.
+
+Ficha Clinica es un objeto, informático.
+Ficha Clinica puede estar abierta o cerrada.
+Consentimiento Informado es un objeto, informático.
+Consentimiento Informado puede estar pendiente o firmado.
+Carta de Derechos y Deberes es un objeto, informático.
+Resumen Clinico en Domicilio es un objeto, informático.
+Registro de Llamadas es un objeto, informático.
+Sistema Telefonico es un objeto, físico.
+Soporte Informatico es un objeto, informático.
+Director Tecnico es un objeto, físico.
+Enfermero Clinico es un objeto, físico.
+Medico de Atencion Directa es un objeto, físico.
+
+Gestionar Registros afecta Ficha Clinica.
+Gestionar Registros genera Registro de Llamadas.
+
+Gestionar Registros se descompone en Mantener Ficha Clinica, Registrar Consentimiento, Mantener Resumen Clinico, Registrar Llamadas y Resguardar Confidencialidad, en esa secuencia.
+
+Mantener Ficha Clinica afecta Ficha Clinica.
+Mantener Ficha Clinica requiere Soporte Informatico.
+Enfermero Clinico maneja Mantener Ficha Clinica.
+Medico de Atencion Directa maneja Mantener Ficha Clinica.
+
+Registrar Consentimiento genera Consentimiento Informado.
+Registrar Consentimiento afecta Carta de Derechos y Deberes.
+Enfermero Clinico maneja Registrar Consentimiento.
+
+Mantener Resumen Clinico afecta Resumen Clinico en Domicilio.
+Enfermero Clinico maneja Mantener Resumen Clinico.
+
+Registrar Llamadas genera Registro de Llamadas.
+Registrar Llamadas requiere Sistema Telefonico.
+
+Resguardar Confidencialidad afecta Ficha Clinica.
+Director Tecnico maneja Resguardar Confidencialidad.
+
+=== SD6 ===
+SD se refina por descomposicion de Capacitar Personal en SD6.
+
+Capacitar Personal es un proceso, informático.
+Inducir Personal Nuevo es un proceso, informático.
+Capacitar en IAAS es un proceso, informático.
+Capacitar en RCP es un proceso, informático.
+Certificar Uso de Desfibrilador es un proceso, informático.
+Capacitar en Humanizacion del Cuidado es un proceso, informático.
+
+Personal de Salud es un objeto, físico.
+Plan de Capacitacion Anual es un objeto, informático.
+Programa de Prevencion de IAAS es un objeto, informático.
+Desfibrilador es un objeto, físico.
+Director Tecnico es un objeto, físico.
+Coordinador es un objeto, físico.
+
+Capacitar Personal afecta Personal de Salud.
+Capacitar Personal requiere Plan de Capacitacion Anual.
+Director Tecnico maneja Capacitar Personal.
+
+Capacitar Personal se descompone en Inducir Personal Nuevo, Capacitar en IAAS, Capacitar en RCP, Certificar Uso de Desfibrilador y Capacitar en Humanizacion del Cuidado, en esa secuencia.
+
+Inducir Personal Nuevo afecta Personal de Salud.
+Coordinador maneja Inducir Personal Nuevo.
+
+Capacitar en IAAS afecta Personal de Salud.
+Capacitar en IAAS requiere Programa de Prevencion de IAAS.
+
+Capacitar en RCP afecta Personal de Salud.
+
+Certificar Uso de Desfibrilador afecta Personal de Salud.
+Certificar Uso de Desfibrilador requiere Desfibrilador.
+
+Capacitar en Humanizacion del Cuidado afecta Personal de Salud.
+
+=== SD7 ===
+SD se refina por descomposicion de Gestionar Residuos en SD7.
+
+Gestionar Residuos es un proceso, físico.
+Almacenar Transitoriamente es un proceso, físico.
+Retirar Residuos es un proceso, físico.
+Eliminar Residuos es un proceso, físico.
+
+Residuo Especial es un objeto, físico.
+Residuo Especial puede estar generado, almacenado-transitoriamente o retirado.
+Area de Residuos es un objeto, físico.
+
+Gestionar Residuos cambia Residuo Especial de generado a retirado.
+
+Gestionar Residuos se descompone en Almacenar Transitoriamente, Retirar Residuos y Eliminar Residuos, en esa secuencia.
+
+Almacenar Transitoriamente cambia Residuo Especial de generado a almacenado-transitoriamente.
+Almacenar Transitoriamente requiere Area de Residuos.
+
+Retirar Residuos cambia Residuo Especial de almacenado-transitoriamente a retirado.
+
+Eliminar Residuos consume Residuo Especial.
+
+=== SD8 ===
+SD se refina por descomposicion de Mantener Equipos en SD8.
+
+Mantener Equipos es un proceso, físico.
+Ejecutar Mantencion Preventiva es un proceso, físico.
+Reparar Equipo es un proceso, físico.
+
+Equipamiento Medico es un objeto, físico.
+Equipamiento Medico puede estar operativo, en-mantencion o fuera-de-servicio.
+Vehiculo de Transporte es un objeto, físico.
+Vehiculo de Transporte puede estar disponible, en-ruta o en-mantencion.
+Programa de Mantencion Preventiva es un objeto, informático.
+
+Mantener Equipos cambia Equipamiento Medico de fuera-de-servicio a operativo.
+Mantener Equipos cambia Vehiculo de Transporte de en-mantencion a disponible.
+
+Mantener Equipos se descompone en Ejecutar Mantencion Preventiva y Reparar Equipo, en esa secuencia.
+
+Ejecutar Mantencion Preventiva afecta Equipamiento Medico.
+Ejecutar Mantencion Preventiva afecta Vehiculo de Transporte.
+Ejecutar Mantencion Preventiva requiere Programa de Mantencion Preventiva.
+
+Reparar Equipo cambia Equipamiento Medico de fuera-de-servicio a operativo.
+
+=== SD9 ===
+SD se refina por descomposicion de Abastecer Farmacia en SD9.
+
+Abastecer Farmacia es un proceso, físico.
+Controlar Stock es un proceso, informático.
+Adquirir Medicamentos es un proceso, físico.
+Almacenar con Cadena de Frio es un proceso, físico.
+Dispensar en Domicilio es un proceso, físico.
+
+Medicamento es un objeto, físico.
+Medicamento puede estar disponible, administrado o agotado.
+Insumo Clinico es un objeto, físico.
+Convenio es un objeto, informático.
+Bodega de Insumos es un objeto, físico.
+Farmacia-Botiquin es un objeto, físico.
+Paciente es un objeto, físico.
+Receta es un objeto, informático.
+Director Tecnico es un objeto, físico.
+
+Abastecer Farmacia cambia Medicamento de agotado a disponible.
+Abastecer Farmacia afecta Insumo Clinico.
+
+Abastecer Farmacia se descompone en Controlar Stock, Adquirir Medicamentos, Almacenar con Cadena de Frio y Dispensar en Domicilio, en esa secuencia.
+
+Controlar Stock afecta Medicamento.
+Controlar Stock afecta Insumo Clinico.
+Director Tecnico maneja Controlar Stock.
+
+Adquirir Medicamentos genera Medicamento.
+Adquirir Medicamentos requiere Convenio.
+
+Almacenar con Cadena de Frio afecta Medicamento.
+Almacenar con Cadena de Frio requiere Bodega de Insumos.
+Almacenar con Cadena de Frio requiere Farmacia-Botiquin.
+
+Dispensar en Domicilio consume Medicamento.
+Dispensar en Domicilio afecta Paciente.
+Dispensar en Domicilio requiere Receta.
+
+=== SD10 ===
+SD se refina por descomposicion de Manejar Emergencia en SD10.
+
+Manejar Emergencia es un proceso, físico.
+Detectar Agudizacion es un proceso, informático.
+Coordinar Reingreso es un proceso, informático.
+Trasladar Paciente es un proceso, físico.
+
+Paciente es un objeto, físico.
+Condicion Clinica es un objeto, informático.
+Condicion Clinica puede estar agudo-reagudizado, estable, recuperado, sano, ingresado, en-tratamiento, reinternado, fallecido o egresado.
+Paciente exhibe Condicion Clinica.
+Sistema Telefonico es un objeto, físico.
+Vehiculo de Transporte es un objeto, físico.
+Vehiculo de Transporte puede estar disponible, en-ruta o en-mantencion.
+Medico de Atencion Directa es un objeto, físico.
+Medico Regulador es un objeto, físico.
+Director Tecnico es un objeto, físico.
+Medico Tratante es un objeto, físico, ambiental.
+Establecimiento de Atencion Cerrada es un objeto, físico, ambiental.
+
+Manejar Emergencia cambia Condicion Clinica de en-tratamiento a reinternado.
+
+Manejar Emergencia se descompone en Detectar Agudizacion, Coordinar Reingreso y Trasladar Paciente, en esa secuencia.
+
+Detectar Agudizacion afecta Paciente.
+Detectar Agudizacion requiere Sistema Telefonico.
+Medico de Atencion Directa maneja Detectar Agudizacion.
+Medico Regulador maneja Detectar Agudizacion.
+
+Coordinar Reingreso afecta Paciente.
+Coordinar Reingreso requiere Medico Tratante.
+Coordinar Reingreso requiere Establecimiento de Atencion Cerrada.
+Medico de Atencion Directa maneja Coordinar Reingreso.
+
+Trasladar Paciente cambia Condicion Clinica de en-tratamiento a reinternado.
+Trasladar Paciente requiere Vehiculo de Transporte.
+Director Tecnico maneja Trasladar Paciente.
+
+=== SD11 ===
+SD1.4 se refina por descomposicion de Administrar Tratamiento en SD11.
+
+Manejar Via Venosa Periferica es un proceso, físico.
+Manejar Via Venosa Central es un proceso, físico.
+Manejar Cateter Urinario es un proceso, físico.
+Manejar Traqueostomia es un proceso, físico.
+Tomar Muestras es un proceso, físico.
+Aplicar Precauciones de Aislamiento es un proceso, físico.
+
+Paciente es un objeto, físico.
+Insumo Clinico es un objeto, físico.
+Manual de Procedimientos es un objeto, informático.
+Elemento de Proteccion Personal es un objeto, físico.
+Protocolo Clinico es un objeto, informático.
+Muestra Clinica es un objeto, físico.
+Enfermero Clinico es un objeto, físico.
+Kinesiologo es un objeto, físico.
+
+Manejar Via Venosa Periferica afecta Paciente.
+Manejar Via Venosa Periferica consume Insumo Clinico.
+Manejar Via Venosa Periferica requiere Manual de Procedimientos.
+Enfermero Clinico maneja Manejar Via Venosa Periferica.
+
+Manejar Via Venosa Central afecta Paciente.
+Manejar Via Venosa Central consume Insumo Clinico.
+Manejar Via Venosa Central requiere Manual de Procedimientos.
+Enfermero Clinico maneja Manejar Via Venosa Central.
+
+Manejar Cateter Urinario afecta Paciente.
+Manejar Cateter Urinario consume Insumo Clinico.
+Enfermero Clinico maneja Manejar Cateter Urinario.
+
+Manejar Traqueostomia afecta Paciente.
+Manejar Traqueostomia consume Insumo Clinico.
+Enfermero Clinico maneja Manejar Traqueostomia.
+Kinesiologo maneja Manejar Traqueostomia.
+
+Tomar Muestras afecta Paciente.
+Tomar Muestras genera Muestra Clinica.
+Enfermero Clinico maneja Tomar Muestras.
+
+Aplicar Precauciones de Aislamiento afecta Paciente.
+Aplicar Precauciones de Aislamiento requiere Elemento de Proteccion Personal.
+Aplicar Precauciones de Aislamiento requiere Protocolo Clinico.
+Enfermero Clinico maneja Aplicar Precauciones de Aislamiento.
+
+=== SD12 ===
+SD1.4 se refina por descomposicion de Regular a Distancia en SD12.
+
+Atender con TIC es un proceso, informático.
+
+Paciente es un objeto, físico.
+Soporte Informatico es un objeto, informático.
+Sistema Telefonico es un objeto, físico.
+Medico de Atencion Directa es un objeto, físico.
+Medico Regulador es un objeto, físico.
+
+Atender con TIC afecta Paciente.
+Atender con TIC requiere Soporte Informatico.
+Atender con TIC requiere Sistema Telefonico.
+Medico de Atencion Directa maneja Atender con TIC.
+Medico Regulador maneja Atender con TIC.

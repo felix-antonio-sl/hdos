@@ -1,0 +1,155 @@
+=== SD ===
+Servicio de Hospitalizacion Domiciliaria es un objeto, físico.
+Hospitalizar en Domicilio es un proceso, físico.
+Director Tecnico es un objeto, físico.
+Coordinador es un objeto, físico.
+Equipo de Salud es un objeto, físico.
+Dependencia Administrativa es un objeto, físico.
+Medico de Atencion Directa es un objeto, físico.
+Medico Regulador es un objeto, físico.
+Enfermero Clinico es un objeto, físico.
+Kinesiologo es un objeto, físico.
+Tecnico de Enfermeria es un objeto, físico.
+Trabajador Social es un objeto, físico.
+Paciente es un objeto, físico.
+Consentimiento Informado es un objeto, informático.
+Plan Terapeutico es un objeto, informático.
+Ficha Clinica es un objeto, informático.
+Equipamiento Medico es un objeto, físico.
+Domicilio del Paciente es un objeto, físico, ambiental.
+Resumen Clinico en Domicilio es un objeto, informático.
+Epicrisis es un objeto, informático.
+SEREMI es un objeto, físico, ambiental.
+Autorizar Servicio es un proceso, informático.
+Fiscalizar Servicio es un proceso, informático.
+
+Servicio de Hospitalizacion Domiciliaria exhibe Hospitalizar en Domicilio.
+Servicio de Hospitalizacion Domiciliaria consta de Director Tecnico, Coordinador, Equipo de Salud y Dependencia Administrativa.
+Equipo de Salud consta de Medico de Atencion Directa, Medico Regulador, Enfermero Clinico, Kinesiologo, Tecnico de Enfermeria y Trabajador Social.
+
+Paciente puede estar hospitalizado-en-atencion-cerrada, ingresado, reingresado o egresado.
+Estado hospitalizado-en-atencion-cerrada de Paciente es inicial.
+Estado egresado de Paciente es final.
+Domicilio del Paciente puede estar con-condiciones-sanitarias-minimas o sin-condiciones-sanitarias-minimas.
+
+Equipo de Salud maneja Hospitalizar en Domicilio.
+Hospitalizar en Domicilio cambia Paciente de hospitalizado-en-atencion-cerrada a egresado.
+Hospitalizar en Domicilio requiere Plan Terapeutico.
+Hospitalizar en Domicilio requiere Ficha Clinica.
+Hospitalizar en Domicilio requiere Equipamiento Medico.
+Hospitalizar en Domicilio ocurre si Consentimiento Informado existe, de lo contrario Hospitalizar en Domicilio se omite.
+Hospitalizar en Domicilio ocurre si Domicilio del Paciente está en con-condiciones-sanitarias-minimas, de lo contrario Hospitalizar en Domicilio se omite.
+Hospitalizar en Domicilio genera Resumen Clinico en Domicilio.
+Hospitalizar en Domicilio genera Epicrisis.
+
+SEREMI maneja Autorizar Servicio.
+Autorizar Servicio afecta Servicio de Hospitalizacion Domiciliaria.
+SEREMI maneja Fiscalizar Servicio.
+Fiscalizar Servicio afecta Servicio de Hospitalizacion Domiciliaria.
+
+=== SD1 ===
+SD se refina por descomposicion de Hospitalizar en Domicilio en SD1.
+
+Hospitalizar en Domicilio es un proceso, físico.
+Evaluar Ingreso es un proceso, informático.
+Planificar Atencion es un proceso, informático.
+Otorgar Atencion en Domicilio es un proceso, físico.
+Gestionar Reingreso Hospitalario es un proceso, informático.
+Gestionar Egreso es un proceso, informático.
+
+Medico de Atencion Directa es un objeto, físico.
+Enfermero Clinico es un objeto, físico.
+Equipo de Salud es un objeto, físico.
+Director Tecnico es un objeto, físico.
+Paciente es un objeto, físico.
+Consentimiento Informado es un objeto, informático.
+Red de Apoyo es un objeto, físico, ambiental.
+Domicilio del Paciente es un objeto, físico, ambiental.
+Plan Terapeutico es un objeto, informático.
+Plan de Cuidados es un objeto, informático.
+Programacion de Visitas Domiciliarias es un objeto, informático.
+Ficha Clinica es un objeto, informático.
+Equipamiento Medico es un objeto, físico.
+Resumen Clinico en Domicilio es un objeto, informático.
+Servicio de Traslado es un objeto, físico, ambiental.
+Epicrisis es un objeto, informático.
+
+Paciente puede estar hospitalizado-en-atencion-cerrada, ingresado, reingresado o egresado.
+Domicilio del Paciente puede estar con-condiciones-sanitarias-minimas o sin-condiciones-sanitarias-minimas.
+
+Hospitalizar en Domicilio se descompone en Evaluar Ingreso, Planificar Atencion, Otorgar Atencion en Domicilio, Gestionar Reingreso Hospitalario y Gestionar Egreso, en esa secuencia.
+
+Medico de Atencion Directa maneja Evaluar Ingreso.
+Enfermero Clinico maneja Evaluar Ingreso.
+Evaluar Ingreso ocurre si Consentimiento Informado existe, de lo contrario Evaluar Ingreso se omite.
+Evaluar Ingreso ocurre si Red de Apoyo existe, de lo contrario Evaluar Ingreso se omite.
+Evaluar Ingreso ocurre si Domicilio del Paciente está en con-condiciones-sanitarias-minimas, de lo contrario Evaluar Ingreso se omite.
+Evaluar Ingreso cambia Paciente de hospitalizado-en-atencion-cerrada a ingresado.
+
+Enfermero Clinico maneja Planificar Atencion.
+Planificar Atencion genera Plan Terapeutico.
+Planificar Atencion genera Plan de Cuidados.
+Planificar Atencion genera Programacion de Visitas Domiciliarias.
+
+Equipo de Salud maneja Otorgar Atencion en Domicilio.
+Otorgar Atencion en Domicilio requiere Plan Terapeutico.
+Otorgar Atencion en Domicilio requiere Plan de Cuidados.
+Otorgar Atencion en Domicilio requiere Ficha Clinica.
+Otorgar Atencion en Domicilio requiere Equipamiento Medico.
+Otorgar Atencion en Domicilio afecta Paciente.
+Otorgar Atencion en Domicilio genera Resumen Clinico en Domicilio.
+
+Director Tecnico maneja Gestionar Reingreso Hospitalario.
+Gestionar Reingreso Hospitalario requiere Servicio de Traslado.
+Gestionar Reingreso Hospitalario cambia Paciente de ingresado a reingresado.
+
+Medico de Atencion Directa maneja Gestionar Egreso.
+Enfermero Clinico maneja Gestionar Egreso.
+Gestionar Egreso cambia Paciente de ingresado a egresado.
+Gestionar Egreso genera Epicrisis.
+
+=== SD2 ===
+SD1 se refina por descomposicion de Otorgar Atencion en Domicilio en SD2.
+
+Otorgar Atencion en Domicilio es un proceso, físico.
+Evaluar Paciente durante Visita es un proceso, físico.
+Ejecutar Plan Terapeutico es un proceso, físico.
+Educar sobre Autocuidado es un proceso, informático.
+Registrar Evolucion en Ficha es un proceso, informático.
+
+Enfermero Clinico es un objeto, físico.
+Medico de Atencion Directa es un objeto, físico.
+Kinesiologo es un objeto, físico.
+Tecnico de Enfermeria es un objeto, físico.
+Paciente es un objeto, físico.
+Grupo de Cuidadores es un objeto, físico, ambiental.
+Instrumento de Evaluacion es un objeto, físico.
+Plan Terapeutico es un objeto, informático.
+Plan de Cuidados es un objeto, informático.
+Equipamiento Medico es un objeto, físico.
+Ficha Clinica es un objeto, informático.
+Resumen Clinico en Domicilio es un objeto, informático.
+
+Otorgar Atencion en Domicilio se descompone en Evaluar Paciente durante Visita, Ejecutar Plan Terapeutico, Educar sobre Autocuidado y Registrar Evolucion en Ficha, en esa secuencia.
+
+Enfermero Clinico maneja Evaluar Paciente durante Visita.
+Evaluar Paciente durante Visita requiere Instrumento de Evaluacion.
+Evaluar Paciente durante Visita afecta Paciente.
+
+Medico de Atencion Directa maneja Ejecutar Plan Terapeutico.
+Enfermero Clinico maneja Ejecutar Plan Terapeutico.
+Kinesiologo maneja Ejecutar Plan Terapeutico.
+Tecnico de Enfermeria maneja Ejecutar Plan Terapeutico.
+Ejecutar Plan Terapeutico requiere Plan Terapeutico.
+Ejecutar Plan Terapeutico requiere Plan de Cuidados.
+Ejecutar Plan Terapeutico requiere Equipamiento Medico.
+Ejecutar Plan Terapeutico afecta Paciente.
+
+Enfermero Clinico maneja Educar sobre Autocuidado.
+Educar sobre Autocuidado afecta Paciente.
+Educar sobre Autocuidado afecta Grupo de Cuidadores.
+
+Enfermero Clinico maneja Registrar Evolucion en Ficha.
+Registrar Evolucion en Ficha requiere Ficha Clinica.
+Registrar Evolucion en Ficha afecta Ficha Clinica.
+Registrar Evolucion en Ficha genera Resumen Clinico en Domicilio.
