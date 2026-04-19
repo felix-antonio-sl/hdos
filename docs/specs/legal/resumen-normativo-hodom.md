@@ -216,7 +216,9 @@ Fecha: 2026-04-10 | Autor: Direccion Tecnica HODOM HSC
 
 **Que es**: Proyecto de inversion "Adquisicion de Equipos y Recurso Humano para Implementacion Permanente de Hospitalizacion Domiciliaria HSC". Codigo BIP 40059567-0. Febrero 2026.
 
-**Fuente**: `dt-hd-sc/PROYECTO IMPLEMENTACION HODOM HSC.txt`
+**Fuente consolidada en KB**: `/home/felix/kora/artifacts/knowledge/salud/hodom/director/03-situacion-chile-2026.md`
+
+Nota de trazabilidad: el extracto operacional local `dt-hd-sc/PROYECTO IMPLEMENTACION HODOM HSC.txt` fue retirado del repo; la referencia vigente vive en la KB centralizada.
 
 ### Contenido del proyecto
 
@@ -360,9 +362,9 @@ Fecha: 2026-04-10 | Autor: Direccion Tecnica HODOM HSC
 | `hodom/normativa/01-reglamento-hodom-ds1-2022.md` | Texto completo DS 1/2022 |
 | `hodom/normativa/02-decreto-exento-31-2024-aprueba-norma-tecnica.md` | Texto DE 31/2024 |
 | `hodom/normativa/03-norma-tecnica-hodom-2024.md` | Texto NT HODOM 2024 |
-| `hodom/director/03-situacion-chile-2026.md` | Diagnostico situacional con contexto financiero MCC/0201408 |
+| `/home/felix/kora/artifacts/knowledge/salud/hodom/director/03-situacion-chile-2026.md` | Diagnostico situacional con contexto financiero MCC/0201408 y consolidado operativo |
 | `docs/models/opl-hodom-normativo.md` | Modelo OPM normativo basado en DS 1/2022 y NT 2024 |
 | `docs/specs/cartera-prestaciones-hsc-2024.md` | Cartera de prestaciones HODOM HSC |
 | `docs/specs/indicadores-operacionales-hodom.md` | Indicadores de gestion HODOM |
-| `dt-hd-sc/PROYECTO IMPLEMENTACION HODOM HSC.txt` | Proyecto BIP completo |
-| `dt-hd-sc/Protocolo Hospitalizacion MODIFICADO 2023 (1).docx.txt` | Protocolo PRO 002 vigente |
+| `/home/felix/kora/artifacts/knowledge/salud/hodom/director/03-situacion-chile-2026.md` | Fuente consolidada vigente para contexto BIP 40059567-0 y situacion HODOM |
+| `/home/felix/kora/artifacts/knowledge/salud/hodom/director/01-manual-direccion-tecnica.md` | Requisitos vigentes de direccion tecnica y marco de protocolos operacionales |

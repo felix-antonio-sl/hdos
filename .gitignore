@@ -35,5 +35,7 @@ input/reference/insumos_varios/*.DOCX
 # Raw incremental data drops (consumed by ingest scripts, not tracked)
 input/actualizacion_*/
 dt-hd-sc/varios/EU-María-Elena-Campos-Hospitalización-Domiciliaria-y-AM.pdf
-dt-hd-sc/varios/EU-María-Elena-Campos-Hospitalización-Domiciliaria-y-AM.pdf
 dt-hd-sc/varios/Plan-de-Acción-Programa-Adolescentes-y-jóvenes-2024-final-publicar.pdf
+
+# Local convenience link to centralized HODOM knowledge base
+docs/kb-hodom

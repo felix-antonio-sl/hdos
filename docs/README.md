@@ -87,4 +87,4 @@ Documentacion tecnica y de diseno de la aplicacion web en `/home/felix/projects/
 
 - La documentacion de este directorio explica la base de datos actual, el modelo de datos o su contexto normativo directo.
 - Material historico u operacional retirado no forma parte del alcance del repositorio.
-- Las fuentes normativas autoritativas estan en la KB centralizada (`/home/felix/kora/KNOWLEDGE/salud/hodom/normativa/`).
+- Las fuentes normativas autoritativas estan en la KB centralizada (`/home/felix/kora/artifacts/knowledge/salud/hodom/normativa/`).
