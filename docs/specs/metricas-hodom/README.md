@@ -18,6 +18,8 @@ Este directorio es la ubicacion normativa para artefactos agregados derivados de
 | `../../../db/updates/2026-05-25-drive-staging-migration.sql` | DDL normativo e idempotente para `staging` y trazabilidad de carga Drive. |
 | `plan-drive-promotion-readiness-2026-05-26.md` | Plan ejecutado para evaluar readiness de promocion desde staging hacia core. |
 | `../../../db/updates/2026-05-26-drive-promotion-readiness.sql` | Vistas no destructivas de matching, calidad y readiness antes de promocion core. |
+| `lectura-categorial-promocion-drive-2026-05-26.md` | Diagnostico categorial de preservacion, pullbacks, parcialidad y gates de promocion. |
+| `../../../db/updates/2026-05-26-drive-promotion-contract.sql` | Contrato no destructivo que degrada readiness a gates seguros antes de inserts core. |
 
 ## Reglas normativas
 
@@ -35,5 +37,6 @@ python3 scripts/drive_consolidation.py
 python3 scripts/hodom_annual_metrics.py
 python3 scripts/drive_staging_migration.py
 PGPASSWORD=hodom psql 'postgresql://hodom:hodom@localhost:5555/hodom' -v ON_ERROR_STOP=1 -f db/updates/2026-05-26-drive-promotion-readiness.sql
+PGPASSWORD=hodom psql 'postgresql://hodom:hodom@localhost:5555/hodom' -v ON_ERROR_STOP=1 -f db/updates/2026-05-26-drive-promotion-contract.sql
 python3 -m unittest discover -s scripts -p 'test_*.py'
 ```
