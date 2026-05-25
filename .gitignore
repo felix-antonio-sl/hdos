@@ -1,6 +1,7 @@
 .DS_Store
 **/.DS_Store
 .venv/
+.tmp/
 .pytest_cache/
 __pycache__/
 **/__pycache__/

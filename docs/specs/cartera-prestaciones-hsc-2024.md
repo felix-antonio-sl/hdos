@@ -1,14 +1,14 @@
 # Cartera de Prestaciones HSC 2024 y Articulacion con HODOM
 
 Hospital de San Carlos Dr. Benicio Arzola Medina.
-Fuente: `cartera_servicios_hsc_2024.txt` (2.124 prestaciones catalogadas).
-Fecha documento fuente: 2024. Ultima actualizacion de este resumen: 2026-04-10.
+Fuente: `cartera_servicios_hsc_2024.txt` (2.111 prestaciones netas; 2.125 filas no vacias incluyendo 13 cabeceras repetidas y 1 fila sin prestacion).
+Fecha documento fuente: 2024. Ultima actualizacion de este resumen: 2026-05-25.
 
 ---
 
 ## 1. Resumen de la cartera hospitalaria
 
-La cartera del HSC contiene 2.124 prestaciones distribuidas en 8 macroprocesos y 25 unidades funcionales.
+La cartera del HSC contiene 2.111 prestaciones netas distribuidas en 8 macroprocesos y 25 unidades funcionales.
 
 ### Distribucion por unidad funcional
 
@@ -32,7 +32,7 @@ La cartera del HSC contiene 2.124 prestaciones distribuidas en 8 macroprocesos y
 | Medicina/Cirugia Adulto | 15 | Atencion cerrada |
 | Prequirurgico (box, preparacion, sala) | 21 | Proceso Quirurgico |
 | Medicina Adulto | 10 | Atencion cerrada |
-| **Total** | **~2.124** | |
+| **Total fuente neta** | **2.111** | |
 
 ### Laboratorio Clinico: subsecciones
 
@@ -176,6 +176,6 @@ Estas prestaciones requieren derivacion fuera de la red del HSC y son relevantes
 ## Notas metodologicas
 
 - La cartera fuente (2024) tiene formato tabular TSV con 13 campos: usuario, macroproceso, unidad, subproceso, estamento, prestacion, codigo MAI, tipo EPH, actual/nueva, area de influencia, compra de servicio, observaciones.
-- El conteo de 2.124 incluye encabezados repetidos (13 filas de header). Prestaciones netas: ~2.111.
+- El conteo bruto de 2.125 filas no vacias incluye 13 encabezados repetidos y 1 fila sin prestacion. Prestaciones netas cargadas a la base: 2.111.
 - Farmacia no aparece como unidad independiente en la cartera; opera como servicio transversal de apoyo. La articulacion con HODOM se documenta en el protocolo operativo.
 - HODOM no genera prestaciones codificadas MAI propias en esta cartera; su produccion se reporta via REM A21 C.1 (codigo dia-cama 0201408).

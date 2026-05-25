@@ -1,0 +1,483 @@
+{
+  "root_url": "https://drive.google.com/drive/folders/1P6ur0dHwmECADUluzwfVvA5g9uTO9oVe?usp=sharing",
+  "files": [
+    {
+      "path": "INVENTARIO INSUMOS.xlsx",
+      "id": "14BHghSF78PzgmztpLbDEZedZfk_lBv42",
+      "title": "INVENTARIO INSUMOS.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "inventario_insumos",
+      "year": null,
+      "month": null
+    },
+    {
+      "path": "INGRESOS 2026 DRIVE",
+      "id": "1qynoVzgF5a5qMdTVXhfM35zQC4QCtVqh0MNaSHD2_aQ",
+      "title": "INGRESOS 2026 DRIVE",
+      "mime_type": "application/vnd.google-apps.spreadsheet",
+      "native_google": true,
+      "dataset": "ingresos_2026",
+      "year": 2026,
+      "month": null
+    },
+    {
+      "path": "2023/PACIENTES 2023.docx",
+      "id": "1qxXDDohR2_tIFn4bKRfvevkYyChSVsdP",
+      "title": "PACIENTES 2023.docx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "dataset": "pacientes_docx",
+      "year": 2023,
+      "month": null
+    },
+    {
+      "path": "2023/PRESTACIONES ENFERMERIA/JULIO.xlsx",
+      "id": "1ATVCG6kWiPQeYIcl09PERdla7Eqn5_bD",
+      "title": "JULIO.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "prestaciones_enfermeria",
+      "year": 2023,
+      "month": 7
+    },
+    {
+      "path": "2023/PRESTACIONES ENFERMERIA/AGOSTO.xlsx",
+      "id": "19Nm0_Em-Gbg9XNYwXuVfxOwyG57swSgw",
+      "title": "AGOSTO.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "prestaciones_enfermeria",
+      "year": 2023,
+      "month": 8
+    },
+    {
+      "path": "2023/PRESTACIONES ENFERMERIA/SEPTIEMBRE.xlsx",
+      "id": "1_ZCtEQW8ks_1C1EKhqpMN7bw5Tk_KvXl",
+      "title": "SEPTIEMBRE.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "prestaciones_enfermeria",
+      "year": 2023,
+      "month": 9
+    },
+    {
+      "path": "2023/PRESTACIONES ENFERMERIA/OCTUBRE.xlsx",
+      "id": "1BGQSqyMvsQooPXEoHy30xojVRhHpp_B5",
+      "title": "OCTUBRE.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "prestaciones_enfermeria",
+      "year": 2023,
+      "month": 10
+    },
+    {
+      "path": "2023/PRESTACIONES ENFERMERIA/NOVIEMBRE.xlsx",
+      "id": "1gE4-Rd7_tgG2E4AFXYxN4Gz49EJ1yO5t",
+      "title": "NOVIEMBRE.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "prestaciones_enfermeria",
+      "year": 2023,
+      "month": 11
+    },
+    {
+      "path": "2023/REM/REM JULIO.xlsx",
+      "id": "1YqqaWrx5ktmOozPsPgow-Vj_n277pT8r",
+      "title": "REM JULIO.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "rem",
+      "year": 2023,
+      "month": 7
+    },
+    {
+      "path": "2023/REM/REM AGOSTO .xlsx",
+      "id": "16EhYHzj79ejkkcbv-U-2AkpqWWyyLozL",
+      "title": "REM AGOSTO .xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "rem",
+      "year": 2023,
+      "month": 8
+    },
+    {
+      "path": "2023/REM/REM SEPTIEMBRE.xlsx",
+      "id": "1KLqIZst4Io8XPpCbjbMZoQ3CQQjWD_r2",
+      "title": "REM SEPTIEMBRE.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "rem",
+      "year": 2023,
+      "month": 9
+    },
+    {
+      "path": "2023/REM/REM OCTUBRE.xlsx",
+      "id": "1zJkabCxZf-tmcVh3QjCg8a8pVm3Enrbt",
+      "title": "REM OCTUBRE.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "rem",
+      "year": 2023,
+      "month": 10
+    },
+    {
+      "path": "2023/REM/REM NOVIEMBRE.xlsx",
+      "id": "1wx-I3In7JF4zsjst_e3lLi7jQ-ttQxno",
+      "title": "REM NOVIEMBRE.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "rem",
+      "year": 2023,
+      "month": 11
+    },
+    {
+      "path": "2024/PRESTACIONES ENFERMERIA/ENERO.xlsx",
+      "id": "17s1fuW2TxP_qVqPiD-mKwD2fLCswvCu5",
+      "title": "ENERO.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "prestaciones_enfermeria",
+      "year": 2024,
+      "month": 1
+    },
+    {
+      "path": "2024/PRESTACIONES ENFERMERIA/FEBRERO.xlsx",
+      "id": "1D2KUCdC-tIoUYgimmstzj-GelMyJWzXM",
+      "title": "FEBRERO.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "prestaciones_enfermeria",
+      "year": 2024,
+      "month": 2
+    },
+    {
+      "path": "2024/PRESTACIONES ENFERMERIA/MARZO.xlsx",
+      "id": "19JTaSuOnVn0OXKoFkVF5FNkM4_67anJX",
+      "title": "MARZO.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "prestaciones_enfermeria",
+      "year": 2024,
+      "month": 3
+    },
+    {
+      "path": "2024/PRESTACIONES ENFERMERIA/ABRIL.xlsx",
+      "id": "1-RdUr7XJbrv6IRegjl3usOYCzQqa3TbE",
+      "title": "ABRIL.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "prestaciones_enfermeria",
+      "year": 2024,
+      "month": 4
+    },
+    {
+      "path": "2024/PRESTACIONES ENFERMERIA/MAYO.xlsx",
+      "id": "1ANBJfUklBw74Grs6Nja3QEbgr8n-ZcVJ",
+      "title": "MAYO.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "prestaciones_enfermeria",
+      "year": 2024,
+      "month": 5
+    },
+    {
+      "path": "2024/PRESTACIONES ENFERMERIA/JUNIO.xlsx",
+      "id": "1hrCPdomrUa7ay0HAMFfTzNnXxU9SC7yd",
+      "title": "JUNIO.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "prestaciones_enfermeria",
+      "year": 2024,
+      "month": 6
+    },
+    {
+      "path": "2024/PRESTACIONES ENFERMERIA/AGOSTO.xlsx",
+      "id": "1ClJKiA3pdNe3wBtF829Po0bTFr1lIRx0",
+      "title": "AGOSTO.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "prestaciones_enfermeria",
+      "year": 2024,
+      "month": 8
+    },
+    {
+      "path": "2024/PRESTACIONES ENFERMERIA/SEPTIEMBRE .xlsx",
+      "id": "1fhY2hZms5yUWLAyatFME-42krk22MMwd",
+      "title": "SEPTIEMBRE .xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "prestaciones_enfermeria",
+      "year": 2024,
+      "month": 9
+    },
+    {
+      "path": "2024/PRESTACIONES ENFERMERIA/OCTUBRE.xlsx",
+      "id": "19XlEES5GtMbF9p0-y8kCTZ8KuL8gK_cK",
+      "title": "OCTUBRE.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "prestaciones_enfermeria",
+      "year": 2024,
+      "month": 10
+    },
+    {
+      "path": "2024/PRESTACIONES ENFERMERIA/NOVIEMBRE.xlsx",
+      "id": "1v8e0i4kPU7qTrQXiWjD5kyR9OL0EORbw",
+      "title": "NOVIEMBRE.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "prestaciones_enfermeria",
+      "year": 2024,
+      "month": 11
+    },
+    {
+      "path": "2024/PRESTACIONES ENFERMERIA/DICIEMBRE.xlsx",
+      "id": "1KoeVrc_FOsNteiW7AVFt259iPYkA7lGx",
+      "title": "DICIEMBRE.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "prestaciones_enfermeria",
+      "year": 2024,
+      "month": 12
+    },
+    {
+      "path": "2024/REM/REM ENERO.xlsx",
+      "id": "1mzhxOD6oZNKOVZhmtyOAUaG9oCf1EA_3",
+      "title": "REM ENERO.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "rem",
+      "year": 2024,
+      "month": 1
+    },
+    {
+      "path": "2024/REM/REM FEBRERO.xlsx",
+      "id": "1nRSfmUDKCDAL9i1itUpuLaZTGszTtJWD",
+      "title": "REM FEBRERO.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "rem",
+      "year": 2024,
+      "month": 2
+    },
+    {
+      "path": "2024/REM/REM MARZO.xlsx",
+      "id": "1bX7VftfBpK0sKFvL1_-TYj5zKsCtX-l6",
+      "title": "REM MARZO.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "rem",
+      "year": 2024,
+      "month": 3
+    },
+    {
+      "path": "2024/REM/REM ABRIL 24.xlsx",
+      "id": "1TJprQcKtmepC7T3dinRhNhuLb8sZSSVk",
+      "title": "REM ABRIL 24.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "rem",
+      "year": 2024,
+      "month": 4
+    },
+    {
+      "path": "2024/REM/REM MAYO.xlsx",
+      "id": "1o89epL0PR0uARpLos8La4djWu6XemGCE",
+      "title": "REM MAYO.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "rem",
+      "year": 2024,
+      "month": 5
+    },
+    {
+      "path": "2024/REM/REM JUNIO 24.xlsx",
+      "id": "1O0vZ-rS6zmXYc3hiO2uJctAuSAGn6qHy",
+      "title": "REM JUNIO 24.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "rem",
+      "year": 2024,
+      "month": 6
+    },
+    {
+      "path": "2024/REM/REM JULIO .xlsx",
+      "id": "1Y4Z2qhJUH5ac_2TBwyMK3gJEBQQqtU8h",
+      "title": "REM JULIO .xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "rem",
+      "year": 2024,
+      "month": 7
+    },
+    {
+      "path": "2024/REM/REM AGOSTO .xlsx",
+      "id": "1gJmNAnkjixRWd9iUS2hMzrf1PE7saon5",
+      "title": "REM AGOSTO .xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "rem",
+      "year": 2024,
+      "month": 8
+    },
+    {
+      "path": "2024/REM/REM SEPTIEMBRE.xlsx",
+      "id": "1lcSUJDJZY7smocpthV4U4C_gDoRlY7Jr",
+      "title": "REM SEPTIEMBRE.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "rem",
+      "year": 2024,
+      "month": 9
+    },
+    {
+      "path": "2024/REM/REM OCTUBRE 24.xlsx",
+      "id": "1tUk3kjN3wMZUrcrfuHOxSS2KeXmTsc8E",
+      "title": "REM OCTUBRE 24.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "rem",
+      "year": 2024,
+      "month": 10
+    },
+    {
+      "path": "2024/REM/REM NOVIEMBRE 2024.xlsx",
+      "id": "1QvpN7L-sDHzv832n6wIeG9BF-DZ-Xw11",
+      "title": "REM NOVIEMBRE 2024.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "rem",
+      "year": 2024,
+      "month": 11
+    },
+    {
+      "path": "2024/REM/REM DICIEMBRE.xlsx",
+      "id": "16a0d9oKZY1CLbNMrI31hRsNLtQB3rspS",
+      "title": "REM DICIEMBRE.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "rem",
+      "year": 2024,
+      "month": 12
+    },
+    {
+      "path": "HOMOM 2025.xlsx",
+      "id": "1Sr27xmW0V7eqBZd4tjAJ2AgcID0VSNze",
+      "title": "HOMOM 2025.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "resumen_hodom",
+      "year": 2025,
+      "month": null
+    },
+    {
+      "path": "HOMOM 2026.xlsx",
+      "id": "13VFdvVY76YtgbTukf3RCsARmgyNsZaOh",
+      "title": "HOMOM 2026.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "resumen_hodom",
+      "year": 2026,
+      "month": null
+    },
+    {
+      "path": "2024/INGRESOS ENE-OCT 2024.xlsx",
+      "id": "1g-ojvSZh2uuYHwKz7ch7So9p0V2yLbtp",
+      "title": "INGRESOS ENE-OCT 2024.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "ingresos_nominales",
+      "year": 2024,
+      "month": null
+    },
+    {
+      "path": "2024/PLANILLA NOV DIC 2024.xlsx",
+      "id": "15s5FU9UKBjgTQxz277_M7zSq9KGavLXN",
+      "title": "PLANILLA NOV DIC 2024.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "ingresos_nominales",
+      "year": 2024,
+      "month": null
+    },
+    {
+      "path": "2025/INGRESOS 2025 (3).xlsx",
+      "id": "1EmbYGViWjZKe_uQoEi9OiGhgXiMdzFtO",
+      "title": "INGRESOS 2025 (3).xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "ingresos_nominales",
+      "year": 2025,
+      "month": null
+    },
+    {
+      "path": "2025/REM ENERO 2025.xlsx",
+      "id": "1ZDjH03MGi1-6IXBzvnoMUh4hNwZTNkU2",
+      "title": "REM ENERO 2025.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "rem",
+      "year": 2025,
+      "month": 1
+    },
+    {
+      "path": "2025/REM FEBRERO 2025.xlsx",
+      "id": "17dnhkUd_livEcTq20R5d4_vVoSK7YdLz",
+      "title": "REM FEBRERO 2025.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "rem",
+      "year": 2025,
+      "month": 2
+    },
+    {
+      "path": "2025/REM MARZO 25.xlsx",
+      "id": "1o4Gzm6gIRIUB0NPk9qpkk2npgnGC-BOm",
+      "title": "REM MARZO 25.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "rem",
+      "year": 2025,
+      "month": 3
+    },
+    {
+      "path": "2025/REM ABRIL 25.xlsx",
+      "id": "1GjYTueXURnPif_ROkNqSbwJwyZwfVqLi",
+      "title": "REM ABRIL 25.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "rem",
+      "year": 2025,
+      "month": 4
+    },
+    {
+      "path": "2025/REM MAYO 25.xlsx",
+      "id": "10LPwBU_IBAzbLy3WqVkiInjdcgoaomQN",
+      "title": "REM MAYO 25.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "rem",
+      "year": 2025,
+      "month": 5
+    },
+    {
+      "path": "2025/REM JUNIO 25.xlsx",
+      "id": "1G8Irz-5jRvYnITkwqi6bRRfItYH3mk8m",
+      "title": "REM JUNIO 25.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "rem",
+      "year": 2025,
+      "month": 6
+    },
+    {
+      "path": "2025/REM JULIO 25.xlsx",
+      "id": "1C4aQqgQLwEUDQeIOWETki5oe6Kg9gSmD",
+      "title": "REM JULIO 25.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "rem",
+      "year": 2025,
+      "month": 7
+    },
+    {
+      "path": "2025/REM AGOSTO 25.xlsx",
+      "id": "1Sn8gTpfkgYlt9cHaqIaOfZQO65fPs77N",
+      "title": "REM AGOSTO 25.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "rem",
+      "year": 2025,
+      "month": 8
+    },
+    {
+      "path": "2025/REM SEPTIEMBRE 2025.xlsx",
+      "id": "1-AALBIe9XfeIv74dKJfILmcwgsPHR9vY",
+      "title": "REM SEPTIEMBRE 2025.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "rem",
+      "year": 2025,
+      "month": 9
+    },
+    {
+      "path": "2025/REM OCTUBRE 2025.xlsx",
+      "id": "1egEOppOHucpPKbjJ-JwmEm4nzuZN0r62",
+      "title": "REM OCTUBRE 2025.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "rem",
+      "year": 2025,
+      "month": 10
+    },
+    {
+      "path": "2025/REM NOVIEMBRE 2025.xlsx",
+      "id": "1Cllu661Xrnv6HOu3-XC1o0nYELk-GjKI",
+      "title": "REM NOVIEMBRE 2025.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "rem",
+      "year": 2025,
+      "month": 11
+    },
+    {
+      "path": "2025/REM DICIEMBRE 2025.xlsx",
+      "id": "1o33DqlEBKjxuHvaUvtkuyPASKG_k_6Lj",
+      "title": "REM DICIEMBRE 2025.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "rem",
+      "year": 2025,
+      "month": 12
+    }
+  ]
+}

@@ -12,14 +12,15 @@ Documentacion tecnica del sistema de Hospitalizacion Domiciliaria, Hospital de S
 | [Indicadores operacionales HODOM](specs/indicadores-operacionales-hodom.md) | KPIs de gestion: estancia media, ocupacion, reingresos, produccion por estamento |
 | [Resumen normativo HODOM](specs/legal/resumen-normativo-hodom.md) | Marco legal completo: DS 1/2022, NT HD 2024, NT 243/2025, Ley 20.584, DS 41, Ley 21.668, BIP, FONASA, NGT 237 |
 | [Estructura REM A21 C.1](specs/rem-a21-c1-estructura-datos.md) | Estructura de datos del Resumen Estadistico Mensual para hospitalizacion domiciliaria |
+| [Metricas HODOM normativas](specs/metricas-hodom/README.md) | Especificaciones canonicas de consolidacion Drive, inventario de fuentes y metricas anuales de atenciones/usuarios |
 | [Manual REM 2026](specs/manual-rem-2026.md) | Referencia operativa del REM: definiciones, reglas de registro, validaciones |
 | [Vistas operativas SQL](specs/vistas-operativas-hodom.sql) | Vistas SQL auxiliares para consultas operativas sobre la base de datos |
 
-### Legal (fuentes primarias XML)
+### Legal y fuentes primarias
 
 | Documento | Contenido |
 |-----------|-----------|
-| [DS 1 Reglamento HD (XML)](specs/legal/decreto-1-reglamento-hospitalizacion-domiciliaria.xml) | Fuente primaria XML del Decreto Supremo 1/2022 |
+| [DS 1 Reglamento HD (placeholder XML)](specs/legal/decreto-1-reglamento-hospitalizacion-domiciliaria.xml) | El archivo local esta vacio; la fuente primaria vigente se registra por URL oficial LeyChile en `reference.original_source` |
 | [MCC Implementacion (XML)](specs/legal/implementacion-modalidad-cobertura-complementaria.xml) | Fuente primaria XML de la Modalidad de Cobertura Complementaria |
 
 ---
@@ -43,6 +44,7 @@ Documentacion tecnica del sistema de Hospitalizacion Domiciliaria, Hospital de S
 | Documento | Contenido |
 |-----------|-----------|
 | [Schema PostgreSQL](../db/hodom-integrado-pg-v4.sql) | Dump PostgreSQL versionado -- artefacto principal de la base de datos |
+| [Actualizacion fuentes originales 2026-05-25](../db/updates/2026-05-25-original-source-refresh.sql) | Migracion idempotente de fuentes originales: normativa, cartera HSC 2024 y REM A21 C.1 abril 2026 |
 
 ---
 
@@ -87,4 +89,4 @@ Documentacion tecnica y de diseno de la aplicacion web en `/home/felix/projects/
 
 - La documentacion de este directorio explica la base de datos actual, el modelo de datos o su contexto normativo directo.
 - Material historico u operacional retirado no forma parte del alcance del repositorio.
-- Las fuentes normativas autoritativas estan en la KB centralizada (`/home/felix/kora/artifacts/knowledge/salud/hodom/normativa/`).
+- Las fuentes normativas autoritativas estan en la KB centralizada (`/home/felix/kora/artifacts/knowledge/salud/salubrista/hodom/normativa/`).

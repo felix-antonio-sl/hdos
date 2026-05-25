@@ -1,0 +1,3147 @@
+{
+  "metrics": {
+    "total_files": 53,
+    "by_dataset": {
+      "inventario_insumos": 1,
+      "ingresos_2026": 1,
+      "pacientes_docx": 1,
+      "prestaciones_enfermeria": 16,
+      "rem": 29,
+      "resumen_hodom": 2,
+      "ingresos_nominales": 3
+    },
+    "by_year": {
+      "sin_anio": 1,
+      "2026": 2,
+      "2023": 11,
+      "2024": 25,
+      "2025": 14
+    },
+    "bytes_by_dataset": {
+      "inventario_insumos": 21964,
+      "ingresos_2026": 142861,
+      "pacientes_docx": 19507,
+      "prestaciones_enfermeria": 1569850,
+      "rem": 899664,
+      "resumen_hodom": 114816,
+      "ingresos_nominales": 842929
+    },
+    "periods_by_dataset": {
+      "prestaciones_enfermeria": [
+        "2023-07",
+        "2023-08",
+        "2023-09",
+        "2023-10",
+        "2023-11",
+        "2024-01",
+        "2024-02",
+        "2024-03",
+        "2024-04",
+        "2024-05",
+        "2024-06",
+        "2024-08",
+        "2024-09",
+        "2024-10",
+        "2024-11",
+        "2024-12"
+      ],
+      "rem": [
+        "2023-07",
+        "2023-08",
+        "2023-09",
+        "2023-10",
+        "2023-11",
+        "2024-01",
+        "2024-02",
+        "2024-03",
+        "2024-04",
+        "2024-05",
+        "2024-06",
+        "2024-07",
+        "2024-08",
+        "2024-09",
+        "2024-10",
+        "2024-11",
+        "2024-12",
+        "2025-01",
+        "2025-02",
+        "2025-03",
+        "2025-04",
+        "2025-05",
+        "2025-06",
+        "2025-07",
+        "2025-08",
+        "2025-09",
+        "2025-10",
+        "2025-11",
+        "2025-12"
+      ]
+    },
+    "rem_periods_extracted": [
+      "2023-07",
+      "2023-08",
+      "2023-09",
+      "2023-10",
+      "2023-11",
+      "2024-01",
+      "2024-02",
+      "2024-03",
+      "2024-04",
+      "2024-05",
+      "2024-06",
+      "2024-07",
+      "2024-08",
+      "2024-09",
+      "2024-10",
+      "2024-11",
+      "2024-12",
+      "2025-01",
+      "2025-02",
+      "2025-03",
+      "2025-04",
+      "2025-05",
+      "2025-06",
+      "2025-07",
+      "2025-08",
+      "2025-09",
+      "2025-10",
+      "2025-11",
+      "2025-12"
+    ],
+    "rem_metrics": [
+      {
+        "period": "2023-07",
+        "ingresos": 43,
+        "personas_atendidas": 43,
+        "dias_persona": 467,
+        "altas": 17,
+        "fallecidos_esperados": 0,
+        "reingresos_hospitalizacion": 2,
+        "visitas_medico": 45,
+        "visitas_enfermera": 372,
+        "visitas_tecnico_paramedico": 165,
+        "visitas_kinesiologo": 245,
+        "visitas_fonoaudiologo": 72,
+        "visitas_trabajador_social": 121,
+        "cupos_programados": 20,
+        "cupos_utilizados": 20,
+        "cupos_disponibles": 0
+      },
+      {
+        "period": "2023-08",
+        "ingresos": 54,
+        "personas_atendidas": 54,
+        "dias_persona": 639,
+        "altas": 48,
+        "fallecidos_esperados": 0,
+        "reingresos_hospitalizacion": 2,
+        "visitas_medico": 27,
+        "visitas_enfermera": 366,
+        "visitas_tecnico_paramedico": 128,
+        "visitas_kinesiologo": 241,
+        "visitas_fonoaudiologo": 91,
+        "visitas_trabajador_social": 54,
+        "cupos_programados": 20,
+        "cupos_utilizados": 746,
+        "cupos_disponibles": 620
+      },
+      {
+        "period": "2023-09",
+        "ingresos": 53,
+        "personas_atendidas": 53,
+        "dias_persona": 667,
+        "altas": 51,
+        "fallecidos_esperados": 0,
+        "reingresos_hospitalizacion": 2,
+        "visitas_medico": 26,
+        "visitas_enfermera": 345,
+        "visitas_tecnico_paramedico": 118,
+        "visitas_kinesiologo": 243,
+        "visitas_fonoaudiologo": 79,
+        "visitas_trabajador_social": 34,
+        "cupos_programados": 25,
+        "cupos_utilizados": 772,
+        "cupos_disponibles": 750
+      },
+      {
+        "period": "2023-10",
+        "ingresos": 81,
+        "personas_atendidas": 81,
+        "dias_persona": 996,
+        "altas": 79,
+        "fallecidos_esperados": 7,
+        "reingresos_hospitalizacion": 3,
+        "visitas_medico": 42,
+        "visitas_enfermera": 531,
+        "visitas_tecnico_paramedico": 96,
+        "visitas_kinesiologo": 245,
+        "visitas_fonoaudiologo": 115,
+        "visitas_trabajador_social": 155,
+        "cupos_programados": 25,
+        "cupos_utilizados": 996,
+        "cupos_disponibles": 775
+      },
+      {
+        "period": "2023-11",
+        "ingresos": 61,
+        "personas_atendidas": 61,
+        "dias_persona": 754,
+        "altas": 70,
+        "fallecidos_esperados": 1,
+        "reingresos_hospitalizacion": 3,
+        "visitas_medico": 60,
+        "visitas_enfermera": 469,
+        "visitas_tecnico_paramedico": 81,
+        "visitas_kinesiologo": 239,
+        "visitas_fonoaudiologo": 110,
+        "visitas_trabajador_social": 133,
+        "cupos_programados": 25,
+        "cupos_utilizados": 965,
+        "cupos_disponibles": 750
+      },
+      {
+        "period": "2024-01",
+        "ingresos": 57,
+        "personas_atendidas": 57,
+        "dias_persona": 664,
+        "altas": 59,
+        "fallecidos_esperados": 1,
+        "reingresos_hospitalizacion": 2,
+        "visitas_medico": 92,
+        "visitas_enfermera": 467,
+        "visitas_tecnico_paramedico": 24,
+        "visitas_kinesiologo": 264,
+        "visitas_fonoaudiologo": 94,
+        "visitas_trabajador_social": 120,
+        "cupos_programados": 25,
+        "cupos_utilizados": 708,
+        "cupos_disponibles": 775
+      },
+      {
+        "period": "2024-02",
+        "ingresos": 59,
+        "personas_atendidas": 656,
+        "dias_persona": 629,
+        "altas": 61,
+        "fallecidos_esperados": 3,
+        "reingresos_hospitalizacion": 2,
+        "visitas_medico": 100,
+        "visitas_enfermera": 402,
+        "visitas_tecnico_paramedico": 46,
+        "visitas_kinesiologo": 237,
+        "visitas_fonoaudiologo": 103,
+        "visitas_trabajador_social": 102,
+        "cupos_programados": 25,
+        "cupos_utilizados": 793,
+        "cupos_disponibles": 725
+      },
+      {
+        "period": "2024-03",
+        "ingresos": 67,
+        "personas_atendidas": 67,
+        "dias_persona": 688,
+        "altas": 68,
+        "fallecidos_esperados": 2,
+        "reingresos_hospitalizacion": 2,
+        "visitas_medico": 87,
+        "visitas_enfermera": 498,
+        "visitas_tecnico_paramedico": 44,
+        "visitas_kinesiologo": 264,
+        "visitas_fonoaudiologo": 99,
+        "visitas_trabajador_social": 103,
+        "cupos_programados": 25,
+        "cupos_utilizados": 896,
+        "cupos_disponibles": 775
+      },
+      {
+        "period": "2024-04",
+        "ingresos": 74,
+        "personas_atendidas": 74,
+        "dias_persona": 637,
+        "altas": 77,
+        "fallecidos_esperados": 1,
+        "reingresos_hospitalizacion": 4,
+        "visitas_medico": 100,
+        "visitas_enfermera": 378,
+        "visitas_tecnico_paramedico": 88,
+        "visitas_kinesiologo": 263,
+        "visitas_fonoaudiologo": 124,
+        "visitas_trabajador_social": 118,
+        "cupos_programados": 25,
+        "cupos_utilizados": 573,
+        "cupos_disponibles": 750
+      },
+      {
+        "period": "2024-05",
+        "ingresos": 100,
+        "personas_atendidas": 100,
+        "dias_persona": 586,
+        "altas": 94,
+        "fallecidos_esperados": 3,
+        "reingresos_hospitalizacion": 2,
+        "visitas_medico": 84,
+        "visitas_enfermera": 296,
+        "visitas_tecnico_paramedico": 44,
+        "visitas_kinesiologo": 278,
+        "visitas_fonoaudiologo": 117,
+        "visitas_trabajador_social": 143,
+        "cupos_programados": 25,
+        "cupos_utilizados": 843,
+        "cupos_disponibles": 775
+      },
+      {
+        "period": "2024-06",
+        "ingresos": 89,
+        "personas_atendidas": 89,
+        "dias_persona": 507,
+        "altas": 96,
+        "fallecidos_esperados": 3,
+        "reingresos_hospitalizacion": 3,
+        "visitas_medico": 88,
+        "visitas_enfermera": 424,
+        "visitas_tecnico_paramedico": 88,
+        "visitas_kinesiologo": 354,
+        "visitas_fonoaudiologo": 116,
+        "visitas_trabajador_social": 124,
+        "cupos_programados": 35,
+        "cupos_utilizados": 723,
+        "cupos_disponibles": 1050
+      },
+      {
+        "period": "2024-07",
+        "ingresos": 84,
+        "personas_atendidas": 102,
+        "dias_persona": 533,
+        "altas": 88,
+        "fallecidos_esperados": 1,
+        "reingresos_hospitalizacion": 2,
+        "visitas_medico": 80,
+        "visitas_enfermera": 498,
+        "visitas_tecnico_paramedico": 44,
+        "visitas_kinesiologo": 258,
+        "visitas_fonoaudiologo": 121,
+        "visitas_trabajador_social": 110,
+        "cupos_programados": 25,
+        "cupos_utilizados": 533,
+        "cupos_disponibles": 865
+      },
+      {
+        "period": "2024-08",
+        "ingresos": 83,
+        "personas_atendidas": 83,
+        "dias_persona": 456,
+        "altas": 74,
+        "fallecidos_esperados": 1,
+        "reingresos_hospitalizacion": 3,
+        "visitas_medico": 176,
+        "visitas_enfermera": 362,
+        "visitas_tecnico_paramedico": 26,
+        "visitas_kinesiologo": 268,
+        "visitas_fonoaudiologo": 114,
+        "visitas_trabajador_social": 107,
+        "cupos_programados": 25,
+        "cupos_utilizados": 860,
+        "cupos_disponibles": 775
+      },
+      {
+        "period": "2024-09",
+        "ingresos": 71,
+        "personas_atendidas": 98,
+        "dias_persona": 493,
+        "altas": 66,
+        "fallecidos_esperados": 0,
+        "reingresos_hospitalizacion": 2,
+        "visitas_medico": 139,
+        "visitas_enfermera": 405,
+        "visitas_tecnico_paramedico": 52,
+        "visitas_kinesiologo": 262,
+        "visitas_fonoaudiologo": 93,
+        "visitas_trabajador_social": 104,
+        "cupos_programados": 25,
+        "cupos_utilizados": 862,
+        "cupos_disponibles": 750
+      },
+      {
+        "period": "2024-10",
+        "ingresos": 71,
+        "personas_atendidas": 96,
+        "dias_persona": 498,
+        "altas": 75,
+        "fallecidos_esperados": 0,
+        "reingresos_hospitalizacion": 2,
+        "visitas_medico": 142,
+        "visitas_enfermera": 405,
+        "visitas_tecnico_paramedico": 48,
+        "visitas_kinesiologo": 266,
+        "visitas_fonoaudiologo": 91,
+        "visitas_trabajador_social": 89,
+        "cupos_programados": 25,
+        "cupos_utilizados": 686,
+        "cupos_disponibles": 775
+      },
+      {
+        "period": "2024-11",
+        "ingresos": 53,
+        "personas_atendidas": 70,
+        "dias_persona": 402,
+        "altas": 55,
+        "fallecidos_esperados": null,
+        "reingresos_hospitalizacion": 1,
+        "visitas_medico": 90,
+        "visitas_enfermera": 284,
+        "visitas_tecnico_paramedico": 29,
+        "visitas_kinesiologo": 261,
+        "visitas_fonoaudiologo": 102,
+        "visitas_trabajador_social": null,
+        "cupos_programados": 16,
+        "cupos_utilizados": 591,
+        "cupos_disponibles": 480
+      },
+      {
+        "period": "2024-12",
+        "ingresos": 44,
+        "personas_atendidas": 67,
+        "dias_persona": 411,
+        "altas": 49,
+        "fallecidos_esperados": 1,
+        "reingresos_hospitalizacion": 3,
+        "visitas_medico": 102,
+        "visitas_enfermera": 269,
+        "visitas_tecnico_paramedico": 44,
+        "visitas_kinesiologo": 220,
+        "visitas_fonoaudiologo": 105,
+        "visitas_trabajador_social": null,
+        "cupos_programados": 16,
+        "cupos_utilizados": 681,
+        "cupos_disponibles": 496
+      },
+      {
+        "period": "2025-01",
+        "ingresos": 52,
+        "personas_atendidas": 69,
+        "dias_persona": 372,
+        "altas": 47,
+        "fallecidos_esperados": 0,
+        "reingresos_hospitalizacion": 1,
+        "visitas_medico": 132,
+        "visitas_enfermera": 246,
+        "visitas_tecnico_paramedico": 44,
+        "visitas_kinesiologo": 224,
+        "visitas_fonoaudiologo": 112,
+        "visitas_trabajador_social": null,
+        "cupos_programados": 16,
+        "cupos_utilizados": 688,
+        "cupos_disponibles": 496
+      },
+      {
+        "period": "2025-02",
+        "ingresos": 47,
+        "personas_atendidas": 21,
+        "dias_persona": 349,
+        "altas": 46,
+        "fallecidos_esperados": 1,
+        "reingresos_hospitalizacion": 2,
+        "visitas_medico": 132,
+        "visitas_enfermera": 246,
+        "visitas_tecnico_paramedico": 44,
+        "visitas_kinesiologo": 226,
+        "visitas_fonoaudiologo": 115,
+        "visitas_trabajador_social": null,
+        "cupos_programados": 16,
+        "cupos_utilizados": 576,
+        "cupos_disponibles": 448
+      },
+      {
+        "period": "2025-03",
+        "ingresos": 51,
+        "personas_atendidas": 51,
+        "dias_persona": 382,
+        "altas": 51,
+        "fallecidos_esperados": 0,
+        "reingresos_hospitalizacion": 1,
+        "visitas_medico": 176,
+        "visitas_enfermera": 241,
+        "visitas_tecnico_paramedico": 44,
+        "visitas_kinesiologo": 255,
+        "visitas_fonoaudiologo": 127,
+        "visitas_trabajador_social": null,
+        "cupos_programados": 16,
+        "cupos_utilizados": 453,
+        "cupos_disponibles": 496
+      },
+      {
+        "period": "2025-04",
+        "ingresos": 56,
+        "personas_atendidas": 56,
+        "dias_persona": 404,
+        "altas": 43,
+        "fallecidos_esperados": 3,
+        "reingresos_hospitalizacion": 2,
+        "visitas_medico": 176,
+        "visitas_enfermera": 250,
+        "visitas_tecnico_paramedico": 44,
+        "visitas_kinesiologo": 241,
+        "visitas_fonoaudiologo": 104,
+        "visitas_trabajador_social": null,
+        "cupos_programados": 16,
+        "cupos_utilizados": 608,
+        "cupos_disponibles": 480
+      },
+      {
+        "period": "2025-05",
+        "ingresos": 55,
+        "personas_atendidas": 75,
+        "dias_persona": 483,
+        "altas": 55,
+        "fallecidos_esperados": 1,
+        "reingresos_hospitalizacion": 1,
+        "visitas_medico": 110,
+        "visitas_enfermera": 247,
+        "visitas_tecnico_paramedico": 33,
+        "visitas_kinesiologo": 260,
+        "visitas_fonoaudiologo": 93,
+        "visitas_trabajador_social": null,
+        "cupos_programados": 16,
+        "cupos_utilizados": 520,
+        "cupos_disponibles": 496
+      },
+      {
+        "period": "2025-06",
+        "ingresos": 52,
+        "personas_atendidas": 69,
+        "dias_persona": 398,
+        "altas": 53,
+        "fallecidos_esperados": 0,
+        "reingresos_hospitalizacion": 3,
+        "visitas_medico": 97,
+        "visitas_enfermera": 244,
+        "visitas_tecnico_paramedico": 33,
+        "visitas_kinesiologo": 253,
+        "visitas_fonoaudiologo": 110,
+        "visitas_trabajador_social": null,
+        "cupos_programados": 16,
+        "cupos_utilizados": 399,
+        "cupos_disponibles": 480
+      },
+      {
+        "period": "2025-07",
+        "ingresos": 52,
+        "personas_atendidas": 68,
+        "dias_persona": 492,
+        "altas": 55,
+        "fallecidos_esperados": 0,
+        "reingresos_hospitalizacion": 3,
+        "visitas_medico": 106,
+        "visitas_enfermera": 280,
+        "visitas_tecnico_paramedico": 23,
+        "visitas_kinesiologo": 275,
+        "visitas_fonoaudiologo": 113,
+        "visitas_trabajador_social": null,
+        "cupos_programados": 16,
+        "cupos_utilizados": 471,
+        "cupos_disponibles": 496
+      },
+      {
+        "period": "2025-08",
+        "ingresos": 45,
+        "personas_atendidas": 62,
+        "dias_persona": 434,
+        "altas": 54,
+        "fallecidos_esperados": 0,
+        "reingresos_hospitalizacion": 2,
+        "visitas_medico": 93,
+        "visitas_enfermera": 274,
+        "visitas_tecnico_paramedico": 31,
+        "visitas_kinesiologo": 270,
+        "visitas_fonoaudiologo": 112,
+        "visitas_trabajador_social": null,
+        "cupos_programados": 16,
+        "cupos_utilizados": 426,
+        "cupos_disponibles": 496
+      },
+      {
+        "period": "2025-09",
+        "ingresos": 59,
+        "personas_atendidas": 76,
+        "dias_persona": 616,
+        "altas": 55,
+        "fallecidos_esperados": 0,
+        "reingresos_hospitalizacion": 2,
+        "visitas_medico": 109,
+        "visitas_enfermera": 301,
+        "visitas_tecnico_paramedico": 34,
+        "visitas_kinesiologo": 271,
+        "visitas_fonoaudiologo": 122,
+        "visitas_trabajador_social": null,
+        "cupos_programados": 20,
+        "cupos_utilizados": 616,
+        "cupos_disponibles": 600
+      },
+      {
+        "period": "2025-10",
+        "ingresos": 62,
+        "personas_atendidas": 78,
+        "dias_persona": 510,
+        "altas": 61,
+        "fallecidos_esperados": 1,
+        "reingresos_hospitalizacion": 2,
+        "visitas_medico": 90,
+        "visitas_enfermera": 285,
+        "visitas_tecnico_paramedico": 35,
+        "visitas_kinesiologo": 263,
+        "visitas_fonoaudiologo": 117,
+        "visitas_trabajador_social": null,
+        "cupos_programados": 20,
+        "cupos_utilizados": 461,
+        "cupos_disponibles": 620
+      },
+      {
+        "period": "2025-11",
+        "ingresos": 47,
+        "personas_atendidas": 65,
+        "dias_persona": 478,
+        "altas": 48,
+        "fallecidos_esperados": 1,
+        "reingresos_hospitalizacion": 6,
+        "visitas_medico": 90,
+        "visitas_enfermera": 280,
+        "visitas_tecnico_paramedico": 23,
+        "visitas_kinesiologo": 253,
+        "visitas_fonoaudiologo": 129,
+        "visitas_trabajador_social": null,
+        "cupos_programados": 20,
+        "cupos_utilizados": 463,
+        "cupos_disponibles": 600
+      },
+      {
+        "period": "2025-12",
+        "ingresos": 50,
+        "personas_atendidas": 66,
+        "dias_persona": 562,
+        "altas": 61,
+        "fallecidos_esperados": 0,
+        "reingresos_hospitalizacion": 3,
+        "visitas_medico": 79,
+        "visitas_enfermera": 290,
+        "visitas_tecnico_paramedico": 34,
+        "visitas_kinesiologo": 273,
+        "visitas_fonoaudiologo": 114,
+        "visitas_trabajador_social": null,
+        "cupos_programados": 20,
+        "cupos_utilizados": 562,
+        "cupos_disponibles": 620
+      }
+    ],
+    "quality_flags": [
+      {
+        "code": "coverage_gap",
+        "severity": "review",
+        "dataset": "prestaciones_enfermeria",
+        "year": 2024,
+        "periods": [
+          "2024-07"
+        ],
+        "detail": "Expected monthly source file was not found in the Drive inventory."
+      },
+      {
+        "code": "rem_outlier_personas_atendidas",
+        "severity": "review",
+        "period": "2024-02",
+        "checks": [
+          "personas_atendidas=656 versus ingresos=59",
+          "personas_atendidas=656 exceeds dias_persona=629"
+        ],
+        "detail": "Validate this aggregate against the original REM workbook before migration."
+      },
+      {
+        "code": "rem_missing_metric",
+        "severity": "review",
+        "period": "2024-11",
+        "fields": [
+          "fallecidos_esperados",
+          "visitas_trabajador_social"
+        ],
+        "detail": "Metric was blank or not located in the source workbook sample."
+      },
+      {
+        "code": "rem_missing_metric",
+        "severity": "review",
+        "period": "2024-12",
+        "fields": [
+          "visitas_trabajador_social"
+        ],
+        "detail": "Metric was blank or not located in the source workbook sample."
+      },
+      {
+        "code": "rem_missing_metric",
+        "severity": "review",
+        "period": "2025-01",
+        "fields": [
+          "visitas_trabajador_social"
+        ],
+        "detail": "Metric was blank or not located in the source workbook sample."
+      },
+      {
+        "code": "rem_missing_metric",
+        "severity": "review",
+        "period": "2025-02",
+        "fields": [
+          "visitas_trabajador_social"
+        ],
+        "detail": "Metric was blank or not located in the source workbook sample."
+      },
+      {
+        "code": "rem_missing_metric",
+        "severity": "review",
+        "period": "2025-03",
+        "fields": [
+          "visitas_trabajador_social"
+        ],
+        "detail": "Metric was blank or not located in the source workbook sample."
+      },
+      {
+        "code": "rem_missing_metric",
+        "severity": "review",
+        "period": "2025-04",
+        "fields": [
+          "visitas_trabajador_social"
+        ],
+        "detail": "Metric was blank or not located in the source workbook sample."
+      },
+      {
+        "code": "rem_missing_metric",
+        "severity": "review",
+        "period": "2025-05",
+        "fields": [
+          "visitas_trabajador_social"
+        ],
+        "detail": "Metric was blank or not located in the source workbook sample."
+      },
+      {
+        "code": "rem_missing_metric",
+        "severity": "review",
+        "period": "2025-06",
+        "fields": [
+          "visitas_trabajador_social"
+        ],
+        "detail": "Metric was blank or not located in the source workbook sample."
+      },
+      {
+        "code": "rem_missing_metric",
+        "severity": "review",
+        "period": "2025-07",
+        "fields": [
+          "visitas_trabajador_social"
+        ],
+        "detail": "Metric was blank or not located in the source workbook sample."
+      },
+      {
+        "code": "rem_missing_metric",
+        "severity": "review",
+        "period": "2025-08",
+        "fields": [
+          "visitas_trabajador_social"
+        ],
+        "detail": "Metric was blank or not located in the source workbook sample."
+      },
+      {
+        "code": "rem_missing_metric",
+        "severity": "review",
+        "period": "2025-09",
+        "fields": [
+          "visitas_trabajador_social"
+        ],
+        "detail": "Metric was blank or not located in the source workbook sample."
+      },
+      {
+        "code": "rem_missing_metric",
+        "severity": "review",
+        "period": "2025-10",
+        "fields": [
+          "visitas_trabajador_social"
+        ],
+        "detail": "Metric was blank or not located in the source workbook sample."
+      },
+      {
+        "code": "rem_missing_metric",
+        "severity": "review",
+        "period": "2025-11",
+        "fields": [
+          "visitas_trabajador_social"
+        ],
+        "detail": "Metric was blank or not located in the source workbook sample."
+      },
+      {
+        "code": "rem_missing_metric",
+        "severity": "review",
+        "period": "2025-12",
+        "fields": [
+          "visitas_trabajador_social"
+        ],
+        "detail": "Metric was blank or not located in the source workbook sample."
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "INVENTARIO INSUMOS.xlsx",
+      "id": "14BHghSF78PzgmztpLbDEZedZfk_lBv42",
+      "title": "INVENTARIO INSUMOS.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "inventario_insumos",
+      "year": null,
+      "month": null,
+      "local_file": "/home/felix/projects/hdos/.tmp/drive-consolidation/raw/INVENTARIO_INSUMOS.xlsx",
+      "size_bytes": 21964,
+      "sha256": "ada47fadc77d0595ed070699dcb0736d06784fa6438305f458e378c8ea8ad29a",
+      "workbook": {
+        "sheet_count": 1
+      },
+      "sheets": [
+        {
+          "title": "MAYO 2026",
+          "max_row": 67,
+          "max_column": 12,
+          "non_empty_rows": 59,
+          "non_empty_cells": 251
+        }
+      ]
+    },
+    {
+      "path": "INGRESOS 2026 DRIVE",
+      "id": "1qynoVzgF5a5qMdTVXhfM35zQC4QCtVqh0MNaSHD2_aQ",
+      "title": "INGRESOS 2026 DRIVE",
+      "mime_type": "application/vnd.google-apps.spreadsheet",
+      "native_google": true,
+      "dataset": "ingresos_2026",
+      "year": 2026,
+      "month": null,
+      "local_file": "/home/felix/projects/hdos/.tmp/drive-consolidation/raw/INGRESOS_2026_DRIVE.xlsx",
+      "size_bytes": 142861,
+      "sha256": "01d1c6d00daca6367371c66a9762f652c3dd4c7da3aab40363692b01ddf292ee",
+      "workbook": {
+        "sheet_count": 5
+      },
+      "sheets": [
+        {
+          "title": "INGRESOS",
+          "max_row": null,
+          "max_column": null,
+          "non_empty_rows": 349,
+          "non_empty_cells": 5567
+        },
+        {
+          "title": "EGRESOS ENERO",
+          "max_row": null,
+          "max_column": null,
+          "non_empty_rows": 59,
+          "non_empty_cells": 1169
+        },
+        {
+          "title": "EGRESOS FEBRERO ",
+          "max_row": null,
+          "max_column": null,
+          "non_empty_rows": 50,
+          "non_empty_cells": 1217
+        },
+        {
+          "title": "EGRESOS MARZO",
+          "max_row": null,
+          "max_column": null,
+          "non_empty_rows": 47,
+          "non_empty_cells": 1150
+        },
+        {
+          "title": "EGRESO ABRIL",
+          "max_row": null,
+          "max_column": null,
+          "non_empty_rows": 222,
+          "non_empty_cells": 2051
+        }
+      ]
+    },
+    {
+      "path": "2023/PACIENTES 2023.docx",
+      "id": "1qxXDDohR2_tIFn4bKRfvevkYyChSVsdP",
+      "title": "PACIENTES 2023.docx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "dataset": "pacientes_docx",
+      "year": 2023,
+      "month": null,
+      "local_file": "/home/felix/projects/hdos/.tmp/drive-consolidation/raw/2023_PACIENTES_2023.docx",
+      "size_bytes": 19507,
+      "sha256": "971b26692bbfaf149f6d57bad340309ca26823690554355026415cc727fa4ac9",
+      "docx_metrics": {
+        "characters": 685,
+        "word_count": 105,
+        "line_like_breaks": 0
+      }
+    },
+    {
+      "path": "2023/PRESTACIONES ENFERMERIA/JULIO.xlsx",
+      "id": "1ATVCG6kWiPQeYIcl09PERdla7Eqn5_bD",
+      "title": "JULIO.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "prestaciones_enfermeria",
+      "year": 2023,
+      "month": 7,
+      "local_file": "/home/felix/projects/hdos/.tmp/drive-consolidation/raw/2023_PRESTACIONES_ENFERMERIA_JULIO.xlsx",
+      "size_bytes": 98719,
+      "sha256": "8ba64d675fefb03a8b56d1d101158c0e58cd853bcbf44cbc1eeb17d97a7a2959",
+      "workbook": {
+        "sheet_count": 1
+      },
+      "sheets": [
+        {
+          "title": "Tecnicas",
+          "max_row": 997,
+          "max_column": 35,
+          "non_empty_rows": 42,
+          "non_empty_cells": 296
+        }
+      ]
+    },
+    {
+      "path": "2023/PRESTACIONES ENFERMERIA/AGOSTO.xlsx",
+      "id": "19Nm0_Em-Gbg9XNYwXuVfxOwyG57swSgw",
+      "title": "AGOSTO.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "prestaciones_enfermeria",
+      "year": 2023,
+      "month": 8,
+      "local_file": "/home/felix/projects/hdos/.tmp/drive-consolidation/raw/2023_PRESTACIONES_ENFERMERIA_AGOSTO.xlsx",
+      "size_bytes": 98763,
+      "sha256": "c7a23a41ad66490c0097ef7150c8ae49f0e1aac1fc3cd210094c48437daca437",
+      "workbook": {
+        "sheet_count": 1
+      },
+      "sheets": [
+        {
+          "title": "Tecnicas",
+          "max_row": 997,
+          "max_column": 35,
+          "non_empty_rows": 42,
+          "non_empty_cells": 318
+        }
+      ]
+    },
+    {
+      "path": "2023/PRESTACIONES ENFERMERIA/SEPTIEMBRE.xlsx",
+      "id": "1_ZCtEQW8ks_1C1EKhqpMN7bw5Tk_KvXl",
+      "title": "SEPTIEMBRE.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "prestaciones_enfermeria",
+      "year": 2023,
+      "month": 9,
+      "local_file": "/home/felix/projects/hdos/.tmp/drive-consolidation/raw/2023_PRESTACIONES_ENFERMERIA_SEPTIEMBRE.xlsx",
+      "size_bytes": 96649,
+      "sha256": "50cb412d706e78c5528024098d3c9de50292461d05dd52af2d4fb3ceba7c7698",
+      "workbook": {
+        "sheet_count": 1
+      },
+      "sheets": [
+        {
+          "title": "Tecnicas",
+          "max_row": 997,
+          "max_column": 34,
+          "non_empty_rows": 42,
+          "non_empty_cells": 298
+        }
+      ]
+    },
+    {
+      "path": "2023/PRESTACIONES ENFERMERIA/OCTUBRE.xlsx",
+      "id": "1BGQSqyMvsQooPXEoHy30xojVRhHpp_B5",
+      "title": "OCTUBRE.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "prestaciones_enfermeria",
+      "year": 2023,
+      "month": 10,
+      "local_file": "/home/felix/projects/hdos/.tmp/drive-consolidation/raw/2023_PRESTACIONES_ENFERMERIA_OCTUBRE.xlsx",
+      "size_bytes": 98939,
+      "sha256": "26159edb4c36abd2be24ecf2b583708ef5d70be5924612b4dbb1c17c950e834b",
+      "workbook": {
+        "sheet_count": 1
+      },
+      "sheets": [
+        {
+          "title": "Tecnicas",
+          "max_row": 998,
+          "max_column": 35,
+          "non_empty_rows": 43,
+          "non_empty_cells": 332
+        }
+      ]
+    },
+    {
+      "path": "2023/PRESTACIONES ENFERMERIA/NOVIEMBRE.xlsx",
+      "id": "1gE4-Rd7_tgG2E4AFXYxN4Gz49EJ1yO5t",
+      "title": "NOVIEMBRE.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "prestaciones_enfermeria",
+      "year": 2023,
+      "month": 11,
+      "local_file": "/home/felix/projects/hdos/.tmp/drive-consolidation/raw/2023_PRESTACIONES_ENFERMERIA_NOVIEMBRE.xlsx",
+      "size_bytes": 98169,
+      "sha256": "4ec1deedc241209002d232f6eea0a265d4c8877d995cc8c4614da49c04e88095",
+      "workbook": {
+        "sheet_count": 1
+      },
+      "sheets": [
+        {
+          "title": "Tecnicas",
+          "max_row": 998,
+          "max_column": 34,
+          "non_empty_rows": 43,
+          "non_empty_cells": 328
+        }
+      ]
+    },
+    {
+      "path": "2023/REM/REM JULIO.xlsx",
+      "id": "1YqqaWrx5ktmOozPsPgow-Vj_n277pT8r",
+      "title": "REM JULIO.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "rem",
+      "year": 2023,
+      "month": 7,
+      "local_file": "/home/felix/projects/hdos/.tmp/drive-consolidation/raw/2023_REM_REM_JULIO.xlsx",
+      "size_bytes": 36558,
+      "sha256": "e22da3588826511fe807558ee1399e281d73c35aff5a27a14b6039f2459cd8fa",
+      "workbook": {
+        "sheet_count": 2
+      },
+      "sheets": [
+        {
+          "title": "Rem A21",
+          "max_row": 144,
+          "max_column": 104,
+          "non_empty_rows": 89,
+          "non_empty_cells": 256
+        },
+        {
+          "title": "Rem BS",
+          "max_row": 6,
+          "max_column": 16362,
+          "non_empty_rows": 6,
+          "non_empty_cells": 42
+        }
+      ],
+      "rem_metrics": {
+        "personas": {
+          "ingresos": 43,
+          "personas_atendidas": 43,
+          "dias_persona": 467,
+          "altas": 17,
+          "fallecidos_esperados": 0,
+          "reingresos_hospitalizacion": 2
+        },
+        "visitas": {
+          "medico": 45,
+          "enfermera": 372,
+          "tecnico_paramedico": 165,
+          "kinesiologo": 245,
+          "fonoaudiologo": 72,
+          "trabajador_social": 121
+        },
+        "cupos": {
+          "cupos_programados": 20,
+          "cupos_utilizados": 20,
+          "cupos_disponibles": 0
+        }
+      }
+    },
+    {
+      "path": "2023/REM/REM AGOSTO .xlsx",
+      "id": "16EhYHzj79ejkkcbv-U-2AkpqWWyyLozL",
+      "title": "REM AGOSTO .xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "rem",
+      "year": 2023,
+      "month": 8,
+      "local_file": "/home/felix/projects/hdos/.tmp/drive-consolidation/raw/2023_REM_REM_AGOSTO_.xlsx",
+      "size_bytes": 36577,
+      "sha256": "e0f6ffa033ffe3a590124944bba2f385138251ab855ede3dfa7ab71da80777d7",
+      "workbook": {
+        "sheet_count": 2
+      },
+      "sheets": [
+        {
+          "title": "Rem A21",
+          "max_row": 144,
+          "max_column": 104,
+          "non_empty_rows": 89,
+          "non_empty_cells": 254
+        },
+        {
+          "title": "Rem BS",
+          "max_row": 6,
+          "max_column": 16362,
+          "non_empty_rows": 6,
+          "non_empty_cells": 42
+        }
+      ],
+      "rem_metrics": {
+        "personas": {
+          "ingresos": 54,
+          "personas_atendidas": 54,
+          "dias_persona": 639,
+          "altas": 48,
+          "fallecidos_esperados": 0,
+          "reingresos_hospitalizacion": 2
+        },
+        "visitas": {
+          "medico": 27,
+          "enfermera": 366,
+          "tecnico_paramedico": 128,
+          "kinesiologo": 241,
+          "fonoaudiologo": 91,
+          "trabajador_social": 54
+        },
+        "cupos": {
+          "cupos_programados": 20,
+          "cupos_utilizados": 746,
+          "cupos_disponibles": 620
+        }
+      }
+    },
+    {
+      "path": "2023/REM/REM SEPTIEMBRE.xlsx",
+      "id": "1KLqIZst4Io8XPpCbjbMZoQ3CQQjWD_r2",
+      "title": "REM SEPTIEMBRE.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "rem",
+      "year": 2023,
+      "month": 9,
+      "local_file": "/home/felix/projects/hdos/.tmp/drive-consolidation/raw/2023_REM_REM_SEPTIEMBRE.xlsx",
+      "size_bytes": 36563,
+      "sha256": "d3aab09a43e205d9ac580bd1854a60e045b6950c96fde8ba6fadca5e5d56d6a3",
+      "workbook": {
+        "sheet_count": 2
+      },
+      "sheets": [
+        {
+          "title": "Rem A21",
+          "max_row": 144,
+          "max_column": 104,
+          "non_empty_rows": 89,
+          "non_empty_cells": 255
+        },
+        {
+          "title": "Rem BS",
+          "max_row": 6,
+          "max_column": 16362,
+          "non_empty_rows": 6,
+          "non_empty_cells": 42
+        }
+      ],
+      "rem_metrics": {
+        "personas": {
+          "ingresos": 53,
+          "personas_atendidas": 53,
+          "dias_persona": 667,
+          "altas": 51,
+          "fallecidos_esperados": 0,
+          "reingresos_hospitalizacion": 2
+        },
+        "visitas": {
+          "medico": 26,
+          "enfermera": 345,
+          "tecnico_paramedico": 118,
+          "kinesiologo": 243,
+          "fonoaudiologo": 79,
+          "trabajador_social": 34
+        },
+        "cupos": {
+          "cupos_programados": 25,
+          "cupos_utilizados": 772,
+          "cupos_disponibles": 750
+        }
+      }
+    },
+    {
+      "path": "2023/REM/REM OCTUBRE.xlsx",
+      "id": "1zJkabCxZf-tmcVh3QjCg8a8pVm3Enrbt",
+      "title": "REM OCTUBRE.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "rem",
+      "year": 2023,
+      "month": 10,
+      "local_file": "/home/felix/projects/hdos/.tmp/drive-consolidation/raw/2023_REM_REM_OCTUBRE.xlsx",
+      "size_bytes": 36564,
+      "sha256": "13c7a37d55e6b9449082712b00412d692a1008d35a5ad11b22b1655eb15c10f5",
+      "workbook": {
+        "sheet_count": 2
+      },
+      "sheets": [
+        {
+          "title": "Rem A21",
+          "max_row": 144,
+          "max_column": 104,
+          "non_empty_rows": 89,
+          "non_empty_cells": 255
+        },
+        {
+          "title": "Rem BS",
+          "max_row": 6,
+          "max_column": 16362,
+          "non_empty_rows": 6,
+          "non_empty_cells": 42
+        }
+      ],
+      "rem_metrics": {
+        "personas": {
+          "ingresos": 81,
+          "personas_atendidas": 81,
+          "dias_persona": 996,
+          "altas": 79,
+          "fallecidos_esperados": 7,
+          "reingresos_hospitalizacion": 3
+        },
+        "visitas": {
+          "medico": 42,
+          "enfermera": 531,
+          "tecnico_paramedico": 96,
+          "kinesiologo": 245,
+          "fonoaudiologo": 115,
+          "trabajador_social": 155
+        },
+        "cupos": {
+          "cupos_programados": 25,
+          "cupos_utilizados": 996,
+          "cupos_disponibles": 775
+        }
+      }
+    },
+    {
+      "path": "2023/REM/REM NOVIEMBRE.xlsx",
+      "id": "1wx-I3In7JF4zsjst_e3lLi7jQ-ttQxno",
+      "title": "REM NOVIEMBRE.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "rem",
+      "year": 2023,
+      "month": 11,
+      "local_file": "/home/felix/projects/hdos/.tmp/drive-consolidation/raw/2023_REM_REM_NOVIEMBRE.xlsx",
+      "size_bytes": 36580,
+      "sha256": "1cd01a11cb0eac421cf647f356b6a9235630c3672140d9b4a145fa5acdbd77dd",
+      "workbook": {
+        "sheet_count": 2
+      },
+      "sheets": [
+        {
+          "title": "Rem A21",
+          "max_row": 144,
+          "max_column": 104,
+          "non_empty_rows": 89,
+          "non_empty_cells": 256
+        },
+        {
+          "title": "Rem BS",
+          "max_row": 6,
+          "max_column": 16362,
+          "non_empty_rows": 6,
+          "non_empty_cells": 42
+        }
+      ],
+      "rem_metrics": {
+        "personas": {
+          "ingresos": 61,
+          "personas_atendidas": 61,
+          "dias_persona": 754,
+          "altas": 70,
+          "fallecidos_esperados": 1,
+          "reingresos_hospitalizacion": 3
+        },
+        "visitas": {
+          "medico": 60,
+          "enfermera": 469,
+          "tecnico_paramedico": 81,
+          "kinesiologo": 239,
+          "fonoaudiologo": 110,
+          "trabajador_social": 133
+        },
+        "cupos": {
+          "cupos_programados": 25,
+          "cupos_utilizados": 965,
+          "cupos_disponibles": 750
+        }
+      }
+    },
+    {
+      "path": "2024/PRESTACIONES ENFERMERIA/ENERO.xlsx",
+      "id": "17s1fuW2TxP_qVqPiD-mKwD2fLCswvCu5",
+      "title": "ENERO.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "prestaciones_enfermeria",
+      "year": 2024,
+      "month": 1,
+      "local_file": "/home/felix/projects/hdos/.tmp/drive-consolidation/raw/2024_PRESTACIONES_ENFERMERIA_ENERO.xlsx",
+      "size_bytes": 98450,
+      "sha256": "661ea16c0d5037c728327697568d5f3a02eee1771f748aa8b750dc3c69ec784f",
+      "workbook": {
+        "sheet_count": 1
+      },
+      "sheets": [
+        {
+          "title": "Tecnicas",
+          "max_row": 997,
+          "max_column": 35,
+          "non_empty_rows": 42,
+          "non_empty_cells": 347
+        }
+      ]
+    },
+    {
+      "path": "2024/PRESTACIONES ENFERMERIA/FEBRERO.xlsx",
+      "id": "1D2KUCdC-tIoUYgimmstzj-GelMyJWzXM",
+      "title": "FEBRERO.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "prestaciones_enfermeria",
+      "year": 2024,
+      "month": 2,
+      "local_file": "/home/felix/projects/hdos/.tmp/drive-consolidation/raw/2024_PRESTACIONES_ENFERMERIA_FEBRERO.xlsx",
+      "size_bytes": 93146,
+      "sha256": "c8613254031e3068526d45d88740dfcce0085d25acee7753cd49c942866c681b",
+      "workbook": {
+        "sheet_count": 1
+      },
+      "sheets": [
+        {
+          "title": "Tecnicas",
+          "max_row": 997,
+          "max_column": 33,
+          "non_empty_rows": 42,
+          "non_empty_cells": 320
+        }
+      ]
+    },
+    {
+      "path": "2024/PRESTACIONES ENFERMERIA/MARZO.xlsx",
+      "id": "19JTaSuOnVn0OXKoFkVF5FNkM4_67anJX",
+      "title": "MARZO.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "prestaciones_enfermeria",
+      "year": 2024,
+      "month": 3,
+      "local_file": "/home/felix/projects/hdos/.tmp/drive-consolidation/raw/2024_PRESTACIONES_ENFERMERIA_MARZO.xlsx",
+      "size_bytes": 98938,
+      "sha256": "9167960cd26b2148f93ca6be44d5c10992f067044af954f22fd4224cb7897b56",
+      "workbook": {
+        "sheet_count": 1
+      },
+      "sheets": [
+        {
+          "title": "Tecnicas",
+          "max_row": 997,
+          "max_column": 35,
+          "non_empty_rows": 42,
+          "non_empty_cells": 340
+        }
+      ]
+    },
+    {
+      "path": "2024/PRESTACIONES ENFERMERIA/ABRIL.xlsx",
+      "id": "1-RdUr7XJbrv6IRegjl3usOYCzQqa3TbE",
+      "title": "ABRIL.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "prestaciones_enfermeria",
+      "year": 2024,
+      "month": 4,
+      "local_file": "/home/felix/projects/hdos/.tmp/drive-consolidation/raw/2024_PRESTACIONES_ENFERMERIA_ABRIL.xlsx",
+      "size_bytes": 96889,
+      "sha256": "86d9e4b9764e086497a39b43a785c351a7092ac17d3304caefac275ff05e6c9c",
+      "workbook": {
+        "sheet_count": 1
+      },
+      "sheets": [
+        {
+          "title": "Tecnicas",
+          "max_row": 998,
+          "max_column": 34,
+          "non_empty_rows": 43,
+          "non_empty_cells": 344
+        }
+      ]
+    },
+    {
+      "path": "2024/PRESTACIONES ENFERMERIA/MAYO.xlsx",
+      "id": "1ANBJfUklBw74Grs6Nja3QEbgr8n-ZcVJ",
+      "title": "MAYO.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "prestaciones_enfermeria",
+      "year": 2024,
+      "month": 5,
+      "local_file": "/home/felix/projects/hdos/.tmp/drive-consolidation/raw/2024_PRESTACIONES_ENFERMERIA_MAYO.xlsx",
+      "size_bytes": 96690,
+      "sha256": "1cd26e6a4fe9933e317e4234b7cc94d081abf23b175e3ab6e5dccfd2726423c6",
+      "workbook": {
+        "sheet_count": 1
+      },
+      "sheets": [
+        {
+          "title": "Tecnicas",
+          "max_row": 997,
+          "max_column": 34,
+          "non_empty_rows": 42,
+          "non_empty_cells": 311
+        }
+      ]
+    },
+    {
+      "path": "2024/PRESTACIONES ENFERMERIA/JUNIO.xlsx",
+      "id": "1hrCPdomrUa7ay0HAMFfTzNnXxU9SC7yd",
+      "title": "JUNIO.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "prestaciones_enfermeria",
+      "year": 2024,
+      "month": 6,
+      "local_file": "/home/felix/projects/hdos/.tmp/drive-consolidation/raw/2024_PRESTACIONES_ENFERMERIA_JUNIO.xlsx",
+      "size_bytes": 98069,
+      "sha256": "47fdf5b8c8e2dead13a8e66bb1b26ab3c1b6925fe01b3e8e735ef6c3d47031af",
+      "workbook": {
+        "sheet_count": 1
+      },
+      "sheets": [
+        {
+          "title": "Tecnicas",
+          "max_row": 997,
+          "max_column": 34,
+          "non_empty_rows": 42,
+          "non_empty_cells": 323
+        }
+      ]
+    },
+    {
+      "path": "2024/PRESTACIONES ENFERMERIA/AGOSTO.xlsx",
+      "id": "1ClJKiA3pdNe3wBtF829Po0bTFr1lIRx0",
+      "title": "AGOSTO.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "prestaciones_enfermeria",
+      "year": 2024,
+      "month": 8,
+      "local_file": "/home/felix/projects/hdos/.tmp/drive-consolidation/raw/2024_PRESTACIONES_ENFERMERIA_AGOSTO.xlsx",
+      "size_bytes": 100126,
+      "sha256": "0c799f6fedfd2b15bb5b28b593d91bef6b6e44183dfe9ee7d8f36b424f54167e",
+      "workbook": {
+        "sheet_count": 1
+      },
+      "sheets": [
+        {
+          "title": "Tecnicas",
+          "max_row": 998,
+          "max_column": 35,
+          "non_empty_rows": 43,
+          "non_empty_cells": 307
+        }
+      ]
+    },
+    {
+      "path": "2024/PRESTACIONES ENFERMERIA/SEPTIEMBRE .xlsx",
+      "id": "1fhY2hZms5yUWLAyatFME-42krk22MMwd",
+      "title": "SEPTIEMBRE .xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "prestaciones_enfermeria",
+      "year": 2024,
+      "month": 9,
+      "local_file": "/home/felix/projects/hdos/.tmp/drive-consolidation/raw/2024_PRESTACIONES_ENFERMERIA_SEPTIEMBRE_.xlsx",
+      "size_bytes": 98022,
+      "sha256": "e6a2d3bde1e2a3404de4fb457a5bd675d15a56cc6dbfc3e912fe8d7c5e28f703",
+      "workbook": {
+        "sheet_count": 1
+      },
+      "sheets": [
+        {
+          "title": "Tecnicas",
+          "max_row": 997,
+          "max_column": 34,
+          "non_empty_rows": 42,
+          "non_empty_cells": 315
+        }
+      ]
+    },
+    {
+      "path": "2024/PRESTACIONES ENFERMERIA/OCTUBRE.xlsx",
+      "id": "19XlEES5GtMbF9p0-y8kCTZ8KuL8gK_cK",
+      "title": "OCTUBRE.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "prestaciones_enfermeria",
+      "year": 2024,
+      "month": 10,
+      "local_file": "/home/felix/projects/hdos/.tmp/drive-consolidation/raw/2024_PRESTACIONES_ENFERMERIA_OCTUBRE.xlsx",
+      "size_bytes": 100039,
+      "sha256": "bac52b82dd14978697cf3e5b2daed7ff14f37008c28bf049e47a7bc6eef63323",
+      "workbook": {
+        "sheet_count": 1
+      },
+      "sheets": [
+        {
+          "title": "Tecnicas",
+          "max_row": 997,
+          "max_column": 35,
+          "non_empty_rows": 42,
+          "non_empty_cells": 317
+        }
+      ]
+    },
+    {
+      "path": "2024/PRESTACIONES ENFERMERIA/NOVIEMBRE.xlsx",
+      "id": "1v8e0i4kPU7qTrQXiWjD5kyR9OL0EORbw",
+      "title": "NOVIEMBRE.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "prestaciones_enfermeria",
+      "year": 2024,
+      "month": 11,
+      "local_file": "/home/felix/projects/hdos/.tmp/drive-consolidation/raw/2024_PRESTACIONES_ENFERMERIA_NOVIEMBRE.xlsx",
+      "size_bytes": 97937,
+      "sha256": "b932975cc3383a7b8eff4dc90e5fbf45cf3974084dbac2246b46a1810db0567c",
+      "workbook": {
+        "sheet_count": 1
+      },
+      "sheets": [
+        {
+          "title": "Tecnicas",
+          "max_row": 998,
+          "max_column": 34,
+          "non_empty_rows": 43,
+          "non_empty_cells": 283
+        }
+      ]
+    },
+    {
+      "path": "2024/PRESTACIONES ENFERMERIA/DICIEMBRE.xlsx",
+      "id": "1KoeVrc_FOsNteiW7AVFt259iPYkA7lGx",
+      "title": "DICIEMBRE.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "prestaciones_enfermeria",
+      "year": 2024,
+      "month": 12,
+      "local_file": "/home/felix/projects/hdos/.tmp/drive-consolidation/raw/2024_PRESTACIONES_ENFERMERIA_DICIEMBRE.xlsx",
+      "size_bytes": 100305,
+      "sha256": "0bfcdd34980a856bf5413ab3556831087cb7b97da9f6c0416f0ce6c10592e3d7",
+      "workbook": {
+        "sheet_count": 1
+      },
+      "sheets": [
+        {
+          "title": "Tecnicas",
+          "max_row": 998,
+          "max_column": 35,
+          "non_empty_rows": 43,
+          "non_empty_cells": 430
+        }
+      ]
+    },
+    {
+      "path": "2024/REM/REM ENERO.xlsx",
+      "id": "1mzhxOD6oZNKOVZhmtyOAUaG9oCf1EA_3",
+      "title": "REM ENERO.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "rem",
+      "year": 2024,
+      "month": 1,
+      "local_file": "/home/felix/projects/hdos/.tmp/drive-consolidation/raw/2024_REM_REM_ENERO.xlsx",
+      "size_bytes": 36562,
+      "sha256": "126f5d62e98cd8e0d6dc109ef0de7f8d28d2f74cb8ceff04e465654b5db32e14",
+      "workbook": {
+        "sheet_count": 2
+      },
+      "sheets": [
+        {
+          "title": "Rem A21",
+          "max_row": 144,
+          "max_column": 104,
+          "non_empty_rows": 89,
+          "non_empty_cells": 254
+        },
+        {
+          "title": "Rem BS",
+          "max_row": 6,
+          "max_column": 16362,
+          "non_empty_rows": 6,
+          "non_empty_cells": 42
+        }
+      ],
+      "rem_metrics": {
+        "personas": {
+          "ingresos": 57,
+          "personas_atendidas": 57,
+          "dias_persona": 664,
+          "altas": 59,
+          "fallecidos_esperados": 1,
+          "reingresos_hospitalizacion": 2
+        },
+        "visitas": {
+          "medico": 92,
+          "enfermera": 467,
+          "tecnico_paramedico": 24,
+          "kinesiologo": 264,
+          "fonoaudiologo": 94,
+          "trabajador_social": 120
+        },
+        "cupos": {
+          "cupos_programados": 25,
+          "cupos_utilizados": 708,
+          "cupos_disponibles": 775
+        }
+      }
+    },
+    {
+      "path": "2024/REM/REM FEBRERO.xlsx",
+      "id": "1nRSfmUDKCDAL9i1itUpuLaZTGszTtJWD",
+      "title": "REM FEBRERO.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "rem",
+      "year": 2024,
+      "month": 2,
+      "local_file": "/home/felix/projects/hdos/.tmp/drive-consolidation/raw/2024_REM_REM_FEBRERO.xlsx",
+      "size_bytes": 36601,
+      "sha256": "30363f0d62488f71c380050be0fcf6ffa7bc64e571153cdae48210f0c10a99b6",
+      "workbook": {
+        "sheet_count": 2
+      },
+      "sheets": [
+        {
+          "title": "Rem A21",
+          "max_row": 144,
+          "max_column": 104,
+          "non_empty_rows": 89,
+          "non_empty_cells": 253
+        },
+        {
+          "title": "Rem BS",
+          "max_row": 6,
+          "max_column": 16362,
+          "non_empty_rows": 6,
+          "non_empty_cells": 42
+        }
+      ],
+      "rem_metrics": {
+        "personas": {
+          "ingresos": 59,
+          "personas_atendidas": 656,
+          "dias_persona": 629,
+          "altas": 61,
+          "fallecidos_esperados": 3,
+          "reingresos_hospitalizacion": 2
+        },
+        "visitas": {
+          "medico": 100,
+          "enfermera": 402,
+          "tecnico_paramedico": 46,
+          "kinesiologo": 237,
+          "fonoaudiologo": 103,
+          "trabajador_social": 102
+        },
+        "cupos": {
+          "cupos_programados": 25,
+          "cupos_utilizados": 793,
+          "cupos_disponibles": 725
+        }
+      }
+    },
+    {
+      "path": "2024/REM/REM MARZO.xlsx",
+      "id": "1bX7VftfBpK0sKFvL1_-TYj5zKsCtX-l6",
+      "title": "REM MARZO.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "rem",
+      "year": 2024,
+      "month": 3,
+      "local_file": "/home/felix/projects/hdos/.tmp/drive-consolidation/raw/2024_REM_REM_MARZO.xlsx",
+      "size_bytes": 36608,
+      "sha256": "0af82f60122507b4560cf8c054af516c3f8e766726618ca70a41aea17799ddf5",
+      "workbook": {
+        "sheet_count": 2
+      },
+      "sheets": [
+        {
+          "title": "Rem A21",
+          "max_row": 144,
+          "max_column": 104,
+          "non_empty_rows": 89,
+          "non_empty_cells": 253
+        },
+        {
+          "title": "Rem BS",
+          "max_row": 6,
+          "max_column": 16362,
+          "non_empty_rows": 6,
+          "non_empty_cells": 42
+        }
+      ],
+      "rem_metrics": {
+        "personas": {
+          "ingresos": 67,
+          "personas_atendidas": 67,
+          "dias_persona": 688,
+          "altas": 68,
+          "fallecidos_esperados": 2,
+          "reingresos_hospitalizacion": 2
+        },
+        "visitas": {
+          "medico": 87,
+          "enfermera": 498,
+          "tecnico_paramedico": 44,
+          "kinesiologo": 264,
+          "fonoaudiologo": 99,
+          "trabajador_social": 103
+        },
+        "cupos": {
+          "cupos_programados": 25,
+          "cupos_utilizados": 896,
+          "cupos_disponibles": 775
+        }
+      }
+    },
+    {
+      "path": "2024/REM/REM ABRIL 24.xlsx",
+      "id": "1TJprQcKtmepC7T3dinRhNhuLb8sZSSVk",
+      "title": "REM ABRIL 24.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "rem",
+      "year": 2024,
+      "month": 4,
+      "local_file": "/home/felix/projects/hdos/.tmp/drive-consolidation/raw/2024_REM_REM_ABRIL_24.xlsx",
+      "size_bytes": 36577,
+      "sha256": "165762acc4f21cfd01e7780af4f492a1776e4e906a367469bd23951ca9e54585",
+      "workbook": {
+        "sheet_count": 2
+      },
+      "sheets": [
+        {
+          "title": "Rem A21",
+          "max_row": 144,
+          "max_column": 104,
+          "non_empty_rows": 89,
+          "non_empty_cells": 254
+        },
+        {
+          "title": "Rem BS",
+          "max_row": 6,
+          "max_column": 16362,
+          "non_empty_rows": 6,
+          "non_empty_cells": 42
+        }
+      ],
+      "rem_metrics": {
+        "personas": {
+          "ingresos": 74,
+          "personas_atendidas": 74,
+          "dias_persona": 637,
+          "altas": 77,
+          "fallecidos_esperados": 1,
+          "reingresos_hospitalizacion": 4
+        },
+        "visitas": {
+          "medico": 100,
+          "enfermera": 378,
+          "tecnico_paramedico": 88,
+          "kinesiologo": 263,
+          "fonoaudiologo": 124,
+          "trabajador_social": 118
+        },
+        "cupos": {
+          "cupos_programados": 25,
+          "cupos_utilizados": 573,
+          "cupos_disponibles": 750
+        }
+      }
+    },
+    {
+      "path": "2024/REM/REM MAYO.xlsx",
+      "id": "1o89epL0PR0uARpLos8La4djWu6XemGCE",
+      "title": "REM MAYO.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "rem",
+      "year": 2024,
+      "month": 5,
+      "local_file": "/home/felix/projects/hdos/.tmp/drive-consolidation/raw/2024_REM_REM_MAYO.xlsx",
+      "size_bytes": 36582,
+      "sha256": "22a313e216d8ec82e26dfcd90cf9cbead19d918c8900f5a932cd5ba0329e5330",
+      "workbook": {
+        "sheet_count": 2
+      },
+      "sheets": [
+        {
+          "title": "Rem A21",
+          "max_row": 144,
+          "max_column": 104,
+          "non_empty_rows": 89,
+          "non_empty_cells": 263
+        },
+        {
+          "title": "Rem BS",
+          "max_row": 6,
+          "max_column": 16362,
+          "non_empty_rows": 6,
+          "non_empty_cells": 42
+        }
+      ],
+      "rem_metrics": {
+        "personas": {
+          "ingresos": 100,
+          "personas_atendidas": 100,
+          "dias_persona": 586,
+          "altas": 94,
+          "fallecidos_esperados": 3,
+          "reingresos_hospitalizacion": 2
+        },
+        "visitas": {
+          "medico": 84,
+          "enfermera": 296,
+          "tecnico_paramedico": 44,
+          "kinesiologo": 278,
+          "fonoaudiologo": 117,
+          "trabajador_social": 143
+        },
+        "cupos": {
+          "cupos_programados": 25,
+          "cupos_utilizados": 843,
+          "cupos_disponibles": 775
+        }
+      }
+    },
+    {
+      "path": "2024/REM/REM JUNIO 24.xlsx",
+      "id": "1O0vZ-rS6zmXYc3hiO2uJctAuSAGn6qHy",
+      "title": "REM JUNIO 24.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "rem",
+      "year": 2024,
+      "month": 6,
+      "local_file": "/home/felix/projects/hdos/.tmp/drive-consolidation/raw/2024_REM_REM_JUNIO_24.xlsx",
+      "size_bytes": 36558,
+      "sha256": "3248d037fefe0ee820eda10fc829947cf9f8ab845e75e4953f4ea7d092cc090c",
+      "workbook": {
+        "sheet_count": 2
+      },
+      "sheets": [
+        {
+          "title": "Rem A21",
+          "max_row": 144,
+          "max_column": 104,
+          "non_empty_rows": 89,
+          "non_empty_cells": 257
+        },
+        {
+          "title": "Rem BS",
+          "max_row": 6,
+          "max_column": 16362,
+          "non_empty_rows": 6,
+          "non_empty_cells": 42
+        }
+      ],
+      "rem_metrics": {
+        "personas": {
+          "ingresos": 89,
+          "personas_atendidas": 89,
+          "dias_persona": 507,
+          "altas": 96,
+          "fallecidos_esperados": 3,
+          "reingresos_hospitalizacion": 3
+        },
+        "visitas": {
+          "medico": 88,
+          "enfermera": 424,
+          "tecnico_paramedico": 88,
+          "kinesiologo": 354,
+          "fonoaudiologo": 116,
+          "trabajador_social": 124
+        },
+        "cupos": {
+          "cupos_programados": 35,
+          "cupos_utilizados": 723,
+          "cupos_disponibles": 1050
+        }
+      }
+    },
+    {
+      "path": "2024/REM/REM JULIO .xlsx",
+      "id": "1Y4Z2qhJUH5ac_2TBwyMK3gJEBQQqtU8h",
+      "title": "REM JULIO .xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "rem",
+      "year": 2024,
+      "month": 7,
+      "local_file": "/home/felix/projects/hdos/.tmp/drive-consolidation/raw/2024_REM_REM_JULIO_.xlsx",
+      "size_bytes": 36572,
+      "sha256": "0823b540838041e5580958e385765e4a65680c2dfadcf83e6934fd25576d7d82",
+      "workbook": {
+        "sheet_count": 2
+      },
+      "sheets": [
+        {
+          "title": "Rem A21",
+          "max_row": 144,
+          "max_column": 104,
+          "non_empty_rows": 89,
+          "non_empty_cells": 251
+        },
+        {
+          "title": "Rem BS",
+          "max_row": 6,
+          "max_column": 16362,
+          "non_empty_rows": 6,
+          "non_empty_cells": 42
+        }
+      ],
+      "rem_metrics": {
+        "personas": {
+          "ingresos": 84,
+          "personas_atendidas": 102,
+          "dias_persona": 533,
+          "altas": 88,
+          "fallecidos_esperados": 1,
+          "reingresos_hospitalizacion": 2
+        },
+        "visitas": {
+          "medico": 80,
+          "enfermera": 498,
+          "tecnico_paramedico": 44,
+          "kinesiologo": 258,
+          "fonoaudiologo": 121,
+          "trabajador_social": 110
+        },
+        "cupos": {
+          "cupos_programados": 25,
+          "cupos_utilizados": 533,
+          "cupos_disponibles": 865
+        }
+      }
+    },
+    {
+      "path": "2024/REM/REM AGOSTO .xlsx",
+      "id": "1gJmNAnkjixRWd9iUS2hMzrf1PE7saon5",
+      "title": "REM AGOSTO .xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "rem",
+      "year": 2024,
+      "month": 8,
+      "local_file": "/home/felix/projects/hdos/.tmp/drive-consolidation/raw/2024_REM_REM_AGOSTO_.xlsx",
+      "size_bytes": 36562,
+      "sha256": "06706664184ffd8b7c1d2043ce67ccd3e519adae834dd65b08bc7f3b19ef466a",
+      "workbook": {
+        "sheet_count": 2
+      },
+      "sheets": [
+        {
+          "title": "Rem A21",
+          "max_row": 144,
+          "max_column": 104,
+          "non_empty_rows": 89,
+          "non_empty_cells": 256
+        },
+        {
+          "title": "Rem BS",
+          "max_row": 6,
+          "max_column": 16362,
+          "non_empty_rows": 6,
+          "non_empty_cells": 42
+        }
+      ],
+      "rem_metrics": {
+        "personas": {
+          "ingresos": 83,
+          "personas_atendidas": 83,
+          "dias_persona": 456,
+          "altas": 74,
+          "fallecidos_esperados": 1,
+          "reingresos_hospitalizacion": 3
+        },
+        "visitas": {
+          "medico": 176,
+          "enfermera": 362,
+          "tecnico_paramedico": 26,
+          "kinesiologo": 268,
+          "fonoaudiologo": 114,
+          "trabajador_social": 107
+        },
+        "cupos": {
+          "cupos_programados": 25,
+          "cupos_utilizados": 860,
+          "cupos_disponibles": 775
+        }
+      }
+    },
+    {
+      "path": "2024/REM/REM SEPTIEMBRE.xlsx",
+      "id": "1lcSUJDJZY7smocpthV4U4C_gDoRlY7Jr",
+      "title": "REM SEPTIEMBRE.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "rem",
+      "year": 2024,
+      "month": 9,
+      "local_file": "/home/felix/projects/hdos/.tmp/drive-consolidation/raw/2024_REM_REM_SEPTIEMBRE.xlsx",
+      "size_bytes": 36587,
+      "sha256": "eecdd81d4128c084abb0a25d96070424d135c854fd1a7c864bfc0c3691b2b29b",
+      "workbook": {
+        "sheet_count": 2
+      },
+      "sheets": [
+        {
+          "title": "Rem A21",
+          "max_row": 144,
+          "max_column": 104,
+          "non_empty_rows": 89,
+          "non_empty_cells": 255
+        },
+        {
+          "title": "Rem BS",
+          "max_row": 6,
+          "max_column": 16362,
+          "non_empty_rows": 6,
+          "non_empty_cells": 42
+        }
+      ],
+      "rem_metrics": {
+        "personas": {
+          "ingresos": 71,
+          "personas_atendidas": 98,
+          "dias_persona": 493,
+          "altas": 66,
+          "fallecidos_esperados": 0,
+          "reingresos_hospitalizacion": 2
+        },
+        "visitas": {
+          "medico": 139,
+          "enfermera": 405,
+          "tecnico_paramedico": 52,
+          "kinesiologo": 262,
+          "fonoaudiologo": 93,
+          "trabajador_social": 104
+        },
+        "cupos": {
+          "cupos_programados": 25,
+          "cupos_utilizados": 862,
+          "cupos_disponibles": 750
+        }
+      }
+    },
+    {
+      "path": "2024/REM/REM OCTUBRE 24.xlsx",
+      "id": "1tUk3kjN3wMZUrcrfuHOxSS2KeXmTsc8E",
+      "title": "REM OCTUBRE 24.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "rem",
+      "year": 2024,
+      "month": 10,
+      "local_file": "/home/felix/projects/hdos/.tmp/drive-consolidation/raw/2024_REM_REM_OCTUBRE_24.xlsx",
+      "size_bytes": 36566,
+      "sha256": "51a20a2a6dbb5f86e00806e619f680bc20d183d64d0859167ba27b0405e4858a",
+      "workbook": {
+        "sheet_count": 2
+      },
+      "sheets": [
+        {
+          "title": "Rem A21",
+          "max_row": 144,
+          "max_column": 104,
+          "non_empty_rows": 89,
+          "non_empty_cells": 257
+        },
+        {
+          "title": "Rem BS",
+          "max_row": 6,
+          "max_column": 16362,
+          "non_empty_rows": 6,
+          "non_empty_cells": 42
+        }
+      ],
+      "rem_metrics": {
+        "personas": {
+          "ingresos": 71,
+          "personas_atendidas": 96,
+          "dias_persona": 498,
+          "altas": 75,
+          "fallecidos_esperados": 0,
+          "reingresos_hospitalizacion": 2
+        },
+        "visitas": {
+          "medico": 142,
+          "enfermera": 405,
+          "tecnico_paramedico": 48,
+          "kinesiologo": 266,
+          "fonoaudiologo": 91,
+          "trabajador_social": 89
+        },
+        "cupos": {
+          "cupos_programados": 25,
+          "cupos_utilizados": 686,
+          "cupos_disponibles": 775
+        }
+      }
+    },
+    {
+      "path": "2024/REM/REM NOVIEMBRE 2024.xlsx",
+      "id": "1QvpN7L-sDHzv832n6wIeG9BF-DZ-Xw11",
+      "title": "REM NOVIEMBRE 2024.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "rem",
+      "year": 2024,
+      "month": 11,
+      "local_file": "/home/felix/projects/hdos/.tmp/drive-consolidation/raw/2024_REM_REM_NOVIEMBRE_2024.xlsx",
+      "size_bytes": 36610,
+      "sha256": "06c70f06a48af3769e115c037e8300f95bb94d0992db4ab3506d61f567bb70dd",
+      "workbook": {
+        "sheet_count": 2
+      },
+      "sheets": [
+        {
+          "title": "Rem A21",
+          "max_row": 144,
+          "max_column": 104,
+          "non_empty_rows": 89,
+          "non_empty_cells": 253
+        },
+        {
+          "title": "Rem BS",
+          "max_row": 6,
+          "max_column": 16362,
+          "non_empty_rows": 6,
+          "non_empty_cells": 42
+        }
+      ],
+      "rem_metrics": {
+        "personas": {
+          "ingresos": 53,
+          "personas_atendidas": 70,
+          "dias_persona": 402,
+          "altas": 55,
+          "fallecidos_esperados": null,
+          "reingresos_hospitalizacion": 1
+        },
+        "visitas": {
+          "medico": 90,
+          "enfermera": 284,
+          "tecnico_paramedico": 29,
+          "kinesiologo": 261,
+          "fonoaudiologo": 102,
+          "trabajador_social": null
+        },
+        "cupos": {
+          "cupos_programados": 16,
+          "cupos_utilizados": 591,
+          "cupos_disponibles": 480
+        }
+      }
+    },
+    {
+      "path": "2024/REM/REM DICIEMBRE.xlsx",
+      "id": "16a0d9oKZY1CLbNMrI31hRsNLtQB3rspS",
+      "title": "REM DICIEMBRE.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "rem",
+      "year": 2024,
+      "month": 12,
+      "local_file": "/home/felix/projects/hdos/.tmp/drive-consolidation/raw/2024_REM_REM_DICIEMBRE.xlsx",
+      "size_bytes": 36604,
+      "sha256": "f4ae55f2d6f5869b5c6762a53bd6a715db4b3438c074e280c3333f7d1742f350",
+      "workbook": {
+        "sheet_count": 2
+      },
+      "sheets": [
+        {
+          "title": "Rem A21",
+          "max_row": 144,
+          "max_column": 104,
+          "non_empty_rows": 89,
+          "non_empty_cells": 251
+        },
+        {
+          "title": "Rem BS",
+          "max_row": 6,
+          "max_column": 16362,
+          "non_empty_rows": 6,
+          "non_empty_cells": 42
+        }
+      ],
+      "rem_metrics": {
+        "personas": {
+          "ingresos": 44,
+          "personas_atendidas": 67,
+          "dias_persona": 411,
+          "altas": 49,
+          "fallecidos_esperados": 1,
+          "reingresos_hospitalizacion": 3
+        },
+        "visitas": {
+          "medico": 102,
+          "enfermera": 269,
+          "tecnico_paramedico": 44,
+          "kinesiologo": 220,
+          "fonoaudiologo": 105,
+          "trabajador_social": null
+        },
+        "cupos": {
+          "cupos_programados": 16,
+          "cupos_utilizados": 681,
+          "cupos_disponibles": 496
+        }
+      }
+    },
+    {
+      "path": "HOMOM 2025.xlsx",
+      "id": "1Sr27xmW0V7eqBZd4tjAJ2AgcID0VSNze",
+      "title": "HOMOM 2025.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "resumen_hodom",
+      "year": 2025,
+      "month": null,
+      "local_file": "/home/felix/projects/hdos/.tmp/drive-consolidation/raw/HOMOM_2025.xlsx",
+      "size_bytes": 87339,
+      "sha256": "ed2e5539d4b3ee01c84cae8f687fc85c715718d6e80cbb6fe8b1c4cf12a53bc0",
+      "workbook": {
+        "sheet_count": 14
+      },
+      "sheets": [
+        {
+          "title": "DICIEMBRE 2024",
+          "max_row": 53,
+          "max_column": 22,
+          "non_empty_rows": 47,
+          "non_empty_cells": 374
+        },
+        {
+          "title": "ENERO2025",
+          "max_row": 53,
+          "max_column": 22,
+          "non_empty_rows": 47,
+          "non_empty_cells": 304
+        },
+        {
+          "title": "FEBRERO 2025",
+          "max_row": 50,
+          "max_column": 20,
+          "non_empty_rows": 44,
+          "non_empty_cells": 256
+        },
+        {
+          "title": "MARZO 2025",
+          "max_row": 53,
+          "max_column": 19,
+          "non_empty_rows": 47,
+          "non_empty_cells": 277
+        },
+        {
+          "title": "ABRIL 2025",
+          "max_row": 52,
+          "max_column": 19,
+          "non_empty_rows": 46,
+          "non_empty_cells": 269
+        },
+        {
+          "title": "MAYO 2025",
+          "max_row": 53,
+          "max_column": 19,
+          "non_empty_rows": 47,
+          "non_empty_cells": 329
+        },
+        {
+          "title": "JUNIO 2025",
+          "max_row": 52,
+          "max_column": 19,
+          "non_empty_rows": 46,
+          "non_empty_cells": 265
+        },
+        {
+          "title": "JULIO 2025",
+          "max_row": 53,
+          "max_column": 19,
+          "non_empty_rows": 47,
+          "non_empty_cells": 285
+        },
+        {
+          "title": "AGOSTO 2025",
+          "max_row": 50,
+          "max_column": 19,
+          "non_empty_rows": 45,
+          "non_empty_cells": 260
+        },
+        {
+          "title": "SEPTIEMBRE 2025",
+          "max_row": 49,
+          "max_column": 19,
+          "non_empty_rows": 44,
+          "non_empty_cells": 250
+        },
+        {
+          "title": "OCTUBRE 2025",
+          "max_row": 50,
+          "max_column": 19,
+          "non_empty_rows": 45,
+          "non_empty_cells": 255
+        },
+        {
+          "title": "NOVIEMBRE 2025",
+          "max_row": 49,
+          "max_column": 19,
+          "non_empty_rows": 44,
+          "non_empty_cells": 266
+        },
+        {
+          "title": "DICIEMBRE 2025",
+          "max_row": 50,
+          "max_column": 19,
+          "non_empty_rows": 45,
+          "non_empty_cells": 251
+        },
+        {
+          "title": "ENERO 2026",
+          "max_row": 50,
+          "max_column": 19,
+          "non_empty_rows": 45,
+          "non_empty_cells": 257
+        }
+      ]
+    },
+    {
+      "path": "HOMOM 2026.xlsx",
+      "id": "13VFdvVY76YtgbTukf3RCsARmgyNsZaOh",
+      "title": "HOMOM 2026.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "resumen_hodom",
+      "year": 2026,
+      "month": null,
+      "local_file": "/home/felix/projects/hdos/.tmp/drive-consolidation/raw/HOMOM_2026.xlsx",
+      "size_bytes": 27477,
+      "sha256": "91379c138c26bb7a571d8b7a21b268462cff0fe5db4ec55a553f239ea3a332fb",
+      "workbook": {
+        "sheet_count": 2
+      },
+      "sheets": [
+        {
+          "title": "MARZO 26",
+          "max_row": 52,
+          "max_column": 19,
+          "non_empty_rows": 47,
+          "non_empty_cells": 250
+        },
+        {
+          "title": "ABRIL 26",
+          "max_row": 49,
+          "max_column": 19,
+          "non_empty_rows": 45,
+          "non_empty_cells": 239
+        }
+      ]
+    },
+    {
+      "path": "2024/INGRESOS ENE-OCT 2024.xlsx",
+      "id": "1g-ojvSZh2uuYHwKz7ch7So9p0V2yLbtp",
+      "title": "INGRESOS ENE-OCT 2024.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "ingresos_nominales",
+      "year": 2024,
+      "month": null,
+      "local_file": "/home/felix/projects/hdos/.tmp/drive-consolidation/raw/2024_INGRESOS_ENE-OCT_2024.xlsx",
+      "size_bytes": 481272,
+      "sha256": "e6053d34f1e81743d7ab696669306a3a7535904f6e5f21e78875512393e90fb1",
+      "workbook": {
+        "sheet_count": 13
+      },
+      "sheets": [
+        {
+          "title": "NO MOD",
+          "max_row": 12,
+          "max_column": 19,
+          "non_empty_rows": 12,
+          "non_empty_cells": 76
+        },
+        {
+          "title": "INGRESOS 2024",
+          "max_row": 1160,
+          "max_column": 43,
+          "non_empty_rows": 1158,
+          "non_empty_cells": 22347
+        },
+        {
+          "title": "EGRESOS ENERO",
+          "max_row": 40,
+          "max_column": 41,
+          "non_empty_rows": 40,
+          "non_empty_cells": 1026
+        },
+        {
+          "title": "EGRESOS FEBERO",
+          "max_row": 63,
+          "max_column": 40,
+          "non_empty_rows": 63,
+          "non_empty_cells": 1705
+        },
+        {
+          "title": "EGRESOS MARZO",
+          "max_row": 68,
+          "max_column": 40,
+          "non_empty_rows": 68,
+          "non_empty_cells": 1866
+        },
+        {
+          "title": "EGRESOS ABRIL",
+          "max_row": 78,
+          "max_column": 40,
+          "non_empty_rows": 78,
+          "non_empty_cells": 2085
+        },
+        {
+          "title": "EGRESOS MAYO",
+          "max_row": 96,
+          "max_column": 40,
+          "non_empty_rows": 96,
+          "non_empty_cells": 2644
+        },
+        {
+          "title": "EGRESOS JUNIO",
+          "max_row": 98,
+          "max_column": 44,
+          "non_empty_rows": 98,
+          "non_empty_cells": 2726
+        },
+        {
+          "title": "EGRESOS JULIO",
+          "max_row": 90,
+          "max_column": 43,
+          "non_empty_rows": 90,
+          "non_empty_cells": 2748
+        },
+        {
+          "title": "EGRESOS AGOSTO",
+          "max_row": 85,
+          "max_column": 43,
+          "non_empty_rows": 85,
+          "non_empty_cells": 2545
+        },
+        {
+          "title": "EGRESOS SEPTIEMBRE",
+          "max_row": 67,
+          "max_column": 43,
+          "non_empty_rows": 67,
+          "non_empty_cells": 2050
+        },
+        {
+          "title": "EGRESOS OCTUBRE",
+          "max_row": 77,
+          "max_column": 43,
+          "non_empty_rows": 76,
+          "non_empty_cells": 2306
+        },
+        {
+          "title": "EGRESOS NOVIEMBRE",
+          "max_row": 16,
+          "max_column": 43,
+          "non_empty_rows": 16,
+          "non_empty_cells": 468
+        }
+      ]
+    },
+    {
+      "path": "2024/PLANILLA NOV DIC 2024.xlsx",
+      "id": "15s5FU9UKBjgTQxz277_M7zSq9KGavLXN",
+      "title": "PLANILLA NOV DIC 2024.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "ingresos_nominales",
+      "year": 2024,
+      "month": null,
+      "local_file": "/home/felix/projects/hdos/.tmp/drive-consolidation/raw/2024_PLANILLA_NOV_DIC_2024.xlsx",
+      "size_bytes": 51357,
+      "sha256": "f5c9a5e3b6375aa9269efa5e57a5e3f354181667f02c87ecaae1a34da1fd2362",
+      "workbook": {
+        "sheet_count": 3
+      },
+      "sheets": [
+        {
+          "title": "INGRESOS",
+          "max_row": 100,
+          "max_column": 27,
+          "non_empty_rows": 99,
+          "non_empty_cells": 2414
+        },
+        {
+          "title": "EGRESOS NOV 24",
+          "max_row": 100,
+          "max_column": 26,
+          "non_empty_rows": 55,
+          "non_empty_cells": 1347
+        },
+        {
+          "title": "EGRESOS DIC 24",
+          "max_row": 52,
+          "max_column": 26,
+          "non_empty_rows": 52,
+          "non_empty_cells": 1277
+        }
+      ]
+    },
+    {
+      "path": "2025/INGRESOS 2025 (3).xlsx",
+      "id": "1EmbYGViWjZKe_uQoEi9OiGhgXiMdzFtO",
+      "title": "INGRESOS 2025 (3).xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "ingresos_nominales",
+      "year": 2025,
+      "month": null,
+      "local_file": "/home/felix/projects/hdos/.tmp/drive-consolidation/raw/2025_INGRESOS_2025_3_.xlsx",
+      "size_bytes": 310300,
+      "sha256": "f1d45073434670ad9ceabbbdf354277c7c3b42bcbddfa827cb6469d676323669",
+      "workbook": {
+        "sheet_count": 11
+      },
+      "sheets": [
+        {
+          "title": "INGRESOS",
+          "max_row": 925,
+          "max_column": 27,
+          "non_empty_rows": 501,
+          "non_empty_cells": 12184
+        },
+        {
+          "title": "EGRESOS ENERO",
+          "max_row": 1142,
+          "max_column": 26,
+          "non_empty_rows": 49,
+          "non_empty_cells": 1207
+        },
+        {
+          "title": "EGRESOS FEBRERO",
+          "max_row": 48,
+          "max_column": 26,
+          "non_empty_rows": 48,
+          "non_empty_cells": 1166
+        },
+        {
+          "title": "EGRESOS MARZO",
+          "max_row": 52,
+          "max_column": 26,
+          "non_empty_rows": 52,
+          "non_empty_cells": 1275
+        },
+        {
+          "title": "EGRESOS ABRIL",
+          "max_row": 52,
+          "max_column": 26,
+          "non_empty_rows": 52,
+          "non_empty_cells": 1285
+        },
+        {
+          "title": "EGRESOS MAYO",
+          "max_row": 56,
+          "max_column": 26,
+          "non_empty_rows": 56,
+          "non_empty_cells": 1366
+        },
+        {
+          "title": "EGRESOS JUNIO",
+          "max_row": 54,
+          "max_column": 26,
+          "non_empty_rows": 54,
+          "non_empty_cells": 1333
+        },
+        {
+          "title": "EGRESOS JULIO",
+          "max_row": 56,
+          "max_column": 26,
+          "non_empty_rows": 56,
+          "non_empty_cells": 1375
+        },
+        {
+          "title": "EGRESOS AGOSTO",
+          "max_row": 55,
+          "max_column": 26,
+          "non_empty_rows": 55,
+          "non_empty_cells": 1356
+        },
+        {
+          "title": "EGRESOS SEPTIEMBRE ",
+          "max_row": 57,
+          "max_column": 26,
+          "non_empty_rows": 57,
+          "non_empty_cells": 1382
+        },
+        {
+          "title": "EGRESOS OCTUBRE",
+          "max_row": 160,
+          "max_column": 26,
+          "non_empty_rows": 21,
+          "non_empty_cells": 492
+        }
+      ]
+    },
+    {
+      "path": "2025/REM ENERO 2025.xlsx",
+      "id": "1ZDjH03MGi1-6IXBzvnoMUh4hNwZTNkU2",
+      "title": "REM ENERO 2025.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "rem",
+      "year": 2025,
+      "month": 1,
+      "local_file": "/home/felix/projects/hdos/.tmp/drive-consolidation/raw/2025_REM_ENERO_2025.xlsx",
+      "size_bytes": 37211,
+      "sha256": "b3b0968fe730bb17b0dc89043744c2765ed781e1b3368cf8d5941203e2d5df4f",
+      "workbook": {
+        "sheet_count": 2
+      },
+      "sheets": [
+        {
+          "title": "Rem A21",
+          "max_row": 144,
+          "max_column": 105,
+          "non_empty_rows": 89,
+          "non_empty_cells": 253
+        },
+        {
+          "title": "Rem BS",
+          "max_row": 6,
+          "max_column": 16362,
+          "non_empty_rows": 6,
+          "non_empty_cells": 42
+        }
+      ],
+      "rem_metrics": {
+        "personas": {
+          "ingresos": 52,
+          "personas_atendidas": 69,
+          "dias_persona": 372,
+          "altas": 47,
+          "fallecidos_esperados": 0,
+          "reingresos_hospitalizacion": 1
+        },
+        "visitas": {
+          "medico": 132,
+          "enfermera": 246,
+          "tecnico_paramedico": 44,
+          "kinesiologo": 224,
+          "fonoaudiologo": 112,
+          "trabajador_social": null
+        },
+        "cupos": {
+          "cupos_programados": 16,
+          "cupos_utilizados": 688,
+          "cupos_disponibles": 496
+        }
+      }
+    },
+    {
+      "path": "2025/REM FEBRERO 2025.xlsx",
+      "id": "17dnhkUd_livEcTq20R5d4_vVoSK7YdLz",
+      "title": "REM FEBRERO 2025.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "rem",
+      "year": 2025,
+      "month": 2,
+      "local_file": "/home/felix/projects/hdos/.tmp/drive-consolidation/raw/2025_REM_FEBRERO_2025.xlsx",
+      "size_bytes": 36962,
+      "sha256": "16b9b517ec20d11ca193bf6fb4f4566a7120561b3b22886e038b7a791406eff6",
+      "workbook": {
+        "sheet_count": 2
+      },
+      "sheets": [
+        {
+          "title": "Rem A21",
+          "max_row": 141,
+          "max_column": 105,
+          "non_empty_rows": 86,
+          "non_empty_cells": 250
+        },
+        {
+          "title": "Rem BS",
+          "max_row": 6,
+          "max_column": 16362,
+          "non_empty_rows": 6,
+          "non_empty_cells": 42
+        }
+      ],
+      "rem_metrics": {
+        "personas": {
+          "ingresos": 47,
+          "personas_atendidas": 21,
+          "dias_persona": 349,
+          "altas": 46,
+          "fallecidos_esperados": 1,
+          "reingresos_hospitalizacion": 2
+        },
+        "visitas": {
+          "medico": 132,
+          "enfermera": 246,
+          "tecnico_paramedico": 44,
+          "kinesiologo": 226,
+          "fonoaudiologo": 115,
+          "trabajador_social": null
+        },
+        "cupos": {
+          "cupos_programados": 16,
+          "cupos_utilizados": 576,
+          "cupos_disponibles": 448
+        }
+      }
+    },
+    {
+      "path": "2025/REM MARZO 25.xlsx",
+      "id": "1o4Gzm6gIRIUB0NPk9qpkk2npgnGC-BOm",
+      "title": "REM MARZO 25.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "rem",
+      "year": 2025,
+      "month": 3,
+      "local_file": "/home/felix/projects/hdos/.tmp/drive-consolidation/raw/2025_REM_MARZO_25.xlsx",
+      "size_bytes": 19598,
+      "sha256": "63e58ee7edf7166a645a698f400ccda959bad9d5294e3269f04dd79acfcd4248",
+      "workbook": {
+        "sheet_count": 1
+      },
+      "sheets": [
+        {
+          "title": "Hoja1",
+          "max_row": 44,
+          "max_column": 18,
+          "non_empty_rows": 44,
+          "non_empty_cells": 116
+        }
+      ],
+      "rem_metrics": {
+        "personas": {
+          "ingresos": 51,
+          "personas_atendidas": 51,
+          "dias_persona": 382,
+          "altas": 51,
+          "fallecidos_esperados": 0,
+          "reingresos_hospitalizacion": 1
+        },
+        "visitas": {
+          "medico": 176,
+          "enfermera": 241,
+          "tecnico_paramedico": 44,
+          "kinesiologo": 255,
+          "fonoaudiologo": 127,
+          "trabajador_social": null
+        },
+        "cupos": {
+          "cupos_programados": 16,
+          "cupos_utilizados": 453,
+          "cupos_disponibles": 496
+        }
+      }
+    },
+    {
+      "path": "2025/REM ABRIL 25.xlsx",
+      "id": "1GjYTueXURnPif_ROkNqSbwJwyZwfVqLi",
+      "title": "REM ABRIL 25.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "rem",
+      "year": 2025,
+      "month": 4,
+      "local_file": "/home/felix/projects/hdos/.tmp/drive-consolidation/raw/2025_REM_ABRIL_25.xlsx",
+      "size_bytes": 19590,
+      "sha256": "b72dad30312fbcc0eb2180b990c829bcc6a862ede0faf64717b099c1f3b5d57c",
+      "workbook": {
+        "sheet_count": 1
+      },
+      "sheets": [
+        {
+          "title": "Hoja1",
+          "max_row": 44,
+          "max_column": 18,
+          "non_empty_rows": 44,
+          "non_empty_cells": 117
+        }
+      ],
+      "rem_metrics": {
+        "personas": {
+          "ingresos": 56,
+          "personas_atendidas": 56,
+          "dias_persona": 404,
+          "altas": 43,
+          "fallecidos_esperados": 3,
+          "reingresos_hospitalizacion": 2
+        },
+        "visitas": {
+          "medico": 176,
+          "enfermera": 250,
+          "tecnico_paramedico": 44,
+          "kinesiologo": 241,
+          "fonoaudiologo": 104,
+          "trabajador_social": null
+        },
+        "cupos": {
+          "cupos_programados": 16,
+          "cupos_utilizados": 608,
+          "cupos_disponibles": 480
+        }
+      }
+    },
+    {
+      "path": "2025/REM MAYO 25.xlsx",
+      "id": "10LPwBU_IBAzbLy3WqVkiInjdcgoaomQN",
+      "title": "REM MAYO 25.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "rem",
+      "year": 2025,
+      "month": 5,
+      "local_file": "/home/felix/projects/hdos/.tmp/drive-consolidation/raw/2025_REM_MAYO_25.xlsx",
+      "size_bytes": 19615,
+      "sha256": "3c15c7f316c001d409527d0cd0c74b7c86bcdc43e6250932c1f104e077b26082",
+      "workbook": {
+        "sheet_count": 1
+      },
+      "sheets": [
+        {
+          "title": "Hoja1",
+          "max_row": 44,
+          "max_column": 18,
+          "non_empty_rows": 44,
+          "non_empty_cells": 114
+        }
+      ],
+      "rem_metrics": {
+        "personas": {
+          "ingresos": 55,
+          "personas_atendidas": 75,
+          "dias_persona": 483,
+          "altas": 55,
+          "fallecidos_esperados": 1,
+          "reingresos_hospitalizacion": 1
+        },
+        "visitas": {
+          "medico": 110,
+          "enfermera": 247,
+          "tecnico_paramedico": 33,
+          "kinesiologo": 260,
+          "fonoaudiologo": 93,
+          "trabajador_social": null
+        },
+        "cupos": {
+          "cupos_programados": 16,
+          "cupos_utilizados": 520,
+          "cupos_disponibles": 496
+        }
+      }
+    },
+    {
+      "path": "2025/REM JUNIO 25.xlsx",
+      "id": "1G8Irz-5jRvYnITkwqi6bRRfItYH3mk8m",
+      "title": "REM JUNIO 25.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "rem",
+      "year": 2025,
+      "month": 6,
+      "local_file": "/home/felix/projects/hdos/.tmp/drive-consolidation/raw/2025_REM_JUNIO_25.xlsx",
+      "size_bytes": 19716,
+      "sha256": "4fc00c03a69f197e0724ee29cbafc109629fd80e03b0c68a7a8d4cbdc810f0d9",
+      "workbook": {
+        "sheet_count": 1
+      },
+      "sheets": [
+        {
+          "title": "Hoja1",
+          "max_row": 44,
+          "max_column": 18,
+          "non_empty_rows": 44,
+          "non_empty_cells": 124
+        }
+      ],
+      "rem_metrics": {
+        "personas": {
+          "ingresos": 52,
+          "personas_atendidas": 69,
+          "dias_persona": 398,
+          "altas": 53,
+          "fallecidos_esperados": 0,
+          "reingresos_hospitalizacion": 3
+        },
+        "visitas": {
+          "medico": 97,
+          "enfermera": 244,
+          "tecnico_paramedico": 33,
+          "kinesiologo": 253,
+          "fonoaudiologo": 110,
+          "trabajador_social": null
+        },
+        "cupos": {
+          "cupos_programados": 16,
+          "cupos_utilizados": 399,
+          "cupos_disponibles": 480
+        }
+      }
+    },
+    {
+      "path": "2025/REM JULIO 25.xlsx",
+      "id": "1C4aQqgQLwEUDQeIOWETki5oe6Kg9gSmD",
+      "title": "REM JULIO 25.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "rem",
+      "year": 2025,
+      "month": 7,
+      "local_file": "/home/felix/projects/hdos/.tmp/drive-consolidation/raw/2025_REM_JULIO_25.xlsx",
+      "size_bytes": 19696,
+      "sha256": "ba17997653ebb26bc6ff330149763678e41f2769990c2024e1aa7e02447ac461",
+      "workbook": {
+        "sheet_count": 1
+      },
+      "sheets": [
+        {
+          "title": "Hoja1",
+          "max_row": 44,
+          "max_column": 18,
+          "non_empty_rows": 44,
+          "non_empty_cells": 125
+        }
+      ],
+      "rem_metrics": {
+        "personas": {
+          "ingresos": 52,
+          "personas_atendidas": 68,
+          "dias_persona": 492,
+          "altas": 55,
+          "fallecidos_esperados": 0,
+          "reingresos_hospitalizacion": 3
+        },
+        "visitas": {
+          "medico": 106,
+          "enfermera": 280,
+          "tecnico_paramedico": 23,
+          "kinesiologo": 275,
+          "fonoaudiologo": 113,
+          "trabajador_social": null
+        },
+        "cupos": {
+          "cupos_programados": 16,
+          "cupos_utilizados": 471,
+          "cupos_disponibles": 496
+        }
+      }
+    },
+    {
+      "path": "2025/REM AGOSTO 25.xlsx",
+      "id": "1Sn8gTpfkgYlt9cHaqIaOfZQO65fPs77N",
+      "title": "REM AGOSTO 25.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "rem",
+      "year": 2025,
+      "month": 8,
+      "local_file": "/home/felix/projects/hdos/.tmp/drive-consolidation/raw/2025_REM_AGOSTO_25.xlsx",
+      "size_bytes": 21035,
+      "sha256": "e017913904ccb0324bdc012a77a62f894ea5fee22ad289c419122ec4ad9b071a",
+      "workbook": {
+        "sheet_count": 1
+      },
+      "sheets": [
+        {
+          "title": "Hoja1",
+          "max_row": 44,
+          "max_column": 18,
+          "non_empty_rows": 44,
+          "non_empty_cells": 123
+        }
+      ],
+      "rem_metrics": {
+        "personas": {
+          "ingresos": 45,
+          "personas_atendidas": 62,
+          "dias_persona": 434,
+          "altas": 54,
+          "fallecidos_esperados": 0,
+          "reingresos_hospitalizacion": 2
+        },
+        "visitas": {
+          "medico": 93,
+          "enfermera": 274,
+          "tecnico_paramedico": 31,
+          "kinesiologo": 270,
+          "fonoaudiologo": 112,
+          "trabajador_social": null
+        },
+        "cupos": {
+          "cupos_programados": 16,
+          "cupos_utilizados": 426,
+          "cupos_disponibles": 496
+        }
+      }
+    },
+    {
+      "path": "2025/REM SEPTIEMBRE 2025.xlsx",
+      "id": "1-AALBIe9XfeIv74dKJfILmcwgsPHR9vY",
+      "title": "REM SEPTIEMBRE 2025.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "rem",
+      "year": 2025,
+      "month": 9,
+      "local_file": "/home/felix/projects/hdos/.tmp/drive-consolidation/raw/2025_REM_SEPTIEMBRE_2025.xlsx",
+      "size_bytes": 21093,
+      "sha256": "eae94cd97751ad0d4bd3866b8d7f2aabea688cb8287c0050cb1f08119a4fd83a",
+      "workbook": {
+        "sheet_count": 1
+      },
+      "sheets": [
+        {
+          "title": "Hoja1",
+          "max_row": 44,
+          "max_column": 18,
+          "non_empty_rows": 44,
+          "non_empty_cells": 128
+        }
+      ],
+      "rem_metrics": {
+        "personas": {
+          "ingresos": 59,
+          "personas_atendidas": 76,
+          "dias_persona": 616,
+          "altas": 55,
+          "fallecidos_esperados": 0,
+          "reingresos_hospitalizacion": 2
+        },
+        "visitas": {
+          "medico": 109,
+          "enfermera": 301,
+          "tecnico_paramedico": 34,
+          "kinesiologo": 271,
+          "fonoaudiologo": 122,
+          "trabajador_social": null
+        },
+        "cupos": {
+          "cupos_programados": 20,
+          "cupos_utilizados": 616,
+          "cupos_disponibles": 600
+        }
+      }
+    },
+    {
+      "path": "2025/REM OCTUBRE 2025.xlsx",
+      "id": "1egEOppOHucpPKbjJ-JwmEm4nzuZN0r62",
+      "title": "REM OCTUBRE 2025.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "rem",
+      "year": 2025,
+      "month": 10,
+      "local_file": "/home/felix/projects/hdos/.tmp/drive-consolidation/raw/2025_REM_OCTUBRE_2025.xlsx",
+      "size_bytes": 21111,
+      "sha256": "3e1768b6eea08f2bb58b59a50877772e215a5b14756fc185ef0c7d089b851515",
+      "workbook": {
+        "sheet_count": 1
+      },
+      "sheets": [
+        {
+          "title": "Hoja1",
+          "max_row": 44,
+          "max_column": 18,
+          "non_empty_rows": 44,
+          "non_empty_cells": 126
+        }
+      ],
+      "rem_metrics": {
+        "personas": {
+          "ingresos": 62,
+          "personas_atendidas": 78,
+          "dias_persona": 510,
+          "altas": 61,
+          "fallecidos_esperados": 1,
+          "reingresos_hospitalizacion": 2
+        },
+        "visitas": {
+          "medico": 90,
+          "enfermera": 285,
+          "tecnico_paramedico": 35,
+          "kinesiologo": 263,
+          "fonoaudiologo": 117,
+          "trabajador_social": null
+        },
+        "cupos": {
+          "cupos_programados": 20,
+          "cupos_utilizados": 461,
+          "cupos_disponibles": 620
+        }
+      }
+    },
+    {
+      "path": "2025/REM NOVIEMBRE 2025.xlsx",
+      "id": "1Cllu661Xrnv6HOu3-XC1o0nYELk-GjKI",
+      "title": "REM NOVIEMBRE 2025.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "rem",
+      "year": 2025,
+      "month": 11,
+      "local_file": "/home/felix/projects/hdos/.tmp/drive-consolidation/raw/2025_REM_NOVIEMBRE_2025.xlsx",
+      "size_bytes": 21090,
+      "sha256": "3b0228e5301119dbb0d03e4f9a67d11d05b58ca65b414ec61928168e65182738",
+      "workbook": {
+        "sheet_count": 1
+      },
+      "sheets": [
+        {
+          "title": "Hoja1",
+          "max_row": 44,
+          "max_column": 18,
+          "non_empty_rows": 44,
+          "non_empty_cells": 126
+        }
+      ],
+      "rem_metrics": {
+        "personas": {
+          "ingresos": 47,
+          "personas_atendidas": 65,
+          "dias_persona": 478,
+          "altas": 48,
+          "fallecidos_esperados": 1,
+          "reingresos_hospitalizacion": 6
+        },
+        "visitas": {
+          "medico": 90,
+          "enfermera": 280,
+          "tecnico_paramedico": 23,
+          "kinesiologo": 253,
+          "fonoaudiologo": 129,
+          "trabajador_social": null
+        },
+        "cupos": {
+          "cupos_programados": 20,
+          "cupos_utilizados": 463,
+          "cupos_disponibles": 600
+        }
+      }
+    },
+    {
+      "path": "2025/REM DICIEMBRE 2025.xlsx",
+      "id": "1o33DqlEBKjxuHvaUvtkuyPASKG_k_6Lj",
+      "title": "REM DICIEMBRE 2025.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "dataset": "rem",
+      "year": 2025,
+      "month": 12,
+      "local_file": "/home/felix/projects/hdos/.tmp/drive-consolidation/raw/2025_REM_DICIEMBRE_2025.xlsx",
+      "size_bytes": 21116,
+      "sha256": "42a2e7d77bb126e33f61e3f30cb7fcf364743a436358af24bb3833b307442167",
+      "workbook": {
+        "sheet_count": 1
+      },
+      "sheets": [
+        {
+          "title": "Hoja1",
+          "max_row": 44,
+          "max_column": 18,
+          "non_empty_rows": 44,
+          "non_empty_cells": 125
+        }
+      ],
+      "rem_metrics": {
+        "personas": {
+          "ingresos": 50,
+          "personas_atendidas": 66,
+          "dias_persona": 562,
+          "altas": 61,
+          "fallecidos_esperados": 0,
+          "reingresos_hospitalizacion": 3
+        },
+        "visitas": {
+          "medico": 79,
+          "enfermera": 290,
+          "tecnico_paramedico": 34,
+          "kinesiologo": 273,
+          "fonoaudiologo": 114,
+          "trabajador_social": null
+        },
+        "cupos": {
+          "cupos_programados": 20,
+          "cupos_utilizados": 562,
+          "cupos_disponibles": 620
+        }
+      }
+    }
+  ]
+}

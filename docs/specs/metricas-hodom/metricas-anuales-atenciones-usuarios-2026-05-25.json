@@ -1,0 +1,1076 @@
+{
+  "generated_at": "2026-05-25T17:56:15+00:00",
+  "drive_root_url": "https://drive.google.com/drive/folders/1P6ur0dHwmECADUluzwfVvA5g9uTO9oVe?usp=sharing",
+  "annual_rem": {
+    "2023": {
+      "periods": [
+        "2023-07",
+        "2023-08",
+        "2023-09",
+        "2023-10",
+        "2023-11"
+      ],
+      "atenciones_rem_visitas": 5048,
+      "usuarios_rem_personas_atendidas_suma_mensual": 292,
+      "ingresos_rem": 292,
+      "dias_persona": 3523,
+      "visitas_by_profession": {
+        "enfermera": 2083,
+        "fonoaudiologo": 467,
+        "kinesiologo": 1213,
+        "matrona": 0,
+        "medico": 200,
+        "psicologo": 0,
+        "tecnico_paramedico": 588,
+        "terapeuta_ocupacional": 0,
+        "trabajador_social": 497
+      }
+    },
+    "2024": {
+      "periods": [
+        "2024-01",
+        "2024-02",
+        "2024-03",
+        "2024-04",
+        "2024-05",
+        "2024-06",
+        "2024-07",
+        "2024-08",
+        "2024-09",
+        "2024-10",
+        "2024-11",
+        "2024-12"
+      ],
+      "atenciones_rem_visitas": 12139,
+      "usuarios_rem_personas_atendidas_suma_mensual": 1559,
+      "ingresos_rem": 852,
+      "dias_persona": 6504,
+      "visitas_by_profession": {
+        "enfermera": 4688,
+        "fonoaudiologo": 1279,
+        "kinesiologo": 3195,
+        "matrona": 0,
+        "medico": 1280,
+        "psicologo": 0,
+        "tecnico_paramedico": 577,
+        "terapeuta_ocupacional": 0,
+        "trabajador_social": 1120
+      }
+    },
+    "2025": {
+      "periods": [
+        "2025-01",
+        "2025-02",
+        "2025-03",
+        "2025-04",
+        "2025-05",
+        "2025-06",
+        "2025-07",
+        "2025-08",
+        "2025-09",
+        "2025-10",
+        "2025-11",
+        "2025-12"
+      ],
+      "atenciones_rem_visitas": 9428,
+      "usuarios_rem_personas_atendidas_suma_mensual": 756,
+      "ingresos_rem": 628,
+      "dias_persona": 5480,
+      "visitas_by_profession": {
+        "enfermera": 3184,
+        "fonoaudiologo": 1368,
+        "kinesiologo": 3064,
+        "matrona": 0,
+        "medico": 1390,
+        "psicologo": 0,
+        "tecnico_paramedico": 422,
+        "terapeuta_ocupacional": 0,
+        "trabajador_social": 0
+      }
+    }
+  },
+  "monthly_rem": [
+    {
+      "period": "2023-07",
+      "source": "2023/REM/REM JULIO.xlsx",
+      "metrics": {
+        "personas": {
+          "ingresos": 43,
+          "personas_atendidas": 43,
+          "dias_persona": 467,
+          "altas": 17,
+          "fallecidos_esperados": 0,
+          "reingresos_hospitalizacion": 2
+        },
+        "visitas": {
+          "medico": 45,
+          "enfermera": 372,
+          "tecnico_paramedico": 165,
+          "matrona": null,
+          "kinesiologo": 245,
+          "psicologo": null,
+          "fonoaudiologo": 72,
+          "trabajador_social": 121,
+          "terapeuta_ocupacional": null
+        },
+        "total_visitas": 1020
+      }
+    },
+    {
+      "period": "2023-08",
+      "source": "2023/REM/REM AGOSTO .xlsx",
+      "metrics": {
+        "personas": {
+          "ingresos": 54,
+          "personas_atendidas": 54,
+          "dias_persona": 639,
+          "altas": 48,
+          "fallecidos_esperados": 0,
+          "reingresos_hospitalizacion": 2
+        },
+        "visitas": {
+          "medico": 27,
+          "enfermera": 366,
+          "tecnico_paramedico": 128,
+          "matrona": null,
+          "kinesiologo": 241,
+          "psicologo": null,
+          "fonoaudiologo": 91,
+          "trabajador_social": 54,
+          "terapeuta_ocupacional": null
+        },
+        "total_visitas": 907
+      }
+    },
+    {
+      "period": "2023-09",
+      "source": "2023/REM/REM SEPTIEMBRE.xlsx",
+      "metrics": {
+        "personas": {
+          "ingresos": 53,
+          "personas_atendidas": 53,
+          "dias_persona": 667,
+          "altas": 51,
+          "fallecidos_esperados": 0,
+          "reingresos_hospitalizacion": 2
+        },
+        "visitas": {
+          "medico": 26,
+          "enfermera": 345,
+          "tecnico_paramedico": 118,
+          "matrona": null,
+          "kinesiologo": 243,
+          "psicologo": null,
+          "fonoaudiologo": 79,
+          "trabajador_social": 34,
+          "terapeuta_ocupacional": null
+        },
+        "total_visitas": 845
+      }
+    },
+    {
+      "period": "2023-10",
+      "source": "2023/REM/REM OCTUBRE.xlsx",
+      "metrics": {
+        "personas": {
+          "ingresos": 81,
+          "personas_atendidas": 81,
+          "dias_persona": 996,
+          "altas": 79,
+          "fallecidos_esperados": 7,
+          "reingresos_hospitalizacion": 3
+        },
+        "visitas": {
+          "medico": 42,
+          "enfermera": 531,
+          "tecnico_paramedico": 96,
+          "matrona": null,
+          "kinesiologo": 245,
+          "psicologo": null,
+          "fonoaudiologo": 115,
+          "trabajador_social": 155,
+          "terapeuta_ocupacional": null
+        },
+        "total_visitas": 1184
+      }
+    },
+    {
+      "period": "2023-11",
+      "source": "2023/REM/REM NOVIEMBRE.xlsx",
+      "metrics": {
+        "personas": {
+          "ingresos": 61,
+          "personas_atendidas": 61,
+          "dias_persona": 754,
+          "altas": 70,
+          "fallecidos_esperados": 1,
+          "reingresos_hospitalizacion": 3
+        },
+        "visitas": {
+          "medico": 60,
+          "enfermera": 469,
+          "tecnico_paramedico": 81,
+          "matrona": null,
+          "kinesiologo": 239,
+          "psicologo": null,
+          "fonoaudiologo": 110,
+          "trabajador_social": 133,
+          "terapeuta_ocupacional": null
+        },
+        "total_visitas": 1092
+      }
+    },
+    {
+      "period": "2024-01",
+      "source": "2024/REM/REM ENERO.xlsx",
+      "metrics": {
+        "personas": {
+          "ingresos": 57,
+          "personas_atendidas": 57,
+          "dias_persona": 664,
+          "altas": 59,
+          "fallecidos_esperados": 1,
+          "reingresos_hospitalizacion": 2
+        },
+        "visitas": {
+          "medico": 92,
+          "enfermera": 467,
+          "tecnico_paramedico": 24,
+          "matrona": null,
+          "kinesiologo": 264,
+          "psicologo": null,
+          "fonoaudiologo": 94,
+          "trabajador_social": 120,
+          "terapeuta_ocupacional": null
+        },
+        "total_visitas": 1061
+      }
+    },
+    {
+      "period": "2024-02",
+      "source": "2024/REM/REM FEBRERO.xlsx",
+      "metrics": {
+        "personas": {
+          "ingresos": 59,
+          "personas_atendidas": 656,
+          "dias_persona": 629,
+          "altas": 61,
+          "fallecidos_esperados": 3,
+          "reingresos_hospitalizacion": 2
+        },
+        "visitas": {
+          "medico": 100,
+          "enfermera": 402,
+          "tecnico_paramedico": 46,
+          "matrona": null,
+          "kinesiologo": 237,
+          "psicologo": null,
+          "fonoaudiologo": 103,
+          "trabajador_social": 102,
+          "terapeuta_ocupacional": null
+        },
+        "total_visitas": 990
+      }
+    },
+    {
+      "period": "2024-03",
+      "source": "2024/REM/REM MARZO.xlsx",
+      "metrics": {
+        "personas": {
+          "ingresos": 67,
+          "personas_atendidas": 67,
+          "dias_persona": 688,
+          "altas": 68,
+          "fallecidos_esperados": 2,
+          "reingresos_hospitalizacion": 2
+        },
+        "visitas": {
+          "medico": 87,
+          "enfermera": 498,
+          "tecnico_paramedico": 44,
+          "matrona": null,
+          "kinesiologo": 264,
+          "psicologo": null,
+          "fonoaudiologo": 99,
+          "trabajador_social": 103,
+          "terapeuta_ocupacional": null
+        },
+        "total_visitas": 1095
+      }
+    },
+    {
+      "period": "2024-04",
+      "source": "2024/REM/REM ABRIL 24.xlsx",
+      "metrics": {
+        "personas": {
+          "ingresos": 74,
+          "personas_atendidas": 74,
+          "dias_persona": 637,
+          "altas": 77,
+          "fallecidos_esperados": 1,
+          "reingresos_hospitalizacion": 4
+        },
+        "visitas": {
+          "medico": 100,
+          "enfermera": 378,
+          "tecnico_paramedico": 88,
+          "matrona": null,
+          "kinesiologo": 263,
+          "psicologo": null,
+          "fonoaudiologo": 124,
+          "trabajador_social": 118,
+          "terapeuta_ocupacional": null
+        },
+        "total_visitas": 1071
+      }
+    },
+    {
+      "period": "2024-05",
+      "source": "2024/REM/REM MAYO.xlsx",
+      "metrics": {
+        "personas": {
+          "ingresos": 100,
+          "personas_atendidas": 100,
+          "dias_persona": 586,
+          "altas": 94,
+          "fallecidos_esperados": 3,
+          "reingresos_hospitalizacion": 2
+        },
+        "visitas": {
+          "medico": 84,
+          "enfermera": 296,
+          "tecnico_paramedico": 44,
+          "matrona": null,
+          "kinesiologo": 278,
+          "psicologo": null,
+          "fonoaudiologo": 117,
+          "trabajador_social": 143,
+          "terapeuta_ocupacional": null
+        },
+        "total_visitas": 962
+      }
+    },
+    {
+      "period": "2024-06",
+      "source": "2024/REM/REM JUNIO 24.xlsx",
+      "metrics": {
+        "personas": {
+          "ingresos": 89,
+          "personas_atendidas": 89,
+          "dias_persona": 507,
+          "altas": 96,
+          "fallecidos_esperados": 3,
+          "reingresos_hospitalizacion": 3
+        },
+        "visitas": {
+          "medico": 88,
+          "enfermera": 424,
+          "tecnico_paramedico": 88,
+          "matrona": null,
+          "kinesiologo": 354,
+          "psicologo": null,
+          "fonoaudiologo": 116,
+          "trabajador_social": 124,
+          "terapeuta_ocupacional": null
+        },
+        "total_visitas": 1194
+      }
+    },
+    {
+      "period": "2024-07",
+      "source": "2024/REM/REM JULIO .xlsx",
+      "metrics": {
+        "personas": {
+          "ingresos": 84,
+          "personas_atendidas": 102,
+          "dias_persona": 533,
+          "altas": 88,
+          "fallecidos_esperados": 1,
+          "reingresos_hospitalizacion": 2
+        },
+        "visitas": {
+          "medico": 80,
+          "enfermera": 498,
+          "tecnico_paramedico": 44,
+          "matrona": null,
+          "kinesiologo": 258,
+          "psicologo": null,
+          "fonoaudiologo": 121,
+          "trabajador_social": 110,
+          "terapeuta_ocupacional": null
+        },
+        "total_visitas": 1111
+      }
+    },
+    {
+      "period": "2024-08",
+      "source": "2024/REM/REM AGOSTO .xlsx",
+      "metrics": {
+        "personas": {
+          "ingresos": 83,
+          "personas_atendidas": 83,
+          "dias_persona": 456,
+          "altas": 74,
+          "fallecidos_esperados": 1,
+          "reingresos_hospitalizacion": 3
+        },
+        "visitas": {
+          "medico": 176,
+          "enfermera": 362,
+          "tecnico_paramedico": 26,
+          "matrona": null,
+          "kinesiologo": 268,
+          "psicologo": null,
+          "fonoaudiologo": 114,
+          "trabajador_social": 107,
+          "terapeuta_ocupacional": null
+        },
+        "total_visitas": 1053
+      }
+    },
+    {
+      "period": "2024-09",
+      "source": "2024/REM/REM SEPTIEMBRE.xlsx",
+      "metrics": {
+        "personas": {
+          "ingresos": 71,
+          "personas_atendidas": 98,
+          "dias_persona": 493,
+          "altas": 66,
+          "fallecidos_esperados": 0,
+          "reingresos_hospitalizacion": 2
+        },
+        "visitas": {
+          "medico": 139,
+          "enfermera": 405,
+          "tecnico_paramedico": 52,
+          "matrona": null,
+          "kinesiologo": 262,
+          "psicologo": null,
+          "fonoaudiologo": 93,
+          "trabajador_social": 104,
+          "terapeuta_ocupacional": null
+        },
+        "total_visitas": 1055
+      }
+    },
+    {
+      "period": "2024-10",
+      "source": "2024/REM/REM OCTUBRE 24.xlsx",
+      "metrics": {
+        "personas": {
+          "ingresos": 71,
+          "personas_atendidas": 96,
+          "dias_persona": 498,
+          "altas": 75,
+          "fallecidos_esperados": 0,
+          "reingresos_hospitalizacion": 2
+        },
+        "visitas": {
+          "medico": 142,
+          "enfermera": 405,
+          "tecnico_paramedico": 48,
+          "matrona": null,
+          "kinesiologo": 266,
+          "psicologo": null,
+          "fonoaudiologo": 91,
+          "trabajador_social": 89,
+          "terapeuta_ocupacional": null
+        },
+        "total_visitas": 1041
+      }
+    },
+    {
+      "period": "2024-11",
+      "source": "2024/REM/REM NOVIEMBRE 2024.xlsx",
+      "metrics": {
+        "personas": {
+          "ingresos": 53,
+          "personas_atendidas": 70,
+          "dias_persona": 402,
+          "altas": 55,
+          "fallecidos_esperados": null,
+          "reingresos_hospitalizacion": 1
+        },
+        "visitas": {
+          "medico": 90,
+          "enfermera": 284,
+          "tecnico_paramedico": 29,
+          "matrona": null,
+          "kinesiologo": 261,
+          "psicologo": null,
+          "fonoaudiologo": 102,
+          "trabajador_social": null,
+          "terapeuta_ocupacional": null
+        },
+        "total_visitas": 766
+      }
+    },
+    {
+      "period": "2024-12",
+      "source": "2024/REM/REM DICIEMBRE.xlsx",
+      "metrics": {
+        "personas": {
+          "ingresos": 44,
+          "personas_atendidas": 67,
+          "dias_persona": 411,
+          "altas": 49,
+          "fallecidos_esperados": 1,
+          "reingresos_hospitalizacion": 3
+        },
+        "visitas": {
+          "medico": 102,
+          "enfermera": 269,
+          "tecnico_paramedico": 44,
+          "matrona": null,
+          "kinesiologo": 220,
+          "psicologo": null,
+          "fonoaudiologo": 105,
+          "trabajador_social": null,
+          "terapeuta_ocupacional": null
+        },
+        "total_visitas": 740
+      }
+    },
+    {
+      "period": "2025-01",
+      "source": "2025/REM ENERO 2025.xlsx",
+      "metrics": {
+        "personas": {
+          "ingresos": 52,
+          "personas_atendidas": 69,
+          "dias_persona": 372,
+          "altas": 47,
+          "fallecidos_esperados": 0,
+          "reingresos_hospitalizacion": 1
+        },
+        "visitas": {
+          "medico": 132,
+          "enfermera": 246,
+          "tecnico_paramedico": 44,
+          "matrona": null,
+          "kinesiologo": 224,
+          "psicologo": null,
+          "fonoaudiologo": 112,
+          "trabajador_social": null,
+          "terapeuta_ocupacional": null
+        },
+        "total_visitas": 758
+      }
+    },
+    {
+      "period": "2025-02",
+      "source": "2025/REM FEBRERO 2025.xlsx",
+      "metrics": {
+        "personas": {
+          "ingresos": 47,
+          "personas_atendidas": 21,
+          "dias_persona": 349,
+          "altas": 46,
+          "fallecidos_esperados": 1,
+          "reingresos_hospitalizacion": 2
+        },
+        "visitas": {
+          "medico": 132,
+          "enfermera": 246,
+          "tecnico_paramedico": 44,
+          "matrona": null,
+          "kinesiologo": 226,
+          "psicologo": null,
+          "fonoaudiologo": 115,
+          "trabajador_social": null,
+          "terapeuta_ocupacional": null
+        },
+        "total_visitas": 763
+      }
+    },
+    {
+      "period": "2025-03",
+      "source": "2025/REM MARZO 25.xlsx",
+      "metrics": {
+        "personas": {
+          "ingresos": 51,
+          "personas_atendidas": 51,
+          "dias_persona": 382,
+          "altas": 51,
+          "fallecidos_esperados": 0,
+          "reingresos_hospitalizacion": 1
+        },
+        "visitas": {
+          "medico": 176,
+          "enfermera": 241,
+          "tecnico_paramedico": 44,
+          "matrona": null,
+          "kinesiologo": 255,
+          "psicologo": null,
+          "fonoaudiologo": 127,
+          "trabajador_social": null,
+          "terapeuta_ocupacional": null
+        },
+        "total_visitas": 843
+      }
+    },
+    {
+      "period": "2025-04",
+      "source": "2025/REM ABRIL 25.xlsx",
+      "metrics": {
+        "personas": {
+          "ingresos": 56,
+          "personas_atendidas": 56,
+          "dias_persona": 404,
+          "altas": 43,
+          "fallecidos_esperados": 3,
+          "reingresos_hospitalizacion": 2
+        },
+        "visitas": {
+          "medico": 176,
+          "enfermera": 250,
+          "tecnico_paramedico": 44,
+          "matrona": null,
+          "kinesiologo": 241,
+          "psicologo": null,
+          "fonoaudiologo": 104,
+          "trabajador_social": null,
+          "terapeuta_ocupacional": null
+        },
+        "total_visitas": 815
+      }
+    },
+    {
+      "period": "2025-05",
+      "source": "2025/REM MAYO 25.xlsx",
+      "metrics": {
+        "personas": {
+          "ingresos": 55,
+          "personas_atendidas": 75,
+          "dias_persona": 483,
+          "altas": 55,
+          "fallecidos_esperados": 1,
+          "reingresos_hospitalizacion": 1
+        },
+        "visitas": {
+          "medico": 110,
+          "enfermera": 247,
+          "tecnico_paramedico": 33,
+          "matrona": null,
+          "kinesiologo": 260,
+          "psicologo": null,
+          "fonoaudiologo": 93,
+          "trabajador_social": null,
+          "terapeuta_ocupacional": null
+        },
+        "total_visitas": 743
+      }
+    },
+    {
+      "period": "2025-06",
+      "source": "2025/REM JUNIO 25.xlsx",
+      "metrics": {
+        "personas": {
+          "ingresos": 52,
+          "personas_atendidas": 69,
+          "dias_persona": 398,
+          "altas": 53,
+          "fallecidos_esperados": 0,
+          "reingresos_hospitalizacion": 3
+        },
+        "visitas": {
+          "medico": 97,
+          "enfermera": 244,
+          "tecnico_paramedico": 33,
+          "matrona": null,
+          "kinesiologo": 253,
+          "psicologo": null,
+          "fonoaudiologo": 110,
+          "trabajador_social": null,
+          "terapeuta_ocupacional": null
+        },
+        "total_visitas": 737
+      }
+    },
+    {
+      "period": "2025-07",
+      "source": "2025/REM JULIO 25.xlsx",
+      "metrics": {
+        "personas": {
+          "ingresos": 52,
+          "personas_atendidas": 68,
+          "dias_persona": 492,
+          "altas": 55,
+          "fallecidos_esperados": 0,
+          "reingresos_hospitalizacion": 3
+        },
+        "visitas": {
+          "medico": 106,
+          "enfermera": 280,
+          "tecnico_paramedico": 23,
+          "matrona": null,
+          "kinesiologo": 275,
+          "psicologo": null,
+          "fonoaudiologo": 113,
+          "trabajador_social": null,
+          "terapeuta_ocupacional": null
+        },
+        "total_visitas": 797
+      }
+    },
+    {
+      "period": "2025-08",
+      "source": "2025/REM AGOSTO 25.xlsx",
+      "metrics": {
+        "personas": {
+          "ingresos": 45,
+          "personas_atendidas": 62,
+          "dias_persona": 434,
+          "altas": 54,
+          "fallecidos_esperados": 0,
+          "reingresos_hospitalizacion": 2
+        },
+        "visitas": {
+          "medico": 93,
+          "enfermera": 274,
+          "tecnico_paramedico": 31,
+          "matrona": null,
+          "kinesiologo": 270,
+          "psicologo": null,
+          "fonoaudiologo": 112,
+          "trabajador_social": null,
+          "terapeuta_ocupacional": null
+        },
+        "total_visitas": 780
+      }
+    },
+    {
+      "period": "2025-09",
+      "source": "2025/REM SEPTIEMBRE 2025.xlsx",
+      "metrics": {
+        "personas": {
+          "ingresos": 59,
+          "personas_atendidas": 76,
+          "dias_persona": 616,
+          "altas": 55,
+          "fallecidos_esperados": 0,
+          "reingresos_hospitalizacion": 2
+        },
+        "visitas": {
+          "medico": 109,
+          "enfermera": 301,
+          "tecnico_paramedico": 34,
+          "matrona": null,
+          "kinesiologo": 271,
+          "psicologo": null,
+          "fonoaudiologo": 122,
+          "trabajador_social": null,
+          "terapeuta_ocupacional": null
+        },
+        "total_visitas": 837
+      }
+    },
+    {
+      "period": "2025-10",
+      "source": "2025/REM OCTUBRE 2025.xlsx",
+      "metrics": {
+        "personas": {
+          "ingresos": 62,
+          "personas_atendidas": 78,
+          "dias_persona": 510,
+          "altas": 61,
+          "fallecidos_esperados": 1,
+          "reingresos_hospitalizacion": 2
+        },
+        "visitas": {
+          "medico": 90,
+          "enfermera": 285,
+          "tecnico_paramedico": 35,
+          "matrona": null,
+          "kinesiologo": 263,
+          "psicologo": null,
+          "fonoaudiologo": 117,
+          "trabajador_social": null,
+          "terapeuta_ocupacional": null
+        },
+        "total_visitas": 790
+      }
+    },
+    {
+      "period": "2025-11",
+      "source": "2025/REM NOVIEMBRE 2025.xlsx",
+      "metrics": {
+        "personas": {
+          "ingresos": 47,
+          "personas_atendidas": 65,
+          "dias_persona": 478,
+          "altas": 48,
+          "fallecidos_esperados": 1,
+          "reingresos_hospitalizacion": 6
+        },
+        "visitas": {
+          "medico": 90,
+          "enfermera": 280,
+          "tecnico_paramedico": 23,
+          "matrona": null,
+          "kinesiologo": 253,
+          "psicologo": null,
+          "fonoaudiologo": 129,
+          "trabajador_social": null,
+          "terapeuta_ocupacional": null
+        },
+        "total_visitas": 775
+      }
+    },
+    {
+      "period": "2025-12",
+      "source": "2025/REM DICIEMBRE 2025.xlsx",
+      "metrics": {
+        "personas": {
+          "ingresos": 50,
+          "personas_atendidas": 66,
+          "dias_persona": 562,
+          "altas": 61,
+          "fallecidos_esperados": 0,
+          "reingresos_hospitalizacion": 3
+        },
+        "visitas": {
+          "medico": 79,
+          "enfermera": 290,
+          "tecnico_paramedico": 34,
+          "matrona": null,
+          "kinesiologo": 273,
+          "psicologo": null,
+          "fonoaudiologo": 114,
+          "trabajador_social": null,
+          "terapeuta_ocupacional": null
+        },
+        "total_visitas": 790
+      }
+    }
+  ],
+  "nominal_2024": {
+    "year": 2024,
+    "admissions": 858,
+    "unique_users": 707,
+    "missing_user_id": 1,
+    "monthly_admissions": {
+      "2024-01": 58,
+      "2024-02": 58,
+      "2024-03": 68,
+      "2024-04": 74,
+      "2024-05": 100,
+      "2024-06": 92,
+      "2024-07": 86,
+      "2024-08": 82,
+      "2024-09": 71,
+      "2024-10": 71,
+      "2024-11": 53,
+      "2024-12": 45
+    },
+    "source_count": 2
+  },
+  "nominal_2024_parts": [
+    {
+      "source_file": "/home/felix/projects/hdos/.tmp/drive-refresh/raw/2024_INGRESOS_ENE-OCT_2024.xlsx",
+      "sheet": "INGRESOS 2024",
+      "year": 2024,
+      "admissions": 760,
+      "unique_users": 632,
+      "missing_user_id": 1,
+      "monthly_admissions": {
+        "2024-01": 58,
+        "2024-02": 58,
+        "2024-03": 68,
+        "2024-04": 74,
+        "2024-05": 100,
+        "2024-06": 92,
+        "2024-07": 86,
+        "2024-08": 82,
+        "2024-09": 71,
+        "2024-10": 71
+      }
+    },
+    {
+      "source_file": "/home/felix/projects/hdos/.tmp/drive-refresh/raw/2024_PLANILLA_NOV_DIC_2024.xlsx",
+      "sheet": "INGRESOS",
+      "year": 2024,
+      "admissions": 98,
+      "unique_users": 94,
+      "missing_user_id": 0,
+      "monthly_admissions": {
+        "2024-11": 53,
+        "2024-12": 45
+      }
+    }
+  ],
+  "nominal_2025": {
+    "source_file": "/home/felix/projects/hdos/.tmp/drive-refresh/raw/2025_INGRESOS_2025_3_.xlsx",
+    "sheet": "INGRESOS",
+    "year": 2025,
+    "admissions": 500,
+    "unique_users": 445,
+    "missing_user_id": 2,
+    "monthly_admissions": {
+      "2025-01": 52,
+      "2025-02": 48,
+      "2025-03": 51,
+      "2025-04": 56,
+      "2025-05": 54,
+      "2025-06": 52,
+      "2025-07": 52,
+      "2025-08": 61,
+      "2025-09": 59,
+      "2025-10": 15
+    }
+  },
+  "hodom_2025": {
+    "annual_total": 637,
+    "monthly": {
+      "ENERO2025": 52,
+      "FEBRERO 2025": 48,
+      "MARZO 2025": 51,
+      "ABRIL 2025": 56,
+      "MAYO 2025": 55,
+      "JUNIO 2025": 52,
+      "JULIO 2025": 52,
+      "AGOSTO 2025": 51,
+      "SEPTIEMBRE 2025": 59,
+      "OCTUBRE 2025": 64,
+      "NOVIEMBRE 2025": 47,
+      "DICIEMBRE 2025": 50
+    }
+  },
+  "certificate_2023": {
+    "periods": {
+      "2023-07": 43,
+      "2023-08": 54,
+      "2023-09": 53,
+      "2023-10": 81,
+      "2023-11": 61,
+      "2023-12": 48
+    },
+    "total_ingresos_certificados": 340
+  },
+  "database": {
+    "available": true,
+    "rows": {
+      "2023": {
+        "visitas_rows": 0,
+        "usuarios_con_visita": 0,
+        "visitas_realizadas": 0,
+        "visitas_rem_reportable": 0,
+        "estadia_ingresos": 0,
+        "usuarios_ingresados": 0
+      },
+      "2024": {
+        "visitas_rows": 0,
+        "usuarios_con_visita": 0,
+        "visitas_realizadas": 0,
+        "visitas_rem_reportable": 0,
+        "estadia_ingresos": 0,
+        "usuarios_ingresados": 0
+      },
+      "2025": {
+        "visitas_rows": 5457,
+        "usuarios_con_visita": 523,
+        "visitas_realizadas": 0,
+        "visitas_rem_reportable": 0,
+        "estadia_ingresos": 634,
+        "usuarios_ingresados": 559
+      }
+    }
+  },
+  "unique_user_rows": [
+    {
+      "year": 2023,
+      "unique_users": 340,
+      "source": "Certificado PACIENTES 2023.docx",
+      "note": "Ingresos segundo semestre; no entrega usuarios unicos anuales."
+    },
+    {
+      "year": 2024,
+      "unique_users": 707,
+      "source": "Planillas nominales 2024 por RUT",
+      "note": "858 ingresos; 1 sin RUT."
+    },
+    {
+      "year": 2025,
+      "unique_users": 559,
+      "source": "Base local clinical.estadia",
+      "note": "634 estadias ingresadas. Planilla nominal parcial: 500 ingresos, 445 RUT unicos, 2 sin RUT."
+    }
+  ],
+  "quality_flags": [
+    {
+      "code": "rem_coverage_gap",
+      "severity": "review",
+      "year": 2023,
+      "missing_periods": [
+        "2023-01",
+        "2023-02",
+        "2023-03",
+        "2023-04",
+        "2023-05",
+        "2023-06",
+        "2023-12"
+      ]
+    },
+    {
+      "code": "rem_personas_atendidas_outlier_high",
+      "severity": "review",
+      "period": "2024-02",
+      "ingresos": 59,
+      "personas_atendidas": 656
+    },
+    {
+      "code": "rem_personas_atendidas_exceeds_dias",
+      "severity": "review",
+      "period": "2024-02",
+      "personas_atendidas": 656,
+      "dias_persona": 629
+    },
+    {
+      "code": "rem_personas_atendidas_outlier_low",
+      "severity": "review",
+      "period": "2025-02",
+      "ingresos": 47,
+      "personas_atendidas": 21
+    },
+    {
+      "code": "source_discrepancy_2024_ingresos",
+      "severity": "review",
+      "rem_ingresos": 852,
+      "nominal_admissions": 858
+    },
+    {
+      "code": "source_discrepancy_2025_ingresos",
+      "severity": "review",
+      "rem_ingresos": 628,
+      "hodom_daily_admissions": 637
+    },
+    {
+      "code": "nominal_2025_coverage_gap",
+      "severity": "review",
+      "missing_periods": [
+        "2025-11",
+        "2025-12"
+      ],
+      "nominal_admissions": 500
+    },
+    {
+      "code": "source_discrepancy_2025_nominal_vs_rem",
+      "severity": "review",
+      "rem_ingresos": 628,
+      "nominal_admissions": 500
+    },
+    {
+      "code": "db_visits_not_realized_for_rem",
+      "severity": "info",
+      "year": 2025,
+      "visitas_rows": 5457,
+      "visitas_realizadas": 0
+    }
+  ],
+  "outputs": {
+    "json": "/home/felix/projects/hdos/docs/specs/metricas-hodom/metricas-anuales-atenciones-usuarios-2026-05-25.json",
+    "markdown": "/home/felix/projects/hdos/docs/specs/metricas-hodom/metricas-anuales-atenciones-usuarios-2026-05-25.md",
+    "csv": "/home/felix/projects/hdos/docs/specs/metricas-hodom/metricas-anuales-atenciones-usuarios-2026-05-25.csv"
+  }
+}
