@@ -24,6 +24,10 @@ Este directorio es la ubicacion normativa para artefactos agregados derivados de
 | `../../../db/updates/2026-05-26-human-reconciliation.sql` | Tabla de decisiones humanas y vistas de candidatos/gates de conciliacion. |
 | `simulacion-conciliacion-drive-2026-05-26.md` | Resultado normativo de propuestas simuladas no vinculantes para ordenar revision humana. |
 | `../../../db/updates/2026-05-26-simulated-reconciliation-proposals.sql` | Inserta propuestas `proposed` con target unico; no promueve a core ni crea decisiones humanas efectivas. |
+| `revision-conciliacion-drive-2026-05-26.md` | Revision agregada de duplicados, composicion identidad-estadia y semillas de diccionario. |
+| `../../../db/updates/2026-05-26-duplicate-visit-review.sql` | Vistas de cola/resumen para revisar pushout de duplicados de visita. |
+| `../../../db/updates/2026-05-26-identity-stay-review.sql` | Vistas de cola/resumen para revisar composicion paciente-estadia. |
+| `../../../db/updates/2026-05-26-dictionary-seeds.sql` | Vistas semilla para diccionarios de prestacion, profesional y domicilio. |
 
 ## Reglas normativas
 
@@ -44,5 +48,8 @@ PGPASSWORD=hodom psql 'postgresql://hodom:hodom@localhost:5555/hodom' -v ON_ERRO
 PGPASSWORD=hodom psql 'postgresql://hodom:hodom@localhost:5555/hodom' -v ON_ERROR_STOP=1 -f db/updates/2026-05-26-drive-promotion-contract.sql
 PGPASSWORD=hodom psql 'postgresql://hodom:hodom@localhost:5555/hodom' -v ON_ERROR_STOP=1 -f db/updates/2026-05-26-human-reconciliation.sql
 PGPASSWORD=hodom psql 'postgresql://hodom:hodom@localhost:5555/hodom' -v ON_ERROR_STOP=1 -f db/updates/2026-05-26-simulated-reconciliation-proposals.sql
+PGPASSWORD=hodom psql 'postgresql://hodom:hodom@localhost:5555/hodom' -v ON_ERROR_STOP=1 -f db/updates/2026-05-26-duplicate-visit-review.sql
+PGPASSWORD=hodom psql 'postgresql://hodom:hodom@localhost:5555/hodom' -v ON_ERROR_STOP=1 -f db/updates/2026-05-26-identity-stay-review.sql
+PGPASSWORD=hodom psql 'postgresql://hodom:hodom@localhost:5555/hodom' -v ON_ERROR_STOP=1 -f db/updates/2026-05-26-dictionary-seeds.sql
 python3 -m unittest discover -s scripts -p 'test_*.py'
 ```

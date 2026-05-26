@@ -64,3 +64,13 @@ Estas filas sirven para ordenar el trabajo humano:
 3. Construir diccionarios o reglas explicitas para `service_prestacion`, `professional_provider` y `address_domicilio`.
 
 La regla sigue siendo: una propuesta simulada puede orientar revision, pero solo una persona responsable debe cambiarla a una decision final.
+
+## Revision posterior aplicada
+
+La continuacion normativa quedo en `docs/specs/metricas-hodom/revision-conciliacion-drive-2026-05-26.md`.
+
+Resumen:
+
+- `duplicate_visit`: 3151 propuestas en cola; 31 prioridad 1, 2318 prioridad 2 y 802 prioridad 3.
+- `patient_identity` + `active_stay`: 7035 pares componen; 1003 filas tienen anclaje faltante; 0 mismatches paciente-estadia o temporales.
+- Diccionarios `READY_IDENTITY_STAY_ONLY`: 147 semillas de prestacion, 24 de profesional y 192 de domicilio.
