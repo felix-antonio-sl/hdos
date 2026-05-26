@@ -32,6 +32,7 @@ Este directorio es la ubicacion normativa para artefactos agregados derivados de
 | `../../../db/updates/2026-05-26-expert-reconciliation-recommendations.sql` | Inserta propuestas expertas `proposed` para prestacion y domicilio, y resume readiness experto. |
 | `memoria-consolidada-migracion-drive-2026-05-26.md` | Memoria consolidada de estado, decisiones, artefactos, pendientes y prompt de continuidad. |
 | `handoff-ingresos-2026-drive-2026-05-26.md` | Handoff especifico para incorporar `INGRESOS 2026 DRIVE` como fuente de pacientes, ingresos y estadias. |
+| `handoff-cierre-drive-2026-05-26.md` | Handoff de cierre con estadias resueltas, contrato V2, normalizacion nominal, pendientes y prompt de continuidad. |
 | `../../../db/updates/2026-05-26-drive-pilot-migration.sql` | Piloto inicial: 115 visitas con servicio + domicilio en `operational.visita`. |
 | `../../../db/updates/2026-05-26-professional-reconciliation.sql` | Conciliacion de profesionales Drive vs `operational.profesional`: 62 propuestas, vistas de scoring. |
 | `../../../db/updates/2026-05-26-drive-enrichment-2026.sql` | Enriquecimiento UPDATE de 1,065 visitas core 2026 con provider_id y hora del Drive. |
@@ -41,6 +42,10 @@ Este directorio es la ubicacion normativa para artefactos agregados derivados de
 | `../../../db/updates/2026-05-26-fuzzy-patient-match-expansion.sql` | Expansion reproducible de propuestas fuzzy all-words y backfill de `match_pattern`. |
 | `../../../db/updates/2026-05-26-fuzzy-resolved-migration-2026.sql` | Promocion fuzzy-resolved controlada: 25 visitas promovidas, con batch duplicates marcados para revision. |
 | `../../../db/updates/2026-05-26-fuzzy-review-enrichment-2026.sql` | Revision de batch/split/missing fuzzy y enriquecimiento seguro de visitas core existentes. |
+| `../../../db/updates/2026-05-26-hodom-active-stay-resolution.sql` | Resolucion de rutas 2026 sin estadia activa mediante INGRESOS, `daterange &&`, INSERT/UPDATE de `clinical.estadia` y provenance. |
+| `../../../db/updates/2026-05-26-hodom-word-overlap-contract-v2.sql` | Tabla materializada de word-overlap paciente-ruta y contrato flexible V2. |
+| `../../../db/updates/2026-05-26-hodom-patient-name-normalization.sql` | Normalizacion controlada de nombres de pacientes desde INGRESOS con provenance. |
+| `../../../db/updates/2026-05-26-hodom-migration-dashboard-final.sql` | Dashboard final consolidado con estadias resueltas, nombres normalizados y metricas V2. |
 | `../../../scripts/test_drive_pilot_migration.py` | 24 tests unitarios de migracion piloto, conciliacion profesional, repairs, fuzzy-resolved y fuzzy enrichment. |
 
 ## Reglas normativas
@@ -75,5 +80,10 @@ PGPASSWORD=hodom psql 'postgresql://hodom:hodom@localhost:5555/hodom' -v ON_ERRO
 PGPASSWORD=hodom psql 'postgresql://hodom:hodom@localhost:5555/hodom' -v ON_ERROR_STOP=1 -f db/updates/2026-05-26-drive-new-visits-audit-repair.sql
 PGPASSWORD=hodom psql 'postgresql://hodom:hodom@localhost:5555/hodom' -v ON_ERROR_STOP=1 -f db/updates/2026-05-26-fuzzy-resolved-migration-2026.sql
 PGPASSWORD=hodom psql 'postgresql://hodom:hodom@localhost:5555/hodom' -v ON_ERROR_STOP=1 -f db/updates/2026-05-26-fuzzy-review-enrichment-2026.sql
+PGPASSWORD=hodom psql 'postgresql://hodom:hodom@localhost:5555/hodom' -v ON_ERROR_STOP=1 -f db/updates/2026-05-26-hodom-active-stay-resolution.sql
+PGPASSWORD=hodom psql 'postgresql://hodom:hodom@localhost:5555/hodom' -v ON_ERROR_STOP=1 -f db/updates/2026-05-26-hodom-word-overlap-contract-v2.sql
+PGPASSWORD=hodom psql 'postgresql://hodom:hodom@localhost:5555/hodom' -v ON_ERROR_STOP=1 -f db/updates/2026-05-26-hodom-patient-name-normalization.sql
+PGPASSWORD=hodom psql 'postgresql://hodom:hodom@localhost:5555/hodom' -v ON_ERROR_STOP=1 -f db/updates/2026-05-26-hodom-word-overlap-contract-v2.sql
+PGPASSWORD=hodom psql 'postgresql://hodom:hodom@localhost:5555/hodom' -v ON_ERROR_STOP=1 -f db/updates/2026-05-26-hodom-migration-dashboard-final.sql
 python3 -m unittest discover -s scripts -p 'test_*.py'
 ```

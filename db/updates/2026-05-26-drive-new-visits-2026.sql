@@ -15,6 +15,9 @@ BEGIN;
 -- 1. Vista preview: que se va a insertar
 -- ============================================================================
 
+DROP VIEW IF EXISTS staging.v_hodom_new_visits_summary_2026;
+DROP VIEW IF EXISTS staging.v_hodom_new_visits_audit_2026;
+DROP VIEW IF EXISTS staging.v_hodom_new_visits_gate_2026;
 DROP VIEW IF EXISTS staging.v_hodom_new_visits_preview_2026;
 CREATE OR REPLACE VIEW staging.v_hodom_new_visits_preview_2026 AS
 WITH new_routes AS (

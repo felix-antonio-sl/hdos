@@ -11,6 +11,18 @@ DUPLICATE_REVIEW_SQL = ROOT / "db" / "updates" / "2026-05-26-duplicate-visit-rev
 IDENTITY_STAY_REVIEW_SQL = ROOT / "db" / "updates" / "2026-05-26-identity-stay-review.sql"
 DICTIONARY_SEEDS_SQL = ROOT / "db" / "updates" / "2026-05-26-dictionary-seeds.sql"
 EXPERT_RECONCILIATION_SQL = ROOT / "db" / "updates" / "2026-05-26-expert-reconciliation-recommendations.sql"
+ACTIVE_STAY_RESOLUTION_SQL = (
+    ROOT / "db" / "updates" / "2026-05-26-hodom-active-stay-resolution.sql"
+)
+WORD_OVERLAP_V2_SQL = (
+    ROOT / "db" / "updates" / "2026-05-26-hodom-word-overlap-contract-v2.sql"
+)
+PATIENT_NAME_NORMALIZATION_SQL = (
+    ROOT / "db" / "updates" / "2026-05-26-hodom-patient-name-normalization.sql"
+)
+FINAL_DASHBOARD_SQL = (
+    ROOT / "db" / "updates" / "2026-05-26-hodom-migration-dashboard-final.sql"
+)
 
 
 class DrivePromotionReadinessTests(unittest.TestCase):
@@ -187,6 +199,76 @@ class DrivePromotionReadinessTests(unittest.TestCase):
         self.assertNotIn("INSERT INTO OPERATIONAL.", upper_sql)
         self.assertNotIn("UPDATE CLINICAL.", upper_sql)
         self.assertNotIn("UPDATE OPERATIONAL.", upper_sql)
+
+    def test_active_stay_resolution_uses_daterange_and_provenance(self):
+        self.assertTrue(
+            ACTIVE_STAY_RESOLUTION_SQL.exists(),
+            "active stay resolution SQL must exist",
+        )
+        sql = ACTIVE_STAY_RESOLUTION_SQL.read_text(encoding="utf-8")
+
+        self.assertIn("CREATE OR REPLACE VIEW staging.v_hodom_active_stay_resolution_preview_2026", sql)
+        self.assertIn("CREATE OR REPLACE VIEW staging.v_hodom_active_stay_resolution_summary_2026", sql)
+        self.assertIn("CREATE TEMP TABLE _hodom_active_stay_resolution_apply", sql)
+        self.assertIn("daterange(", sql)
+        self.assertIn("&&", sql)
+        self.assertIn("INSERT INTO clinical.estadia", sql)
+        self.assertIn("UPDATE clinical.estadia", sql)
+        self.assertIn("INSERT INTO migration.provenance", sql)
+        self.assertIn("active_stay_resolution_2026_05_26", sql)
+        self.assertIn("OPEN_INGRESO_ACTIVE", sql)
+        self.assertIn("EXTEND_EXISTING_STAY_FROM_INGRESOS", sql)
+        self.assertIn("UNRESOLVED_NO_INGRESOS_ANCHOR", sql)
+
+    def test_word_overlap_v2_materializes_patient_matches(self):
+        self.assertTrue(
+            WORD_OVERLAP_V2_SQL.exists(),
+            "word-overlap V2 contract SQL must exist",
+        )
+        sql = WORD_OVERLAP_V2_SQL.read_text(encoding="utf-8")
+
+        self.assertIn("CREATE TABLE IF NOT EXISTS staging.hodom_patient_word_overlap_match_2026", sql)
+        self.assertIn("TRUNCATE staging.hodom_patient_word_overlap_match_2026", sql)
+        self.assertIn("INSERT INTO staging.hodom_patient_word_overlap_match_2026", sql)
+        self.assertIn("CREATE INDEX IF NOT EXISTS", sql)
+        self.assertIn("CREATE OR REPLACE VIEW staging.v_hodom_route_promotion_contract_v2", sql)
+        self.assertIn("CREATE OR REPLACE VIEW staging.v_hodom_route_promotion_contract_v2_summary", sql)
+        self.assertIn("ROUTE_WORDS_SUBSET_OF_PATIENT", sql)
+        self.assertIn("PATIENT_WORDS_SUBSET_OF_ROUTE", sql)
+        self.assertIn("UNIQUE_WORD_OVERLAP_PATIENT", sql)
+
+    def test_patient_name_normalization_is_controlled_core_update(self):
+        self.assertTrue(
+            PATIENT_NAME_NORMALIZATION_SQL.exists(),
+            "patient name normalization SQL must exist",
+        )
+        sql = PATIENT_NAME_NORMALIZATION_SQL.read_text(encoding="utf-8")
+
+        self.assertIn("CREATE OR REPLACE VIEW staging.v_hodom_patient_name_normalization_preview_2026", sql)
+        self.assertIn("CREATE OR REPLACE VIEW staging.v_hodom_patient_name_normalization_summary_2026", sql)
+        self.assertIn("CREATE TEMP TABLE _hodom_patient_name_normalization_apply", sql)
+        self.assertIn("UPDATE clinical.paciente", sql)
+        self.assertIn("INSERT INTO migration.provenance", sql)
+        self.assertIn("patient_name_normalization_2026_05_26", sql)
+        self.assertIn("CURRENT_WORDS_SUBSET_OF_INGRESOS", sql)
+        self.assertIn("candidate_count = 1", sql)
+        self.assertNotIn("'approved'", sql.lower())
+
+    def test_final_dashboard_exposes_resolution_and_v2_metrics(self):
+        self.assertTrue(
+            FINAL_DASHBOARD_SQL.exists(),
+            "final migration dashboard SQL must exist",
+        )
+        sql = FINAL_DASHBOARD_SQL.read_text(encoding="utf-8")
+
+        self.assertIn("CREATE OR REPLACE VIEW staging.v_hodom_migration_dashboard", sql)
+        self.assertIn("active_stays_resolved_from_ingresos", sql)
+        self.assertIn("patients_name_normalized_from_ingresos", sql)
+        self.assertIn("word_overlap_materialized_rows", sql)
+        self.assertIn("contract_v2_blocked_no_patient", sql)
+        self.assertIn("contract_v2_blocked_no_active_stay", sql)
+        self.assertIn("active_stay_resolution_2026_05_26", sql)
+        self.assertIn("patient_name_normalization_2026_05_26", sql)
 
 
 if __name__ == "__main__":

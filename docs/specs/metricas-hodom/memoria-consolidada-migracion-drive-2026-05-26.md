@@ -2,6 +2,7 @@
 
 Fecha: 2026-05-26. Rama: `main`.
 Commit base: `f412a6a feat(audit): vistas estables de auditoria basadas en provenance`.
+Actualizacion de cierre: resolucion de estadias activas, contrato flexible V2 materializado y normalizacion nominal controlada.
 
 ## Estado final consolidado
 
@@ -16,31 +17,46 @@ Migracion Drive HODOM 2026 ejecutada en multiples fases sobre rutas con `visit_d
 | Visitas core 2026 enriquecidas (hora) | 522 |
 | Visitas core 2026 completas (4/4 campos) | 1,329 (59%) |
 | Pacientes en `clinical.paciente` | **733** (+43 desde INGRESOS) |
-| Estadias en `clinical.estadia` | **836** (+36 desde INGRESOS + 21 extendidas) |
+| Pacientes normalizados nominalmente desde INGRESOS | **7** |
+| Estadias en `clinical.estadia` | **853** (+36 creadas desde INGRESOS + 18 resueltas desde INGRESOS + 21 ventanas previas extendidas) |
+| Estadias resueltas para rutas sin ventana activa | **18** (17 abiertas + 1 extension) |
 | Ventanas de estadia extendidas | 21 (13 post-egreso + 8 pre-ingreso) |
 | INGRESOS 2026 en staging | 722 filas (5 hojas Excel) |
 | Match paciente por RUT (ingresos) | 216/216 (100%) |
 | Propuestas de reconciliacion totales | 1,300+ |
-| Provenance total | ~9,600+ filas |
+| Word-overlap V2 materializado | 3,197 filas |
+| Provenance total | 9,878 filas de migracion 2026 core |
 | Decisiones humanas efectivas | 0 |
-| Tests | 93/93 OK |
+| Tests | 97/97 OK |
 
 ### Distribucion de rutas 2026 por gate
 
 | Gate | Rutas | Significado |
 | --- | ---: | --- |
-| `REVIEW_DUPLICATE_PUSHOUT_REQUIRED` | 2,249 | Ya promovidas o con visita core |
-| `BLOCKED_NO_PATIENT_MATCH` | 580 | Paciente no matchea por `norm_text` exacto |
-| `BLOCKED_NO_ACTIVE_STAY_MATCH` | 288 | Sin estadia activa en fecha visita |
+| `REVIEW_DUPLICATE_PUSHOUT_REQUIRED` | 2,120 | Ya promovidas o con visita core |
+| `BLOCKED_NO_PATIENT_MATCH` | 709 | Paciente no matchea por `norm_text` exacto; V2 reduce esta cola a 177 |
+| `BLOCKED_NO_ACTIVE_STAY_MATCH` | 2 | Sin estadia activa en fecha visita tras resolucion INGRESOS |
 | `BLOCKED_AMBIGUOUS_PATIENT_MATCH` | 21 | Ambiguedad de identidad |
-| `READY_IDENTITY_STAY_ONLY` | 12 | Listas (sin servicio mapeado) |
+| `READY_IDENTITY_STAY_ONLY` | 298 | Listas por identidad/estadia; mayoritariamente pendientes de servicio/diccionarios |
+
+### Distribucion por contrato flexible V2
+
+| Gate V2 | Rutas | Significado |
+| --- | ---: | --- |
+| `REVIEW_DUPLICATE_PUSHOUT_REQUIRED` | 2,492 | Visita core existente mismo dia usando identidad flexible unica |
+| `READY_IDENTITY_STAY_ONLY` | 287 | Identidad y estadia resueltas; falta contrato de servicio/domicilio/profesional para insertar |
+| `BLOCKED_NO_PATIENT_MATCH` | 177 | Sin paciente unico incluso con word-overlap materializado |
+| `BLOCKED_AMBIGUOUS_PATIENT_MATCH` | 156 | Match nominal no unico; requiere revision o ancla por RUT/SGH |
+| `BLOCKED_NO_ACTIVE_STAY_MATCH` | 38 | Identidad flexible unica, pero sin ventana activa |
 
 ### Diagnostico de los 868 bloqueados restantes
 
-Los 580+288+21 = 868 rutas bloqueadas no son pacientes ausentes. La evidencia del censo SGH (via `hsc-agent-cli find --hospitalizados --hodom`) confirmo que la mayoria existen en el hospital y en `clinical.paciente`. El bloqueo es nominal:
-- El contrato usa `norm_text` exacto, que falla cuando Drive omite segundos nombres ("JUANA BELMAR" vs "JUANA MARIA DEL CARMEN BELMAR")
-- Las propuestas de reconciliacion fuzzy/direct ya resuelven la identidad para ~24 de 51 nombres
-- Las 288 sin estadia tienen paciente (via fuzzy) pero la fecha de visita no cae dentro de ninguna ventana de estadia
+Los bloqueos residuales ya no se explican por las 288 rutas sin estadia del corte anterior. Esa cola fue reducida a 2 rutas en el contrato exacto mediante INGRESOS:
+- 17 estadias abiertas creadas desde filas `ACTIVO` de INGRESOS, que explican 284 rutas.
+- 1 estadia existente extendida hacia atras usando rango cerrado de INGRESOS, que explica 2 rutas.
+- 2 rutas quedaron `UNRESOLVED_NO_INGRESOS_ANCHOR`.
+
+El contrato exacto empeora nominalmente tras normalizar 7 nombres con segundos nombres desde INGRESOS, porque sigue dependiendo de igualdad `norm_text`. Por eso el contrato normativo de trabajo pasa a ser `v_hodom_route_promotion_contract_v2`, respaldado por tabla materializada de word-overlap.
 
 ### Lecciones del censo SGH
 
@@ -63,6 +79,10 @@ El censo HODOM activo (22 pacientes) fue cruzado contra nombres bloqueados. 17 d
 | 7 | `hodom-ingreso-audit-stable.sql` | Vistas provenance-based | Dashboard + 6 vistas |
 | 8 | Extension ventanas estadia | UPDATE fecha_egreso/ingreso | 21 ventanas |
 | 9 | Promociones posteriores | INSERT desde READY | +145 visitas |
+| 10 | `hodom-active-stay-resolution.sql` | INSERT/UPDATE estadias desde INGRESOS con `daterange &&` | 17 estadias nuevas + 1 extendida |
+| 11 | `hodom-word-overlap-contract-v2.sql` | Tabla materializada word-overlap + contrato V2 | 3,197 matches |
+| 12 | `hodom-patient-name-normalization.sql` | UPDATE controlado de nombres desde INGRESOS | 7 pacientes |
+| 13 | `hodom-migration-dashboard-final.sql` | Dashboard final consolidado | metricas de cierre |
 
 ## Artefactos del repo
 
@@ -79,9 +99,14 @@ El censo HODOM activo (22 pacientes) fue cruzado contra nombres bloqueados. 17 d
 | `db/updates/2026-05-26-hodom-create-missing-patients.sql` | Creacion 43 pacientes |
 | `db/updates/2026-05-26-hodom-create-missing-stays.sql` | Creacion 36 estadias |
 | `db/updates/2026-05-26-hodom-ingreso-audit-stable.sql` | Vistas estables provenance-based |
+| `db/updates/2026-05-26-hodom-active-stay-resolution.sql` | Resolucion de 288 rutas sin estadia mediante INGRESOS y `daterange &&` |
+| `db/updates/2026-05-26-hodom-word-overlap-contract-v2.sql` | Tabla `staging.hodom_patient_word_overlap_match_2026` y contrato flexible V2 |
+| `db/updates/2026-05-26-hodom-patient-name-normalization.sql` | Normalizacion controlada de `clinical.paciente.nombre_completo` desde INGRESOS |
+| `db/updates/2026-05-26-hodom-migration-dashboard-final.sql` | Dashboard final consolidado de migracion 2026 |
 | `scripts/hodom_ingreso_2026_staging.py` | Parser Excel (36 tests) |
 | `scripts/test_hodom_ingreso_2026_staging.py` | 36 tests parser |
-| `scripts/test_drive_pilot_migration.py` | 24 tests migracion |
+| `scripts/test_drive_pilot_migration.py` | Tests migracion piloto/fuzzy/enrichment |
+| `scripts/test_drive_promotion_readiness.py` | Tests contrato, estadias, V2, normalizacion y dashboard |
 
 ## Decisiones consolidadas
 
@@ -94,12 +119,14 @@ El censo HODOM activo (22 pacientes) fue cruzado contra nombres bloqueados. 17 d
 - **Vistas basadas en provenance**: metricas estables, idempotentes, independientes del estado vivo.
 - **PII**: nunca en docs versionados.
 - **hsc-agent-cli**: censo SGH util para confirmar existencia de pacientes. No busca por nombre sin RUT.
-- **Contrato flexible V2**: word-overlap en vez de exact match es correcto conceptualmente pero costoso en compilacion. Se desarrollo un wrapper ligero (`v_hodom_route_promotion_contract_v2`) que usa reconciliation decisions como puente.
+- **Contrato flexible V2**: word-overlap en vez de exact match es correcto conceptualmente. Queda materializado en `staging.hodom_patient_word_overlap_match_2026` y consumido por `v_hodom_route_promotion_contract_v2`.
+- **Normalizacion de nombres**: solo se actualiza `clinical.paciente.nombre_completo` cuando los nombres actuales son subconjunto estricto del nombre INGRESOS y existe un unico candidato por paciente.
 
 ## Supuestos
 
 - Las visitas sin `provider_id` (734) no tienen correspondencia Drive — son de la app.
-- Las estadias creadas desde INGRESOS estan en `pendiente_evaluacion` — requieren transicion via app.
+- Las estadias creadas desde INGRESOS estan en `pendiente_evaluacion` por trigger normativo — requieren transicion via app.
+- Las filas INGRESOS `ACTIVO` sin fecha de egreso representan episodios abiertos y se modelan con `fecha_egreso = NULL`.
 - La planilla INGRESOS 2026 DRIVE es la fuente autoritativa de episodios 2026.
 - El censo SGH refleja el estado actual del hospital y puede usarse como verificacion de identidad.
 
@@ -108,22 +135,22 @@ El censo HODOM activo (22 pacientes) fue cruzado contra nombres bloqueados. 17 d
 - Propuestas simuladas (`proposed`) sin aprobacion humana.
 - Pacientes creados con datos parciales (sin RUT en algunos).
 - Estadias en `pendiente_evaluacion` sin transicion a `egresado`.
-- Las 868 rutas bloqueadas representan pacientes que existen pero no se promueven por rigidez del contrato o ventana temporal.
+- El contrato exacto ya no es la herramienta primaria para identidad despues de normalizar nombres; usar V2 para trabajo operativo.
+- Las 38 rutas `BLOCKED_NO_ACTIVE_STAY_MATCH` en V2 mezclan nuevos pacientes resueltos por word-overlap que aun necesitan ancla temporal.
+- Las 287 rutas `READY_IDENTITY_STAY_ONLY` en V2 requieren diccionario/servicio antes de insertar visitas nuevas.
 - PII en staging y clinical — no exportar.
 
 ## Prompt de continuacion
 
 Continuar desde `docs/specs/metricas-hodom/memoria-consolidada-migracion-drive-2026-05-26.md`:
 
-1. **Resolver los 288 sin estadia**: extender mas ventanas (no solo 1-3 dias) o crear estadias desde INGRESOS con `daterange &&`. El overlap checking ya esta implementado en `v_hodom_ingreso_2026_pending_stays`.
+1. **Resolver residuos V2**: investigar 38 `BLOCKED_NO_ACTIVE_STAY_MATCH` del contrato V2 y 177 `BLOCKED_NO_PATIENT_MATCH` con anclas RUT/SGH. No promover por fuzzy sin evidencia adicional.
 
-2. **Contrato flexible V2 optimizado**: materializar los resultados de word-overlap en una tabla auxiliar para evitar compilacion costosa. Luego usar esa tabla como fuente de `matched_patient_id` en el contrato.
+2. **Diccionario de servicios**: resolver `service_prestacion` para las 287 rutas `READY_IDENTITY_STAY_ONLY` V2 antes de insertar nuevas visitas.
 
-3. **Normalizar nombres en clinical.paciente**: agregar segundos nombres desde INGRESOS o SGH para mejorar matching exacto por `norm_text`. Esto eliminaria la necesidad de fuzzy matching.
+3. **Duplicate visits**: disenar/aplicar flujo de enriquecimiento (UPDATE, no merge) para las rutas `REVIEW_DUPLICATE_PUSHOUT_REQUIRED`, usando target unico y solo campos faltantes.
 
-4. **Censo SGH periodico**: usar `hsc-agent-cli find --hospitalizados --hodom` para mantener actualizada la tabla de pacientes activos y cruzar con rutas pendientes.
-
-5. **Duplicate visits**: disenar flujo de enriquecimiento (UPDATE, no merge) para las 2,249 rutas con visita core mismo dia.
+4. **Censo SGH periodico**: usar `hsc-agent-cli find --hospitalizados --hodom` como fuente de ancla operacional para pacientes activos y estadias abiertas.
 
 ```bash
 python3 -m unittest discover -s scripts -p 'test_*.py'
