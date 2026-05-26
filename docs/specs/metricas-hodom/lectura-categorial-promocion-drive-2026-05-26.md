@@ -79,3 +79,26 @@ Antes de insertar en `operational.visita`, cada fila candidata debe satisfacer:
 No hay promocion core automatica en este paso. La siguiente unidad de trabajo debe construir reglas de mapping para prestacion, profesional y domicilio, y un contrato de deduplicacion para `REVIEW_DUPLICATE_PUSHOUT_REQUIRED`.
 
 Esta conclusion es formal como diagnostico de preservacion/pullback/parcialidad; el uso exacto de nombre normalizado como sonda de identidad es una heuristica operacional, no un teorema.
+
+## Conciliacion humana y no determinismo
+
+La instruccion operativa vigente es que ningun match automatico se interpreta como determinista. Cada coincidencia es un morfismo candidato en una relacion enriquecida:
+
+- Puede haber cero candidatos.
+- Puede haber un candidato plausible pero no aprobado.
+- Puede haber varios candidatos compatibles que requieren revision humana.
+- Una decision negativa tambien es informacion estructural, porque elimina una flecha posible.
+
+La capa `db/updates/2026-05-26-human-reconciliation.sql` implementa esta lectura:
+
+- `staging.v_hodom_route_reconciliation_candidate`: genera candidatos relacionales.
+- `staging.hodom_reconciliation_decision`: almacena decisiones humanas.
+- `staging.v_hodom_route_reconciliation_human_gate`: mantiene `core_insert_allowed = false` hasta que una migracion posterior consuma decisiones aprobadas.
+
+Anclaje ICAS-BoK:
+
+- `urn:fxsl:kb:icas-enriquecimiento`: la relacion tiene fuerza/evidencia, no solo verdadero/falso.
+- `urn:fxsl:kb:icas-efectos`: el matching es no determinista y parcial.
+- `urn:fxsl:kb:icas-universales`: los duplicados mismo-dia se resuelven como pushout, no como inserciones paralelas.
+- `urn:fxsl:kb:icas-identidad-relacion`: identidad es patron relacional observado, no igualdad textual.
+- `urn:fxsl:kb:icas-calidad-riesgo`: la aprobacion humana estrecha el riesgo antes de componer hacia core.

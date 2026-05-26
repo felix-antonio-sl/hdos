@@ -20,6 +20,8 @@ Este directorio es la ubicacion normativa para artefactos agregados derivados de
 | `../../../db/updates/2026-05-26-drive-promotion-readiness.sql` | Vistas no destructivas de matching, calidad y readiness antes de promocion core. |
 | `lectura-categorial-promocion-drive-2026-05-26.md` | Diagnostico categorial de preservacion, pullbacks, parcialidad y gates de promocion. |
 | `../../../db/updates/2026-05-26-drive-promotion-contract.sql` | Contrato no destructivo que degrada readiness a gates seguros antes de inserts core. |
+| `protocolo-conciliacion-humana-drive-2026-05-26.md` | Protocolo normativo de candidatos no deterministas, anclajes relacionales y decision humana. |
+| `../../../db/updates/2026-05-26-human-reconciliation.sql` | Tabla de decisiones humanas y vistas de candidatos/gates de conciliacion. |
 
 ## Reglas normativas
 
@@ -38,5 +40,6 @@ python3 scripts/hodom_annual_metrics.py
 python3 scripts/drive_staging_migration.py
 PGPASSWORD=hodom psql 'postgresql://hodom:hodom@localhost:5555/hodom' -v ON_ERROR_STOP=1 -f db/updates/2026-05-26-drive-promotion-readiness.sql
 PGPASSWORD=hodom psql 'postgresql://hodom:hodom@localhost:5555/hodom' -v ON_ERROR_STOP=1 -f db/updates/2026-05-26-drive-promotion-contract.sql
+PGPASSWORD=hodom psql 'postgresql://hodom:hodom@localhost:5555/hodom' -v ON_ERROR_STOP=1 -f db/updates/2026-05-26-human-reconciliation.sql
 python3 -m unittest discover -s scripts -p 'test_*.py'
 ```

@@ -5,6 +5,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 READINESS_SQL = ROOT / "db" / "updates" / "2026-05-26-drive-promotion-readiness.sql"
 CONTRACT_SQL = ROOT / "db" / "updates" / "2026-05-26-drive-promotion-contract.sql"
+HUMAN_SQL = ROOT / "db" / "updates" / "2026-05-26-human-reconciliation.sql"
 
 
 class DrivePromotionReadinessTests(unittest.TestCase):
@@ -37,6 +38,24 @@ class DrivePromotionReadinessTests(unittest.TestCase):
 
     def test_contract_sql_does_not_define_core_inserts(self):
         sql = CONTRACT_SQL.read_text(encoding="utf-8").upper()
+
+        self.assertNotIn("INSERT INTO CLINICAL.", sql)
+        self.assertNotIn("INSERT INTO OPERATIONAL.", sql)
+        self.assertNotIn("UPDATE CLINICAL.", sql)
+        self.assertNotIn("UPDATE OPERATIONAL.", sql)
+
+    def test_human_reconciliation_sql_defines_decision_table_and_candidate_views(self):
+        sql = HUMAN_SQL.read_text(encoding="utf-8")
+
+        self.assertIn("CREATE TABLE IF NOT EXISTS staging.hodom_reconciliation_decision", sql)
+        self.assertIn("CREATE OR REPLACE VIEW staging.v_hodom_route_reconciliation_candidate", sql)
+        self.assertIn("CREATE OR REPLACE VIEW staging.v_hodom_route_reconciliation_candidate_summary", sql)
+        self.assertIn("CREATE OR REPLACE VIEW staging.v_hodom_route_reconciliation_human_gate", sql)
+        self.assertIn("NEEDS_HUMAN_CONFIRMATION", sql)
+        self.assertIn("human_approved", sql)
+
+    def test_human_reconciliation_sql_does_not_define_core_inserts(self):
+        sql = HUMAN_SQL.read_text(encoding="utf-8").upper()
 
         self.assertNotIn("INSERT INTO CLINICAL.", sql)
         self.assertNotIn("INSERT INTO OPERATIONAL.", sql)
