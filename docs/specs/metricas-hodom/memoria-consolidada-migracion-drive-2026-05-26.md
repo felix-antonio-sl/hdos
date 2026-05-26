@@ -8,6 +8,8 @@ Estado base previo: `cfc8f4f feat(migration): migracion Drive HODOM 2026 — 4 f
 
 Migracion Drive HODOM 2026 en fase avanzada de conciliacion y promocion core. Se ejecutaron 4 fases iniciales y dos continuaciones controladas: enriquecimiento de visitas existentes, insercion de visitas nuevas, reconciliacion profesional, fuzzy matching de pacientes, promocion fuzzy-resolved limitada y enriquecimiento fuzzy de visitas core existentes. La regla vigente sigue siendo no insertar en `clinical` — solo `operational.visita` con provenance completa.
 
+Corte adicional: la fuente `INGRESOS 2026 DRIVE` (`1qynoVzgF5a5qMdTVXhfM35zQC4QCtVqh0MNaSHD2_aQ`) esta inventariada y registrada en `staging.drive_source_file` como `ingresos_2026`, pero aun no existe una tabla nominal especifica para ingresos/estadias 2026. Debe tratarse como el siguiente frente antes de declarar 2026 saneado en usuarios y episodios.
+
 **Scope**: rutas Drive con `visit_date >= '2026-01-01'` (3,150 rutas de 17,117 totales).
 
 Controles verificados:
@@ -85,6 +87,7 @@ Controles verificados:
 | --- | --- |
 | `docs/specs/metricas-hodom/memoria-consolidada-migracion-drive-2026-05-26.md` | Esta memoria consolidada. |
 | `docs/specs/metricas-hodom/handoff-2026-05-25.md` | Handoff historico acumulado con todas las fases. |
+| `docs/specs/metricas-hodom/handoff-ingresos-2026-drive-2026-05-26.md` | Handoff explicito para incorporar `INGRESOS 2026 DRIVE`. |
 | `db/updates/2026-05-26-drive-pilot-migration.sql` | Piloto inicial (115 rutas con servicio+domicilio). |
 | `db/updates/2026-05-26-drive-enrichment-2026.sql` | Enriquecimiento UPDATE de visitas core 2026. |
 | `db/updates/2026-05-26-drive-new-visits-2026.sql` | Insercion de 333 visitas nuevas 2026. |
@@ -113,6 +116,7 @@ Controles verificados:
 - **No se toca `duplicate_visit`**: flujo separado, sin resolver aun.
 - **No se toca `clinical`**: solo `operational.visita` y `migration.provenance`.
 - **hsc-agent-cli no aplica para nombres sin RUT**: el CLI requiere RUT para buscar pacientes. Los 65 nombres restantes no tienen correspondencia en la DB.
+- **INGRESOS 2026 DRIVE es frente separado**: gobierna pacientes, ingresos, egresos y estadias; no debe mezclarse con la migracion de rutas/visitas ni promoverse directo a `clinical` sin staging y gates.
 
 ## Pendientes inmediatos
 
@@ -128,6 +132,7 @@ Controles verificados:
 10. **Duplicate visits**: 3,151 propuestas + 6,293 rutas `REVIEW_DUPLICATE_PUSHOUT_REQUIRED`.
 11. **Servicios compuestos**: 207 rutas `EXPERT_SPLIT_SERVICE_REQUIRED` para 2026.
 12. **383 rutas sin domicilio**: `EXPERT_MINIMAL_READY_SINGLE_SERVICE` en 2026.
+13. **Incorporar `INGRESOS 2026 DRIVE`**: crear staging nominal, auditar calidad, conciliar contra `clinical.paciente` y `clinical.estadia`, y cruzar contra visitas 2026 ya migradas.
 
 ## Riesgos
 
@@ -148,6 +153,10 @@ Continuar desde `docs/specs/metricas-hodom/memoria-consolidada-migracion-drive-2
 5. Resolver ambiguous de profesional: 11 nombres (PIA, CAMILA, etc.) requieren desambiguacion.
 6. Duplicate visits: flujo separado de merge/pushout para las 6,293 + 3,151 rutas.
 7. Antes de tocar OPM/OPL o canon, leer `docs/canon-opm/reglas-opm-estrictas.md`. Antes de tocar UI, `ui-forja/GOVERNANCE.md`.
+
+Prompt alternativo para el siguiente frente:
+
+Continuar desde `docs/specs/metricas-hodom/handoff-ingresos-2026-drive-2026-05-26.md`. Crear staging nominal para `INGRESOS 2026 DRIVE` (`staging.hodom_ingreso_2026`) y parser/loader desde `.tmp/drive-consolidation/raw/INGRESOS_2026_DRIVE.xlsx`, con tests antes de SQL/codigo. No tocar `clinical` todavia. Luego construir vistas agregadas de calidad, conciliacion contra `clinical.paciente`, conciliacion contra `clinical.estadia` y cruce con visitas 2026 ya migradas.
 
 Comandos de verificacion:
 ```bash
