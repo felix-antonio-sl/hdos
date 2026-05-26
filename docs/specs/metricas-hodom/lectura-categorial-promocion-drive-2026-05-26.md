@@ -102,3 +102,17 @@ Anclaje ICAS-BoK:
 - `urn:fxsl:kb:icas-universales`: los duplicados mismo-dia se resuelven como pushout, no como inserciones paralelas.
 - `urn:fxsl:kb:icas-identidad-relacion`: identidad es patron relacional observado, no igualdad textual.
 - `urn:fxsl:kb:icas-calidad-riesgo`: la aprobacion humana estrecha el riesgo antes de componer hacia core.
+
+## Simulacion como coend operativo
+
+La instruccion "simular criterio humano" se implemento como validacion empirica acotada, no como decision final. En terminos de `urn:fxsl:kb:icas-calidad-riesgo`, la simulacion es un muestreo/coend operacional sobre candidatos con target unico; reduce el espacio de revision, pero no demuestra universalmente que el diagrama de migracion conmute para todos los casos.
+
+La capa `db/updates/2026-05-26-simulated-reconciliation-proposals.sql` inserta solo propuestas `proposed` cuando hay `target_pk` concreto y exactamente un target distinto para el anclaje. Resultado aplicado:
+
+| Anchor type | Propuestas |
+| --- | ---: |
+| `patient_identity` | 8009 |
+| `active_stay` | 7064 |
+| `duplicate_visit` | 3151 |
+
+No se simularon `service_prestacion`, `professional_provider`, `address_domicilio`, `visit_date` ni anclajes sin target, porque eso violaria preservacion: crearia flechas sin codominio concreto (`urn:fxsl:kb:icas-preservacion`). La decision sigue siendo heuristica operacional, no teorema de identidad.

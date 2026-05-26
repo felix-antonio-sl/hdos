@@ -30,6 +30,7 @@ Esto materializa cinco criterios:
 - `staging.v_hodom_route_reconciliation_candidate`: candidatos relacionales sin datos nominales exportables.
 - `staging.v_hodom_route_reconciliation_candidate_summary`: conteos agregados seguros.
 - `staging.v_hodom_route_reconciliation_human_gate`: gate por fila de ruta; mantiene `core_insert_allowed = false`.
+- `staging.v_hodom_reconciliation_simulated_proposal_summary`: conteos agregados de propuestas simuladas no vinculantes.
 
 ## Tipos de anclaje
 
@@ -64,6 +65,18 @@ Totales:
 - Filas de ruta cubiertas por gate humano: 17117.
 - Decisiones humanas aprobadas iniciales: 0.
 - Filas autorizadas para insert core: 0.
+
+## Simulacion no vinculante
+
+La simulacion aplicada el 2026-05-26 genero propuestas `proposed`, no decisiones finales:
+
+| Anchor type | Propuestas | Criterio |
+| --- | ---: | --- |
+| `active_stay` | 7064 | Target de estadia unico con `target_pk` concreto. |
+| `duplicate_visit` | 3151 | Visita core unica mismo paciente-mismo dia. |
+| `patient_identity` | 8009 | Target de paciente unico con `target_pk` concreto. |
+
+Estas propuestas pueden ordenar la revision humana, pero no deben tratarse como aprobacion. La promocion core sigue bloqueada hasta que una persona responsable convierta cada caso necesario en decision final.
 
 ## Reglas operativas
 

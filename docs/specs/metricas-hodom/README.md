@@ -22,6 +22,8 @@ Este directorio es la ubicacion normativa para artefactos agregados derivados de
 | `../../../db/updates/2026-05-26-drive-promotion-contract.sql` | Contrato no destructivo que degrada readiness a gates seguros antes de inserts core. |
 | `protocolo-conciliacion-humana-drive-2026-05-26.md` | Protocolo normativo de candidatos no deterministas, anclajes relacionales y decision humana. |
 | `../../../db/updates/2026-05-26-human-reconciliation.sql` | Tabla de decisiones humanas y vistas de candidatos/gates de conciliacion. |
+| `simulacion-conciliacion-drive-2026-05-26.md` | Resultado normativo de propuestas simuladas no vinculantes para ordenar revision humana. |
+| `../../../db/updates/2026-05-26-simulated-reconciliation-proposals.sql` | Inserta propuestas `proposed` con target unico; no promueve a core ni crea decisiones humanas efectivas. |
 
 ## Reglas normativas
 
@@ -41,5 +43,6 @@ python3 scripts/drive_staging_migration.py
 PGPASSWORD=hodom psql 'postgresql://hodom:hodom@localhost:5555/hodom' -v ON_ERROR_STOP=1 -f db/updates/2026-05-26-drive-promotion-readiness.sql
 PGPASSWORD=hodom psql 'postgresql://hodom:hodom@localhost:5555/hodom' -v ON_ERROR_STOP=1 -f db/updates/2026-05-26-drive-promotion-contract.sql
 PGPASSWORD=hodom psql 'postgresql://hodom:hodom@localhost:5555/hodom' -v ON_ERROR_STOP=1 -f db/updates/2026-05-26-human-reconciliation.sql
+PGPASSWORD=hodom psql 'postgresql://hodom:hodom@localhost:5555/hodom' -v ON_ERROR_STOP=1 -f db/updates/2026-05-26-simulated-reconciliation-proposals.sql
 python3 -m unittest discover -s scripts -p 'test_*.py'
 ```

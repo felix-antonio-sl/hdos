@@ -6,6 +6,7 @@ ROOT = Path(__file__).resolve().parents[1]
 READINESS_SQL = ROOT / "db" / "updates" / "2026-05-26-drive-promotion-readiness.sql"
 CONTRACT_SQL = ROOT / "db" / "updates" / "2026-05-26-drive-promotion-contract.sql"
 HUMAN_SQL = ROOT / "db" / "updates" / "2026-05-26-human-reconciliation.sql"
+SIMULATED_SQL = ROOT / "db" / "updates" / "2026-05-26-simulated-reconciliation-proposals.sql"
 
 
 class DrivePromotionReadinessTests(unittest.TestCase):
@@ -56,6 +57,27 @@ class DrivePromotionReadinessTests(unittest.TestCase):
 
     def test_human_reconciliation_sql_does_not_define_core_inserts(self):
         sql = HUMAN_SQL.read_text(encoding="utf-8").upper()
+
+        self.assertNotIn("INSERT INTO CLINICAL.", sql)
+        self.assertNotIn("INSERT INTO OPERATIONAL.", sql)
+        self.assertNotIn("UPDATE CLINICAL.", sql)
+        self.assertNotIn("UPDATE OPERATIONAL.", sql)
+
+    def test_simulated_reconciliation_sql_creates_proposals_not_approvals(self):
+        self.assertTrue(SIMULATED_SQL.exists(), "simulated reconciliation SQL must exist")
+        sql = SIMULATED_SQL.read_text(encoding="utf-8")
+        lower_sql = sql.lower()
+
+        self.assertIn("INSERT INTO staging.hodom_reconciliation_decision", sql)
+        self.assertIn("simulated_agent_reconciliation", sql)
+        self.assertIn("'proposed'", sql)
+        self.assertIn("target_pk IS NOT NULL", sql)
+        self.assertIn("HAVING count(DISTINCT target_pk) = 1", sql)
+        self.assertNotIn("'approved'", lower_sql)
+
+    def test_simulated_reconciliation_sql_does_not_define_core_inserts(self):
+        self.assertTrue(SIMULATED_SQL.exists(), "simulated reconciliation SQL must exist")
+        sql = SIMULATED_SQL.read_text(encoding="utf-8").upper()
 
         self.assertNotIn("INSERT INTO CLINICAL.", sql)
         self.assertNotIn("INSERT INTO OPERATIONAL.", sql)
