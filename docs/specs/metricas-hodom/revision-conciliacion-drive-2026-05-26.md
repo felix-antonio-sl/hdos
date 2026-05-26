@@ -107,3 +107,21 @@ Los valores normalizados de profesionales y domicilios viven solo en la base loc
 3. Revisar los 802 duplicados completos.
 4. Completar las 1003 rutas con anclaje identidad-estadia faltante.
 5. Convertir semillas de diccionario en reglas revisadas, empezando por `service_prestacion` porque no contiene valores nominales personales.
+
+## Recomendaciones expertas aplicadas
+
+La capa posterior quedo documentada en `docs/specs/metricas-hodom/recomendaciones-expertas-conciliacion-drive-2026-05-26.md`.
+
+Resumen:
+
+| Recomendacion | Filas |
+| --- | ---: |
+| Links `service_prestacion` propuestos | 941 |
+| Rutas con algun target de prestacion | 709 |
+| Links `address_domicilio` propuestos | 150 |
+| Rutas `EXPERT_MINIMAL_READY_SINGLE_SERVICE_ADDRESS` | 115 |
+| Rutas `EXPERT_MINIMAL_READY_SINGLE_SERVICE` | 383 |
+| Rutas `EXPERT_SPLIT_SERVICE_REQUIRED` | 211 |
+| Rutas `EXPERT_SERVICE_TARGET_MISSING` | 33 |
+
+Esta capa no resuelve `professional_provider`: no hubo evidencia suficiente para asignar `provider_id` sin riesgo de falsa identidad.

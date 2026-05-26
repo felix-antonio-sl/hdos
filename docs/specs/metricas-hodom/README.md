@@ -28,6 +28,8 @@ Este directorio es la ubicacion normativa para artefactos agregados derivados de
 | `../../../db/updates/2026-05-26-duplicate-visit-review.sql` | Vistas de cola/resumen para revisar pushout de duplicados de visita. |
 | `../../../db/updates/2026-05-26-identity-stay-review.sql` | Vistas de cola/resumen para revisar composicion paciente-estadia. |
 | `../../../db/updates/2026-05-26-dictionary-seeds.sql` | Vistas semilla para diccionarios de prestacion, profesional y domicilio. |
+| `recomendaciones-expertas-conciliacion-drive-2026-05-26.md` | Recomendaciones simuladas de especialista para acercar migracion controlada. |
+| `../../../db/updates/2026-05-26-expert-reconciliation-recommendations.sql` | Inserta propuestas expertas `proposed` para prestacion y domicilio, y resume readiness experto. |
 
 ## Reglas normativas
 
@@ -51,5 +53,6 @@ PGPASSWORD=hodom psql 'postgresql://hodom:hodom@localhost:5555/hodom' -v ON_ERRO
 PGPASSWORD=hodom psql 'postgresql://hodom:hodom@localhost:5555/hodom' -v ON_ERROR_STOP=1 -f db/updates/2026-05-26-duplicate-visit-review.sql
 PGPASSWORD=hodom psql 'postgresql://hodom:hodom@localhost:5555/hodom' -v ON_ERROR_STOP=1 -f db/updates/2026-05-26-identity-stay-review.sql
 PGPASSWORD=hodom psql 'postgresql://hodom:hodom@localhost:5555/hodom' -v ON_ERROR_STOP=1 -f db/updates/2026-05-26-dictionary-seeds.sql
+PGPASSWORD=hodom psql 'postgresql://hodom:hodom@localhost:5555/hodom' -v ON_ERROR_STOP=1 -f db/updates/2026-05-26-expert-reconciliation-recommendations.sql
 python3 -m unittest discover -s scripts -p 'test_*.py'
 ```

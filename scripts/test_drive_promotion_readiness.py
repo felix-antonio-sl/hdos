@@ -10,6 +10,7 @@ SIMULATED_SQL = ROOT / "db" / "updates" / "2026-05-26-simulated-reconciliation-p
 DUPLICATE_REVIEW_SQL = ROOT / "db" / "updates" / "2026-05-26-duplicate-visit-review.sql"
 IDENTITY_STAY_REVIEW_SQL = ROOT / "db" / "updates" / "2026-05-26-identity-stay-review.sql"
 DICTIONARY_SEEDS_SQL = ROOT / "db" / "updates" / "2026-05-26-dictionary-seeds.sql"
+EXPERT_RECONCILIATION_SQL = ROOT / "db" / "updates" / "2026-05-26-expert-reconciliation-recommendations.sql"
 
 
 class DrivePromotionReadinessTests(unittest.TestCase):
@@ -155,6 +156,30 @@ class DrivePromotionReadinessTests(unittest.TestCase):
     def test_dictionary_seeds_sql_does_not_approve_or_write_core(self):
         self.assertTrue(DICTIONARY_SEEDS_SQL.exists(), "dictionary seeds SQL must exist")
         lower_sql = DICTIONARY_SEEDS_SQL.read_text(encoding="utf-8").lower()
+        upper_sql = lower_sql.upper()
+
+        self.assertNotIn("'approved'", lower_sql)
+        self.assertNotIn("INSERT INTO CLINICAL.", upper_sql)
+        self.assertNotIn("INSERT INTO OPERATIONAL.", upper_sql)
+        self.assertNotIn("UPDATE CLINICAL.", upper_sql)
+        self.assertNotIn("UPDATE OPERATIONAL.", upper_sql)
+
+    def test_expert_reconciliation_sql_inserts_proposed_recommendations(self):
+        self.assertTrue(EXPERT_RECONCILIATION_SQL.exists(), "expert reconciliation SQL must exist")
+        sql = EXPERT_RECONCILIATION_SQL.read_text(encoding="utf-8")
+
+        self.assertIn("INSERT INTO staging.hodom_reconciliation_decision", sql)
+        self.assertIn("simulated_expert_reconciliation", sql)
+        self.assertIn("'proposed'", sql)
+        self.assertIn("service_prestacion", sql)
+        self.assertIn("address_domicilio", sql)
+        self.assertIn("CREATE OR REPLACE VIEW staging.v_hodom_expert_migration_readiness", sql)
+        self.assertIn("EXPERT_MINIMAL_READY_SINGLE_SERVICE_ADDRESS", sql)
+        self.assertIn("EXPERT_SPLIT_SERVICE_REQUIRED", sql)
+
+    def test_expert_reconciliation_sql_does_not_approve_or_write_core(self):
+        self.assertTrue(EXPERT_RECONCILIATION_SQL.exists(), "expert reconciliation SQL must exist")
+        lower_sql = EXPERT_RECONCILIATION_SQL.read_text(encoding="utf-8").lower()
         upper_sql = lower_sql.upper()
 
         self.assertNotIn("'approved'", lower_sql)
