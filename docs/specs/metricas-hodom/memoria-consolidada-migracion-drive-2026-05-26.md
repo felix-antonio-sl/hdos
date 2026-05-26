@@ -6,7 +6,7 @@ Estado base previo: `cfc8f4f feat(migration): migracion Drive HODOM 2026 — 4 f
 
 ## Estado actual
 
-Migracion Drive HODOM 2026 en fase avanzada de conciliacion y promocion core. Se ejecutaron 4 fases iniciales y una continuacion controlada: enriquecimiento de visitas existentes, insercion de visitas nuevas, reconciliacion profesional, fuzzy matching de pacientes y promocion fuzzy-resolved limitada. La regla vigente sigue siendo no insertar en `clinical` — solo `operational.visita` con provenance completa.
+Migracion Drive HODOM 2026 en fase avanzada de conciliacion y promocion core. Se ejecutaron 4 fases iniciales y dos continuaciones controladas: enriquecimiento de visitas existentes, insercion de visitas nuevas, reconciliacion profesional, fuzzy matching de pacientes, promocion fuzzy-resolved limitada y enriquecimiento fuzzy de visitas core existentes. La regla vigente sigue siendo no insertar en `clinical` — solo `operational.visita` con provenance completa.
 
 **Scope**: rutas Drive con `visit_date >= '2026-01-01'` (3,150 rutas de 17,117 totales).
 
@@ -19,13 +19,17 @@ Controles verificados:
 | Visitas core enriquecidas (UPDATE provider) | 1,065 |
 | Visitas core enriquecidas (UPDATE hora) | 522 |
 | Visitas core 2026 total | 2,721 |
-| Visitas core 2026 completas (4/4 campos) | 1,439 (53%) |
+| Visitas core 2026 con provider_id | 1,855 |
+| Visitas core 2026 con hora | 2,258 |
+| Visitas core 2026 con prestacion | 2,604 |
+| Visitas core 2026 completas (4/4 campos) | 1,526 (56%) |
 | Propuestas de profesional | 62 (24 high-confidence unicas) |
 | Propuestas fuzzy de identidad paciente | 30 (323 rutas con estadia activa unica) |
 | Rutas fuzzy-resolved promovidas | 25 (15 single-service limpias + 10 en batch-duplicate review) |
+| Enriquecimientos fuzzy seguros aplicados | 127 campos en 103 visitas core |
 | Rutas bloqueadas sin paciente (65 nombres) | 768 |
 | Rutas bloqueadas sin estadia activa | 198 |
-| Provenance de fases Drive 2026 controladas | 7,408 filas |
+| Provenance de fases Drive 2026 controladas | 7,535 filas |
 | Decisiones humanas efectivas | 0 |
 
 ## Fases ejecutadas
@@ -67,6 +71,14 @@ Controles verificados:
 - De las 25 promovidas, 15 son single-service sin colision de batch y 10 quedan marcadas como `FUZZY_REVIEW_BATCH_DUPLICATE` por compartir paciente/estadia/dia con otra ruta Drive del mismo lote. No se borran: quedan trazables para conciliacion posterior.
 - 13 rutas net-new quedan bloqueadas por batch duplicate, split de servicio o servicio no mapeado.
 
+### Fase 6 — Revision y enriquecimiento fuzzy
+- **Artefacto**: `db/updates/2026-05-26-fuzzy-review-enrichment-2026.sql`
+- Las 10 fuzzy promovidas como batch duplicate quedan en cola de revision; no se tratan como aprobacion humana.
+- Las 13 net-new no promovidas quedan clasificadas: 6 batch duplicate, 6 requieren modelo de split de visita y 1 requiere diccionario de servicio.
+- De 285 rutas fuzzy con visita core existente, 171 tenian visita core unica y 114 quedaron ambiguas por multiples visitas core el mismo dia.
+- Se aplicaron 127 enriquecimientos seguros en 103 visitas core: 91 `provider_id`, 35 `hora_plan_inicio`, 1 `prestacion_id`, 0 `domicilio_id`.
+- Quedan 24 filas de campo con valores conflictivos, bloqueadas para revision.
+
 ## Artefactos relevantes
 
 | Artefacto | Uso |
@@ -81,11 +93,12 @@ Controles verificados:
 | `db/updates/2026-05-26-fuzzy-patient-match-2026.sql` | Fuzzy matching de identidad paciente. |
 | `db/updates/2026-05-26-fuzzy-patient-match-expansion.sql` | Expansion reproducible de propuestas fuzzy all-words y backfill de `match_pattern`. |
 | `db/updates/2026-05-26-fuzzy-resolved-migration-2026.sql` | Promocion fuzzy-resolved controlada a `operational.visita`. |
+| `db/updates/2026-05-26-fuzzy-review-enrichment-2026.sql` | Colas de revision fuzzy y enriquecimiento seguro de visitas core existentes. |
 | `db/updates/2026-05-26-expert-reconciliation-recommendations.sql` | Recomendaciones expertas servicio + domicilio. |
 | `db/updates/2026-05-26-human-reconciliation.sql` | Tabla de decisiones humanas. |
 | `db/updates/2026-05-26-simulated-reconciliation-proposals.sql` | Propuestas simuladas iniciales. |
 | `db/updates/2026-05-26-drive-promotion-*.sql` | Readiness y contrato de promocion. |
-| `scripts/test_drive_pilot_migration.py` | 22 tests unitarios para piloto, profesional, repairs y fuzzy-resolved. |
+| `scripts/test_drive_pilot_migration.py` | 24 tests unitarios para piloto, profesional, repairs, fuzzy-resolved y enriquecimiento fuzzy. |
 
 ## Decisiones consolidadas
 
@@ -94,6 +107,7 @@ Controles verificados:
 - **Fuzzy matching**: se aceptan matches donde TODAS las palabras significativas (len>2) del nombre Drive aparecen en el nombre DB. No requiere contiguidad. Marcado como `proposed` con `human_required=true`.
 - **Fuzzy-resolved no equivale a aprobado humano**: `simulated_expert_reconciliation` orienta promocion controlada; no reemplaza revision responsable.
 - **Batch duplicate review**: multiples rutas Drive para el mismo paciente/estadia/dia no se destruyen ni se aprueban como verdad final; si ya fueron promovidas, quedan trazadas con provenance y marca `FUZZY_REVIEW_BATCH_DUPLICATE`.
+- **Enriquecimiento fuzzy seguro**: solo actualiza campos NULL cuando hay una unica visita core candidata y un unico valor Drive candidato por campo. Conflictos y multiples visitas core quedan bloqueados.
 - **Enriquecimiento > Insercion**: las visitas que ya existen en core se enriquecen (UPDATE), no se duplican. Solo se INSERTAN las que no tienen visita core el mismo dia.
 - **Provenance por campo**: cada campo enriquecido o insertado deja registro en `migration.provenance` con `source_file`, `source_key`, `phase` y `field_name`.
 - **No se toca `duplicate_visit`**: flujo separado, sin resolver aun.
@@ -102,17 +116,18 @@ Controles verificados:
 
 ## Pendientes inmediatos
 
-1. **Revisar 10 fuzzy promovidas en batch-duplicate review**: decidir si son atenciones multiples reales o pushout/merge.
-2. **Enriquecer 285 rutas fuzzy con visita core existente**: solo llenar brechas, sin duplicar.
-3. **Resolver 13 rutas fuzzy net-new no promovidas**: batch duplicate, split de servicio o servicio no mapeado.
-4. **Resolver 768 rutas sin paciente**: 65 nombres que no existen en `clinical.paciente`. Requieren creacion de pacientes o ingreso manual.
-5. **Resolver 198 rutas sin estadia**: tienen paciente pero la fecha de visita no cae dentro de ninguna estadia.
-6. **Resolver ambiguous de profesional**: 11 nombres Drive con multiples candidatos DB (PIA, CAMILA, etc.).
-7. **Resolver fono low-confidence**: M. JOSE (3,483 rutas totales) requiere confirmacion.
-8. **Resolver medicos sin match en DB**: SANCHEZ, PEREZ, PINO (~815 rutas).
-9. **Duplicate visits**: 3,151 propuestas + 6,293 rutas `REVIEW_DUPLICATE_PUSHOUT_REQUIRED`.
-10. **Servicios compuestos**: 207 rutas `EXPERT_SPLIT_SERVICE_REQUIRED` para 2026.
-11. **383 rutas sin domicilio**: `EXPERT_MINIMAL_READY_SINGLE_SERVICE` en 2026.
+1. **Revisar batch duplicates fuzzy**: 7 grupos; 3 ya promovidos completos, 2 parcialmente promovidos y 2 sin promover.
+2. **Resolver 114 rutas fuzzy con multiples visitas core candidatas**: requiere criterio de merge/pushout antes de enriquecer.
+3. **Resolver 24 filas de campo fuzzy con valores conflictivos**: principalmente provider/hora con mas de un valor candidato para la misma visita core.
+4. **Resolver 13 rutas fuzzy net-new no promovidas**: 6 batch duplicate, 6 split de servicio, 1 servicio no mapeado.
+5. **Resolver 768 rutas sin paciente**: 65 nombres que no existen en `clinical.paciente`. Requieren creacion de pacientes o ingreso manual.
+6. **Resolver 198 rutas sin estadia**: tienen paciente pero la fecha de visita no cae dentro de ninguna estadia.
+7. **Resolver ambiguous de profesional**: 11 nombres Drive con multiples candidatos DB (PIA, CAMILA, etc.).
+8. **Resolver fono low-confidence**: M. JOSE (3,483 rutas totales) requiere confirmacion.
+9. **Resolver medicos sin match en DB**: SANCHEZ, PEREZ, PINO (~815 rutas).
+10. **Duplicate visits**: 3,151 propuestas + 6,293 rutas `REVIEW_DUPLICATE_PUSHOUT_REQUIRED`.
+11. **Servicios compuestos**: 207 rutas `EXPERT_SPLIT_SERVICE_REQUIRED` para 2026.
+12. **383 rutas sin domicilio**: `EXPERT_MINIMAL_READY_SINGLE_SERVICE` en 2026.
 
 ## Riesgos
 
@@ -126,9 +141,9 @@ Controles verificados:
 
 Continuar desde `docs/specs/metricas-hodom/memoria-consolidada-migracion-drive-2026-05-26.md`:
 
-1. Revisar `staging.v_hodom_fuzzy_resolved_route_summary_2026`: hay 25 fuzzy promovidas, 15 single-service limpias y 10 `FUZZY_REVIEW_BATCH_DUPLICATE` trazadas.
-2. Construir enriquecimiento para 285 rutas fuzzy con visita core existente; solo completar campos NULL con provenance.
-3. Resolver 13 rutas fuzzy net-new no promovidas por batch duplicate, split de servicio o servicio no mapeado.
+1. Revisar `staging.v_hodom_fuzzy_batch_duplicate_summary_2026`: 7 grupos batch fuzzy, con 10 rutas ya promovidas en revision y 6 no promovidas.
+2. Revisar `staging.v_hodom_fuzzy_existing_enrichment_summary_2026`: 127 campos enriquecidos; quedan 114 rutas con core ambiguo y 24 filas de campo conflictivas.
+3. Resolver `staging.v_hodom_fuzzy_unpromoted_net_new_summary_2026`: 6 batch duplicate, 6 split de servicio, 1 servicio no mapeado.
 4. Resolver los 65 nombres bloqueados: no existen en `clinical.paciente`. Opciones: creacion manual de pacientes, busqueda en SGH/DAU via `hsc-agent-cli` si se consigue RUT por otra via, o flaggear como `UNRESOLVABLE`.
 5. Resolver ambiguous de profesional: 11 nombres (PIA, CAMILA, etc.) requieren desambiguacion.
 6. Duplicate visits: flujo separado de merge/pushout para las 6,293 + 3,151 rutas.

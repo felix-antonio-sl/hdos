@@ -13,6 +13,9 @@ FUZZY_EXPANSION_SQL = (
 FUZZY_RESOLVED_SQL = (
     ROOT / "db" / "updates" / "2026-05-26-fuzzy-resolved-migration-2026.sql"
 )
+FUZZY_REVIEW_ENRICHMENT_SQL = (
+    ROOT / "db" / "updates" / "2026-05-26-fuzzy-review-enrichment-2026.sql"
+)
 
 
 class DrivePilotMigrationTests(unittest.TestCase):
@@ -262,6 +265,39 @@ class DrivePilotMigrationTests(unittest.TestCase):
         self.assertIn("fuzzy_resolved_2026_05_26", sql)
         self.assertIn("BEGIN;", sql)
         self.assertIn("COMMIT;", sql)
+        self.assertNotIn("INSERT INTO clinical.", sql)
+        self.assertNotIn("UPDATE clinical.", sql)
+
+    def test_fuzzy_review_enrichment_defines_review_queues(self):
+        self.assertTrue(
+            FUZZY_REVIEW_ENRICHMENT_SQL.exists(),
+            "fuzzy review/enrichment SQL must exist",
+        )
+        sql = FUZZY_REVIEW_ENRICHMENT_SQL.read_text(encoding="utf-8")
+
+        self.assertIn("CREATE OR REPLACE VIEW staging.v_hodom_fuzzy_batch_duplicate_review_2026", sql)
+        self.assertIn("CREATE OR REPLACE VIEW staging.v_hodom_fuzzy_batch_duplicate_summary_2026", sql)
+        self.assertIn("CREATE OR REPLACE VIEW staging.v_hodom_fuzzy_unpromoted_net_new_review_2026", sql)
+        self.assertIn("CREATE OR REPLACE VIEW staging.v_hodom_fuzzy_unpromoted_net_new_summary_2026", sql)
+        self.assertIn("DO_NOT_INSERT_BEFORE_HUMAN_BATCH_REVIEW", sql)
+        self.assertIn("REQUIRES_SPLIT_VISIT_MODEL", sql)
+        self.assertIn("REQUIRES_SERVICE_DICTIONARY", sql)
+
+    def test_fuzzy_review_enrichment_updates_only_unique_safe_fields(self):
+        self.assertTrue(FUZZY_REVIEW_ENRICHMENT_SQL.exists())
+        sql = FUZZY_REVIEW_ENRICHMENT_SQL.read_text(encoding="utf-8")
+
+        self.assertIn("CREATE OR REPLACE VIEW staging.v_hodom_fuzzy_existing_enrichment_preview_2026", sql)
+        self.assertIn("CREATE TEMP TABLE _hodom_fuzzy_enrichment_apply", sql)
+        self.assertIn("core_visit_count = 1", sql)
+        self.assertIn("distinct_values = 1", sql)
+        self.assertIn("UPDATE operational.visita", sql)
+        self.assertIn("INSERT INTO migration.provenance", sql)
+        self.assertIn("fuzzy_enrichment_2026_05_26", sql)
+        self.assertIn("FUZZY_ENRICH_SAFE_UNIQUE_CORE", sql)
+        self.assertIn("FUZZY_ENRICH_CONFLICTING_FIELD_VALUE", sql)
+        self.assertIn("FUZZY_ENRICH_AMBIGUOUS_CORE_VISIT", sql)
+        self.assertNotIn("INSERT INTO operational.visita", sql)
         self.assertNotIn("INSERT INTO clinical.", sql)
         self.assertNotIn("UPDATE clinical.", sql)
 

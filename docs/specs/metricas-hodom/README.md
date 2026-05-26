@@ -39,7 +39,8 @@ Este directorio es la ubicacion normativa para artefactos agregados derivados de
 | `../../../db/updates/2026-05-26-fuzzy-patient-match-2026.sql` | Fuzzy matching de identidad paciente: 30 propuestas, 323 rutas con identidad y estadia unica. |
 | `../../../db/updates/2026-05-26-fuzzy-patient-match-expansion.sql` | Expansion reproducible de propuestas fuzzy all-words y backfill de `match_pattern`. |
 | `../../../db/updates/2026-05-26-fuzzy-resolved-migration-2026.sql` | Promocion fuzzy-resolved controlada: 25 visitas promovidas, con batch duplicates marcados para revision. |
-| `../../../scripts/test_drive_pilot_migration.py` | 22 tests unitarios de migracion piloto, conciliacion profesional, repairs y fuzzy-resolved. |
+| `../../../db/updates/2026-05-26-fuzzy-review-enrichment-2026.sql` | Revision de batch/split/missing fuzzy y enriquecimiento seguro de visitas core existentes. |
+| `../../../scripts/test_drive_pilot_migration.py` | 24 tests unitarios de migracion piloto, conciliacion profesional, repairs, fuzzy-resolved y fuzzy enrichment. |
 
 ## Reglas normativas
 
@@ -72,5 +73,6 @@ PGPASSWORD=hodom psql 'postgresql://hodom:hodom@localhost:5555/hodom' -v ON_ERRO
 PGPASSWORD=hodom psql 'postgresql://hodom:hodom@localhost:5555/hodom' -v ON_ERROR_STOP=1 -f db/updates/2026-05-26-drive-pilot-migration.sql
 PGPASSWORD=hodom psql 'postgresql://hodom:hodom@localhost:5555/hodom' -v ON_ERROR_STOP=1 -f db/updates/2026-05-26-drive-new-visits-audit-repair.sql
 PGPASSWORD=hodom psql 'postgresql://hodom:hodom@localhost:5555/hodom' -v ON_ERROR_STOP=1 -f db/updates/2026-05-26-fuzzy-resolved-migration-2026.sql
+PGPASSWORD=hodom psql 'postgresql://hodom:hodom@localhost:5555/hodom' -v ON_ERROR_STOP=1 -f db/updates/2026-05-26-fuzzy-review-enrichment-2026.sql
 python3 -m unittest discover -s scripts -p 'test_*.py'
 ```
