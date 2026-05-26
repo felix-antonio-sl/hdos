@@ -4,6 +4,8 @@ Fecha: 2026-05-26. Rama: `main`.
 Commit base: `f412a6a feat(audit): vistas estables de auditoria basadas en provenance`.
 Actualizacion de cierre: resolucion de estadias activas, sincronizacion activo/egreso desde INGRESOS vivo, contrato flexible V2 materializado y normalizacion nominal controlada.
 
+Actualizacion app/censo: ver `handoff-app-censo-calidad-datos-2026-05-26.md`. Se detecto que `/censo` exponia datos core incompletos como `a`, `0a` o diagnostico vacio. Se aplico respaldo operativo desde `staging.hodom_ingreso_2026` por RUT en `hdos-app` para edad/diagnostico cuando el core falta o es implausible, sin mutar datos clinicos. Queda pendiente una migracion DB acotada para corregir core solo con anclas RUT unicas y sin flags de calidad.
+
 ## Estado final consolidado
 
 Migracion Drive HODOM 2026 ejecutada en multiples fases sobre rutas con `visit_date >= '2026-01-01'` (3,150 de 17,117 totales) + fases paralelas de INGRESOS 2026 DRIVE.
