@@ -25,9 +25,10 @@ Migracion Drive HODOM 2026 ejecutada en multiples fases sobre rutas con `visit_d
 | Match paciente por RUT (ingresos) | 216/216 (100%) |
 | Propuestas de reconciliacion totales | 1,300+ |
 | Word-overlap V2 materializado | 3,197 filas |
-| Provenance total | 9,878 filas de migracion 2026 core |
+| Campos enriquecidos por duplicados V2 | 25 |
+| Provenance total | 9,903 filas de migracion 2026 core |
 | Decisiones humanas efectivas | 0 |
-| Tests | 97/97 OK |
+| Tests | 98/98 OK |
 
 ### Distribucion de rutas 2026 por gate
 
@@ -82,7 +83,8 @@ El censo HODOM activo (22 pacientes) fue cruzado contra nombres bloqueados. 17 d
 | 10 | `hodom-active-stay-resolution.sql` | INSERT/UPDATE estadias desde INGRESOS con `daterange &&` | 17 estadias nuevas + 1 extendida |
 | 11 | `hodom-word-overlap-contract-v2.sql` | Tabla materializada word-overlap + contrato V2 | 3,197 matches |
 | 12 | `hodom-patient-name-normalization.sql` | UPDATE controlado de nombres desde INGRESOS | 7 pacientes |
-| 13 | `hodom-migration-dashboard-final.sql` | Dashboard final consolidado | metricas de cierre |
+| 13 | `hodom-v2-duplicate-enrichment.sql` | UPDATE seguro de campos faltantes en duplicados V2 | 25 campos |
+| 14 | `hodom-migration-dashboard-final.sql` | Dashboard final consolidado | metricas de cierre |
 
 ## Artefactos del repo
 
@@ -102,6 +104,7 @@ El censo HODOM activo (22 pacientes) fue cruzado contra nombres bloqueados. 17 d
 | `db/updates/2026-05-26-hodom-active-stay-resolution.sql` | Resolucion de 288 rutas sin estadia mediante INGRESOS y `daterange &&` |
 | `db/updates/2026-05-26-hodom-word-overlap-contract-v2.sql` | Tabla `staging.hodom_patient_word_overlap_match_2026` y contrato flexible V2 |
 | `db/updates/2026-05-26-hodom-patient-name-normalization.sql` | Normalizacion controlada de `clinical.paciente.nombre_completo` desde INGRESOS |
+| `db/updates/2026-05-26-hodom-v2-duplicate-enrichment.sql` | Enriquecimiento seguro de visitas core existentes desde duplicados V2 |
 | `db/updates/2026-05-26-hodom-migration-dashboard-final.sql` | Dashboard final consolidado de migracion 2026 |
 | `scripts/hodom_ingreso_2026_staging.py` | Parser Excel (36 tests) |
 | `scripts/test_hodom_ingreso_2026_staging.py` | 36 tests parser |
@@ -148,7 +151,7 @@ Continuar desde `docs/specs/metricas-hodom/memoria-consolidada-migracion-drive-2
 
 2. **Diccionario de servicios**: resolver `service_prestacion` para las 287 rutas `READY_IDENTITY_STAY_ONLY` V2 antes de insertar nuevas visitas.
 
-3. **Duplicate visits**: disenar/aplicar flujo de enriquecimiento (UPDATE, no merge) para las rutas `REVIEW_DUPLICATE_PUSHOUT_REQUIRED`, usando target unico y solo campos faltantes.
+3. **Duplicate visits**: continuar enriquecimiento (UPDATE, no merge) para rutas `REVIEW_DUPLICATE_PUSHOUT_REQUIRED`, solo cuando exista target unico, valor fuente unico y campo destino nulo.
 
 4. **Censo SGH periodico**: usar `hsc-agent-cli find --hospitalizados --hodom` como fuente de ancla operacional para pacientes activos y estadias abiertas.
 

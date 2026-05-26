@@ -17,7 +17,8 @@ Se completo el frente solicitado sobre el corte de `memoria-consolidada-migracio
 | Estadias creadas desde INGRESOS | 36 |
 | Estadias resueltas desde INGRESOS | 18 |
 | Word-overlap V2 materializado | 3,197 filas |
-| Provenance migracion 2026 core | 9,878 filas |
+| Campos enriquecidos por duplicados V2 | 25 |
+| Provenance migracion 2026 core | 9,903 filas |
 
 ## Decisiones ejecutadas
 
@@ -28,6 +29,7 @@ Se completo el frente solicitado sobre el corte de `memoria-consolidada-migracio
 - El contrato flexible V2 quedo materializado en `staging.hodom_patient_word_overlap_match_2026` y expuesto como `staging.v_hodom_route_promotion_contract_v2`.
 - Se normalizaron 7 nombres de `clinical.paciente` desde INGRESOS solo con candidato unico y regla de subconjunto estricto.
 - Se reejecuto `drive-new-visits-2026.sql` tras corregir su orden de `DROP VIEW`; no inserto visitas nuevas, pero reparo provenance faltante para visitas ya existentes.
+- Se aplico enriquecimiento seguro de duplicados V2 sobre visitas core existentes: 25 campos trazados en `v2_duplicate_enrichment_2026_05_26`. No se insertaron visitas nuevas.
 
 ## Pendientes
 
@@ -36,7 +38,7 @@ Se completo el frente solicitado sobre el corte de `memoria-consolidada-migracio
 | V2 estadias | Resolver 38 `BLOCKED_NO_ACTIVE_STAY_MATCH` con ancla temporal adicional. |
 | V2 identidad | Resolver 177 `BLOCKED_NO_PATIENT_MATCH` y 156 ambiguos con RUT/SGH o revision humana. |
 | Servicios | Mapear `service_prestacion` para 287 `READY_IDENTITY_STAY_ONLY` V2 antes de insertar. |
-| Duplicados | Enriquecer rutas con visita core existente mediante UPDATE de campos faltantes; no hacer merge destructivo. |
+| Duplicados | Continuar enriquecimiento solo cuando exista target core unico y valor fuente unico; no hacer merge destructivo. |
 | App | Transicionar estadias creadas desde `pendiente_evaluacion` por flujo de la app cuando corresponda. |
 
 ## Supuestos
@@ -61,8 +63,8 @@ PGPASSWORD=hodom psql 'postgresql://hodom:hodom@localhost:5555/hodom' \
   -c "SELECT * FROM staging.v_hodom_migration_dashboard;"
 ```
 
-Resultado verificado: 97/97 tests OK; dashboard con 853 estadias, 18 estadias resueltas desde INGRESOS, 7 pacientes normalizados y 3,197 filas V2 materializadas.
+Resultado verificado: 98/98 tests OK; dashboard con 853 estadias, 18 estadias resueltas desde INGRESOS, 7 pacientes normalizados, 3,197 filas V2 materializadas y 25 campos enriquecidos por duplicados V2.
 
 ## Prompt de continuacion
 
-Continuar desde `docs/specs/metricas-hodom/handoff-cierre-drive-2026-05-26.md`. Prioridad: resolver 38 `BLOCKED_NO_ACTIVE_STAY_MATCH` del contrato V2 con anclas temporales adicionales; luego mapear `service_prestacion` para 287 `READY_IDENTITY_STAY_ONLY` V2; despues disenar/aplicar enriquecimiento UPDATE para `REVIEW_DUPLICATE_PUSHOUT_REQUIRED`. Mantener regla: conciliacion simulada orienta revision, no es aprobacion humana.
+Continuar desde `docs/specs/metricas-hodom/handoff-cierre-drive-2026-05-26.md`. Prioridad: resolver 38 `BLOCKED_NO_ACTIVE_STAY_MATCH` del contrato V2 con anclas temporales adicionales; luego mapear `service_prestacion` para 287 `READY_IDENTITY_STAY_ONLY` V2; despues continuar enriquecimiento UPDATE de duplicados solo cuando haya target core unico y valor fuente unico. Mantener regla: conciliacion simulada orienta revision, no es aprobacion humana.

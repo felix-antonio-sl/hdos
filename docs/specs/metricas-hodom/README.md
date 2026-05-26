@@ -45,6 +45,7 @@ Este directorio es la ubicacion normativa para artefactos agregados derivados de
 | `../../../db/updates/2026-05-26-hodom-active-stay-resolution.sql` | Resolucion de rutas 2026 sin estadia activa mediante INGRESOS, `daterange &&`, INSERT/UPDATE de `clinical.estadia` y provenance. |
 | `../../../db/updates/2026-05-26-hodom-word-overlap-contract-v2.sql` | Tabla materializada de word-overlap paciente-ruta y contrato flexible V2. |
 | `../../../db/updates/2026-05-26-hodom-patient-name-normalization.sql` | Normalizacion controlada de nombres de pacientes desde INGRESOS con provenance. |
+| `../../../db/updates/2026-05-26-hodom-v2-duplicate-enrichment.sql` | Enriquecimiento seguro de campos faltantes en visitas core existentes desde duplicados V2. |
 | `../../../db/updates/2026-05-26-hodom-migration-dashboard-final.sql` | Dashboard final consolidado con estadias resueltas, nombres normalizados y metricas V2. |
 | `../../../scripts/test_drive_pilot_migration.py` | 24 tests unitarios de migracion piloto, conciliacion profesional, repairs, fuzzy-resolved y fuzzy enrichment. |
 
@@ -84,6 +85,7 @@ PGPASSWORD=hodom psql 'postgresql://hodom:hodom@localhost:5555/hodom' -v ON_ERRO
 PGPASSWORD=hodom psql 'postgresql://hodom:hodom@localhost:5555/hodom' -v ON_ERROR_STOP=1 -f db/updates/2026-05-26-hodom-word-overlap-contract-v2.sql
 PGPASSWORD=hodom psql 'postgresql://hodom:hodom@localhost:5555/hodom' -v ON_ERROR_STOP=1 -f db/updates/2026-05-26-hodom-patient-name-normalization.sql
 PGPASSWORD=hodom psql 'postgresql://hodom:hodom@localhost:5555/hodom' -v ON_ERROR_STOP=1 -f db/updates/2026-05-26-hodom-word-overlap-contract-v2.sql
+PGPASSWORD=hodom psql 'postgresql://hodom:hodom@localhost:5555/hodom' -v ON_ERROR_STOP=1 -f db/updates/2026-05-26-hodom-v2-duplicate-enrichment.sql
 PGPASSWORD=hodom psql 'postgresql://hodom:hodom@localhost:5555/hodom' -v ON_ERROR_STOP=1 -f db/updates/2026-05-26-hodom-migration-dashboard-final.sql
 python3 -m unittest discover -s scripts -p 'test_*.py'
 ```

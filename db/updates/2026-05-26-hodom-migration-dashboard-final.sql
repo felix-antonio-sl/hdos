@@ -33,6 +33,9 @@ SELECT
     (SELECT count(*) FROM staging.hodom_ingreso_2026 WHERE rut_normalizado IS NOT NULL) AS ingresos_with_rut,
     (SELECT count(DISTINCT rut_normalizado) FROM staging.hodom_ingreso_2026 WHERE rut_normalizado IS NOT NULL) AS distinct_ruts_ingresos,
     (SELECT count(*) FROM staging.hodom_patient_word_overlap_match_2026) AS word_overlap_materialized_rows,
+    (SELECT count(*) FROM migration.provenance
+     WHERE phase = 'v2_duplicate_enrichment_2026_05_26'
+       AND target_table = 'operational.visita') AS v2_duplicate_enriched_fields,
     coalesce((SELECT route_rows FROM contract_v2 WHERE promotion_gate = 'BLOCKED_NO_PATIENT_MATCH'), 0) AS contract_v2_blocked_no_patient,
     coalesce((SELECT route_rows FROM contract_v2 WHERE promotion_gate = 'BLOCKED_NO_ACTIVE_STAY_MATCH'), 0) AS contract_v2_blocked_no_active_stay,
     (SELECT count(*) FROM migration.provenance
@@ -41,6 +44,6 @@ SELECT
     now() AS generated_at;
 
 COMMENT ON VIEW staging.v_hodom_migration_dashboard IS
-'Final consolidated dashboard for HODOM Drive 2026 migration. Includes INGRESOS-created patients/stays, active stay resolution, patient-name normalization, and materialized word-overlap V2 metrics.';
+'Final consolidated dashboard for HODOM Drive 2026 migration. Includes INGRESOS-created patients/stays, active stay resolution, patient-name normalization, materialized word-overlap V2 metrics, and V2 duplicate enrichment.';
 
 COMMIT;

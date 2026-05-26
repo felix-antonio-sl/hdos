@@ -23,6 +23,9 @@ PATIENT_NAME_NORMALIZATION_SQL = (
 FINAL_DASHBOARD_SQL = (
     ROOT / "db" / "updates" / "2026-05-26-hodom-migration-dashboard-final.sql"
 )
+V2_DUPLICATE_ENRICHMENT_SQL = (
+    ROOT / "db" / "updates" / "2026-05-26-hodom-v2-duplicate-enrichment.sql"
+)
 
 
 class DrivePromotionReadinessTests(unittest.TestCase):
@@ -265,10 +268,33 @@ class DrivePromotionReadinessTests(unittest.TestCase):
         self.assertIn("active_stays_resolved_from_ingresos", sql)
         self.assertIn("patients_name_normalized_from_ingresos", sql)
         self.assertIn("word_overlap_materialized_rows", sql)
+        self.assertIn("v2_duplicate_enriched_fields", sql)
         self.assertIn("contract_v2_blocked_no_patient", sql)
         self.assertIn("contract_v2_blocked_no_active_stay", sql)
         self.assertIn("active_stay_resolution_2026_05_26", sql)
         self.assertIn("patient_name_normalization_2026_05_26", sql)
+
+    def test_v2_duplicate_enrichment_updates_only_missing_fields(self):
+        self.assertTrue(
+            V2_DUPLICATE_ENRICHMENT_SQL.exists(),
+            "V2 duplicate enrichment SQL must exist",
+        )
+        sql = V2_DUPLICATE_ENRICHMENT_SQL.read_text(encoding="utf-8")
+
+        self.assertIn("CREATE OR REPLACE VIEW staging.v_hodom_v2_duplicate_enrichment_preview_2026", sql)
+        self.assertIn("CREATE OR REPLACE VIEW staging.v_hodom_v2_duplicate_enrichment_summary_2026", sql)
+        self.assertIn("CREATE TEMP TABLE _hodom_v2_duplicate_enrichment_apply", sql)
+        self.assertIn("UPDATE operational.visita", sql)
+        self.assertIn("INSERT INTO migration.provenance", sql)
+        self.assertIn("v2_duplicate_enrichment_2026_05_26", sql)
+        self.assertIn("REVIEW_DUPLICATE_PUSHOUT_REQUIRED", sql)
+        self.assertIn("core_visit_count = 1", sql)
+        self.assertIn("distinct_values = 1", sql)
+        self.assertIn("v.hora_plan_inicio IS NULL", sql)
+        self.assertIn("v.provider_id IS NULL", sql)
+        self.assertIn("v.domicilio_id IS NULL", sql)
+        self.assertNotIn("INSERT INTO operational.visita", sql)
+        self.assertNotIn("UPDATE clinical.", sql)
 
 
 if __name__ == "__main__":
