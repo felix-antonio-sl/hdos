@@ -30,6 +30,7 @@ Este directorio es la ubicacion normativa para artefactos agregados derivados de
 | `../../../db/updates/2026-05-26-dictionary-seeds.sql` | Vistas semilla para diccionarios de prestacion, profesional y domicilio. |
 | `recomendaciones-expertas-conciliacion-drive-2026-05-26.md` | Recomendaciones simuladas de especialista para acercar migracion controlada. |
 | `../../../db/updates/2026-05-26-expert-reconciliation-recommendations.sql` | Inserta propuestas expertas `proposed` para prestacion y domicilio, y resume readiness experto. |
+| `memoria-consolidada-migracion-drive-2026-05-26.md` | Memoria consolidada de estado, decisiones, artefactos, pendientes y prompt de continuidad. |
 
 ## Reglas normativas
 
