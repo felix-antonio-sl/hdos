@@ -43,10 +43,11 @@ Este directorio es la ubicacion normativa para artefactos agregados derivados de
 | `../../../db/updates/2026-05-26-fuzzy-resolved-migration-2026.sql` | Promocion fuzzy-resolved controlada: 25 visitas promovidas, con batch duplicates marcados para revision. |
 | `../../../db/updates/2026-05-26-fuzzy-review-enrichment-2026.sql` | Revision de batch/split/missing fuzzy y enriquecimiento seguro de visitas core existentes. |
 | `../../../db/updates/2026-05-26-hodom-active-stay-resolution.sql` | Resolucion de rutas 2026 sin estadia activa mediante INGRESOS, `daterange &&`, INSERT/UPDATE de `clinical.estadia` y provenance. |
+| `../../../db/updates/2026-05-26-hodom-ingreso-status-sync.sql` | Sincronizacion de pacientes/estadias activos y egresados desde la planilla viva INGRESOS 2026 DRIVE; usa transiciones de estado, cierra splits contiguos y crea estadias activas faltantes con provenance. |
 | `../../../db/updates/2026-05-26-hodom-word-overlap-contract-v2.sql` | Tabla materializada de word-overlap paciente-ruta y contrato flexible V2. |
 | `../../../db/updates/2026-05-26-hodom-patient-name-normalization.sql` | Normalizacion controlada de nombres de pacientes desde INGRESOS con provenance. |
 | `../../../db/updates/2026-05-26-hodom-v2-duplicate-enrichment.sql` | Enriquecimiento seguro de campos faltantes en visitas core existentes desde duplicados V2. |
-| `../../../db/updates/2026-05-26-hodom-migration-dashboard-final.sql` | Dashboard final consolidado con estadias resueltas, nombres normalizados y metricas V2. |
+| `../../../db/updates/2026-05-26-hodom-migration-dashboard-final.sql` | Dashboard final consolidado con estadias resueltas, sincronizacion de estados INGRESOS, nombres normalizados y metricas V2. |
 | `../../../scripts/test_drive_pilot_migration.py` | 24 tests unitarios de migracion piloto, conciliacion profesional, repairs, fuzzy-resolved y fuzzy enrichment. |
 
 ## Reglas normativas
@@ -82,6 +83,7 @@ PGPASSWORD=hodom psql 'postgresql://hodom:hodom@localhost:5555/hodom' -v ON_ERRO
 PGPASSWORD=hodom psql 'postgresql://hodom:hodom@localhost:5555/hodom' -v ON_ERROR_STOP=1 -f db/updates/2026-05-26-fuzzy-resolved-migration-2026.sql
 PGPASSWORD=hodom psql 'postgresql://hodom:hodom@localhost:5555/hodom' -v ON_ERROR_STOP=1 -f db/updates/2026-05-26-fuzzy-review-enrichment-2026.sql
 PGPASSWORD=hodom psql 'postgresql://hodom:hodom@localhost:5555/hodom' -v ON_ERROR_STOP=1 -f db/updates/2026-05-26-hodom-active-stay-resolution.sql
+PGPASSWORD=hodom psql 'postgresql://hodom:hodom@localhost:5555/hodom' -v ON_ERROR_STOP=1 -f db/updates/2026-05-26-hodom-ingreso-status-sync.sql
 PGPASSWORD=hodom psql 'postgresql://hodom:hodom@localhost:5555/hodom' -v ON_ERROR_STOP=1 -f db/updates/2026-05-26-hodom-word-overlap-contract-v2.sql
 PGPASSWORD=hodom psql 'postgresql://hodom:hodom@localhost:5555/hodom' -v ON_ERROR_STOP=1 -f db/updates/2026-05-26-hodom-patient-name-normalization.sql
 PGPASSWORD=hodom psql 'postgresql://hodom:hodom@localhost:5555/hodom' -v ON_ERROR_STOP=1 -f db/updates/2026-05-26-hodom-word-overlap-contract-v2.sql

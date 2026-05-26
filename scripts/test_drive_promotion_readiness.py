@@ -26,6 +26,9 @@ FINAL_DASHBOARD_SQL = (
 V2_DUPLICATE_ENRICHMENT_SQL = (
     ROOT / "db" / "updates" / "2026-05-26-hodom-v2-duplicate-enrichment.sql"
 )
+INGRESO_STATUS_SYNC_SQL = (
+    ROOT / "db" / "updates" / "2026-05-26-hodom-ingreso-status-sync.sql"
+)
 
 
 class DrivePromotionReadinessTests(unittest.TestCase):
@@ -269,10 +272,13 @@ class DrivePromotionReadinessTests(unittest.TestCase):
         self.assertIn("patients_name_normalized_from_ingresos", sql)
         self.assertIn("word_overlap_materialized_rows", sql)
         self.assertIn("v2_duplicate_enriched_fields", sql)
+        self.assertIn("ingreso_status_synced_stays", sql)
+        self.assertIn("ingreso_active_core_stays", sql)
         self.assertIn("contract_v2_blocked_no_patient", sql)
         self.assertIn("contract_v2_blocked_no_active_stay", sql)
         self.assertIn("active_stay_resolution_2026_05_26", sql)
         self.assertIn("patient_name_normalization_2026_05_26", sql)
+        self.assertIn("ingreso_status_sync_2026_05_26", sql)
 
     def test_v2_duplicate_enrichment_updates_only_missing_fields(self):
         self.assertTrue(
@@ -295,6 +301,31 @@ class DrivePromotionReadinessTests(unittest.TestCase):
         self.assertIn("v.domicilio_id IS NULL", sql)
         self.assertNotIn("INSERT INTO operational.visita", sql)
         self.assertNotIn("UPDATE clinical.", sql)
+
+    def test_ingreso_status_sync_transitions_estadias_from_live_ingresos(self):
+        self.assertTrue(
+            INGRESO_STATUS_SYNC_SQL.exists(),
+            "INGRESOS status sync SQL must exist",
+        )
+        sql = INGRESO_STATUS_SYNC_SQL.read_text(encoding="utf-8")
+
+        self.assertIn("CREATE OR REPLACE VIEW staging.v_hodom_ingreso_status_sync_preview_2026", sql)
+        self.assertIn("CREATE OR REPLACE VIEW staging.v_hodom_ingreso_status_sync_summary_2026", sql)
+        self.assertIn("CREATE TEMP TABLE _hodom_ingreso_status_sync_apply", sql)
+        self.assertIn("daterange(", sql)
+        self.assertIn("&&", sql)
+        self.assertIn("UPDATE clinical.estadia", sql)
+        self.assertIn("INSERT INTO clinical.estadia", sql)
+        self.assertIn("clinical.transition_estadia", sql)
+        self.assertIn("INSERT INTO migration.provenance", sql)
+        self.assertIn("ingreso_status_sync_2026_05_26", sql)
+        self.assertIn("CLOSE_SPLIT_ACTIVE_STAY_FROM_INGRESOS", sql)
+        self.assertIn("CREATE_ACTIVE_STAY_FROM_INGRESOS_STATUS", sql)
+        self.assertIn("SOURCE_ACTIVO", sql)
+        self.assertIn("SOURCE_EGRESADO", sql)
+        self.assertIn("APPLY_SAFE", sql)
+        self.assertIn("BLOCKED_CLOSED_SOURCE_CONFLICT", sql)
+        self.assertIn("stay_choice_rank", sql)
 
 
 if __name__ == "__main__":

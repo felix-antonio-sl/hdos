@@ -1,5 +1,6 @@
 -- HODOM Drive 2026 - final dashboard refresh after stay resolution,
--- word-overlap V2 materialization, and patient name normalization.
+-- word-overlap V2 materialization, patient name normalization, and
+-- INGRESOS active/discharged status synchronization.
 
 BEGIN;
 
@@ -29,6 +30,14 @@ SELECT
     (SELECT count(DISTINCT target_pk) FROM migration.provenance
      WHERE phase = 'active_stay_resolution_2026_05_26'
        AND target_table = 'clinical.estadia') AS active_stays_resolved_from_ingresos,
+    (SELECT count(DISTINCT target_pk) FROM migration.provenance
+     WHERE phase = 'ingreso_status_sync_2026_05_26'
+       AND target_table = 'clinical.estadia') AS ingreso_status_synced_stays,
+    (SELECT count(*) FROM migration.provenance
+     WHERE phase = 'ingreso_status_sync_2026_05_26'
+       AND target_table = 'clinical.estadia') AS ingreso_status_sync_fields,
+    (SELECT count(*) FROM clinical.estadia
+     WHERE estado = 'activo' AND fecha_egreso IS NULL) AS ingreso_active_core_stays,
     (SELECT count(*) FROM staging.hodom_ingreso_2026) AS ingresos_staged,
     (SELECT count(*) FROM staging.hodom_ingreso_2026 WHERE rut_normalizado IS NOT NULL) AS ingresos_with_rut,
     (SELECT count(DISTINCT rut_normalizado) FROM staging.hodom_ingreso_2026 WHERE rut_normalizado IS NOT NULL) AS distinct_ruts_ingresos,
@@ -44,6 +53,6 @@ SELECT
     now() AS generated_at;
 
 COMMENT ON VIEW staging.v_hodom_migration_dashboard IS
-'Final consolidated dashboard for HODOM Drive 2026 migration. Includes INGRESOS-created patients/stays, active stay resolution, patient-name normalization, materialized word-overlap V2 metrics, and V2 duplicate enrichment.';
+'Final consolidated dashboard for HODOM Drive 2026 migration. Includes INGRESOS-created patients/stays, active stay resolution, INGRESOS status synchronization, patient-name normalization, materialized word-overlap V2 metrics, and V2 duplicate enrichment.';
 
 COMMIT;
