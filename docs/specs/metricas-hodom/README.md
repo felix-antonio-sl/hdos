@@ -35,8 +35,11 @@ Este directorio es la ubicacion normativa para artefactos agregados derivados de
 | `../../../db/updates/2026-05-26-professional-reconciliation.sql` | Conciliacion de profesionales Drive vs `operational.profesional`: 62 propuestas, vistas de scoring. |
 | `../../../db/updates/2026-05-26-drive-enrichment-2026.sql` | Enriquecimiento UPDATE de 1,065 visitas core 2026 con provider_id y hora del Drive. |
 | `../../../db/updates/2026-05-26-drive-new-visits-2026.sql` | Insercion de 333 visitas nuevas 2026 (READY_IDENTITY_STAY_ONLY sin visita core). |
-| `../../../db/updates/2026-05-26-fuzzy-patient-match-2026.sql` | Fuzzy matching de identidad paciente: 30 propuestas, 335 rutas desbloqueadas. |
-| `../../../scripts/test_drive_pilot_migration.py` | 16 tests unitarios de migracion piloto y conciliacion profesional. |
+| `../../../db/updates/2026-05-26-drive-new-visits-audit-repair.sql` | Reparacion view-only de vistas agregadas Phase 2 desde `migration.provenance`. |
+| `../../../db/updates/2026-05-26-fuzzy-patient-match-2026.sql` | Fuzzy matching de identidad paciente: 30 propuestas, 323 rutas con identidad y estadia unica. |
+| `../../../db/updates/2026-05-26-fuzzy-patient-match-expansion.sql` | Expansion reproducible de propuestas fuzzy all-words y backfill de `match_pattern`. |
+| `../../../db/updates/2026-05-26-fuzzy-resolved-migration-2026.sql` | Promocion fuzzy-resolved controlada: 25 visitas promovidas, con batch duplicates marcados para revision. |
+| `../../../scripts/test_drive_pilot_migration.py` | 22 tests unitarios de migracion piloto, conciliacion profesional, repairs y fuzzy-resolved. |
 
 ## Reglas normativas
 
@@ -63,8 +66,11 @@ PGPASSWORD=hodom psql 'postgresql://hodom:hodom@localhost:5555/hodom' -v ON_ERRO
 PGPASSWORD=hodom psql 'postgresql://hodom:hodom@localhost:5555/hodom' -v ON_ERROR_STOP=1 -f db/updates/2026-05-26-expert-reconciliation-recommendations.sql
 PGPASSWORD=hodom psql 'postgresql://hodom:hodom@localhost:5555/hodom' -v ON_ERROR_STOP=1 -f db/updates/2026-05-26-professional-reconciliation.sql
 PGPASSWORD=hodom psql 'postgresql://hodom:hodom@localhost:5555/hodom' -v ON_ERROR_STOP=1 -f db/updates/2026-05-26-fuzzy-patient-match-2026.sql
+PGPASSWORD=hodom psql 'postgresql://hodom:hodom@localhost:5555/hodom' -v ON_ERROR_STOP=1 -f db/updates/2026-05-26-fuzzy-patient-match-expansion.sql
 PGPASSWORD=hodom psql 'postgresql://hodom:hodom@localhost:5555/hodom' -v ON_ERROR_STOP=1 -f db/updates/2026-05-26-drive-enrichment-2026.sql
 PGPASSWORD=hodom psql 'postgresql://hodom:hodom@localhost:5555/hodom' -v ON_ERROR_STOP=1 -f db/updates/2026-05-26-drive-new-visits-2026.sql
 PGPASSWORD=hodom psql 'postgresql://hodom:hodom@localhost:5555/hodom' -v ON_ERROR_STOP=1 -f db/updates/2026-05-26-drive-pilot-migration.sql
+PGPASSWORD=hodom psql 'postgresql://hodom:hodom@localhost:5555/hodom' -v ON_ERROR_STOP=1 -f db/updates/2026-05-26-drive-new-visits-audit-repair.sql
+PGPASSWORD=hodom psql 'postgresql://hodom:hodom@localhost:5555/hodom' -v ON_ERROR_STOP=1 -f db/updates/2026-05-26-fuzzy-resolved-migration-2026.sql
 python3 -m unittest discover -s scripts -p 'test_*.py'
 ```

@@ -4,6 +4,15 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 PILOT_SQL = ROOT / "db" / "updates" / "2026-05-26-drive-pilot-migration.sql"
+NEW_VISITS_AUDIT_REPAIR_SQL = (
+    ROOT / "db" / "updates" / "2026-05-26-drive-new-visits-audit-repair.sql"
+)
+FUZZY_EXPANSION_SQL = (
+    ROOT / "db" / "updates" / "2026-05-26-fuzzy-patient-match-expansion.sql"
+)
+FUZZY_RESOLVED_SQL = (
+    ROOT / "db" / "updates" / "2026-05-26-fuzzy-resolved-migration-2026.sql"
+)
 
 
 class DrivePilotMigrationTests(unittest.TestCase):
@@ -166,6 +175,95 @@ class DrivePilotMigrationTests(unittest.TestCase):
         self.assertNotIn("INSERT INTO operational.", sql)
         self.assertNotIn("UPDATE clinical.", sql)
         self.assertNotIn("UPDATE operational.", sql)
+
+    def test_new_visits_audit_repair_defines_missing_views(self):
+        self.assertTrue(
+            NEW_VISITS_AUDIT_REPAIR_SQL.exists(),
+            "new visits audit repair SQL must exist",
+        )
+        sql = NEW_VISITS_AUDIT_REPAIR_SQL.read_text(encoding="utf-8")
+
+        self.assertIn("CREATE OR REPLACE VIEW staging.v_hodom_new_visits_gate_2026", sql)
+        self.assertIn("CREATE OR REPLACE VIEW staging.v_hodom_new_visits_audit_2026", sql)
+        self.assertIn("CREATE OR REPLACE VIEW staging.v_hodom_new_visits_summary_2026", sql)
+        self.assertIn("phase_provenance_visits", sql)
+        self.assertIn("overlap_with_pilot", sql)
+        self.assertIn("new_phase_not_pilot", sql)
+        self.assertIn("drive_sourced_visits", sql)
+
+    def test_new_visits_audit_repair_is_view_only(self):
+        self.assertTrue(NEW_VISITS_AUDIT_REPAIR_SQL.exists())
+        sql = NEW_VISITS_AUDIT_REPAIR_SQL.read_text(encoding="utf-8")
+        code_lines = [
+            line for line in sql.split("\n")
+            if not line.strip().startswith("--")
+        ]
+        code_text = "\n".join(code_lines).upper()
+
+        self.assertNotIn("INSERT INTO", code_text)
+        self.assertNotIn("UPDATE ", code_text)
+        self.assertNotIn("DELETE FROM", code_text)
+        self.assertNotIn("CREATE TABLE", code_text)
+
+    def test_fuzzy_patient_match_expansion_is_reproducible(self):
+        self.assertTrue(
+            FUZZY_EXPANSION_SQL.exists(),
+            "fuzzy patient match expansion SQL must exist",
+        )
+        sql = FUZZY_EXPANSION_SQL.read_text(encoding="utf-8")
+
+        self.assertIn("INSERT INTO staging.hodom_reconciliation_decision", sql)
+        self.assertIn("WORD_OVERLAP_3PLUS", sql)
+        self.assertIn("WORD_OVERLAP_2", sql)
+        self.assertIn("all_words_match", sql)
+        self.assertIn("jsonb_set", sql)
+        self.assertIn("match_pattern", sql)
+        self.assertIn("'human_required', true", sql)
+        self.assertIn("NOT EXISTS", sql)
+
+    def test_fuzzy_patient_match_expansion_does_not_touch_core(self):
+        self.assertTrue(FUZZY_EXPANSION_SQL.exists())
+        sql = FUZZY_EXPANSION_SQL.read_text(encoding="utf-8")
+
+        self.assertNotIn("INSERT INTO clinical.", sql)
+        self.assertNotIn("INSERT INTO operational.", sql)
+        self.assertNotIn("UPDATE clinical.", sql)
+        self.assertNotIn("UPDATE operational.", sql)
+
+    def test_fuzzy_resolved_migration_defines_controlled_flow(self):
+        self.assertTrue(
+            FUZZY_RESOLVED_SQL.exists(),
+            "fuzzy resolved migration SQL must exist",
+        )
+        sql = FUZZY_RESOLVED_SQL.read_text(encoding="utf-8")
+
+        self.assertIn("CREATE OR REPLACE VIEW staging.v_hodom_fuzzy_resolved_route_preview_2026", sql)
+        self.assertIn("CREATE OR REPLACE VIEW staging.v_hodom_fuzzy_resolved_route_gate_2026", sql)
+        self.assertIn("CREATE OR REPLACE VIEW staging.v_hodom_fuzzy_resolved_route_audit_2026", sql)
+        self.assertIn("CREATE OR REPLACE VIEW staging.v_hodom_fuzzy_resolved_route_summary_2026", sql)
+        self.assertIn("HAVING count(DISTINCT target_pk) = 1", sql)
+        self.assertIn("FUZZY_ENRICH_EXISTING", sql)
+        self.assertIn("FUZZY_INSERT_SINGLE_SERVICE", sql)
+        self.assertIn("FUZZY_SPLIT_SERVICE_REQUIRED", sql)
+        self.assertIn("FUZZY_SERVICE_TARGET_MISSING", sql)
+        self.assertIn("FUZZY_REVIEW_BATCH_DUPLICATE", sql)
+        self.assertIn("batch_day_route_count", sql)
+
+    def test_fuzzy_resolved_migration_inserts_only_single_service_new_visits(self):
+        self.assertTrue(FUZZY_RESOLVED_SQL.exists())
+        sql = FUZZY_RESOLVED_SQL.read_text(encoding="utf-8")
+
+        self.assertIn("INSERT INTO operational.visita", sql)
+        self.assertIn("WHERE pv.fuzzy_migration_action = 'FUZZY_INSERT_SINGLE_SERVICE'", sql)
+        self.assertIn("v.visit_id <> us.candidate_visit_id", sql)
+        self.assertIn("v.visit_id <> pv.visit_id", sql)
+        self.assertIn("NOT EXISTS", sql)
+        self.assertIn("INSERT INTO migration.provenance", sql)
+        self.assertIn("fuzzy_resolved_2026_05_26", sql)
+        self.assertIn("BEGIN;", sql)
+        self.assertIn("COMMIT;", sql)
+        self.assertNotIn("INSERT INTO clinical.", sql)
+        self.assertNotIn("UPDATE clinical.", sql)
 
 
 if __name__ == "__main__":
